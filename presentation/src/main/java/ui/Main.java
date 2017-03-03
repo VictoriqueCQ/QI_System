@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.VerticalDirection;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
@@ -31,8 +32,9 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/ClientOverview.fxml"));
             rootLayout = (SplitPane) fxmlLoader.load();
-            rootLayout.setPrefSize(1000, 600);
-            rootLayout.setDividerPositions(0.3f);
+            rootLayout.setPrefSize(1200, 800);
+//            rootLayout.setOrientation();
+            rootLayout.setDividerPositions(0.2f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
             controller.setMain(this);
             Scene scene = new Scene(rootLayout);
@@ -52,7 +54,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         stage.initStyle(StageStyle.UNDECORATED);
-//		stage.setTitle("Hotel");
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
