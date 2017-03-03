@@ -16,7 +16,7 @@ public class ClientOverviewController implements Initializable {
 
 
 	@FXML
-	private SplitPane leftPane;
+	private SplitPane topPane;
 	
 	@FXML
 	private ImageView head;
