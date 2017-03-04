@@ -26,9 +26,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <BarChart fx:id="barChart_1" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <BarChart fx:id="barChart_1" title="涨跌停股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <xAxis>
-                <CategoryAxis fx:id="TypeOfStock_1" label="涨跌停股票情况" side="TOP" />
+                <CategoryAxis fx:id="TypeOfStock_1" side="TOP" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="NumberOfStock_1" label="单位：只" />
