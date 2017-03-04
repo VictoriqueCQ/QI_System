@@ -22,6 +22,12 @@ public class ThermometerController implements Initializable {
     private DatePicker datepicker;
 
     @FXML
+    private Button search;
+
+    @FXML
+    private TextArea volumn;
+
+    @FXML
     private NumberAxis NumberOfStock_1 = new NumberAxis();
 
     @FXML
@@ -77,7 +83,9 @@ public class ThermometerController implements Initializable {
         barChart_3.getData().add(series3);
     }
 
-    public ThermometerController(){}
+    public ThermometerController(){
+        search = new Button();
+    }
 
     public void setMain(Main main) {
         setBarChart_1();
