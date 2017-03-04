@@ -3,10 +3,12 @@ package ui;/**
  */
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 public class ContrastController extends Application {
     private Main main;
+    @FXML
 
 
     public static void main(String[] args) {
