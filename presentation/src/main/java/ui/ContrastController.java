@@ -5,8 +5,9 @@ package ui;/**
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class CompareFunctionController extends Application {
+public class ContrastController extends Application {
     private Main main;
+
 
     public static void main(String[] args) {
         launch(args);

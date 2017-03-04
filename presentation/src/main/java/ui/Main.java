@@ -73,11 +73,11 @@ public class Main extends Application {
     public void gotoCompareFunction(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(Main.class.getResource("/CompareFunction.fxml"));
+            fxmlLoader.setLocation(Main.class.getResource("/Contrast.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
-            CompareFunctionController controller = (CompareFunctionController) fxmlLoader.getController();
+            ContrastController controller = (ContrastController) fxmlLoader.getController();
             controller.setMain(this);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
