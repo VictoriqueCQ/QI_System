@@ -22,31 +22,31 @@ public class ThermometerController implements Initializable {
     private DatePicker datepicker;
 
     @FXML
-    private NumberAxis NumberOfStock_1;
+    private NumberAxis NumberOfStock_1 = new NumberAxis();
 
     @FXML
-    private NumberAxis NumberOfStock_2;
+    private NumberAxis NumberOfStock_2 = new NumberAxis();
 
     @FXML
-    private NumberAxis NumberOfStock_3;
+    private NumberAxis NumberOfStock_3 = new NumberAxis();
 
     @FXML
-    private CategoryAxis TypeOfStock_1;
+    private CategoryAxis TypeOfStock_1 = new CategoryAxis();
 
     @FXML
-    private CategoryAxis TypeOfStock_2;
+    private CategoryAxis TypeOfStock_2 = new CategoryAxis();
 
     @FXML
-    private CategoryAxis TypeOfStock_3;
+    private CategoryAxis TypeOfStock_3 = new CategoryAxis();
 
     @FXML
-    private BarChart<String, Number> barChart_1;
+    private BarChart<String, Number> barChart_1 = new BarChart<String, Number>(TypeOfStock_1, NumberOfStock_1);
 
     @FXML
-    private BarChart<String, Number> barChart_2;
+    private BarChart<String, Number> barChart_2 = new BarChart<String, Number>(TypeOfStock_2, NumberOfStock_2);
 
     @FXML
-    private BarChart<String, Number> barChart_3;
+    private BarChart<String, Number> barChart_3 = new BarChart<String, Number>(TypeOfStock_3, NumberOfStock_3);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,23 +55,13 @@ public class ThermometerController implements Initializable {
 
     //以下都是模拟数据
     private void setBarChart_1(){
-        TypeOfStock_1 = new CategoryAxis();
-        NumberOfStock_1 = new NumberAxis();
-        barChart_1 = new BarChart<String, Number>(TypeOfStock_1, NumberOfStock_1);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        System.out.println("图表1");
         series1.getData().add(new XYChart.Data<>("涨停股票数",30));
-        System.out.println("图表2");
         series1.getData().add(new XYChart.Data<>("跌停股票数",10));
-        System.out.println("图表3");
-        barChart_1.getData().add(series1);
-        System.out.println("图表4");
+        barChart_1.getData().addAll(series1);
     }
 
     private void setBarChart_2(){
-        TypeOfStock_2 = new CategoryAxis();
-        NumberOfStock_2 = new NumberAxis();
-        barChart_2 = new BarChart<String, Number>(TypeOfStock_2, NumberOfStock_2);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", 60));
         series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", 20));
@@ -80,9 +70,6 @@ public class ThermometerController implements Initializable {
     }
 
     private void setBarChart_3(){
-        TypeOfStock_3 = new CategoryAxis();
-        NumberOfStock_3 = new NumberAxis();
-        barChart_3 = new BarChart<String, Number>(TypeOfStock_3, NumberOfStock_3);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
         series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", 45));
         series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", 15));
@@ -93,9 +80,9 @@ public class ThermometerController implements Initializable {
     public ThermometerController(){}
 
     public void setMain(Main main) {
-        this.main = main;
         setBarChart_1();
         setBarChart_2();
         setBarChart_3();
+        this.main = main;
     }
 }
