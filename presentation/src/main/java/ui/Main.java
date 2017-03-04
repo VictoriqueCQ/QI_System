@@ -37,7 +37,7 @@ public class Main extends Application {
             rootLayout.setDividerPositions(0.2f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
             controller.setMain(this);
-            Scene scene = new Scene(rootLayout);
+            scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.show();
@@ -93,6 +93,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Thermometer.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             insidePane.setPrefSize(1200, 640);
+            //scene.getStylesheets().add("/ThermometerCSS.css");
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
             controller.setMain(this);
