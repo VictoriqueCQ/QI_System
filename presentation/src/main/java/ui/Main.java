@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.layout.AnchorPane;
 
 public class Main extends Application {
     // 主窗口
@@ -67,5 +68,32 @@ public class Main extends Application {
         stage.close();
     }
 
+    public void gotoCompareFunction(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/CompareFunction.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 640);
+            rootLayout.getItems().set(1, insidePane);
+            CompareFunctionController controller = (CompareFunctionController) fxmlLoader.getController();
+            controller.setMain(this);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void gotoThermometer(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Thermometer.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 640);
+            rootLayout.getItems().set(1, insidePane);
+            ThermometerController controller = (ThermometerController) fxmlLoader.getController();
+            controller.setMain(this);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 }
 
