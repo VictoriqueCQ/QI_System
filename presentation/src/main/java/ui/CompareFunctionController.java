@@ -5,7 +5,8 @@ package ui;/**
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class CompareFunction extends Application {
+public class CompareFunctionController extends Application {
+    private Main main;
 
     public static void main(String[] args) {
         launch(args);
@@ -15,4 +16,10 @@ public class CompareFunction extends Application {
     public void start(Stage primaryStage) {
 
     }
+
+    public void setMain(Main main) {
+        this.main = main;
+
+    }
+
 }
