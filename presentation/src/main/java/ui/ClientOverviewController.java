@@ -54,12 +54,12 @@ public class ClientOverviewController implements Initializable {
 
 	@FXML
 	private void gotoComparsion() throws RemoteException {
-		System.out.println("2");
+		main.gotoCompareFunction();
 	}
 
 	@FXML
 	private void gotoThermometer() throws RemoteException {
-		System.out.println("3");
+		main.gotoThermometer();
 	}
 
 	
