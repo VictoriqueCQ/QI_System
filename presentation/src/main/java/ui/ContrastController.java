@@ -4,11 +4,42 @@ package ui;/**
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 public class ContrastController extends Application {
     private Main main;
+
     @FXML
+    private ChoiceBox choiceBox1;
+
+    @FXML
+    private  ChoiceBox choiceBox2;
+
+    @FXML
+    private DatePicker startDate;
+
+    @FXML
+    private DatePicker endDate;
+
+    @FXML
+    private Button maxAndMinContrast;
+
+    @FXML
+    private Button riseAndDownContrast;
+
+    @FXML
+    private Button closeContrast;
+
+    @FXML
+    private Button incomeProContrast;
+
+    @FXML
+    private Button incomeVaContrast;
+
+
 
 
     public static void main(String[] args) {

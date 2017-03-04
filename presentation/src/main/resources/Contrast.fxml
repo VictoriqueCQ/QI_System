@@ -50,27 +50,27 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="256.0" text="最低/高价">
+            <Button fx:id="maxAndMinContrast" mnemonicParsing="false" prefHeight="40.0" prefWidth="256.0" text="最低/高价">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="254.0" text="涨/跌幅" GridPane.columnIndex="1">
+            <Button fx:id="riseAndDownContrast" mnemonicParsing="false" prefHeight="68.0" prefWidth="254.0" text="涨/跌幅" GridPane.columnIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="209.0" text="每日收盘价" GridPane.columnIndex="2">
+            <Button fx:id="closeContrast" mnemonicParsing="false" prefHeight="57.0" prefWidth="209.0" text="每日收盘价" GridPane.columnIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="207.0" text="对数收益率" GridPane.columnIndex="3">
+            <Button fx:id="incomeProContrast" mnemonicParsing="false" prefHeight="53.0" prefWidth="207.0" text="对数收益率" GridPane.columnIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="207.0" text="对数收益方差" GridPane.columnIndex="4">
+            <Button fx:id="incomeVaContrast" mnemonicParsing="false" prefHeight="39.0" prefWidth="207.0" text="对数收益方差" GridPane.columnIndex="4">
                <font>
                   <Font size="20.0" />
                </font>
