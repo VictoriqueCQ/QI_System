@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -11,8 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ThermometerController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ThermometerController">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0">
         <columnConstraints>
@@ -28,7 +32,7 @@
          <children>
             <BarChart fx:id="barChart_1" title="涨跌停股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <xAxis>
-                <CategoryAxis fx:id="TypeOfStock_1" side="TOP" />
+                <CategoryAxis fx:id="TypeOfStock_1" side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="NumberOfStock_1" label="单位：只" />
@@ -63,7 +67,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="271.0" layoutY="119.0" text="100000(瞎写的）">
+                  <Label layoutX="271.0" layoutY="119.0">
                      <font>
                         <Font size="20.0" />
                      </font>
