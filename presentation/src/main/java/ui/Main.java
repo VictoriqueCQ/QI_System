@@ -25,6 +25,21 @@ public class Main extends Application {
     private final double MINIMUM_WINDOW_HEIGHT = 250.0;
 
     /**
+     * 初始化界面
+     * @param primaryStage
+     * @throws Exception
+     */
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
+        stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
+        stage.setResizable(false);
+        this.gotoClientOverview();
+    }
+
+    /**
      * 跳转到客户界面
      */
     public void gotoClientOverview() {
@@ -33,7 +48,6 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/ClientOverview.fxml"));
             rootLayout = (SplitPane) fxmlLoader.load();
             rootLayout.setPrefSize(1200, 800);
-//            rootLayout.setOrientation();
             rootLayout.setDividerPositions(0.2f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
             controller.setMain(this);
@@ -46,25 +60,21 @@ public class Main extends Application {
         }
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
-        stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
-        stage.setResizable(false);
-        this.gotoClientOverview();
-    }
-
     /**
-     * 退出系统
+     * 跳转到K线图界面
      */
-    public void exitSystem() {
-        stage.close();
+    public void gotoCandlestickChart(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/CandlestickChart.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 640);
+            rootLayout.getItems().set(1, insidePane);
+            CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
+            controller.setMain(this);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
@@ -97,9 +107,22 @@ public class Main extends Application {
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
             controller.setMain(this);
+
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+
+
+    /**
+     * 退出系统
+     */
+    public void exitSystem() {
+        stage.close();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
 
