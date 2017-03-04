@@ -10,6 +10,7 @@
       <set>
         <option value="$PROJECT_DIR$/bl/pom.xml" />
         <option value="$PROJECT_DIR$/data/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </set>
     </option>
   </component>
