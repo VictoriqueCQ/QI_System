@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ContrastController">
+   <children>
+      <Label layoutX="33.0" layoutY="25.0" prefHeight="34.0" prefWidth="124.0" text="设置对比">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="33.0" layoutY="72.0" prefHeight="32.0" prefWidth="87.0" text="股票选择">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox layoutX="146.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
+      <Label layoutX="260.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ChoiceBox layoutX="301.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
+      <Label layoutX="518.0" layoutY="72.0" prefHeight="32.0" prefWidth="87.0" text="时间选择">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="633.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
+      <Label layoutX="742.0" layoutY="72.0" prefHeight="28.0" prefWidth="36.0" text="——" textFill="#141313">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <DatePicker layoutX="791.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
+      <Button layoutX="980.0" layoutY="72.0" mnemonicParsing="false" text="移除对比" />
+      <GridPane layoutX="33.0" layoutY="130.0" prefHeight="38.0" prefWidth="1018.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="256.0" text="最低/高价">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="68.0" prefWidth="254.0" text="涨/跌幅" GridPane.columnIndex="1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="57.0" prefWidth="209.0" text="每日收盘价" GridPane.columnIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="207.0" text="对数收益率" GridPane.columnIndex="3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="207.0" text="对数收益方差" GridPane.columnIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <AnchorPane layoutX="33.0" layoutY="168.0" prefHeight="470.0" prefWidth="1018.0" />
+   </children>
+</AnchorPane>
