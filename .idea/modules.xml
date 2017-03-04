@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/QI_System.iml" filepath="$PROJECT_DIR$/QI_System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/QI_System.iml" filepath="$PROJECT_DIR$/.idea/QI_System.iml" />
       <module fileurl="file://$PROJECT_DIR$/bl/bl.iml" filepath="$PROJECT_DIR$/bl/bl.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/presentation/presentation.iml" filepath="$PROJECT_DIR$/presentation/presentation.iml" />
