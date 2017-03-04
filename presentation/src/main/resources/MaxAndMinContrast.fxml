@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutX="160.0" layoutY="70.0" prefHeight="195.0" prefWidth="452.0">
+        <columns>
+          <TableColumn prefWidth="90.0" text="股票名称" />
+          <TableColumn prefWidth="90.0" text="股票价格" />
+            <TableColumn prefWidth="90.0" text="最低值" />
+            <TableColumn prefWidth="90.0" text="最高值" />
+            <TableColumn prefWidth="90.0" text="交易总量" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
