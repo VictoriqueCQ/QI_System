@@ -49,7 +49,7 @@ public class ClientOverviewController implements Initializable {
 
 	@FXML
 	private void gotoImageK() throws RemoteException {
-		System.out.println("1");
+		main.gotoCandlestickChart();
 	}
 
 	@FXML
