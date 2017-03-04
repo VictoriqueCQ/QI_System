@@ -68,6 +68,9 @@ public class Main extends Application {
         stage.close();
     }
 
+    /**
+     * 跳转到股票比较功能界面
+     */
     public void gotoCompareFunction(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -82,6 +85,9 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * 跳转到市场温度计界面
+     */
     public void gotoThermometer(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
