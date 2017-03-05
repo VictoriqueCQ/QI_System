@@ -7,8 +7,11 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
-
-import java.awt.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,10 +25,11 @@ public class ThermometerController implements Initializable {
     private DatePicker datepicker;
 
     @FXML
-    private Button search;
+    private Button searchButton;
+
 
     @FXML
-    private TextArea volumn;
+    private TextArea volumnText;
 
     @FXML
     private NumberAxis NumberOfStock_1 = new NumberAxis();
@@ -61,14 +65,18 @@ public class ThermometerController implements Initializable {
 
     //以下都是模拟数据
     private void setBarChart_1(){
+        barChart_1.setCategoryGap(80);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        series1.setName("股票涨跌停情况");
         series1.getData().add(new XYChart.Data<>("涨停股票数",30));
         series1.getData().add(new XYChart.Data<>("跌停股票数",10));
         barChart_1.getData().addAll(series1);
     }
 
     private void setBarChart_2(){
+        barChart_2.setCategoryGap(80);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+        series2.setName("涨幅超过5%股票情况");
         series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", 60));
         series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", 20));
 
@@ -76,21 +84,46 @@ public class ThermometerController implements Initializable {
     }
 
     private void setBarChart_3(){
+        barChart_3.setCategoryGap(80);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+        series3.setName("日增减幅超过5%股票情况");
         series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", 45));
         series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", 15));
 
         barChart_3.getData().add(series3);
     }
 
+    public void setSearchButton(){
+        searchButton.getStyleClass().add("button");
+        //处理Action
+        searchButton.setOnAction((ActionEvent e)->{
+            System.out.println("Search the data and show the volumn.");
+            volumnText.setPromptText("100000(瞎写的)");
+            setBarChart_1();
+            setBarChart_2();
+            setBarChart_3();
+
+        });
+
+        //当鼠标进入按钮时添加阴影特效
+        DropShadow shadow = new DropShadow();
+        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+            searchButton.setEffect(shadow);
+        });
+
+        //当鼠标离开按钮时移除阴影效果
+        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+            searchButton.setEffect(null);
+        });
+    }
+
     public ThermometerController(){
-        search = new Button();
+
     }
 
     public void setMain(Main main) {
-        setBarChart_1();
-        setBarChart_2();
-        setBarChart_3();
+
+        setSearchButton();
         this.main = main;
     }
 }
