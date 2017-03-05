@@ -106,6 +106,7 @@
                   </AnchorPane>
                </children>
             </GridPane>
+            <PieChart fx:id="pieChart" title="所有股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
