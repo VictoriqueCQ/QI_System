@@ -58,10 +58,6 @@ public class ContrastController extends Application {
         this.main = main;
 
     }
-    @FXML
-    public void gotoMaxAndMinCompare(){
 
-        main.gotoMaxAndMinContrast();
-    }
 
 }

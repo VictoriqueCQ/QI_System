@@ -127,41 +127,8 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    /**
-     * 跳转到最低最高值比较
-     */
-    public void gotoMaxAndMinContrast(){
-        System.out.print("ytuis");
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(Main.class.getResource("/MaxAndMinContrast.fxml"));
-            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(1018, 470);
-            rootLayout1=new SplitPane();
-            System.out.print("hjk");
-            rootLayout1.getItems().set(1, insidePane);
-            MaxAndMinContrastController controller = (MaxAndMinContrastController) fxmlLoader.getController();
-            controller.setMain(this);
 
-        } catch (Exception e) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
-        }
 
-    }
-    /**
-     * 跳转到涨跌幅比较
-     */
-
-    /**
-     * 跳转到每日收盘价比较
-     */
-    /**
-     * 跳转到对数收益率比较
-     */
-
-    /**
-     * 跳转到对数收益方差比较
-     */
     /**
      * 退出系统
      */
