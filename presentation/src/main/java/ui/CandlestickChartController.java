@@ -1,10 +1,17 @@
 package ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import org.jfree.chart.ChartUtilities;
+import javafx.util.Callback;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -18,11 +25,9 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 
 /**
  * Created by xjwhhh on 2017/3/4.
@@ -33,6 +38,59 @@ public class CandlestickChartController {
     @FXML
     private GridPane gridPane;
 
+    @FXML
+    private javafx.scene.chart.NumberAxis number = new javafx.scene.chart.NumberAxis();
+
+    @FXML
+    private CategoryAxis time = new CategoryAxis();
+
+    @FXML
+    private LineChart<String, Number> lineChart = new LineChart<String, Number>(time, number);
+
+    @FXML
+    private DatePicker startTimeDatePicker;
+
+    @FXML
+    private DatePicker endTimeDatePicker;
+
+    @FXML
+    private TextArea stockNameTextArea;
+
+    @FXML
+    private TextArea stockNumberTextArea;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    public void updateEndTimeDatePicker(){
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        startTimeDatePicker.getValue().plusDays(1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                            }
+                        };
+                    }
+                };
+        endTimeDatePicker.setDayCellFactory(dayCellFactory1);
+    }
+
+    @FXML
+    public void search(){
+        this.createCandlestickChart();
+        this.createEMA();
+    }
 
 
     public void createCandlestickChart(){
@@ -182,36 +240,90 @@ public class CandlestickChartController {
         combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间
         JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
-        FileOutputStream out=null;
-        try{
-            File outFile=new File("/Kimage.png");
-            if(!outFile.getParentFile().exists()){
-                outFile.getParentFile().mkdirs();
-            }
-            out=new FileOutputStream(outFile);
-
-            ChartUtilities.writeChartAsPNG(out,chart,500,600);
-            out.flush();
-            out.close();
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        //动态生成图片并展示
+//        FileOutputStream out=null;
+//        try{
+//            File outFile=new File("/Kimage.png");
+//            if(!outFile.getParentFile().exists()){
+//                outFile.getParentFile().mkdirs();
+//            }
+//            out=new FileOutputStream(outFile);
+//
+//            ChartUtilities.writeChartAsPNG(out,chart,600,600);
+//            out.flush();
+//            out.close();
+//        }
+//        catch(FileNotFoundException e){
+//            e.printStackTrace();
+//        }
+//        catch (IOException e){
+//            e.printStackTrace();
+//        }
 
         Image image=new Image("/Kimage.png");
-
         ImageView im=new ImageView(image);
         gridPane.add(im,0,0);
+    }
 
+    public void createEMA(){
+        final CategoryAxis xAxis = new CategoryAxis();
+        final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
+        xAxis.setLabel("Month");
+
+        lineChart.setTitle("Stock Monitoring, 2010");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Portfolio 1");
+
+        series1.getData().add(new XYChart.Data("Jan", 23));
+        series1.getData().add(new XYChart.Data("Feb", 14));
+        series1.getData().add(new XYChart.Data("Mar", 15));
+        series1.getData().add(new XYChart.Data("Apr", 24));
+        series1.getData().add(new XYChart.Data("May", 34));
+        series1.getData().add(new XYChart.Data("Jun", 36));
+        series1.getData().add(new XYChart.Data("Jul", 22));
+        series1.getData().add(new XYChart.Data("Aug", 45));
+        series1.getData().add(new XYChart.Data("Sep", 43));
+        series1.getData().add(new XYChart.Data("Oct", 17));
+        series1.getData().add(new XYChart.Data("Nov", 29));
+        series1.getData().add(new XYChart.Data("Dec", 25));
+
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("Portfolio 2");
+        series2.getData().add(new XYChart.Data("Jan", 33));
+        series2.getData().add(new XYChart.Data("Feb", 34));
+        series2.getData().add(new XYChart.Data("Mar", 25));
+        series2.getData().add(new XYChart.Data("Apr", 44));
+        series2.getData().add(new XYChart.Data("May", 39));
+        series2.getData().add(new XYChart.Data("Jun", 16));
+        series2.getData().add(new XYChart.Data("Jul", 55));
+        series2.getData().add(new XYChart.Data("Aug", 54));
+        series2.getData().add(new XYChart.Data("Sep", 48));
+        series2.getData().add(new XYChart.Data("Oct", 27));
+        series2.getData().add(new XYChart.Data("Nov", 37));
+        series2.getData().add(new XYChart.Data("Dec", 29));
+
+        XYChart.Series series3 = new XYChart.Series();
+        series3.setName("Portfolio 3");
+        series3.getData().add(new XYChart.Data("Jan", 44));
+        series3.getData().add(new XYChart.Data("Feb", 35));
+        series3.getData().add(new XYChart.Data("Mar", 36));
+        series3.getData().add(new XYChart.Data("Apr", 33));
+        series3.getData().add(new XYChart.Data("May", 31));
+        series3.getData().add(new XYChart.Data("Jun", 26));
+        series3.getData().add(new XYChart.Data("Jul", 22));
+        series3.getData().add(new XYChart.Data("Aug", 25));
+        series3.getData().add(new XYChart.Data("Sep", 43));
+        series3.getData().add(new XYChart.Data("Oct", 44));
+        series3.getData().add(new XYChart.Data("Nov", 45));
+        series3.getData().add(new XYChart.Data("Dec", 44));
+
+        lineChart.getData().addAll(series1, series2, series3);
 
     }
 
     public void setMain(Main main) {
         this.main = main;
-        this.createCandlestickChart();
 
     }
 }
