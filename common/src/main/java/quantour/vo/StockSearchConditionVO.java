@@ -1,4 +1,4 @@
-package vo;
+package quantour.vo;
 
 import java.util.Date;
 
