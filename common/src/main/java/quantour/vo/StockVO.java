@@ -1,5 +1,6 @@
 package quantour.vo;
 
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -9,6 +10,8 @@ import java.util.Iterator;
 public class StockVO {
     private String name;
     private String code;
+    private Date start;
+    private Date over;
     private Iterator open;
     private Iterator high;
     private Iterator low;
@@ -18,10 +21,12 @@ public class StockVO {
     private Iterator average;
     private Iterator variance;//相对方差
 
-    public StockVO(String name, String code, Iterator open, Iterator high, Iterator low, Iterator close, Iterator volume,
-                   Iterator adjClose, Iterator average, Iterator variance) {
+    public StockVO(String name, String code, Date start, Date over, Iterator open, Iterator high, Iterator low,
+                   Iterator close, Iterator volume, Iterator adjClose, Iterator average, Iterator variance) {
         this.name = name;
         this.code = code;
+        this.start = start;
+        this.over = over;
         this.open = open;
         this.high = high;
         this.low = low;
@@ -38,6 +43,14 @@ public class StockVO {
 
     public String getCode() {
         return code;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public Date getOver() {
+        return over;
     }
 
     public Iterator getOpen() {
