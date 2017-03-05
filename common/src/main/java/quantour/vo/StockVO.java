@@ -1,5 +1,6 @@
 package quantour.vo;
 
+import java.util.Date;
 import java.util.Iterator;
 
 /**
@@ -7,41 +8,53 @@ import java.util.Iterator;
  * Created by dell on 2017/3/4.
  */
 public class StockVO {
+    private String name;
+    private String code;
+    private Date start;
+    private Date over;
     private Iterator open;
-    private Iterator close;
-    private Iterator rehabClose;//复权后
-    private Iterator volume;//交易数
     private Iterator high;
     private Iterator low;
+    private Iterator close;
+    private Iterator volume;//交易数
+    private Iterator adjClose;//复权后
     private Iterator average;
     private Iterator variance;//相对方差
 
-    public StockVO(Iterator open, Iterator close, Iterator rehabClose, Iterator volume, Iterator high, Iterator low,
-                   Iterator average, Iterator variance) {
+    public StockVO(String name, String code, Date start, Date over, Iterator open, Iterator high, Iterator low,
+                   Iterator close, Iterator volume, Iterator adjClose, Iterator average, Iterator variance) {
+        this.name = name;
+        this.code = code;
+        this.start = start;
+        this.over = over;
         this.open = open;
-        this.close = close;
-        this.rehabClose = rehabClose;
-        this.volume = volume;
         this.high = high;
         this.low = low;
+        this.close = close;
+        this.volume = volume;
+        this.adjClose = adjClose;
         this.average = average;
         this.variance = variance;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public Date getOver() {
+        return over;
+    }
+
     public Iterator getOpen() {
         return open;
-    }
-
-    public Iterator getClose() {
-        return close;
-    }
-
-    public Iterator getRehabClose() {
-        return rehabClose;
-    }
-
-    public Iterator getVolume() {
-        return volume;
     }
 
     public Iterator getHigh() {
@@ -50,6 +63,18 @@ public class StockVO {
 
     public Iterator getLow() {
         return low;
+    }
+
+    public Iterator getClose() {
+        return close;
+    }
+
+    public Iterator getVolume() {
+        return volume;
+    }
+
+    public Iterator getAdjClose() {
+        return adjClose;
     }
 
     public Iterator getAverage() {
