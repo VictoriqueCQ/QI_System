@@ -1,6 +1,5 @@
-package vo;
+package quantour.vo;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
