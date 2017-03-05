@@ -32,7 +32,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <BarChart fx:id="barChart_1" title="涨跌停股票情况" GridPane.rowIndex="2">
+            <BarChart fx:id="barChart_1" GridPane.rowIndex="2">
               <xAxis>
                 <CategoryAxis fx:id="TypeOfStock_1" side="BOTTOM" />
               </xAxis>
@@ -40,7 +40,7 @@
                 <NumberAxis fx:id="NumberOfStock_1" label="单位：只" />
               </yAxis>
             </BarChart>
-            <BarChart fx:id="barChart_2" title="涨跌幅5%股票情况" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <BarChart fx:id="barChart_2" GridPane.columnIndex="1" GridPane.rowIndex="2">
               <xAxis>
                 <CategoryAxis fx:id="TypeOfStock_2" side="BOTTOM" />
               </xAxis>
@@ -48,7 +48,7 @@
                 <NumberAxis fx:id="NumberOfStock_2" label="单位：只" />
               </yAxis>
             </BarChart>
-            <BarChart fx:id="barChart_3" title="日涨跌幅5%股票情况" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <BarChart fx:id="barChart_3" GridPane.columnIndex="2" GridPane.rowIndex="2">
               <xAxis>
                 <CategoryAxis fx:id="TypeOfStock_3" side="BOTTOM" />
               </xAxis>
