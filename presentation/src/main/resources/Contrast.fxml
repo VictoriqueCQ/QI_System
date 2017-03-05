@@ -38,42 +38,67 @@
       </Label>
       <DatePicker layoutX="791.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
       <Button layoutX="980.0" layoutY="72.0" mnemonicParsing="false" text="移除对比" />
-      <AnchorPane fx:id="showPane" layoutX="33.0" layoutY="168.0" prefHeight="470.0" prefWidth="1018.0">
-         <children>
-            <SplitPane fx:id="rootLayout1" dividerPositions="0.12" layoutY="-40.0" orientation="VERTICAL" prefHeight="500.0" prefWidth="1018.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+      <TabPane layoutX="25.0" layoutY="131.0" prefHeight="409.0" prefWidth="1014.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="最低/高价">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="maxAndMinContrast" mnemonicParsing="false" onAction="#gotoMaxAndMinCompare" prefHeight="55.0" prefWidth="203.0" text="最低/高价">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="closeContrast" layoutX="406.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="203.0" text="每日收盘价">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="incomeProContrast" layoutX="812.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="203.0" text="对数收益率">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="incomeVaContrast" layoutX="609.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="203.0" text="对数收益方差">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="riseAndDownContrast" layoutX="203.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="203.0" text="涨/跌幅">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
+                        <TableView layoutX="334.0" layoutY="91.0" prefHeight="218.0" prefWidth="369.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="股票名称" />
+                            <TableColumn prefWidth="75.0" text="股票价格" />
+                              <TableColumn prefWidth="75.0" text="最低值" />
+                              <TableColumn prefWidth="75.0" text="最高值" />
+                              <TableColumn prefWidth="75.0" text="交易总量" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-              </items>
-            </SplitPane>
-         </children></AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="涨/跌幅">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <LineChart layoutX="238.0" layoutY="25.0" prefHeight="249.0" prefWidth="454.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="每日收盘价">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <LineChart layoutX="102.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="对数收益率">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="对数收益方差">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
