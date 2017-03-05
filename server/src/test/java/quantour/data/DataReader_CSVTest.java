@@ -3,6 +3,9 @@ package quantour.data;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by dell on 2017/3/5.
  */
@@ -15,7 +18,8 @@ public class DataReader_CSVTest {
 
     @Test
     public void read() throws Exception {
-        dataReader_CSV.read();
+        Map<StockIdentifier,List> map=dataReader_CSV.read();
+
     }
 
 }
