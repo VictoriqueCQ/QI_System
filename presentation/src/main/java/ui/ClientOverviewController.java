@@ -1,9 +1,5 @@
 package ui;
 
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,15 +7,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.ResourceBundle;
+
 public class ClientOverviewController implements Initializable {
 	private Main main;
 
 
 	@FXML
-	private SplitPane topPane;
+	private SplitPane topSplitPane;
 	
 	@FXML
-	private ImageView head;
+	private ImageView headImageView;
 	
 	@FXML
 	private Button exitButton;
@@ -48,7 +48,7 @@ public class ClientOverviewController implements Initializable {
 	}
 
 	@FXML
-	private void gotoImageK() throws RemoteException {
+	private void gotoCandlestickChar() throws RemoteException {
 		main.gotoCandlestickChart();
 	}
 
