@@ -1,6 +1,7 @@
-package blservice;
+package quantour.blservice;
 
-import vo.MarketVO;
+
+import quantour.vo.MarketVO;
 
 import java.util.Date;
 
@@ -8,6 +9,6 @@ import java.util.Date;
  * 用于整体市场搜索
  * Created by dell on 2017/3/4.
  */
-public interface Overall_Search {
+public interface Overall_Search_bl {
     MarketVO getMarketInfo(Date date);
 }
