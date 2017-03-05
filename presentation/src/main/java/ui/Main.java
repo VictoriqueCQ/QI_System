@@ -14,13 +14,16 @@ import javafx.scene.layout.AnchorPane;
 public class Main extends Application {
     // 主窗口
     private Stage stage;
-
+    private Stage stage1;
 
 
     // 内部窗口
     private SplitPane rootLayout;
+    private SplitPane rootLayout1;//股票比较内部窗口
+
 
     private Scene scene;
+
     private final double MINIMUM_WINDOW_WIDTH = 400.0;
     private final double MINIMUM_WINDOW_HEIGHT = 250.0;
 
@@ -84,11 +87,23 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Contrast.fxml"));
+//
+//            AnchorPane inside =(AnchorPane) fxmlLoader.load();
+//            rootLayout1=new SplitPane();
+//            rootLayout1.setPrefSize(1018, 500);
+//            rootLayout1.setDividerPositions(0.12f);
+//            rootLayout1.getItems().set(1,inside);
+
+
+
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ContrastController controller = (ContrastController) fxmlLoader.getController();
             controller.setMain(this);
+
+
+
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -112,8 +127,41 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    /**
+     * 跳转到最低最高值比较
+     */
+    public void gotoMaxAndMinContrast(){
+        System.out.print("ytuis");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/MaxAndMinContrast.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1018, 470);
+            rootLayout1=new SplitPane();
+            System.out.print("hjk");
+            rootLayout1.getItems().set(1, insidePane);
+            MaxAndMinContrastController controller = (MaxAndMinContrastController) fxmlLoader.getController();
+            controller.setMain(this);
 
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
 
+    }
+    /**
+     * 跳转到涨跌幅比较
+     */
+
+    /**
+     * 跳转到每日收盘价比较
+     */
+    /**
+     * 跳转到对数收益率比较
+     */
+
+    /**
+     * 跳转到对数收益方差比较
+     */
     /**
      * 退出系统
      */
