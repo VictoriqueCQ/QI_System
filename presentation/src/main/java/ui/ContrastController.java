@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class ContrastController extends Application {
@@ -39,6 +40,8 @@ public class ContrastController extends Application {
     @FXML
     private Button incomeVaContrast;
 
+    @FXML
+    private AnchorPane showPane;
 
 
 
@@ -54,6 +57,11 @@ public class ContrastController extends Application {
     public void setMain(Main main) {
         this.main = main;
 
+    }
+    @FXML
+    public void gotoMaxAndMinCompare(){
+
+        main.gotoMaxAndMinContrast();
     }
 
 }
