@@ -65,45 +65,50 @@ public class ThermometerController implements Initializable {
 
     //以下都是模拟数据
     private void setBarChart_1(){
-        barChart_1.setCategoryGap(80);
+        barChart_1.setCategoryGap(90);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        series1.setName("股票涨跌停情况");
+        series1.setName("涨跌停股票情况");
         series1.getData().add(new XYChart.Data<>("涨停股票数",30));
         series1.getData().add(new XYChart.Data<>("跌停股票数",10));
         barChart_1.getData().addAll(series1);
     }
 
     private void setBarChart_2(){
-        barChart_2.setCategoryGap(80);
+        barChart_2.setCategoryGap(90);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-        series2.setName("涨幅超过5%股票情况");
-        series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", 60));
+        series2.setName("涨跌幅超过5%股票情况");
+        series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", 80));
         series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", 20));
 
         barChart_2.getData().add(series2);
     }
 
     private void setBarChart_3(){
-        barChart_3.setCategoryGap(80);
+        barChart_3.setCategoryGap(90);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-        series3.setName("日增减幅超过5%股票情况");
-        series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", 45));
+        series3.setName("日增幅超过5%股票情况");
+        series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", 50));
         series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", 15));
 
         barChart_3.getData().add(series3);
     }
 
     public void setSearchButton(){
+
         searchButton.getStyleClass().add("button");
         //处理Action
         searchButton.setOnAction((ActionEvent e)->{
+
             System.out.println("Search the data and show the volumn.");
             volumnText.setPromptText("100000(瞎写的)");
-            setBarChart_1();
-            setBarChart_2();
-            setBarChart_3();
+
 
         });
+
+        setBarChart_1();
+        setBarChart_2();
+        setBarChart_3();
+
 
         //当鼠标进入按钮时添加阴影特效
         DropShadow shadow = new DropShadow();
@@ -122,6 +127,7 @@ public class ThermometerController implements Initializable {
     }
 
     public void setMain(Main main) {
+
 
         setSearchButton();
         this.main = main;
