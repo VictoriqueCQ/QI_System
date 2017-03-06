@@ -4,14 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -25,6 +26,10 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -241,24 +246,24 @@ public class CandlestickChartController {
         JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
         //动态生成图片并展示
-//        FileOutputStream out=null;
-//        try{
-//            File outFile=new File("/Kimage.png");
-//            if(!outFile.getParentFile().exists()){
-//                outFile.getParentFile().mkdirs();
-//            }
-//            out=new FileOutputStream(outFile);
-//
-//            ChartUtilities.writeChartAsPNG(out,chart,600,600);
-//            out.flush();
-//            out.close();
-//        }
-//        catch(FileNotFoundException e){
-//            e.printStackTrace();
-//        }
-//        catch (IOException e){
-//            e.printStackTrace();
-//        }
+        FileOutputStream out=null;
+        try{
+            //没弄懂为什么要绝对路径
+            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\Kimage.png");
+            if(!outFile.getParentFile().exists()){
+                outFile.getParentFile().mkdirs();
+            }
+            out=new FileOutputStream(outFile);
+            ChartUtilities.writeChartAsPNG(out,chart,600,600);
+            out.flush();
+            out.close();
+        }
+        catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
         Image image=new Image("/Kimage.png");
         ImageView im=new ImageView(image);
