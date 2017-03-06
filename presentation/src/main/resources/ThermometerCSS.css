@@ -1,20 +1,36 @@
 .root{
-    -fx-background-color:rgb(226,238,196);
+    -fx-background-color:rgb(0,0,0);
 }
 
 .label{
-    -fx-text-fill:rgb(102,153,102);
+    -fx-text-fill:rgb(240,150,96);
+    -fx-font-size: 1em;
 }
 
 .data0.chart-bar {
-    -fx-bar-fill:#f9d900;
+    -fx-bar-fill:rgb(255,0,0);
 }
 
 .data1.chart-bar {
-    -fx-bar-fill:#b3f300;
+    -fx-bar-fill:rgb(0,255,0);
 }
 
 .button{
     -fx-font: 22 arial;
-    -fx-base: #b6e7c9;
+    -fx-base: rgb(30,194,210);
+}
+
+.chart-pie-label {
+    -fx-fill: rgb(255,255,255);
+    -fx-font-size: 1em;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: rgb(255,255,255);
+    -fx-fill: rgb(255,255,255);
+}
+
+.chart-legend{
+    -fx-background-color:rgb(0,0,0);
+    -fx-stroke: rgb(0,0,0);
 }

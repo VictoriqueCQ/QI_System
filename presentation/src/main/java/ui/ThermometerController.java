@@ -22,6 +22,8 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static javax.swing.text.html.CSS.Attribute.BACKGROUND_COLOR;
+
 /**
  * Created by Administrator on 2017/3/3.
  */
@@ -70,6 +72,7 @@ public class ThermometerController implements Initializable {
     PieChart.Data d3 = new PieChart.Data("涨跌幅小于5股票",260);
     PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",20);
     PieChart.Data d5 = new PieChart.Data("跌停股票",10);
+
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
 
     @FXML
