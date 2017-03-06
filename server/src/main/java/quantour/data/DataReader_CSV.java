@@ -30,7 +30,7 @@ public class DataReader_CSV {
         File f=new File(path);
 
         Map<StockIdentifier,List> stockMap=new HashMap<>();
-        SimpleDateFormat sdf=new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
         try{
             BufferedReader br=new BufferedReader(new FileReader(f));
             br.readLine();//标题行
