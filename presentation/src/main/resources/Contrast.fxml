@@ -61,7 +61,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <LineChart layoutX="238.0" layoutY="25.0" prefHeight="249.0" prefWidth="454.0">
+                        <LineChart layoutX="240.0" layoutY="60.0" prefHeight="249.0" prefWidth="454.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -77,7 +77,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart layoutX="102.0">
+                        <LineChart layoutX="240.0" layoutY="60.0" prefHeight="276.0" prefWidth="492.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -90,12 +90,32 @@
             </Tab>
             <Tab text="对数收益率">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <LineChart layoutX="240.0" layoutY="60.0" prefHeight="295.0" prefWidth="417.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="对数收益方差">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <LineChart layoutX="240.0" layoutY="60.0" prefHeight="305.0" prefWidth="461.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
