@@ -248,8 +248,8 @@ public class CandlestickChartController {
         //动态生成图片并展示
         FileOutputStream out=null;
         try{
-            //没弄懂为什么要绝对路径
-            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\Kimage.png");
+            //搞不懂啊
+            File outFile=new File("../../resources/Kimage.png");
             if(!outFile.getParentFile().exists()){
                 outFile.getParentFile().mkdirs();
             }
@@ -257,6 +257,7 @@ public class CandlestickChartController {
             ChartUtilities.writeChartAsPNG(out,chart,600,600);
             out.flush();
             out.close();
+            System.out.print(outFile.getPath().toString());
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
