@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@CandlestickChartCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CandlestickChartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/CandlestickChartCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CandlestickChartController">
    <children>
       <GridPane fx:id="gridPane" layoutX="557.0" layoutY="96.0" prefHeight="529.0" prefWidth="1200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
         <columnConstraints>
@@ -25,7 +26,7 @@
                 <NumberAxis fx:id="number" side="LEFT" />
               </yAxis>
             </LineChart>
-            <Label prefHeight="572.0" prefWidth="716.0" text=" 股市有风险，入市需谨慎">
+            <Label prefHeight="572.0" prefWidth="716.0" stylesheets="@css/label1CSS.css" text="  股市有风险，入市需谨慎">
                <font>
                   <Font size="51.0" />
                </font>
