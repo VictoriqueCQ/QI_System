@@ -26,9 +26,9 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -264,7 +264,7 @@ public class CandlestickChartController {
 
             //搞不懂啊这个路径问题
 //            File outFile=new File("../../resources/Kimage.png");
-            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\Kimage.jpeg");
+            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\picture\\Kimage.jpeg");
 
             if(!outFile.getParentFile().exists()){
                 outFile.getParentFile().mkdirs();
@@ -281,8 +281,14 @@ public class CandlestickChartController {
         catch (IOException e){
             e.printStackTrace();
         }
+//        try{
+//        ChartUtilities.saveChartAsPNG(new File("/Kimage.png"),chart,600,500);
+//        }
+//        catch(IOException e){
+//            e.printStackTrace();
+//        }
 
-        Image image=new Image("/Kimage.jpeg");
+        Image image=new Image("/picture/Kimage.jpeg");
         ImageView im=new ImageView(image);
         gridPane.add(im,0,0);
     }
