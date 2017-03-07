@@ -26,9 +26,9 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,6 +38,7 @@ import java.time.LocalDate;
  * Created by xjwhhh on 2017/3/4.
  */
 public class CandlestickChartController {
+    //要不要做日K，周K，月K
     private Main main;
 
     @FXML
@@ -219,10 +220,12 @@ public class CandlestickChartController {
         x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,7));//设置时间刻度的间隔，一般以周为单位
         x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
         NumberAxis y1Axis=new NumberAxis();//设定y轴，就是数字轴
-        y1Axis.setAutoRange(false);//不不使用自动设定范围
+        y1Axis.setAutoRange(false);//不使用自动设定范围
         y1Axis.setRange(minValue*0.9, highValue*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
         y1Axis.setTickUnit(new NumberTickUnit((highValue*1.1-minValue*0.9)/10));//设置刻度显示的密度
         XYPlot plot1=new XYPlot(seriesCollection,x1Axis,y1Axis,candlestickRender);//设置画图区域对象
+
+
 
         XYBarRenderer xyBarRender=new XYBarRenderer(){
             private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值
@@ -245,19 +248,32 @@ public class CandlestickChartController {
         combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间
         JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
+        chart.setBackgroundPaint(Color.black);//背景颜色
+        x1Axis.setTickMarkPaint(Color.yellow);
+        y1Axis.setTickMarkPaint(Color.yellow);
+        y2Axis.setTickMarkPaint(Color.yellow);
+        x1Axis.setTickLabelPaint(Color.white);
+        y1Axis.setTickLabelPaint(Color.white);
+        y2Axis.setTickLabelPaint(Color.white);
+        plot1.setBackgroundPaint(Color.black);
+        plot2.setBackgroundPaint(Color.black);
+
         //动态生成图片并展示
         FileOutputStream out=null;
         try{
-            //搞不懂啊
-            File outFile=new File("../../resources/Kimage.png");
+
+            //搞不懂啊这个路径问题
+//            File outFile=new File("../../resources/Kimage.png");
+            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\Kimage.jpeg");
+
             if(!outFile.getParentFile().exists()){
                 outFile.getParentFile().mkdirs();
             }
             out=new FileOutputStream(outFile);
-            ChartUtilities.writeChartAsPNG(out,chart,600,600);
+            ChartUtilities.writeChartAsJPEG(out,chart,600,500);
             out.flush();
-            out.close();
-            System.out.print(outFile.getPath().toString());
+//            out.close();
+//            System.out.print(outFile.getPath().toString());
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
@@ -266,10 +282,13 @@ public class CandlestickChartController {
             e.printStackTrace();
         }
 
-        Image image=new Image("/Kimage.png");
+        Image image=new Image("/Kimage.jpeg");
         ImageView im=new ImageView(image);
         gridPane.add(im,0,0);
     }
+
+    //对K线图进行数据注入
+    //public OHLCSeries addData(OHLCSeries series,)
 
     public void createEMA(){
         final CategoryAxis xAxis = new CategoryAxis();
@@ -326,7 +345,22 @@ public class CandlestickChartController {
 
         lineChart.getData().addAll(series1, series2, series3);
 
+
     }
+
+    /**
+     * 对均线图进行数据注入
+     * @param series
+     * @param data
+     * @return
+     */
+    public XYChart.Series addData(XYChart.Series series,int [] data){
+        for(int i=0;i<data.length;i++){
+            series.getData().add(new XYChart.Data(i+1,data[i]));
+        }
+        return series;
+    }
+
 
     public void setMain(Main main) {
         this.main = main;
