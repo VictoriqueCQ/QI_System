@@ -148,6 +148,13 @@ public class ThermometerController implements Initializable {
 
     }
 
+    public void setDatepicker(){
+        datepicker.setOnAction((ActionEvent e)->{
+            
+        });
+    }
+
+
     public void setSearchButton(){
 
         searchButton.getStyleClass().add("button");
