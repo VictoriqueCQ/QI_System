@@ -14,12 +14,12 @@ import javafx.scene.layout.AnchorPane;
 public class Main extends Application {
     // 主窗口
     private Stage stage;
-    private Stage stage1;
+
 
 
     // 内部窗口
     private SplitPane rootLayout;
-    private SplitPane rootLayout1;//股票比较内部窗口
+
 
 
     private Scene scene;

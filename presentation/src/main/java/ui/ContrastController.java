@@ -4,6 +4,7 @@ package ui;/**
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -11,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.NumberAxis;
 
 public class ContrastController extends Application {
     private Main main;
@@ -52,7 +54,14 @@ public class ContrastController extends Application {
     @FXML
     private Button delete;
 
+   /* @FXML
+    private CategoryAxis xAxis;
 
+    @FXML
+    private NumberAxis yAxis;*/
+
+
+//    private Map<String, XYChart.Series<Number, Number>> seriesMap;
 
 
 
@@ -73,8 +82,10 @@ public class ContrastController extends Application {
     }
 
     public void setCompare(){
-//         final NumberAxis xAxis = new NumberAxis();
-//        final NumberAxis yAxis = new NumberAxis();
+          NumberAxis xAxis = new NumberAxis();
+          NumberAxis yAxis = new NumberAxis();
+          xAxis.setLabel("Numberx");
+          yAxis.setLabel("Numbery");
 //        xAxis.setLabel("Number of Month");
         //creating the chart
 //        final LineChart<Number,Number> lineChart =
@@ -97,8 +108,14 @@ public class ContrastController extends Application {
         series.getData().add(new XYChart.Data(10, 17));
         series.getData().add(new XYChart.Data(11, 29));
         series.getData().add(new XYChart.Data(12, 25));
+         closePriceLine =
+                new LineChart<Number,Number>(xAxis,yAxis);
+
+        closePriceLine.getData().add(series);
+        System.out.print("aaaaaaa");
 
 
+//        seriesMap.put(stock.getStockCode(), series);
     }
 
 
