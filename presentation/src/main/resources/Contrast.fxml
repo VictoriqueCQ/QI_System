@@ -64,10 +64,10 @@
                      <children>
                         <LineChart fx:id="closePriceLine" layoutX="240.0" layoutY="60.0" prefHeight="276.0" prefWidth="492.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <CategoryAxis label="日期" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis label="收盘价" side="LEFT" />
                           </yAxis>
                         </LineChart>
                      </children></AnchorPane>
