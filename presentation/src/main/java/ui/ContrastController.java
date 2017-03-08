@@ -53,6 +53,7 @@ public class ContrastController extends Application {
 
     @FXML
     private Button delete;
+//    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
    /* @FXML
     private CategoryAxis xAxis;
@@ -82,10 +83,7 @@ public class ContrastController extends Application {
     }
 
     public void setCompare(){
-          NumberAxis xAxis = new NumberAxis();
-          NumberAxis yAxis = new NumberAxis();
-          xAxis.setLabel("Numberx");
-          yAxis.setLabel("Numbery");
+
 //        xAxis.setLabel("Number of Month");
         //creating the chart
 //        final LineChart<Number,Number> lineChart =
@@ -93,23 +91,23 @@ public class ContrastController extends Application {
 
 //        lineChart.setTitle("Stock Monitoring, 2010");
         //defining a series
-        XYChart.Series series = new XYChart.Series();
-        series.setName("My portfolio");
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName("demo");
         //populating the series with data
-        series.getData().add(new XYChart.Data(1, 23));
-        series.getData().add(new XYChart.Data(2, 14));
-        series.getData().add(new XYChart.Data(3, 15));
-        series.getData().add(new XYChart.Data(4, 24));
-        series.getData().add(new XYChart.Data(5, 34));
-        series.getData().add(new XYChart.Data(6, 36));
-        series.getData().add(new XYChart.Data(7, 22));
-        series.getData().add(new XYChart.Data(8, 45));
-        series.getData().add(new XYChart.Data(9, 43));
-        series.getData().add(new XYChart.Data(10, 17));
-        series.getData().add(new XYChart.Data(11, 29));
-        series.getData().add(new XYChart.Data(12, 25));
-         closePriceLine =
-                new LineChart<Number,Number>(xAxis,yAxis);
+        series.getData().add(new XYChart.Data("a", 23));
+        series.getData().add(new XYChart.Data("b", 14));
+        series.getData().add(new XYChart.Data("c", 15));
+        series.getData().add(new XYChart.Data("d", 24));
+        series.getData().add(new XYChart.Data("e", 34));
+        series.getData().add(new XYChart.Data("f", 36));
+        series.getData().add(new XYChart.Data("g", 22));
+        series.getData().add(new XYChart.Data("h", 45));
+        series.getData().add(new XYChart.Data("i", 43));
+        series.getData().add(new XYChart.Data("j", 17));
+        series.getData().add(new XYChart.Data("k", 29));
+        series.getData().add(new XYChart.Data("l", 25));
+//         closePriceLine =
+//                new LineChart<Number,Number>(xAxis,yAxis);
 
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");
