@@ -33,4 +33,28 @@
     -fx-stroke: rgb(0,0,0);
 }
 
+.chart-legend-item{
+    -fx-text-fill:rgb(240,150,96);
+    -fx-font-size: 1.2em;
+}
 
+.axis-label {
+    -fx-text-fill: rgb(240,150,96);
+    -fx-font-size: 1.5em;
+}
+
+.axis {
+    -fx-font-size: 1.5em;
+    -fx-tick-label-fill: rgb(240,150,96);
+    -fx-font-family: Tahoma;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #637040;
+    -fx-stroke-width: 3;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #859656;
+}
