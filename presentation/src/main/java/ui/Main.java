@@ -1,15 +1,15 @@
 package ui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.layout.AnchorPane;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main extends Application {
     // 主窗口
@@ -87,23 +87,11 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Contrast.fxml"));
-//
-//            AnchorPane inside =(AnchorPane) fxmlLoader.load();
-//            rootLayout1=new SplitPane();
-//            rootLayout1.setPrefSize(1018, 500);
-//            rootLayout1.setDividerPositions(0.12f);
-//            rootLayout1.getItems().set(1,inside);
-
-
-
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ContrastController controller = (ContrastController) fxmlLoader.getController();
             controller.setMain(this);
-
-
-
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -118,11 +106,9 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Thermometer.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             insidePane.setPrefSize(1200, 640);
-            scene.getStylesheets().add("/ThermometerCSS.css");
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
             controller.setMain(this);
-
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }

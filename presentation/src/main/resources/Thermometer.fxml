@@ -69,7 +69,7 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <DatePicker fx:id="datepicker" layoutY="69.0" />
+                        <DatePicker fx:id="datePicker" layoutY="69.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
