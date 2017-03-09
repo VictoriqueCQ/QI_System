@@ -3,26 +3,24 @@ package ui;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static javax.swing.text.html.CSS.Attribute.BACKGROUND_COLOR;
 
 /**
  * Created by Administrator on 2017/3/3.
@@ -31,7 +29,7 @@ public class ThermometerController implements Initializable {
     private Main main;
 
     @FXML
-    private DatePicker datepicker;
+    private DatePicker datePicker;
 
     @FXML
     private Button searchButton;
@@ -148,11 +146,11 @@ public class ThermometerController implements Initializable {
 
     }
 
-    public void setDatepicker(){
-        datepicker.setOnAction((ActionEvent e)->{
-            
-        });
-    }
+//    public void setDatepicker(){
+//        datePicker.setOnAction((ActionEvent e)->{
+//
+//        });
+//    }
 
 
     public void setSearchButton(){
