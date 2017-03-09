@@ -7,3 +7,11 @@
     -fx-font-color:rgb(255,255,255);
     -fx-font-size: 2em;
 }
+
+.chart{
+    -fx-background-color:#000000;
+}
+
+.chart-plot-background{
+    -fx-background-color:#000000;
+}
