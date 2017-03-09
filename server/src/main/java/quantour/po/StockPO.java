@@ -1,25 +1,25 @@
 package quantour.po;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Created by dell on 2017/3/4.
  */
 public class StockPO {
     private String name;
-    private String code;
+    private int code;
     private Date start;
     private Date over;
-    private Iterator open;
-    private Iterator high;
-    private Iterator low;
-    private Iterator close;
-    private Iterator volume;//交易数
-    private Iterator adjClose;//复权后
+    private ArrayList<Double> open;
+    private ArrayList<Double> high;
+    private ArrayList<Double> low;
+    private ArrayList<Double> close;
+    private ArrayList<Integer> volume;//交易数
+    private ArrayList<Double> adjClose;//复权后
 
-    public StockPO(String name, String code, Date start, Date over, Iterator open, Iterator high, Iterator low,
-                   Iterator close, Iterator volume, Iterator adjClose) {
+    public StockPO(String name, int code, Date start, Date over, ArrayList<Double> open, ArrayList<Double> high,
+                   ArrayList<Double> low, ArrayList<Double> close, ArrayList<Integer> volume, ArrayList<Double> adjClose) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -36,7 +36,7 @@ public class StockPO {
         return name;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
@@ -48,27 +48,27 @@ public class StockPO {
         return over;
     }
 
-    public Iterator getOpen() {
+    public ArrayList<Double> getOpen() {
         return open;
     }
 
-    public Iterator getHigh() {
+    public ArrayList<Double> getHigh() {
         return high;
     }
 
-    public Iterator getLow() {
+    public ArrayList<Double> getLow() {
         return low;
     }
 
-    public Iterator getClose() {
+    public ArrayList<Double> getClose() {
         return close;
     }
 
-    public Iterator getVolume() {
+    public ArrayList<Integer> getVolume() {
         return volume;
     }
 
-    public Iterator getAdjClose() {
+    public ArrayList<Double> getAdjClose() {
         return adjClose;
     }
 }
