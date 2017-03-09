@@ -353,11 +353,8 @@ public class CandlestickChartController {
         series3.getData().add(new XYChart.Data("Dec", 44));
 
         lineChart.getData().addAll(series1, series2, series3);
-        /*lineChart.*/
+        gridPane.add(lineChart,1,0);
 
-//        xAxis.setTickLabelFill();
-//        yAxis.setTickLabelFill();
-//        lineChart.setBackground();
     }
 
     /**
@@ -376,6 +373,5 @@ public class CandlestickChartController {
 
     public void setMain(Main main) {
         this.main = main;
-//        lineChart.p
     }
 }
