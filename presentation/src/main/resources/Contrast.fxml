@@ -73,11 +73,11 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="对数收益率">
+            <Tab text="收益">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="IncomeLine" layoutX="240.0" layoutY="60.0" prefHeight="295.0" prefWidth="417.0">
+                        <LineChart fx:id="IncomeLine2" layoutX="546.0" layoutY="20.0" prefHeight="305.0" prefWidth="461.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -85,14 +85,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                     </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="对数收益方差">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <LineChart fx:id="IncomeLine2" layoutX="240.0" layoutY="60.0" prefHeight="305.0" prefWidth="461.0">
+                        <LineChart fx:id="IncomeLine" layoutX="9.0" layoutY="20.0" prefHeight="295.0" prefWidth="417.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
