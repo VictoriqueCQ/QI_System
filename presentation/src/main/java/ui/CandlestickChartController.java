@@ -26,12 +26,14 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+
+//import javafx.scene.paint.Paint;
 
 
 /**
@@ -69,7 +71,7 @@ public class CandlestickChartController {
     private Button searchButton;
 
     @FXML
-    public void updateEndTimeDatePicker(){
+    private void updateEndTimeDatePicker(){
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -93,13 +95,13 @@ public class CandlestickChartController {
     }
 
     @FXML
-    public void search(){
+    private void search(){
         this.createCandlestickChart();
         this.createEMA();
     }
 
 
-    public void createCandlestickChart(){
+    private void createCandlestickChart(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值
         double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值
@@ -270,7 +272,7 @@ public class CandlestickChartController {
                 outFile.getParentFile().mkdirs();
             }
             out=new FileOutputStream(outFile);
-            ChartUtilities.writeChartAsJPEG(out,chart,600,500);
+            ChartUtilities.writeChartAsJPEG(out,chart,600,600);
             out.flush();
 //            out.close();
 //            System.out.print(outFile.getPath().toString());
@@ -296,7 +298,8 @@ public class CandlestickChartController {
     //对K线图进行数据注入
     //public OHLCSeries addData(OHLCSeries series,)
 
-    public void createEMA(){
+    private void createEMA(){
+//        lineChart.setBackground(new Background());
         final CategoryAxis xAxis = new CategoryAxis();
         final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
         xAxis.setLabel("Month");
@@ -350,8 +353,11 @@ public class CandlestickChartController {
         series3.getData().add(new XYChart.Data("Dec", 44));
 
         lineChart.getData().addAll(series1, series2, series3);
+        /*lineChart.*/
 
-
+//        xAxis.setTickLabelFill();
+//        yAxis.setTickLabelFill();
+//        lineChart.setBackground();
     }
 
     /**
@@ -360,7 +366,7 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    public XYChart.Series addData(XYChart.Series series,int [] data){
+    private XYChart.Series addData(XYChart.Series series,int [] data){
         for(int i=0;i<data.length;i++){
             series.getData().add(new XYChart.Data(i+1,data[i]));
         }
@@ -370,6 +376,6 @@ public class CandlestickChartController {
 
     public void setMain(Main main) {
         this.main = main;
-
+//        lineChart.p
     }
 }
