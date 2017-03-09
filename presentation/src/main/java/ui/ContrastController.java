@@ -77,7 +77,7 @@ public class ContrastController extends Application {
     }
 
     public void setMain(Main main) {
-        setCompare();
+//        setCompare();
         this.main = main;
 
     }
@@ -91,8 +91,25 @@ public class ContrastController extends Application {
 
 //        lineChart.setTitle("Stock Monitoring, 2010");
         //defining a series
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName("demo");
+
+        setTableContrast();
+        setClosePriceLine();
+        setIncomeLine();
+        setIncomeLine2();
+
+
+
+//        seriesMap.put(stock.getStockCode(), series);
+    }
+
+    public void setTableContrast(){
+
+
+
+    }
+    public void setClosePriceLine(){
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("股票一");
         //populating the series with data
         series.getData().add(new XYChart.Data("a", 23));
         series.getData().add(new XYChart.Data("b", 14));
@@ -106,15 +123,46 @@ public class ContrastController extends Application {
         series.getData().add(new XYChart.Data("j", 17));
         series.getData().add(new XYChart.Data("k", 29));
         series.getData().add(new XYChart.Data("l", 25));
-//         closePriceLine =
-//                new LineChart<Number,Number>(xAxis,yAxis);
-
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");
-
-
-//        seriesMap.put(stock.getStockCode(), series);
     }
+    public void setIncomeLine(){
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("股票一");
+        //populating the series with data
+        series.getData().add(new XYChart.Data("a", 23));
+        series.getData().add(new XYChart.Data("b", 14));
+        series.getData().add(new XYChart.Data("c", 15));
+        series.getData().add(new XYChart.Data("d", 24));
+        series.getData().add(new XYChart.Data("e", 34));
+        series.getData().add(new XYChart.Data("f", 36));
+        series.getData().add(new XYChart.Data("g", 22));
+        series.getData().add(new XYChart.Data("h", 45));
+        series.getData().add(new XYChart.Data("i", 43));
+        series.getData().add(new XYChart.Data("j", 17));
+        series.getData().add(new XYChart.Data("k", 29));
+        series.getData().add(new XYChart.Data("l", 25));
+        IncomeLine.getData().add(series);
+        System.out.print("aaaaaaa");
+    }
+    public void setIncomeLine2(){
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("股票一");
+        //populating the series with data
+        series.getData().add(new XYChart.Data("a", 23));
+        series.getData().add(new XYChart.Data("b", 14));
+        series.getData().add(new XYChart.Data("c", 15));
+        series.getData().add(new XYChart.Data("d", 24));
+        series.getData().add(new XYChart.Data("e", 34));
+        series.getData().add(new XYChart.Data("f", 36));
+        series.getData().add(new XYChart.Data("g", 22));
+        series.getData().add(new XYChart.Data("h", 45));
+        series.getData().add(new XYChart.Data("i", 43));
+        series.getData().add(new XYChart.Data("j", 17));
+        series.getData().add(new XYChart.Data("k", 29));
+        series.getData().add(new XYChart.Data("l", 25));
+        IncomeLine2.getData().add(series);
+        System.out.print("aaaaaaa");
 
-
+    }
 }
