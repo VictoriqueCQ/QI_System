@@ -2,10 +2,19 @@
     -fx-background-color:rgb(0,0,0);
 }
 
+.label{
+    -fx-text-fill:rgb(255,255,255);
+    -fx-font-size: 1em;
+}
+
 .button{
     -fx-base:rgb(0,0,0);
     -fx-font-color:rgb(255,255,255);
     -fx-font-size: 2em;
+}
+
+.button1{
+    -fx-background-image:url("/picture/exitbutton.png")
 }
 
 .chart{
