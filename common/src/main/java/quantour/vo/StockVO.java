@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class StockVO {
     private String name;
-    private String code;
+    private int code;
     private Date start;
     private Date over;
     private ArrayList<Double> open;
@@ -21,7 +21,7 @@ public class StockVO {
     private ArrayList<Double> average;
     private ArrayList<Double> variance;//相对方差
 
-    public StockVO(String name, String code, Date start, Date over, ArrayList<Double> open, ArrayList<Double> high,
+    public StockVO(String name, int code, Date start, Date over, ArrayList<Double> open, ArrayList<Double> high,
                    ArrayList<Double> low, ArrayList<Double> close, ArrayList<Integer> volume, ArrayList<Double> adjClose, ArrayList<Double> average, ArrayList<Double> variance) {
         this.name = name;
         this.code = code;
@@ -41,7 +41,7 @@ public class StockVO {
         return name;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
