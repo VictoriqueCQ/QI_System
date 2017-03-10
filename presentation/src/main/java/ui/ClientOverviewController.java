@@ -8,7 +8,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -43,6 +42,9 @@ public class ClientOverviewController implements Initializable {
 
 	@FXML
 	private Label nameLabel;
+
+	@FXML
+	private Label telLabel;
 
 
 
@@ -93,6 +95,8 @@ public class ClientOverviewController implements Initializable {
 	public void setMain(Main main) {
 		this.main = main;
 		setButtonText();
+		nameLabel.setText("牛二");
+		telLabel.setText("1234567890987");
 	}
 
 }
