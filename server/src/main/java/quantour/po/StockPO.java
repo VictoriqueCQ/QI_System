@@ -1,6 +1,5 @@
 package quantour.po;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,15 +10,17 @@ public class StockPO {
     private int code;
     private Date start;
     private Date over;
-    private ArrayList<Double> open;
-    private ArrayList<Double> high;
-    private ArrayList<Double> low;
-    private ArrayList<Double> close;
-    private ArrayList<Integer> volume;//交易数
-    private ArrayList<Double> adjClose;//复权后
+    private double[] open;
+    private double[] high;
+    private double[] low;
+    private double[] close;
+    private int[] volume;//交易数
+    private double[] adjClose;//复权后
+    private double[] average;
+    private double variance;//相对方差
 
-    public StockPO(String name, int code, Date start, Date over, ArrayList<Double> open, ArrayList<Double> high,
-                   ArrayList<Double> low, ArrayList<Double> close, ArrayList<Integer> volume, ArrayList<Double> adjClose) {
+    public StockPO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
+                   double[] close, int[] volume, double[] adjClose, double[] average, double variance) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -30,6 +31,8 @@ public class StockPO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
+        this.average = average;
+        this.variance = variance;
     }
 
     public String getName() {
@@ -48,27 +51,35 @@ public class StockPO {
         return over;
     }
 
-    public ArrayList<Double> getOpen() {
+    public double[] getOpen() {
         return open;
     }
 
-    public ArrayList<Double> getHigh() {
+    public double[] getHigh() {
         return high;
     }
 
-    public ArrayList<Double> getLow() {
+    public double[] getLow() {
         return low;
     }
 
-    public ArrayList<Double> getClose() {
+    public double[] getClose() {
         return close;
     }
 
-    public ArrayList<Integer> getVolume() {
+    public int[] getVolume() {
         return volume;
     }
 
-    public ArrayList<Double> getAdjClose() {
+    public double[] getAdjClose() {
         return adjClose;
+    }
+
+    public double[] getAverage() {
+        return average;
+    }
+
+    public double getVariance() {
+        return variance;
     }
 }
