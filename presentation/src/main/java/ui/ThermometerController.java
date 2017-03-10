@@ -19,6 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,15 +32,34 @@ import java.util.ResourceBundle;
 public class ThermometerController implements Initializable {
     private Main main;
 
+    Socket socket;
+
+    BufferedReader br;
+
+    PrintWriter pw;
+
     @FXML
     private DatePicker datePicker;
 
     @FXML
     private Button searchButton;
 
-
     @FXML
     private TextArea volumnText;
+
+    private String volumn = "100000（瞎写的）";//交易量
+
+    private int NumberOfStocksLimitedUp = 30;//涨停股票
+
+    private int NumberOfStocksLimitedDown = 10;//跌停股票
+
+    private int NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+
+    private int NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+
+    private int NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+
+    private int NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
     @FXML
     private NumberAxis NumberOfStock_1 = new NumberAxis();
@@ -67,7 +90,7 @@ public class ThermometerController implements Initializable {
 
     PieChart.Data d1 = new PieChart.Data("涨停股票",30);
     PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",80);
-    PieChart.Data d3 = new PieChart.Data("涨跌幅小于5股票",260);
+    PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
     PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",20);
     PieChart.Data d5 = new PieChart.Data("跌停股票",10);
 
@@ -86,8 +109,8 @@ public class ThermometerController implements Initializable {
         barChart_1.setCategoryGap(90);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("涨跌停股票情况");
-        series1.getData().add(new XYChart.Data<>("涨停股票数",30));
-        series1.getData().add(new XYChart.Data<>("跌停股票数",10));
+        series1.getData().add(new XYChart.Data<>("涨停股票数",NumberOfStocksLimitedUp));
+        series1.getData().add(new XYChart.Data<>("跌停股票数",NumberOfStocksLimitedDown));
         barChart_1.getData().addAll(series1);
     }
 
@@ -95,8 +118,8 @@ public class ThermometerController implements Initializable {
         barChart_2.setCategoryGap(90);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("涨跌幅超过5%股票情况");
-        series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", 80));
-        series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", 20));
+        series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", NumberOfStocksUpOverFivePerCent));
+        series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", NumberOfStocksDownOverFivePerCent));
 
         barChart_2.getData().add(series2);
     }
@@ -105,28 +128,27 @@ public class ThermometerController implements Initializable {
         barChart_3.setCategoryGap(90);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
         series3.setName("日增幅超过5%股票情况");
-        series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", 50));
-        series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", 15));
+        series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
+        series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", NumberOfStocksDownOverFivePerCentPerDay));
 
         barChart_3.getData().add(series3);
     }
 
     public void setPieChart(){
 //        显示区域所占比例，暂时尚未时间如何添加
-        Label caption = new Label("");
-        caption.setTextFill(Color.DARKORANGE);
-        caption.setStyle("-fx-font: 24 arial;");
-        pieChart.getData().stream().forEach((data) -> {
-            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-                    (MouseEvent e) -> {
-                        caption.setTranslateX(e.getSceneX());
-                        caption.setTranslateY(e.getSceneY());
-                        caption.setText(String.valueOf(data.getPieValue())
-                                + "%");
-                    });
-        });
-
-        //当鼠标移入饼图块时，该块位置发生偏移，鼠标离开后，该块回复到原来位置。暂时尚未实现效果
+//        Label caption = new Label("");
+//        caption.setTextFill(Color.DARKORANGE);
+//        caption.setStyle("-fx-font: 24 arial;");
+//        pieChart.getData().stream().forEach((data) -> {
+//            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
+//                    (MouseEvent e) -> {
+//                        caption.setTranslateX(e.getSceneX());
+//                        caption.setTranslateY(e.getSceneY());
+//                        caption.setText(String.valueOf(data.getPieValue())
+//                                + "%");
+//                    });
+//        });
+//        当鼠标移入饼图块时，该块位置发生偏移，鼠标离开后，该块回复到原来位置。暂时尚未实现效果
 //        d1.getNode().setOnMouseEntered(new MouseHoverAnimation(d1, pieChart));
 //        d1.getNode().setOnMouseExited(new MouseExitAnimation());
 //
@@ -160,7 +182,7 @@ public class ThermometerController implements Initializable {
         searchButton.setOnAction((ActionEvent e)->{
 
             System.out.println("Search the data and show the volumn.");
-            volumnText.setText("100000(瞎写的)");
+            volumnText.setText(volumn);
 
 
         });
@@ -169,7 +191,6 @@ public class ThermometerController implements Initializable {
         setBarChart_2();
         setBarChart_3();
         setPieChart();
-
 
         //当鼠标进入按钮时添加阴影特效
         DropShadow shadow = new DropShadow();
@@ -187,12 +208,68 @@ public class ThermometerController implements Initializable {
 
     }
 
+    public void go(){
+        setSearchButton();
+        setupNet();//建立网络连接
+
+        Thread t = new Thread(new ClientHandler());
+        t.start();
+    }
+
+    private void setupNet() {
+        try{
+            socket=new Socket("127.0.0.1",5100);
+            InputStreamReader is=new InputStreamReader(socket.getInputStream());
+            br=new BufferedReader(is);
+            pw=new PrintWriter(socket.getOutputStream());
+            System.out.println("Network established.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public class ClientHandler implements Runnable{
+        //用于接收信息
+        public void run(){
+            String message;
+            try{
+                while(true){
+                    while((message=br.readLine())!=null){
+                        System.out.println("read: "+message);
+//                        volumnText.appendText(message+"\n");
+
+                    }
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void setMain(Main main) {
 
-
-        setSearchButton();
+        go();
         this.main = main;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     static class MouseHoverAnimation implements EventHandler {
         static final Duration ANIMATION_DURATION = new Duration(500);
