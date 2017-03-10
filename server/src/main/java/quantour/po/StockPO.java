@@ -16,11 +16,16 @@ public class StockPO {
     private double[] close;
     private int[] volume;//交易数
     private double[] adjClose;//复权后
-    private double[] average;
+    private double[] average5;
+    private double[] average10;
+    private double[] average20;
+    private double[] average30;
+    private double[] average60;
     private double variance;//相对方差
 
     public StockPO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
-                   double[] close, int[] volume, double[] adjClose, double[] average, double variance) {
+                   double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
+                   double[] average20, double[] average30, double[] average60, double variance) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -31,7 +36,11 @@ public class StockPO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
-        this.average = average;
+        this.average5 = average5;
+        this.average10 = average10;
+        this.average20 = average20;
+        this.average30 = average30;
+        this.average60 = average60;
         this.variance = variance;
     }
 
@@ -75,8 +84,24 @@ public class StockPO {
         return adjClose;
     }
 
-    public double[] getAverage() {
-        return average;
+    public double[] getAverage5() {
+        return average5;
+    }
+
+    public double[] getAverage10() {
+        return average10;
+    }
+
+    public double[] getAverage20() {
+        return average20;
+    }
+
+    public double[] getAverage30() {
+        return average30;
+    }
+
+    public double[] getAverage60() {
+        return average60;
     }
 
     public double getVariance() {
