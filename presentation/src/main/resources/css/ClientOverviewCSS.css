@@ -14,7 +14,7 @@
 }
 
 .button1{
-    -fx-background-image:url("/picture/exitbutton.png")
+    -fx-background-image:url("/picture/exitbutton.png");
 }
 
 .chart{
@@ -25,3 +25,10 @@
     -fx-background-color:#000000;
 }
 
+.label_logo{
+    -fx-background-image:url("/picture/ASCLL.png");
+}
+
+.label_client_picture{
+    -fx-background-image:url("/picture/头像.png")
+}

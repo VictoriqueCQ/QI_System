@@ -45,7 +45,7 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="334.0" layoutY="91.0" prefHeight="218.0" prefWidth="369.0">
+                        <TableView layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="494.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="股票名称" />
                             <TableColumn prefWidth="75.0" text="股票价格" />
