@@ -160,7 +160,7 @@ public class ThermometerController implements Initializable {
         searchButton.setOnAction((ActionEvent e)->{
 
             System.out.println("Search the data and show the volumn.");
-            volumnText.setPromptText("100000(瞎写的)");
+            volumnText.setText("100000(瞎写的)");
 
 
         });
