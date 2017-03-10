@@ -5,7 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -26,6 +29,7 @@ public class ClientOverviewController implements Initializable {
 	
 	@FXML
 	private Button imagekButton;
+
 
 	@FXML
 	private Button comparsionButton;
@@ -62,6 +66,18 @@ public class ClientOverviewController implements Initializable {
 		main.gotoThermometer();
 	}
 
+
+	public void setButtonText(){
+		Light.Distant light = new Light.Distant();
+		light.setAzimuth(-135.0f);
+		Lighting l = new Lighting();
+		l.setLight(light);
+		l.setSurfaceScale(5.0f);
+
+		imagekButton.setEffect(l);
+		comparsionButton.setEffect(l);
+		thermometerButton.setEffect(l);
+	}
 	
 
 	@Override
@@ -71,11 +87,12 @@ public class ClientOverviewController implements Initializable {
 
 	public ClientOverviewController() {
 
+
 	}
 
 	public void setMain(Main main) {
 		this.main = main;
-
+		setButtonText();
 	}
 
 }
