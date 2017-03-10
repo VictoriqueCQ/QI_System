@@ -18,12 +18,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="572.0" prefWidth="716.0" styleClass="label1" text="  股市有风险">
+            <Label prefHeight="572.0" prefWidth="716.0" styleClass="label_warning" text="  股市有风险">
                <font>
                   <Font size="51.0" />
                </font>
             </Label>
-            <Label styleClass="label1" text=" 入市需谨慎" GridPane.columnIndex="1" />
+            <Label styleClass="label_warning" text=" 入市需谨慎" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="265.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
