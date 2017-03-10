@@ -38,7 +38,6 @@ public class DataReader_CSV {
             while(row!=null){
                 List<String> stockInfo=Arrays.asList(row.split("\t"));
                 int serial=Integer.parseInt(stockInfo.get(0));
-                //List<DayStockDeal> stockDealInfos=new ArrayList<>();
                 Date date = sdf.parse(stockInfo.get(1));
                 double open = Double.parseDouble(stockInfo.get(2));
                 double high = Double.parseDouble(stockInfo.get(3));
@@ -50,31 +49,10 @@ public class DataReader_CSV {
                 int code=Integer.parseInt(stockInfo.get(8));
                 String name=stockInfo.get(9);
                 String market=stockInfo.get(10);
-                //StockIdentifier stockIdentifier=new StockIdentifier(code,name,market);
 
                 Stock stock=new Stock(serial,date,open,high,low,close,volume,adjClose,code,name,market);
                 stockList.add(stock);
 
-                /*while(row!=null&&serial!=0) {
-                    //处理stockDealInfo
-                    Date date = sdf.parse(stockInfo.get(1));
-                    double open = Double.parseDouble(stockInfo.get(2));
-                    double high = Double.parseDouble(stockInfo.get(3));
-                    double low = Double.parseDouble(stockInfo.get(4));
-                    double close = Double.parseDouble(stockInfo.get(5));
-                    int volume = Integer.parseInt(stockInfo.get(6));
-                    double adjClose = Double.parseDouble(stockInfo.get(7));
-                    DayStockDeal stockDealInfo = new DayStockDeal(serial, date, open, high, low, close, volume, adjClose);
-                    stockDealInfos.add(stockDealInfo);
-
-                    row=br.readLine();
-                    if(row!=null){
-                        stockInfo=Arrays.asList(row.split("\t"));
-                        serial=Integer.parseInt(stockInfo.get(0));
-                    }
-                }*/
-
-                //stockMap.put(stockIdentifier,stockDealInfos);
                 row=br.readLine();
             }
 
