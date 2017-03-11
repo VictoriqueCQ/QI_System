@@ -10,17 +10,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -93,6 +96,36 @@ public class ThermometerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    private void setDatePicker() {
+        datePicker.setValue(LocalDate.of(2005, 2, 1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        datePicker.setDayCellFactory(dayCellFactory1);
     }
 
     //以下都是模拟数据
