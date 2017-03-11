@@ -4,30 +4,39 @@ package ui;/**
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.NumberAxis;
+import quantour.vo.StockSearchConditionVO;
+import quantour.vo.StockVO;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 
 public class ContrastController extends Application {
     private Main main;
 
+    private List<StockVO> allStock ;//所有股票
     @FXML
-    private ChoiceBox choiceBox1;
+    private TextArea addName1;
 
     @FXML
-    private  ChoiceBox choiceBox2;
+    private  TextArea addName2;
 
     @FXML
-    private DatePicker startDate;
+    private DatePicker startDatePicker;
 
     @FXML
-    private DatePicker endDate;
+    private DatePicker endDatePicker;
 
 
 
@@ -53,6 +62,13 @@ public class ContrastController extends Application {
 
     @FXML
     private Button delete;
+
+    @FXML
+    private DatePicker startDate;
+
+    @FXML
+    private DatePicker endDate;
+
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
    /* @FXML
@@ -82,7 +98,7 @@ public class ContrastController extends Application {
 
     }
 
-    public void setCompare(){
+    public void addCompare(){
 
 //        xAxis.setLabel("Number of Month");
         //creating the chart
@@ -91,6 +107,35 @@ public class ContrastController extends Application {
 
 //        lineChart.setTitle("Stock Monitoring, 2010");
         //defining a series
+//        String stockName =
+        String stockName1 = addName1.getText();
+        String stockName2 = addName2.getText();
+        boolean b1 = Judge(stockName1);
+        boolean b2 = Judge(stockName2);
+        if(stockName1==stockName2){
+            ExceptionTips repeat = new ExceptionTips("股票名重复");
+        }else if(b1==false||b2==false){
+            ExceptionTips illegal = new ExceptionTips("输入股票名不存在");
+
+
+        }else{
+
+            LocalDate start = startDatePicker.getValue();
+            ZoneId zone = ZoneId.systemDefault();
+            Instant instant = start.atStartOfDay().atZone(zone).toInstant();
+            Date startTime = Date.from(instant);
+            LocalDate end = endDatePicker.getValue();
+            ZoneId zone1 = ZoneId.systemDefault();
+            Instant instant1 = end.atStartOfDay().atZone(zone).toInstant();
+            Date endTime = Date.from(instant);
+
+            StockSearchConditionVO searchVO = new StockSearchConditionVO(null, stockName1, startTime, endTime);
+
+
+        }
+
+
+
 
         setTableContrast();
         setClosePriceLine();
@@ -102,6 +147,23 @@ public class ContrastController extends Application {
 //        seriesMap.put(stock.getStockCode(), series);
     }
 
+    /**
+     * cyy
+     * 判断是否存在
+     */
+    public boolean Judge(String name){
+        boolean b =false;
+
+        Iterator<StockVO> iter = allStock.iterator();
+        while(iter.hasNext()){
+            StockVO stock = iter.next();
+            if(name==stock.getName()){b=true;}
+
+        }
+        return b;
+
+
+    }
     public void setTableContrast(){
 
 
