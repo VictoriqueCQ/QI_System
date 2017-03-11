@@ -129,8 +129,8 @@ public class ThermometerController implements Initializable {
         series3.setName("日增幅超过5%股票情况");
         series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
         series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", NumberOfStocksDownOverFivePerCentPerDay));
-        barChart_2.getData().clear();
-        barChart_2.layout();
+        barChart_3.getData().clear();
+        barChart_3.layout();
         barChart_3.getData().add(series3);
     }
 
