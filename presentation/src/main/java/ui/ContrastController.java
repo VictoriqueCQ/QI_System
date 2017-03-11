@@ -7,29 +7,34 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.ZoneId;
+import java.util.*;
 
 public class ContrastController extends Application {
     private Main main;
 
 
     private List<StockVO> allStock ;//所有股票
+    private StockVO stock1;
+    private StockVO stock2;
 
 
     @FXML
-    private ChoiceBox choiceBox1;
+    private TextArea addName1;
 
     @FXML
-    private  ChoiceBox choiceBox2;
+    private  TextArea addName2;
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -212,17 +217,61 @@ public class ContrastController extends Application {
 
 //        lineChart.setTitle("Stock Monitoring, 2010");
         //defining a series
+        String stockName1 = addName1.getText();
+        String stockName2 = addName2.getText();
+        boolean b1 = Judge(stockName1);
+        boolean b2 = Judge(stockName2);
+        if(stockName1==stockName2){
+            ExceptionTips repeat = new ExceptionTips("股票名重复");
+         }else if(b1==false||b2==false){
+            ExceptionTips illegal = new ExceptionTips("输入股票名不存在");
 
-        setTableContrast();
-        setClosePriceLine();
-        setIncomeLine();
-        setIncomeLine2();
+            } else{
+            LocalDate start = startTimeDatePicker.getValue();
+            ZoneId zone = ZoneId.systemDefault();
+            Instant instant = start.atStartOfDay().atZone(zone).toInstant();
+            Date startTime = Date.from(instant);
+            LocalDate end = endTimeDatePicker.getValue();
+            ZoneId zone1 = ZoneId.systemDefault();
+            Instant instant1 = end.atStartOfDay().atZone(zone).toInstant();
+            Date endTime = Date.from(instant);
+            StockSearchConditionVO searchVO = new StockSearchConditionVO(null, stockName1, startTime, endTime);
+
+
+
+
+            setTableContrast();
+            setClosePriceLine();
+            setIncomeLine();
+            setIncomeLine2();
+
+         }
+
+
+
+
 
 
 
 //        seriesMap.put(stock.getStockCode(), series);
     }
 
+
+    /**
+     * cyy
+     * 判断是否存在
+     * */
+ 	  public boolean Judge(String name){
+      boolean b =false;
+      Iterator<StockVO> iter = allStock.iterator();
+       while(iter.hasNext()){
+           StockVO stock = iter.next();
+        if(name==stock.getName()){b=true;}
+
+                       }
+          return b;
+
+                   }
     public void setTableContrast(){
 
 
@@ -232,7 +281,7 @@ public class ContrastController extends Application {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("股票一");
         //populating the series with data
-        series.getData().add(new XYChart.Data("a", 23));
+        /*series.getData().add(new XYChart.Data("a", 23));
         series.getData().add(new XYChart.Data("b", 14));
         series.getData().add(new XYChart.Data("c", 15));
         series.getData().add(new XYChart.Data("d", 24));
@@ -245,7 +294,19 @@ public class ContrastController extends Application {
         series.getData().add(new XYChart.Data("k", 29));
         series.getData().add(new XYChart.Data("l", 25));
         closePriceLine.getData().add(series);
-        System.out.print("aaaaaaa");
+        System.out.print("aaaaaaa");*/
+        double[] closePrice = stock1.getClose();
+        for(int i = 0;i<closePrice.length;i++){
+
+            Date temp = stock1.getStart();
+            Calendar c   =   new GregorianCalendar();
+            c.setTime(temp);
+            c.add(c.DATE,i);
+            series.getData().add(new XYChart.Data(c.getTime().toString(),closePrice[i]));
+            closePriceLine.getData().add(series);
+
+        }
+
     }
     public void setIncomeLine(){
         XYChart.Series<String, Number> series = new XYChart.Series<>();

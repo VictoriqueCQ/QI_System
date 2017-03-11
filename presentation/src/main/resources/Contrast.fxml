@@ -19,13 +19,11 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="146.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
       <Label layoutX="260.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="301.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
       <Label layoutX="481.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
          <font>
             <Font size="20.0" />
@@ -99,5 +97,7 @@
         </tabs>
       </TabPane>
       <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
+      <TextArea fx:id="addName1" layoutX="165.0" layoutY="69.0" prefHeight="27.0" prefWidth="94.0" />
+      <TextArea fx:id="addName2" layoutX="287.0" layoutY="69.0" prefHeight="27.0" prefWidth="94.0" />
    </children>
 </AnchorPane>
