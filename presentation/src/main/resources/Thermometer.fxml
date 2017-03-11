@@ -84,7 +84,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
-                        <Button fx:id="searchButton" layoutX="34.0" layoutY="59.0" text="查询">
+                        <Button fx:id="searchButton" layoutX="34.0" layoutY="59.0" onAction="#setSearchButton" text="查询">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -102,7 +102,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField layoutY="11.0" prefHeight="123.0" prefWidth="207.0" styleClass="TextFieldText" />
+                        <TextField fx:id="volumnTextField" layoutY="11.0" prefHeight="52.0" prefWidth="207.0" styleClass="TextFieldText" />
                      </children>
                   </AnchorPane>
                </children>
