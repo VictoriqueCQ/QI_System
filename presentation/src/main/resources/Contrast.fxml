@@ -19,13 +19,11 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="146.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
-      <Label layoutX="260.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
+      <Label layoutX="260.0" layoutY="77.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <ChoiceBox layoutX="301.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
       <Label layoutX="497.0" layoutY="72.0" prefHeight="32.0" prefWidth="87.0" text="时间选择">
          <font>
             <Font size="20.0" />
@@ -45,13 +43,13 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="494.0">
+                        <TableView layoutX="264.0" layoutY="36.0" prefHeight="273.0" prefWidth="577.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="股票名称" />
-                            <TableColumn prefWidth="75.0" text="股票价格" />
-                              <TableColumn prefWidth="75.0" text="最低值" />
-                              <TableColumn prefWidth="75.0" text="最高值" />
-                              <TableColumn prefWidth="75.0" text="涨跌幅" />
+                            <TableColumn prefWidth="115.0" text="股票名称" />
+                            <TableColumn prefWidth="115.0" text="股票价格" />
+                              <TableColumn prefWidth="115.0" text="最低值" />
+                              <TableColumn prefWidth="115.0" text="最高值" />
+                              <TableColumn prefWidth="115.0" text="涨跌幅" />
                           </columns>
                         </TableView>
                      </children>
@@ -62,7 +60,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="closePriceLine" layoutX="240.0" layoutY="60.0" prefHeight="276.0" prefWidth="492.0">
+                        <LineChart fx:id="closePriceLine" layoutX="150.0" layoutY="20.0" prefHeight="356.0" prefWidth="550.0">
                           <xAxis>
                             <CategoryAxis label="日期" />
                           </xAxis>
@@ -99,5 +97,7 @@
         </tabs>
       </TabPane>
       <Button fx:id="ensure" layoutX="888.0" layoutY="73.0" mnemonicParsing="false" onAction="#setCompare" text="确认" />
+      <TextArea layoutX="148.0" layoutY="74.0" prefHeight="28.0" prefWidth="104.0" />
+      <TextArea layoutX="287.0" layoutY="75.0" prefHeight="28.0" prefWidth="104.0" />
    </children>
 </AnchorPane>
