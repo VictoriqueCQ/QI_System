@@ -48,7 +48,7 @@ public class StockVO {
         this.variance = variance;
         this.profit = profit;
     }
-   /* public StockVO(StockPO stockPO){
+    /*public StockVO(StockPO stockPO){
         this.name = stockPO.getName();
         this.code = stockPO.getCode();
         this.start = stockPO.getStart();
