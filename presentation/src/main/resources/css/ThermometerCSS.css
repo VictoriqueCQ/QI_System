@@ -15,17 +15,18 @@
 
 .button{
     -fx-font: 22 arial;
-    -fx-base: rgb(30,194,210);
+    -fx-base: rgb(0,0,0);
+    -fx-text-fill: rgb(240,150,96);
 }
 
 .chart-pie-label {
-    -fx-fill: rgb(255,255,255);
+    -fx-fill: rgb(240,150,96);
     -fx-font-size: 1em;
 }
 
 .chart-pie-label-line {
-    -fx-stroke: rgb(255,255,255);
-    -fx-fill: rgb(255,255,255);
+    -fx-stroke: rgb(240,150,96);
+    -fx-fill: rgb(240,150,96);
 }
 
 .chart-legend{
