@@ -1,5 +1,6 @@
 package quantour.po;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -21,11 +22,12 @@ public class StockPO {
     private double[] average20;
     private double[] average30;
     private double[] average60;
+    private ArrayList<Double> profit;//每日收益率
     private double variance;//相对方差
 
     public StockPO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
                    double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
-                   double[] average20, double[] average30, double[] average60, double variance) {
+                   double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -41,6 +43,7 @@ public class StockPO {
         this.average20 = average20;
         this.average30 = average30;
         this.average60 = average60;
+        this.profit = profit;
         this.variance = variance;
     }
 
@@ -102,6 +105,10 @@ public class StockPO {
 
     public double[] getAverage60() {
         return average60;
+    }
+
+    public ArrayList<Double> getProfit() {
+        return profit;
     }
 
     public double getVariance() {
