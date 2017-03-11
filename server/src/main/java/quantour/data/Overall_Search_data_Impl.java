@@ -24,19 +24,28 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
     }
 
     @Override
-    public MarketPO getMarketInfo(Date date) {
+    public MarketPO getMarketInfo(Date date) throws ArrayIndexOutOfBoundsException{
         List<Stock> today= marketList.parallelStream().filter(stock -> stock.getDate().compareTo(date)==0).
                 sorted(Comparator.comparing(Stock::getCode)).collect(Collectors.toList());
 
-        List<Stock> last=null;
-        Calendar c=Calendar.getInstance();
-        c.setTime(date);
-
-
         long sum=today.parallelStream().mapToInt(Stock::getVolume).reduce(0,(x, y)->x+y);
 
-        int oc_overPFivePerNum= (int) today.stream().
-                filter(stock1 -> (stock1.getClose()-stock1.getOpen())>1.05*marketMap.get(stock1.getCode()).get(stock1.getSerial()-1).getClose()).
+        //计算涨停和跌停的
+
+        //计算涨幅超过5%的股票数和跌幅超过5%的股票数
+
+        //计算开盘-收盘大于5%*上一个交易日收盘价的股票个数和开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+        long oc_overPFivePerNum= today.parallelStream().
+                filter(stock -> {
+                    Stock previous=marketList.get(marketList.indexOf(stock)+1);
+                    return previous.getSerial()!=0&&stock.getClose()-stock.getOpen()>0.05*previous.getClose();
+                }).
+                count();
+        long oc_belowMFivePerNum=today.parallelStream().
+                filter(stock -> {
+                    Stock previous=marketList.get(marketList.indexOf(stock)+1);
+                    return previous.getSerial()!=0&&stock.getClose()-stock.getOpen()<-0.05*previous.getClose();
+                }).
                 count();
 
 
@@ -44,6 +53,11 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
     }
 
     private int countNumOfStock(List<Stock> today,double percentage){
+
+        return 0;
+    }
+
+    private int countOCNumOfStock(List<Stock> today,double percentage){
 
         return 0;
     }
