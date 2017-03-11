@@ -61,7 +61,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
         return (int) today.parallelStream().
                 filter(stock -> {
                     Stock previous=marketList.get(marketList.indexOf(stock)+1);
-                    return previous.getSerial()!=0&&stock.getClose()-previous.getClose()>=percentage;
+                    return previous.getSerial()!=0&&(stock.getClose()-previous.getClose())/previous.getClose()>=percentage;
                 }).
                 count();
     }
@@ -71,7 +71,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
         return (int) today.parallelStream().
                 filter(stock -> {
                     Stock previous=marketList.get(marketList.indexOf(stock)+1);
-                    return previous.getSerial()!=0&&stock.getClose()-previous.getClose()<=percentage;
+                    return previous.getSerial()!=0&&(stock.getClose()-previous.getClose())/previous.getClose()<=percentage;
                 }).
                 count();
     }
