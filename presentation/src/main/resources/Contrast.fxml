@@ -9,12 +9,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/ContrastCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ContrastController">
    <children>
-      <Label layoutX="33.0" layoutY="25.0" prefHeight="34.0" prefWidth="124.0" text="设置对比">
+      <Label layoutX="33.0" layoutY="25.0" prefHeight="34.0" prefWidth="124.0" styleClass="label_tip" text="设置对比">
          <font>
             <Font size="21.0" />
          </font>
       </Label>
-      <Label layoutX="33.0" layoutY="72.0" prefHeight="32.0" prefWidth="87.0" text="股票选择">
+      <Label layoutX="79.0" layoutY="60.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
          <font>
             <Font size="20.0" />
          </font>
@@ -26,19 +26,19 @@
          </font>
       </Label>
       <ChoiceBox layoutX="301.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
-      <Label layoutX="497.0" layoutY="72.0" prefHeight="32.0" prefWidth="87.0" text="时间选择">
+      <Label layoutX="541.0" layoutY="60.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <DatePicker layoutX="609.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
-      <Label layoutX="706.0" layoutY="72.0" prefHeight="28.0" prefWidth="36.0" text="——" textFill="#141313">
+      <Label layoutX="711.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
       <DatePicker layoutX="743.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
-      <Button fx:id="delete" layoutX="980.0" layoutY="72.0" mnemonicParsing="false" text="移除对比" />
+      <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比" />
       <TabPane layoutX="25.0" layoutY="131.0" prefHeight="409.0" prefWidth="1014.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="总况">
@@ -98,6 +98,6 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="ensure" layoutX="888.0" layoutY="73.0" mnemonicParsing="false" onAction="#setCompare" text="确认" />
+      <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#setCompare" text="确认" />
    </children>
 </AnchorPane>
