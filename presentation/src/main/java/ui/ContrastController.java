@@ -8,11 +8,14 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import quantour.vo.StockVO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ContrastController extends Application {
@@ -29,10 +32,10 @@ public class ContrastController extends Application {
     private  ChoiceBox choiceBox2;
 
     @FXML
-    private DatePicker startDate;
+    private DatePicker startTimeDatePicker;
 
     @FXML
-    private DatePicker endDate;
+    private DatePicker endTimeDatePicker;
 
 
 
@@ -69,7 +72,119 @@ public class ContrastController extends Application {
 
 //    private Map<String, XYChart.Series<Number, Number>> seriesMap;
 
+    @FXML
+    private void updateEndTimeDatePicker(){
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
 
+                                if (item.isBefore(
+                                        startTimeDatePicker.getValue().plusDays(1))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014,4,30))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        endTimeDatePicker.setDayCellFactory(dayCellFactory1);
+    }
+
+    @FXML
+    private void updateStartTimeDatePicker(){
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isAfter(
+                                        endTimeDatePicker.getValue().minusDays(1))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isBefore(
+                                        LocalDate.of(2005,2,1))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        startTimeDatePicker.setDayCellFactory(dayCellFactory1);
+    }
+
+
+//    XYChart.Series series11 = new XYChart.Series();
+//    XYChart.Series series22= new XYChart.Series();
+//    XYChart.Series series33 = new XYChart.Series();
+
+
+    private void setDatePicker(){
+        startTimeDatePicker.setValue(LocalDate.of(2005,2,1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005,2,1))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        startTimeDatePicker.setDayCellFactory(dayCellFactory1);
+        final Callback<DatePicker, DateCell> dayCellFactory2 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isAfter(
+                                        LocalDate.of(2014,4,30))
+                                        ){
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        endTimeDatePicker.setDayCellFactory(dayCellFactory2);
+        endTimeDatePicker.setValue(LocalDate.of(2014,4,30));
+
+    }
 
 
     public static void main(String[] args) {
@@ -84,10 +199,11 @@ public class ContrastController extends Application {
     public void setMain(Main main) {
 //        setCompare();
         this.main = main;
-
+        this.setDatePicker();
     }
 
-    public void setCompare(){
+    @FXML
+    public void addCompare(){
 
 //        xAxis.setLabel("Number of Month");
         //creating the chart
