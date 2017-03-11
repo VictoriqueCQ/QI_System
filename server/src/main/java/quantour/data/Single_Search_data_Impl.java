@@ -74,7 +74,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
             double variance=sum/(resultList.size()-1)-average*average;
 
             return new StockPO(name,code,startTime,endTime,open,high,low,close,volume,adjClose, average5,average10,
-                    average20,average30,average60,variance);
+                    average20,average30,average60,profit,variance);
         }
 
     }
