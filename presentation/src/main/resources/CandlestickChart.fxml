@@ -80,7 +80,7 @@
               </rowConstraints>
                <children>
                   <Label prefHeight="40.0" prefWidth="188.0" text="股票编号" />
-                  <TextField styleClass="headTextFieldText" GridPane.columnIndex="1" />
+                  <TextField fx:id="stockNumberTextField" styleClass="headTextFieldText" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane prefHeight="40.0" prefWidth="185.0" GridPane.columnIndex="3">
@@ -94,7 +94,7 @@
               </rowConstraints>
                <children>
                   <Label prefHeight="40.0" prefWidth="237.0" text="股票名称" />
-                  <TextField styleClass="headTextFieldText" GridPane.columnIndex="1" />
+                  <TextField fx:id="stockNameTextField" styleClass="headTextFieldText" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0" prefWidth="90.0" styleClass="search_button" text="搜索" GridPane.columnIndex="4" />
