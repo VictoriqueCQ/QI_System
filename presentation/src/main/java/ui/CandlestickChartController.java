@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
-import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -26,10 +25,6 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -351,7 +346,7 @@ public class CandlestickChartController {
         plot2.setBackgroundPaint(Color.black);
 
         //动态生成图片并展示
-        FileOutputStream out=null;
+/*        FileOutputStream out=null;
         try{
 
             //搞不懂啊这个路径问题
@@ -372,7 +367,7 @@ public class CandlestickChartController {
         }
         catch (IOException e){
             e.printStackTrace();
-        }
+        }*/
 //        try{
 //        ChartUtilities.saveChartAsPNG(new File("/Kimage.png"),chart,600,500);
 //        }
