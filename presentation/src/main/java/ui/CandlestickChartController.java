@@ -85,7 +85,7 @@ public class CandlestickChartController {
                                         startTimeDatePicker.getValue().plusDays(1))
                                         ) {
                                     setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
+                                    setStyle("-fx-background-color: #000000;");
                                 }
                             }
                         };
