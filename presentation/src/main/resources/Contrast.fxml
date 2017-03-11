@@ -26,18 +26,18 @@
          </font>
       </Label>
       <ChoiceBox layoutX="301.0" layoutY="72.0" prefHeight="22.0" prefWidth="94.0" />
-      <Label layoutX="541.0" layoutY="60.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
+      <Label layoutX="481.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <DatePicker fx:id="startDate" layoutX="609.0" layoutY="72.0" onAction="#updateEndTimeDatePicker" prefHeight="22.0" prefWidth="94.0" />
-      <Label layoutX="711.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
+      <DatePicker fx:id="startTimeDatePicker" layoutX="551.0" layoutY="72.0" onAction="#updateEndTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
+      <Label layoutX="682.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <DatePicker fx:id="endDate" layoutX="743.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="22.0" prefWidth="94.0" />
+      <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
       <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比" />
       <TabPane layoutX="25.0" layoutY="131.0" prefHeight="409.0" prefWidth="1014.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
