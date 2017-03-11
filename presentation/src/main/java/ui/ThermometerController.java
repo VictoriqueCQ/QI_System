@@ -107,6 +107,8 @@ public class ThermometerController implements Initializable {
         series1.setName("涨跌停股票情况");
         series1.getData().add(new XYChart.Data<>("涨停股票数",NumberOfStocksLimitedUp));
         series1.getData().add(new XYChart.Data<>("跌停股票数",NumberOfStocksLimitedDown));
+        barChart_1.getData().clear();
+        barChart_1.layout();
         barChart_1.getData().addAll(series1);
     }
 
@@ -116,7 +118,8 @@ public class ThermometerController implements Initializable {
         series2.setName("涨跌幅超过5%股票情况");
         series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", NumberOfStocksUpOverFivePerCent));
         series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", NumberOfStocksDownOverFivePerCent));
-
+        barChart_2.getData().clear();
+        barChart_2.layout();
         barChart_2.getData().add(series2);
     }
 
@@ -126,7 +129,8 @@ public class ThermometerController implements Initializable {
         series3.setName("日增幅超过5%股票情况");
         series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
         series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", NumberOfStocksDownOverFivePerCentPerDay));
-
+        barChart_2.getData().clear();
+        barChart_2.layout();
         barChart_3.getData().add(series3);
     }
 
@@ -179,6 +183,32 @@ public class ThermometerController implements Initializable {
             //根据所选日期显示当前日期所有股票情况
             //暂时还没写和date picker相关的
 
+            volumn = "100000（瞎写的）";//交易量
+
+            NumberOfStocksLimitedUp = 30;//涨停股票
+
+            NumberOfStocksLimitedDown = 10;//跌停股票
+
+            NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+
+            NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+
+            NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+
+            NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+
+            //以下是饼图数据
+            PieChart.Data d1 = new PieChart.Data("涨停股票",NumberOfStocksLimitedUp);
+
+            PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",NumberOfStocksUpOverFivePerCent);
+
+            PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
+
+            PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",NumberOfStocksDownOverFivePerCent);
+
+            PieChart.Data d5 = new PieChart.Data("跌停股票",NumberOfStocksLimitedDown);
+
+            pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
 
 
             setBarChart_1();
@@ -187,7 +217,7 @@ public class ThermometerController implements Initializable {
             setPieChart();
 
             System.out.println("Search the data and show the volumn.");
-            volumnText.setText(volumn);
+//            volumnText.setText(volumn);//这里有空指针错误
 
 
         });
@@ -216,74 +246,75 @@ public class ThermometerController implements Initializable {
 
     }
 
-    public void go(){
-        setupNet();//建立网络连接
-        Thread t = new Thread(new ClientHandler());
-
-        t.start();
-    }
-
-    private void setupNet() {
-        try{
-            socket=new Socket("127.0.0.1",5100);
-            InputStreamReader is=new InputStreamReader(socket.getInputStream());
-            br=new BufferedReader(is);
-            pw=new PrintWriter(socket.getOutputStream());
-            System.out.println("Network established.");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public class ClientHandler implements Runnable{
-        //用于接收信息
-        public void run(){
-            String message;
-            try{
-//                while(true){
-//                    while((message=br.readLine())!=null){
-//                        System.out.println("read: "+message);
-                        //此处假设每条信息都是以string形式，一行一行传过来
-//                        volumnText.appendText(message+"\n");
-
-                        volumn = "100000（瞎写的）";//交易量
-
-                        NumberOfStocksLimitedUp = 30;//涨停股票
-
-                        NumberOfStocksLimitedDown = 10;//跌停股票
-
-                        NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
-
-                        NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
-
-                        NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
-
-                        NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
-
-                        //以下是饼图数据
-                        PieChart.Data d1 = new PieChart.Data("涨停股票",NumberOfStocksLimitedUp);
-
-                        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",NumberOfStocksUpOverFivePerCent);
-
-                        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
-
-                        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",NumberOfStocksDownOverFivePerCent);
-
-                        PieChart.Data d5 = new PieChart.Data("跌停股票",NumberOfStocksLimitedDown);
-
-                        pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
-
-                        setSearchButton();
-//                    }
-//                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void go(){
+//        setupNet();//建立网络连接
+//        Thread t = new Thread(new ClientHandler());
+//
+//        t.start();
+//    }
+//
+//    private void setupNet() {
+//        try{
+//            socket=new Socket("127.0.0.1",5100);
+//            InputStreamReader is=new InputStreamReader(socket.getInputStream());
+//            br=new BufferedReader(is);
+//            pw=new PrintWriter(socket.getOutputStream());
+//            System.out.println("Network established.");
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public class ClientHandler implements Runnable{
+//        //用于接收信息
+//        public void run(){
+//            String message;
+//            try{
+////                while(true){
+////                    while((message=br.readLine())!=null){
+////                        System.out.println("read: "+message);
+//                        //此处假设每条信息都是以string形式，一行一行传过来
+////                        volumnText.appendText(message+"\n");
+//
+//                        volumn = "100000（瞎写的）";//交易量
+//
+//                        NumberOfStocksLimitedUp = 30;//涨停股票
+//
+//                        NumberOfStocksLimitedDown = 10;//跌停股票
+//
+//                        NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+//
+//                        NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+//
+//                        NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+//
+//                        NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+//
+//                        //以下是饼图数据
+//                        PieChart.Data d1 = new PieChart.Data("涨停股票",NumberOfStocksLimitedUp);
+//
+//                        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",NumberOfStocksUpOverFivePerCent);
+//
+//                        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
+//
+//                        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",NumberOfStocksDownOverFivePerCent);
+//
+//                        PieChart.Data d5 = new PieChart.Data("跌停股票",NumberOfStocksLimitedDown);
+//
+//                        pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
+//
+////                        setSearchButton();
+////                    }
+////                }
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public void setMain(Main main) {
-        go();
+//        go();
+        setSearchButton();
         this.main = main;
     }
 
