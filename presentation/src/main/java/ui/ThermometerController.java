@@ -15,6 +15,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -88,13 +90,7 @@ public class ThermometerController implements Initializable {
     @FXML
     private BarChart<String, Number> barChart_3 = new BarChart<String, Number>(TypeOfStock_3, NumberOfStock_3);
 
-    PieChart.Data d1 = new PieChart.Data("涨停股票",30);
-    PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",80);
-    PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
-    PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",20);
-    PieChart.Data d5 = new PieChart.Data("跌停股票",10);
-
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
+    ObservableList<PieChart.Data> pieChartData;
 
     @FXML
     private PieChart pieChart = new PieChart();
@@ -196,17 +192,24 @@ public class ThermometerController implements Initializable {
 
         });
 
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0f);
+        Lighting l = new Lighting();
+        l.setLight(light);
+        l.setSurfaceScale(5.0f);
 
-        //当鼠标进入按钮时添加阴影特效
-        DropShadow shadow = new DropShadow();
-        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
-            searchButton.setEffect(shadow);
-        });
+        searchButton.setEffect(l);
 
-        //当鼠标离开按钮时移除阴影效果
-        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
-            searchButton.setEffect(null);
-        });
+//        //当鼠标进入按钮时添加阴影特效
+//        DropShadow shadow = new DropShadow();
+//        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+//            searchButton.setEffect(shadow);
+//        });
+//
+//        //当鼠标离开按钮时移除阴影效果
+//        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+//            searchButton.setEffect(null);
+//        });
     }
 
     public ThermometerController(){
@@ -214,10 +217,9 @@ public class ThermometerController implements Initializable {
     }
 
     public void go(){
-        setSearchButton();
         setupNet();//建立网络连接
-
         Thread t = new Thread(new ClientHandler());
+
         t.start();
     }
 
@@ -238,9 +240,9 @@ public class ThermometerController implements Initializable {
         public void run(){
             String message;
             try{
-                while(true){
-                    while((message=br.readLine())!=null){
-                        System.out.println("read: "+message);
+//                while(true){
+//                    while((message=br.readLine())!=null){
+//                        System.out.println("read: "+message);
                         //此处假设每条信息都是以string形式，一行一行传过来
 //                        volumnText.appendText(message+"\n");
 
@@ -258,8 +260,22 @@ public class ThermometerController implements Initializable {
 
                         NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
-                    }
-                }
+                        //以下是饼图数据
+                        PieChart.Data d1 = new PieChart.Data("涨停股票",NumberOfStocksLimitedUp);
+
+                        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",NumberOfStocksUpOverFivePerCent);
+
+                        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
+
+                        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",NumberOfStocksDownOverFivePerCent);
+
+                        PieChart.Data d5 = new PieChart.Data("跌停股票",NumberOfStocksLimitedDown);
+
+                        pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
+
+                        setSearchButton();
+//                    }
+//                }
             }catch(Exception e){
                 e.printStackTrace();
             }
