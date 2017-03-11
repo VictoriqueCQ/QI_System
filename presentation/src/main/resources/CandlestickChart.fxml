@@ -49,7 +49,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <DatePicker fx:id="startTimeDatePicker" onAction="#updateEndTimeDatePicker" prefHeight="48.0" prefWidth="200.0" GridPane.columnIndex="2" />
+                  <DatePicker fx:id="startTimeDatePicker" onAction="#updateEndTimeDatePicker" prefHeight="13.0" prefWidth="120.0" GridPane.columnIndex="2" />
                   <Label prefHeight="40.0" prefWidth="76.0" text="开始日期" GridPane.columnIndex="1" />
                </children>
             </GridPane>
@@ -63,7 +63,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <DatePicker fx:id="endTimeDatePicker" prefHeight="48.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                  <DatePicker fx:id="endTimeDatePicker" prefHeight="0.0" prefWidth="120.0" GridPane.columnIndex="1" />
                   <Label prefHeight="124.0" prefWidth="110.0" text="结束日期" />
                </children>
             </GridPane>
@@ -80,7 +80,7 @@
               </rowConstraints>
                <children>
                   <Label prefHeight="40.0" prefWidth="188.0" text="股票编号" />
-                  <TextArea fx:id="stockNumberTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                  <TextField styleClass="headTextFieldText" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane prefHeight="40.0" prefWidth="185.0" GridPane.columnIndex="3">
@@ -93,11 +93,11 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextArea fx:id="stockNameTextArea" prefHeight="12.0" prefWidth="211.0" GridPane.columnIndex="1" />
                   <Label prefHeight="40.0" prefWidth="237.0" text="股票名称" />
+                  <TextField styleClass="headTextFieldText" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0" prefWidth="90.0" text="搜索" GridPane.columnIndex="4" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0" prefWidth="90.0" styleClass="search_button" text="搜索" GridPane.columnIndex="4" />
          </children>
       </GridPane>
    </children>
