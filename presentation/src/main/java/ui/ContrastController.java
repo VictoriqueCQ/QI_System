@@ -4,18 +4,23 @@ package ui;/**
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.NumberAxis;
+import quantour.vo.StockVO;
+
+import java.util.List;
 
 public class ContrastController extends Application {
     private Main main;
+
+
+    private List<StockVO> allStock ;//所有股票
+
 
     @FXML
     private ChoiceBox choiceBox1;
