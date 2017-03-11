@@ -13,15 +13,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import quantour.po.MarketPO;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -32,9 +38,12 @@ public class ThermometerController implements Initializable {
 
     Socket socket;
 
+    private List<MarketPO> marketPOList;//市场上所有股票数据
+
     BufferedReader br;
 
     PrintWriter pw;
+
 
     @FXML
     private DatePicker datePicker;
@@ -45,7 +54,11 @@ public class ThermometerController implements Initializable {
     @FXML
     private TextField volumnTextField;
 
-    private String volumn ;//交易量
+    private static final int TOTAL_NUMBER_OF_STOCKS = 791;
+
+    private int NumberOfStocksChangedWithinFivePerCent;
+
+    private String volumn;//交易量
 
     private int NumberOfStocksLimitedUp;//涨停股票
 
@@ -127,19 +140,19 @@ public class ThermometerController implements Initializable {
     }
 
     //以下都是模拟数据
-    private void setBarChart_1(){
+    private void setBarChart_1() {
         barChart_1.setCategoryGap(90);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("涨跌停股票情况");
-        series1.getData().add(new XYChart.Data<>("涨停股票数",NumberOfStocksLimitedUp));
-        series1.getData().add(new XYChart.Data<>("跌停股票数",NumberOfStocksLimitedDown));
+        series1.getData().add(new XYChart.Data<>("涨停股票数", NumberOfStocksLimitedUp));
+        series1.getData().add(new XYChart.Data<>("跌停股票数", NumberOfStocksLimitedDown));
         barChart_1.getData().clear();
         barChart_1.layout();
         barChart_1.getData().addAll(series1);
         barChart_1.setAnimated(false);
     }
 
-    private void setBarChart_2(){
+    private void setBarChart_2() {
         barChart_2.setCategoryGap(90);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("涨跌幅超过5%股票情况");
@@ -151,7 +164,7 @@ public class ThermometerController implements Initializable {
         barChart_2.setAnimated(false);
     }
 
-    private void setBarChart_3(){
+    private void setBarChart_3() {
         barChart_3.setCategoryGap(90);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
         series3.setName("日增幅超过5%股票情况");
@@ -163,7 +176,7 @@ public class ThermometerController implements Initializable {
         barChart_3.setAnimated(false);
     }
 
-    public void setPieChart(){
+    public void setPieChart() {
 //        显示区域所占比例，暂时尚未时间如何添加
 //        Label caption = new Label("");
 //        caption.setTextFill(Color.DARKORANGE);
@@ -205,78 +218,108 @@ public class ThermometerController implements Initializable {
 
 
     @FXML
-    public void setSearchButton(){
+    public void setSearchButton() {
 
 //        searchButton.getStyleClass().add("button");
         //处理Action
 //        searchButton.setOnAction((ActionEvent e)->{
-            //根据所选日期显示当前日期所有股票情况
-            //暂时还没写和date picker相关的
+        //根据所选日期显示当前日期所有股票情况
+        //暂时还没写和date picker相关的
 
-            //之后会删除
-            volumn = "100000（瞎写的）";//交易量
+        //之后会删除
+//            volumn = "100000（瞎写的）";//交易量
+//
+//            NumberOfStocksLimitedUp = 30;//涨停股票
+//
+//            NumberOfStocksLimitedDown = 10;//跌停股票
+//
+//            NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+//
+//            NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+//
+//            NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+//
+//            NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
-            NumberOfStocksLimitedUp = 30;//涨停股票
+        //以下是饼图数据
+        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
 
-            NumberOfStocksLimitedDown = 10;//跌停股票
+        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
 
-            NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票", NumberOfStocksChangedWithinFivePerCent);
 
-            NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票", NumberOfStocksDownOverFivePerCent);
 
-            NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+        PieChart.Data d5 = new PieChart.Data("跌停股票", NumberOfStocksLimitedDown);
 
-            NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
 
-            //以下是饼图数据
-            PieChart.Data d1 = new PieChart.Data("涨停股票",NumberOfStocksLimitedUp);
+        setBarChart_1();
 
-            PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票",NumberOfStocksUpOverFivePerCent);
+        setBarChart_2();
 
-            PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票",260);
+        setBarChart_3();
 
-            PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票",NumberOfStocksDownOverFivePerCent);
+        setPieChart();
 
-            PieChart.Data d5 = new PieChart.Data("跌停股票",NumberOfStocksLimitedDown);
+        System.out.println("Search the data and show the volumn.");
 
-            pieChartData = FXCollections.observableArrayList(d1,d2,d3,d4,d5);
-
-
-            setBarChart_1();
-            setBarChart_2();
-            setBarChart_3();
-            setPieChart();
-
-//        setPieChart();
-            System.out.println("Search the data and show the volumn.");
-//            volumnText.setText(volumn);//这里有空指针错误
         volumnTextField.setText(volumn);
 
 
 //        });
 
-//        Light.Distant light = new Light.Distant();
-//        light.setAzimuth(-135.0f);
-//        Lighting l = new Lighting();
-//        l.setLight(light);
-//        l.setSurfaceScale(5.0f);
-//
-//        searchButton.setEffect(l);
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0f);
+        Lighting l = new Lighting();
+        l.setLight(light);
+        l.setSurfaceScale(5.0f);
 
-//        //当鼠标进入按钮时添加阴影特效
-//        DropShadow shadow = new DropShadow();
-//        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
-//            searchButton.setEffect(shadow);
-//        });
-//
-//        //当鼠标离开按钮时移除阴影效果
-//        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
-//            searchButton.setEffect(null);
-//        });
+        searchButton.setEffect(l);
+
+        //当鼠标进入按钮时添加阴影特效
+        DropShadow shadow = new DropShadow();
+        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+            searchButton.setEffect(shadow);
+        });
+
+        //当鼠标离开按钮时移除阴影效果
+        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+            searchButton.setEffect(null);
+        });
     }
 
-    public ThermometerController(){
+    public ThermometerController() {
 
+    }
+
+    public void getMarketVO() {
+
+        Iterator<MarketPO> iter = marketPOList.iterator();
+
+        while (iter.hasNext()) {
+            MarketPO marketPO = iter.next();
+
+            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
+
+            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
+
+            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
+
+            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
+
+            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
+
+            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
+
+            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
+
+            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+            
+        }
     }
 
 //    public void go(){
@@ -351,24 +394,6 @@ public class ThermometerController implements Initializable {
         this.main = main;
         this.setDatePicker();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     static class MouseHoverAnimation implements EventHandler {
