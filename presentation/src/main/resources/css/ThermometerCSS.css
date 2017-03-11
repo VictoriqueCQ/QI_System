@@ -21,7 +21,7 @@
 
 .chart-pie-label {
     -fx-fill: rgb(240,150,96);
-    -fx-font-size: 1em;
+    -fx-font-size: 0.9em;
 }
 
 .chart-pie-label-line {
@@ -45,7 +45,7 @@
 }
 
 .axis {
-    -fx-font-size: 1.5em;
+    -fx-font-size: 1.2em;
     -fx-tick-label-fill: rgb(240,150,96);
     -fx-font-family: Tahoma;
     -fx-tick-length: 20;
