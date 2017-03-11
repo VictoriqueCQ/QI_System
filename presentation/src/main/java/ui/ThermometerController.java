@@ -47,19 +47,19 @@ public class ThermometerController implements Initializable {
     @FXML
     private TextArea volumnText;
 
-    private String volumn = "100000（瞎写的）";//交易量
+    private String volumn ;//交易量
 
-    private int NumberOfStocksLimitedUp = 30;//涨停股票
+    private int NumberOfStocksLimitedUp;//涨停股票
 
-    private int NumberOfStocksLimitedDown = 10;//跌停股票
+    private int NumberOfStocksLimitedDown;//跌停股票
 
-    private int NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+    private int NumberOfStocksUpOverFivePerCent;//涨幅超过5%的股票数
 
-    private int NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+    private int NumberOfStocksDownOverFivePerCent;//跌幅超过5%的股票数
 
-    private int NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+    private int NumberOfStocksUpOverFivePerCentPerDay;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
 
-    private int NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+    private int NumberOfStocksDownOverFivePerCentPerDay;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
     @FXML
     private NumberAxis NumberOfStock_1 = new NumberAxis();
@@ -180,6 +180,15 @@ public class ThermometerController implements Initializable {
         searchButton.getStyleClass().add("button");
         //处理Action
         searchButton.setOnAction((ActionEvent e)->{
+            //根据所选日期显示当前日期所有股票情况
+            //暂时还没写和date picker相关的
+
+
+
+            setBarChart_1();
+            setBarChart_2();
+            setBarChart_3();
+            setPieChart();
 
             System.out.println("Search the data and show the volumn.");
             volumnText.setText(volumn);
@@ -187,10 +196,6 @@ public class ThermometerController implements Initializable {
 
         });
 
-        setBarChart_1();
-        setBarChart_2();
-        setBarChart_3();
-        setPieChart();
 
         //当鼠标进入按钮时添加阴影特效
         DropShadow shadow = new DropShadow();
@@ -236,7 +241,22 @@ public class ThermometerController implements Initializable {
                 while(true){
                     while((message=br.readLine())!=null){
                         System.out.println("read: "+message);
+                        //此处假设每条信息都是以string形式，一行一行传过来
 //                        volumnText.appendText(message+"\n");
+
+                        volumn = "100000（瞎写的）";//交易量
+
+                        NumberOfStocksLimitedUp = 30;//涨停股票
+
+                        NumberOfStocksLimitedDown = 10;//跌停股票
+
+                        NumberOfStocksUpOverFivePerCent = 80;//涨幅超过5%的股票数
+
+                        NumberOfStocksDownOverFivePerCent = 20;//跌幅超过5%的股票数
+
+                        NumberOfStocksUpOverFivePerCentPerDay = 50;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+
+                        NumberOfStocksDownOverFivePerCentPerDay = 15;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
                     }
                 }
@@ -247,7 +267,6 @@ public class ThermometerController implements Initializable {
     }
 
     public void setMain(Main main) {
-
         go();
         this.main = main;
     }
