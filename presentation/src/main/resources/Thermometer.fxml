@@ -102,7 +102,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="volumnTextField" layoutY="11.0" prefHeight="52.0" prefWidth="207.0" styleClass="TextFieldText" />
+                        <TextField fx:id="volumnTextField" layoutY="11.0" prefHeight="40.0" prefWidth="200.0" styleClass="TextFieldText" />
                      </children>
                   </AnchorPane>
                </children>
