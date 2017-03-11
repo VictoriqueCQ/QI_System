@@ -3,7 +3,6 @@ package ui;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,17 +11,13 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
@@ -47,7 +42,7 @@ public class ThermometerController implements Initializable {
     private Button searchButton;
 
     @FXML
-    private TextArea volumnText;
+    private TextField volumnTextField;
 
     private String volumn ;//交易量
 
@@ -175,11 +170,12 @@ public class ThermometerController implements Initializable {
 //    }
 
 
+    @FXML
     public void setSearchButton(){
 
-        searchButton.getStyleClass().add("button");
+//        searchButton.getStyleClass().add("button");
         //处理Action
-        searchButton.setOnAction((ActionEvent e)->{
+//        searchButton.setOnAction((ActionEvent e)->{
             //根据所选日期显示当前日期所有股票情况
             //暂时还没写和date picker相关的
 
@@ -216,11 +212,13 @@ public class ThermometerController implements Initializable {
             setBarChart_3();
             setPieChart();
 
+//        setPieChart();
             System.out.println("Search the data and show the volumn.");
 //            volumnText.setText(volumn);//这里有空指针错误
+        volumnTextField.setText(volumn);
 
 
-        });
+//        });
 
         Light.Distant light = new Light.Distant();
         light.setAzimuth(-135.0f);
@@ -314,7 +312,7 @@ public class ThermometerController implements Initializable {
 
     public void setMain(Main main) {
 //        go();
-        setSearchButton();
+//        setSearchButton();
         this.main = main;
     }
 
