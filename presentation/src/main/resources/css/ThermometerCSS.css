@@ -15,17 +15,18 @@
 
 .button{
     -fx-font: 22 arial;
-    -fx-base: rgb(30,194,210);
+    -fx-base: rgb(0,0,0);
+    -fx-text-fill: rgb(240,150,96);
 }
 
 .chart-pie-label {
-    -fx-fill: rgb(255,255,255);
+    -fx-fill: rgb(240,150,96);
     -fx-font-size: 1em;
 }
 
 .chart-pie-label-line {
-    -fx-stroke: rgb(255,255,255);
-    -fx-fill: rgb(255,255,255);
+    -fx-stroke: rgb(240,150,96);
+    -fx-fill: rgb(240,150,96);
 }
 
 .chart-legend{
@@ -54,6 +55,7 @@
 .axis-tick-mark {
     -fx-stroke: #637040;
     -fx-stroke-width: 3;
+
 }
 .axis-minor-tick-mark {
     -fx-stroke: #859656;
@@ -61,4 +63,77 @@
 
 .textArea{
     -fx-background-color:rgb(0,0,0);
+}
+
+.TextFieldText{
+    -fx-background-radius: 20px;
+    -fx-background-color: rgb(100,100,100);
+    -fx-border-radius: 20px;
+    -fx-text-fill: #404041;
+}
+
+.date-picker .label{
+    -fx-text-fill:rgb(100,100,100);
+}
+
+.date-picker .button{
+    -fx-base:rgb(100,100,100);
+}
+
+.date-picker > .arrow-button {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 1 1 1 0, 1, 2;
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0;
+}
+
+.date-picker > .text-field {
+    -fx-background-color: rgb(100,100,100);;
+    -fx-background-insets: 1 0 1 1;
+    -fx-background-radius: 2 0 0 2;
+}
+.date-picker > .text-field{
+    -fx-border-color: rgb(100,100,100);
+    -fx-text-fill: #AAACAF;
+}
+.date-picker > .text-field:selected{
+    -fx-border-color: #161618;
+}
+
+.date-picker-popup{
+    -fx-control-inner-background:#161618;
+    -fx-control-inner-border-color:#161618;
+}
+
+.date-picker-popup > .month-year-pane{
+    -fx-background-color: #161618;
+    -fx-border-color: #161618;
+}
+.date-picker-popup > * > .date-cell{
+    -fx-background-color: #161618;
+    -fx-border-color: #AAACAF;
+    -fx-text-fill: #AAACAF;
+}
+
+.date-picker-popup > * > .day-cell:hover{
+    -fx-background-color: #243C62;
+}
+
+.combo-box-base{
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+}
+.combo-box-base:editable > .arrow-button{
+    -fx-border-color: #161618;
+    -fx-background-color: #161618;
+}
+.date-picker:editable > .arrow-button:hover{
+    -fx-border-color: white;
+    -fx-background-color: black;
+}
+.date-picker:editable > .arrow-button > .arrow:hover{
+    -fx-border-color: #243C62;
+    -fx-background-color: #243C62;
+}
+.date-picker-popup > * > .spinner > .button:hover{
+    -fx-background-color: #243C62;
 }
