@@ -54,7 +54,7 @@ class SwitchNode {
         }
 
         public void run(){
-            
+
         }
     }
 
