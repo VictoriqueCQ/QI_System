@@ -98,6 +98,6 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#setCompare" text="确认" />
+      <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
    </children>
 </AnchorPane>
