@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -257,13 +255,13 @@ public class ThermometerController implements Initializable {
 
 //        });
 
-        Light.Distant light = new Light.Distant();
-        light.setAzimuth(-135.0f);
-        Lighting l = new Lighting();
-        l.setLight(light);
-        l.setSurfaceScale(5.0f);
-
-        searchButton.setEffect(l);
+//        Light.Distant light = new Light.Distant();
+//        light.setAzimuth(-135.0f);
+//        Lighting l = new Lighting();
+//        l.setLight(light);
+//        l.setSurfaceScale(5.0f);
+//
+//        searchButton.setEffect(l);
 
 //        //当鼠标进入按钮时添加阴影特效
 //        DropShadow shadow = new DropShadow();
