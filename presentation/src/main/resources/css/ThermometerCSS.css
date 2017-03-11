@@ -72,6 +72,14 @@
     -fx-text-fill: #404041;
 }
 
+.date-picker .label{
+    -fx-text-fill:rgb(100,100,100);
+}
+
+.date-picker .button{
+    -fx-base:rgb(100,100,100);
+}
+
 .date-picker > .arrow-button {
     -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 1 1 1 0, 1, 2;
@@ -79,12 +87,12 @@
 }
 
 .date-picker > .text-field {
-    -fx-background-color: rgb(100,100,100);
+    -fx-background-color: rgb(100,100,100);;
     -fx-background-insets: 1 0 1 1;
     -fx-background-radius: 2 0 0 2;
 }
 .date-picker > .text-field{
-    -fx-border-color: #161618;
+    -fx-border-color: rgb(100,100,100);
     -fx-text-fill: #AAACAF;
 }
 .date-picker > .text-field:selected{
@@ -127,6 +135,5 @@
     -fx-background-color: #243C62;
 }
 .date-picker-popup > * > .spinner > .button:hover{
-
     -fx-background-color: #243C62;
 }
