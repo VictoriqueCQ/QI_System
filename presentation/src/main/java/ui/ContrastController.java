@@ -9,16 +9,14 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 
-import java.time.Instant;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 public class ContrastController extends Application {
@@ -31,10 +29,10 @@ public class ContrastController extends Application {
 
 
     @FXML
-    private TextArea addName1;
+    private TextField addName1;
 
     @FXML
-    private  TextArea addName2;
+    private  TextField addName2;
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -217,7 +215,7 @@ public class ContrastController extends Application {
 
 //        lineChart.setTitle("Stock Monitoring, 2010");
         //defining a series
-        String stockName1 = addName1.getText();
+       /* String stockName1 = addName1.getText();
         String stockName2 = addName2.getText();
         boolean b1 = Judge(stockName1);
         boolean b2 = Judge(stockName2);
@@ -245,8 +243,11 @@ public class ContrastController extends Application {
             setIncomeLine();
             setIncomeLine2();
 
-         }
-
+         }*/
+        setTableContrast();
+        setClosePriceLine();
+        setIncomeLine();
+        setIncomeLine2();
 
 
 
@@ -278,7 +279,7 @@ public class ContrastController extends Application {
 
     }
     public void setClosePriceLine(){
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("股票一");
         //populating the series with data
         /*series.getData().add(new XYChart.Data("a", 23));
@@ -295,7 +296,31 @@ public class ContrastController extends Application {
         series.getData().add(new XYChart.Data("l", 25));
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");*/
-        double[] closePrice = stock1.getClose();
+        double[] d = new double[3];
+        d[0]=100;d[1]=2;d[2]=30;
+        Date d1=new Date(2015,7,6);
+
+        for(int i = 0;i<d.length;i++){
+
+            Calendar c   =   new GregorianCalendar();
+            c.setTime(d1);
+            
+
+            c.add(c.DATE,i);
+
+
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+//            java.util.Date date=new java.util.Date();
+            String s=sdf.format(c.getTime());
+
+            series.getData().add(new XYChart.Data(s, d[i]));
+
+
+            closePriceLine.getData().add(series);
+
+        }
+
+       /* double[] closePrice = stock1.getClose();
         for(int i = 0;i<closePrice.length;i++){
 
             Date temp = stock1.getStart();
@@ -305,7 +330,7 @@ public class ContrastController extends Application {
             series.getData().add(new XYChart.Data(c.getTime().toString(),closePrice[i]));
             closePriceLine.getData().add(series);
 
-        }
+        }*/
 
     }
     public void setIncomeLine(){
