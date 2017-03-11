@@ -37,19 +37,19 @@
       </Label>
       <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
       <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比" />
-      <TabPane layoutX="25.0" layoutY="131.0" prefHeight="409.0" prefWidth="1014.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="47.0" layoutY="131.0" prefHeight="409.0" prefWidth="1097.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="56.0">
         <tabs>
           <Tab text="总况">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="494.0">
+                        <TableView layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="500.0" stylesheets="@css/TableViewCSS.css">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="股票名称" />
-                            <TableColumn prefWidth="75.0" text="股票价格" />
-                              <TableColumn prefWidth="75.0" text="最低值" />
-                              <TableColumn prefWidth="75.0" text="最高值" />
-                              <TableColumn prefWidth="75.0" text="涨跌幅" />
+                            <TableColumn prefWidth="100.0" text="股票名称" />
+                            <TableColumn prefWidth="100.0" text="股票价格" />
+                              <TableColumn prefWidth="100.0" text="最低值" />
+                              <TableColumn prefWidth="100.0" text="最高值" />
+                              <TableColumn prefWidth="100.0" text="涨跌幅" />
                           </columns>
                         </TableView>
                      </children>
@@ -60,7 +60,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="closePriceLine" layoutX="240.0" layoutY="60.0" prefHeight="276.0" prefWidth="492.0">
+                        <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" prefHeight="276.0" prefWidth="492.0">
                           <xAxis>
                             <CategoryAxis label="日期" />
                           </xAxis>
@@ -75,7 +75,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="IncomeLine2" layoutX="546.0" layoutY="20.0" prefHeight="305.0" prefWidth="461.0">
+                        <LineChart fx:id="IncomeLine2" layoutX="605.0" layoutY="22.0" prefHeight="305.0" prefWidth="461.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -83,7 +83,7 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <LineChart fx:id="IncomeLine" layoutX="9.0" layoutY="20.0" prefHeight="295.0" prefWidth="417.0">
+                        <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="22.0" prefHeight="295.0" prefWidth="417.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -97,7 +97,7 @@
         </tabs>
       </TabPane>
       <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
-      <TextArea fx:id="addName1" layoutX="165.0" layoutY="69.0" prefHeight="27.0" prefWidth="94.0" />
-      <TextArea fx:id="addName2" layoutX="287.0" layoutY="69.0" prefHeight="27.0" prefWidth="94.0" />
+      <TextField layoutX="149.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
+      <TextField layoutX="286.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
    </children>
 </AnchorPane>
