@@ -351,6 +351,7 @@ public class ThermometerController implements Initializable {
 //        go();
 //        setSearchButton();
         this.main = main;
+        this.setDatePicker();
     }
 
 
