@@ -12,23 +12,24 @@ public class StockVO {
     private int code;
     private Date start;
     private Date over;
-    private ArrayList<Double> open;
-    private ArrayList<Double> high;
-    private ArrayList<Double> low;
-    private ArrayList<Double> close;
-    private ArrayList<Integer> volume;//交易数
-    private ArrayList<Double> adjClose;//复权后
-    private ArrayList<Double> average5;
-    private ArrayList<Double> average10;
-    private ArrayList<Double> average20;
-    private ArrayList<Double> average30;
-    private ArrayList<Double> average60;
-    private ArrayList<Double> variance;//相对方差
+    private double[] open;
+    private double[] high;
+    private double[] low;
+    private double[] close;
+    private int[] volume;//交易数
+    private double[] adjClose;//复权后
+    private double[] average5;
+    private double[] average10;
+    private double[] average20;
+    private double[] average30;
+    private double[] average60;
+    private ArrayList<Double> profit;//每日收益率
+    private double variance;//相对方差
 
-    public StockVO(String name, int code, Date start, Date over, ArrayList<Double> open, ArrayList<Double> high,
-                   ArrayList<Double> low, ArrayList<Double> close, ArrayList<Integer> volume, ArrayList<Double> adjClose,
-                   ArrayList<Double> average5, ArrayList<Double> average10, ArrayList<Double> average20,
-                   ArrayList<Double> average30, ArrayList<Double> average60, ArrayList<Double> variance) {
+
+    public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
+                   double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
+                   double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -45,7 +46,28 @@ public class StockVO {
         this.average30 = average30;
         this.average60 = average60;
         this.variance = variance;
+        this.profit = profit;
     }
+   /* public StockVO(StockPO stockPO){
+        this.name = stockPO.getName();
+        this.code = stockPO.getCode();
+        this.start = stockPO.getStart();
+        this.over = stockPO.getOver();
+        this.open  = stockPO.getOpen();
+        this.high = stockPO.getHigh();
+        this.low = stockPO.getLow();
+        this.close = stockPO.getClose();
+        this.volume = stockPO.getVolume();
+        this.adjClose = stockPO.getAdjClose();
+        this.average5 = stockPO.getAverage5();
+        this.average10 = stockPO.getAverage10();
+        this.average20 = stockPO.getAverage20();
+        this.average30 = stockPO.getAverage30();
+        this.average60 = stockPO.getAverage60();
+        this.variance = stockPO.getVariance();
+        this.profit = stockPO.getProfit();
+
+    }*/
 
     public String getName() {
         return name;
@@ -63,51 +85,53 @@ public class StockVO {
         return over;
     }
 
-    public ArrayList<Double> getOpen() {
+    public double[] getOpen() {
         return open;
     }
 
-    public ArrayList<Double> getHigh() {
+    public double[] getHigh() {
         return high;
     }
 
-    public ArrayList<Double> getLow() {
+    public double[] getLow() {
         return low;
     }
 
-    public ArrayList<Double> getClose() {
+    public double[] getClose() {
         return close;
     }
 
-    public ArrayList<Integer> getVolume() {
+    public int[] getVolume() {
         return volume;
     }
 
-    public ArrayList<Double> getAdjClose() {
+    public double[] getAdjClose() {
         return adjClose;
     }
 
-    public ArrayList<Double> getAverage5() {
+    public double[] getAverage5() {
         return average5;
     }
 
-    public ArrayList<Double> getAverage10() {
+    public double[] getAverage10() {
         return average10;
     }
 
-    public ArrayList<Double> getAverage20() {
+    public double[] getAverage20() {
         return average20;
     }
 
-    public ArrayList<Double> getAverage30() {
+    public double[] getAverage30() {
         return average30;
     }
 
-    public ArrayList<Double> getAverage60() {
+    public double[] getAverage60() {
         return average60;
     }
 
-    public ArrayList<Double> getVariance() {
+    public Double getVariance() {
         return variance;
     }
+
+    public ArrayList<Double> getProfit(){return profit;}
 }
