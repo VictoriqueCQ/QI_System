@@ -138,6 +138,7 @@ public class ThermometerController implements Initializable {
         barChart_1.getData().clear();
         barChart_1.layout();
         barChart_1.getData().addAll(series1);
+        barChart_1.setAnimated(false);
     }
 
     private void setBarChart_2(){
@@ -149,6 +150,7 @@ public class ThermometerController implements Initializable {
         barChart_2.getData().clear();
         barChart_2.layout();
         barChart_2.getData().add(series2);
+        barChart_2.setAnimated(false);
     }
 
     private void setBarChart_3(){
@@ -160,6 +162,7 @@ public class ThermometerController implements Initializable {
         barChart_3.getData().clear();
         barChart_3.layout();
         barChart_3.getData().add(series3);
+        barChart_3.setAnimated(false);
     }
 
     public void setPieChart(){
@@ -193,7 +196,7 @@ public class ThermometerController implements Initializable {
 //        d5.getNode().setOnMouseExited(new MouseExitAnimation());
 
         pieChart.getData().setAll(pieChartData);
-
+        pieChart.setAnimated(false);
     }
 
 //    public void setDatepicker(){
@@ -212,6 +215,7 @@ public class ThermometerController implements Initializable {
             //根据所选日期显示当前日期所有股票情况
             //暂时还没写和date picker相关的
 
+            //之后会删除
             volumn = "100000（瞎写的）";//交易量
 
             NumberOfStocksLimitedUp = 30;//涨停股票
