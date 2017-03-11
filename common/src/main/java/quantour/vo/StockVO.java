@@ -1,7 +1,5 @@
 package quantour.vo;
 
-import quantour.po.StockPO;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -50,7 +48,7 @@ public class StockVO {
         this.variance = variance;
         this.profit = profit;
     }
-    public StockVO(StockPO stockPO){
+   /* public StockVO(StockPO stockPO){
         this.name = stockPO.getName();
         this.code = stockPO.getCode();
         this.start = stockPO.getStart();
@@ -69,7 +67,7 @@ public class StockVO {
         this.variance = stockPO.getVariance();
         this.profit = stockPO.getProfit();
 
-    }
+    }*/
 
     public String getName() {
         return name;
