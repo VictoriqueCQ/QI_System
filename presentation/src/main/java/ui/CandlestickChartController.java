@@ -7,11 +7,11 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -25,6 +25,10 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
@@ -57,10 +61,10 @@ public class CandlestickChartController {
     private DatePicker endTimeDatePicker;
 
     @FXML
-    private TextArea stockNameTextArea;
+    private TextField stockNameTextField;
 
     @FXML
-    private TextArea stockNumberTextArea;
+    private TextField stockNumberTextField;
 
     @FXML
     private Button searchButton;
@@ -127,15 +131,13 @@ public class CandlestickChartController {
         startTimeDatePicker.setDayCellFactory(dayCellFactory1);
     }
 
-
-//    XYChart.Series series11 = new XYChart.Series();
-//    XYChart.Series series22= new XYChart.Series();
-//    XYChart.Series series33 = new XYChart.Series();
-
     @FXML
     private void search(){
         this.createEMA();
         this.createCandlestickChart();
+        this.setImage();
+//        this.createCandlestickChart1();
+
 
     }
 
@@ -346,46 +348,54 @@ public class CandlestickChartController {
         plot2.setBackgroundPaint(Color.black);
 
         //动态生成图片并展示
-/*        FileOutputStream out=null;
+        String path1="";
+        String path2="";
+        FileOutputStream out=null;
         try{
-
-            //搞不懂啊这个路径问题
-//            File outFile=new File("../../resources/Kimage.png");
-            File outFile=new File("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\presentation\\src\\main\\resources\\picture\\Kimage.jpeg");
-
-            if(!outFile.getParentFile().exists()){
-                outFile.getParentFile().mkdirs();
+            String s=CandlestickChartController.class.getResource("/picture/").getFile();
+            String[] ss=s.split("/");
+            String t="";
+            for(int i=0;i<ss.length-3;i++){
+                t+=(ss[i]+"\\");
             }
-            out=new FileOutputStream(outFile);
+            t=t.substring(1);
+            path2=t+"src\\main\\resources\\picture\\Kimage.jpeg";
+            path1=s+"Kimage.jpeg";
+            File file1=new File(path1);
+            File file2=new File(path2);
+            if(!file1.getParentFile().exists()){
+                file1.getParentFile().mkdirs();
+            }
+            out=new FileOutputStream(file1);
             ChartUtilities.writeChartAsJPEG(out,chart,600,600);
             out.flush();
-//            out.close();
-//            System.out.print(outFile.getPath().toString());
+            out.close();
+            out=new FileOutputStream(file2);
+            ChartUtilities.writeChartAsJPEG(out,chart,600,600);
+            out.flush();
+            out.close();
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
         }
         catch (IOException e){
             e.printStackTrace();
-        }*/
-//        try{
-//        ChartUtilities.saveChartAsPNG(new File("/Kimage.png"),chart,600,500);
-//        }
-//        catch(IOException e){
-//            e.printStackTrace();
-//        }
+        }
 
-        Image image=new Image("/picture/Kimage.jpeg");
+    }
+
+    private void setImage(){
+        javafx.scene.image.Image image=new javafx.scene.image.Image("/picture/Kimage.jpeg");
         ImageView im=new ImageView(image);
         gridPane.add(im,0,0);
     }
 
-    //对K线图进行数据注入
-    //public OHLCSeries addData(OHLCSeries series,)
+//
+
+
 
     private void createEMA(){
         lineChart.getData().clear();
-//        lineChart.getData().removeAll(series11,series22,series33);
         final CategoryAxis xAxis = new CategoryAxis();
         final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
         xAxis.setLabel("Month");
