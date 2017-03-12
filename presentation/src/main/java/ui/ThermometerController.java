@@ -19,13 +19,18 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import quantour.blservice.Overall_Search_bl;
 import quantour.po.MarketPO;
+import quantour.vo.MarketVO;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -218,8 +223,12 @@ public class ThermometerController implements Initializable {
 
 
     @FXML
-    public void setSearchButton() {
-
+    public void setSearchButton(Overall_Search_bl overall_search_bl) {
+        LocalDate time = datePicker.getValue();
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = time.atStartOfDay(zone).toInstant();
+        Date date = Date.from(instant);
+        overall_search_bl.getMarketInfo(date);
 //        searchButton.getStyleClass().add("button");
         //处理Action
 //        searchButton.setOnAction((ActionEvent e)->{
@@ -293,6 +302,8 @@ public class ThermometerController implements Initializable {
 
     }
 
+
+
     public void getMarketVO() {
 
         Iterator<MarketPO> iter = marketPOList.iterator();
@@ -318,7 +329,7 @@ public class ThermometerController implements Initializable {
                     - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
                     + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
                     + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-            
+
         }
     }
 
