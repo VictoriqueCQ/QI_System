@@ -3,19 +3,14 @@ package quantour.bl;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Stack;
 
 /**
  * Created by dell on 2017/3/11.
  */
 class SwitchNode {
-    private Stack<Socket> dataServerStack;
+    //private Stack<Socket> dataServerStack;
     private ClientServer clientServer;
     private DataServer dataServer;
-
-    SwitchNode(){
-        dataServerStack=new Stack<>();
-    }
 
     void run(){
         clientServer=new ClientServer(9000);
@@ -36,9 +31,8 @@ class SwitchNode {
                 ServerSocket cServer=new ServerSocket(port);
                 while(true){
                     Socket socket=cServer.accept();
-                    System.out.println("connected");
-                    while(!dataServerStack.empty()){}
-                    new ClientNodeThread(socket,dataServerStack).run();
+                    (new ClientNodeThread(socket)).run();
+                    System.out.println("client connected");
                 }
             }catch (IOException e) {
                 e.printStackTrace();
@@ -54,7 +48,16 @@ class SwitchNode {
         }
 
         public void run(){
-
+            try {
+                ServerSocket cServer = new ServerSocket(port);//注册数据服务器
+                while(true){
+                    Socket socket=cServer.accept();
+                    (new DataNodeThread(socket)).run();
+                    System.out.println("data connected");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
