@@ -80,7 +80,7 @@ public class CandlestickChartController {
      * 在开始时间选取后更新结束时间可选日期
      */
     @FXML
-    private void updateEndTimeDatePicker(){
+    private void updateEndTimeDatePicker() {
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -92,13 +92,13 @@ public class CandlestickChartController {
 
                                 if (item.isBefore(
                                         startTimeDatePicker.getValue().plusDays(1))
-                                        ){
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
                                 if (item.isAfter(
-                                        LocalDate.of(2014,4,30))
-                                        ){
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -114,7 +114,7 @@ public class CandlestickChartController {
      * 在结束时间选取后更新开始时间可选日期
      */
     @FXML
-    private void updateStartTimeDatePicker(){
+    private void updateStartTimeDatePicker() {
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -125,14 +125,14 @@ public class CandlestickChartController {
                                 super.updateItem(item, empty);
 
                                 if (item.isAfter(
-                                       endTimeDatePicker.getValue().minusDays(1))
-                                        ){
+                                        endTimeDatePicker.getValue().minusDays(1))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
                                 if (item.isBefore(
-                                        LocalDate.of(2005,2,1))
-                                        ){
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -145,7 +145,7 @@ public class CandlestickChartController {
     }
 
     @FXML
-    private void search(){
+    private void search() {
         this.createEMA();
         this.createCandlestickChart();
     }
@@ -153,8 +153,8 @@ public class CandlestickChartController {
     /**
      * 初始化日期选择器可选时间
      */
-    private void setDatePicker(){
-        startTimeDatePicker.setValue(LocalDate.of(2005,2,1));
+    private void setDatePicker() {
+        startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -165,8 +165,8 @@ public class CandlestickChartController {
                                 super.updateItem(item, empty);
 
                                 if (item.isBefore(
-                                        LocalDate.of(2005,2,1))
-                                        ){
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -185,8 +185,8 @@ public class CandlestickChartController {
                                 super.updateItem(item, empty);
 
                                 if (item.isAfter(
-                                        LocalDate.of(2014,4,30))
-                                        ){
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -195,14 +195,14 @@ public class CandlestickChartController {
                     }
                 };
         endTimeDatePicker.setDayCellFactory(dayCellFactory2);
-        endTimeDatePicker.setValue(LocalDate.of(2014,4,30));
+        endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
 
     }
 
     /**
      * 绘制K线图
      */
-    private void createCandlestickChart(){
+    private void createCandlestickChart() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值
         double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值
@@ -247,40 +247,40 @@ public class CandlestickChartController {
         final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
         seriesCollection.addSeries(series);
 
-        TimeSeries series2=new TimeSeries("");//对应时间成交量数据
+        TimeSeries series2 = new TimeSeries("");//对应时间成交量数据
 //        TimeSeries series2=new TimeSeries("");//对应时间成交量数据
 //        series2=this.adTimeSeriesCollectionData(series2,stockVO);
-        series2.add(new Day(28, 9, 2007), 260659400/100);
-        series2.add(new Day(27, 9, 2007), 119701900/100);
-        series2.add(new Day(26, 9, 2007), 109719000/100);
-        series2.add(new Day(25, 9, 2007), 178492400/100);
-        series2.add(new Day(24, 9, 2007), 269978500/100);
-        series2.add(new Day(21, 9, 2007), 361042300/100);
-        series2.add(new Day(20, 9, 2007), 173912600/100);
-        series2.add(new Day(19, 9, 2007), 154622600/100);
-        series2.add(new Day(18, 9, 2007), 200661600/100);
-        series2.add(new Day(17, 9, 2007), 312799600/100);
-        series2.add(new Day(14, 9, 2007), 141652900/100);
-        series2.add(new Day(13, 9, 2007), 221260400/100);
-        series2.add(new Day(12, 9, 2007), 274795400/100);
-        series2.add(new Day(11, 9, 2007), 289287300/100);
-        series2.add(new Day(10, 9, 2007), 289063600/100);
-        series2.add(new Day(7, 9, 2007), 351575300/100);
-        series2.add(new Day(6, 9, 2007), 451357300/100);
-        series2.add(new Day(5, 9, 2007), 442421200/100);
-        series2.add(new Day(4, 9, 2007), 671942600/100);
-        series2.add(new Day(3, 9, 2007), 349647800/100);
-        series2.add(new Day(31, 8, 2007), 225339300/100);
-        series2.add(new Day(30, 8, 2007), 160048200/100);
-        series2.add(new Day(29, 8, 2007), 247341700/100);
-        series2.add(new Day(28, 8, 2007), 394975400/100);
-        series2.add(new Day(27, 8, 2007), 475797500/100);
-        series2.add(new Day(24, 8, 2007), 297679500/100);
-        series2.add(new Day(23, 8, 2007), 191760600/100);
-        series2.add(new Day(22, 8, 2007), 232570200/100);
-        series2.add(new Day(21, 8, 2007), 215693200/100);
-        series2.add(new Day(20, 8, 2007), 200287500/100);
-        TimeSeriesCollection timeSeriesCollection=new TimeSeriesCollection();//保留成交量数据的集合
+        series2.add(new Day(28, 9, 2007), 260659400 / 100);
+        series2.add(new Day(27, 9, 2007), 119701900 / 100);
+        series2.add(new Day(26, 9, 2007), 109719000 / 100);
+        series2.add(new Day(25, 9, 2007), 178492400 / 100);
+        series2.add(new Day(24, 9, 2007), 269978500 / 100);
+        series2.add(new Day(21, 9, 2007), 361042300 / 100);
+        series2.add(new Day(20, 9, 2007), 173912600 / 100);
+        series2.add(new Day(19, 9, 2007), 154622600 / 100);
+        series2.add(new Day(18, 9, 2007), 200661600 / 100);
+        series2.add(new Day(17, 9, 2007), 312799600 / 100);
+        series2.add(new Day(14, 9, 2007), 141652900 / 100);
+        series2.add(new Day(13, 9, 2007), 221260400 / 100);
+        series2.add(new Day(12, 9, 2007), 274795400 / 100);
+        series2.add(new Day(11, 9, 2007), 289287300 / 100);
+        series2.add(new Day(10, 9, 2007), 289063600 / 100);
+        series2.add(new Day(7, 9, 2007), 351575300 / 100);
+        series2.add(new Day(6, 9, 2007), 451357300 / 100);
+        series2.add(new Day(5, 9, 2007), 442421200 / 100);
+        series2.add(new Day(4, 9, 2007), 671942600 / 100);
+        series2.add(new Day(3, 9, 2007), 349647800 / 100);
+        series2.add(new Day(31, 8, 2007), 225339300 / 100);
+        series2.add(new Day(30, 8, 2007), 160048200 / 100);
+        series2.add(new Day(29, 8, 2007), 247341700 / 100);
+        series2.add(new Day(28, 8, 2007), 394975400 / 100);
+        series2.add(new Day(27, 8, 2007), 475797500 / 100);
+        series2.add(new Day(24, 8, 2007), 297679500 / 100);
+        series2.add(new Day(23, 8, 2007), 191760600 / 100);
+        series2.add(new Day(22, 8, 2007), 232570200 / 100);
+        series2.add(new Day(21, 8, 2007), 215693200 / 100);
+        series2.add(new Day(20, 8, 2007), 200287500 / 100);
+        TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
         timeSeriesCollection.addSeries(series2);
 
         //获取K线数据的最高值和最低值
@@ -302,8 +302,8 @@ public class CandlestickChartController {
         for (int i = 0; i < seriesCount2; i++) {
             int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项
             for (int j = 0; j < itemCount; j++) {
-                if (high2Value < timeSeriesCollection.getYValue(i,j)) {//取第i个序列中的第j个数据项的值
-                    high2Value = timeSeriesCollection.getYValue(i,j);
+                if (high2Value < timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                    high2Value = timeSeriesCollection.getYValue(i, j);
                 }
                 if (min2Value > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
                     min2Value = timeSeriesCollection.getYValue(i, j);
@@ -311,48 +311,49 @@ public class CandlestickChartController {
             }
 
         }
-        final CandlestickRenderer candlestickRender=new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
+        final CandlestickRenderer candlestickRender = new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
         candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
         candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
         candlestickRender.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
         candlestickRender.setUpPaint(Color.RED);//设置股票上涨的K线图颜色
         candlestickRender.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色
-        DateAxis x1Axis=new DateAxis();//设置x轴，也就是时间轴
+        DateAxis x1Axis = new DateAxis();//设置x轴，也就是时间轴
         x1Axis.setAutoRange(false);//设置不采用自动设置时间范围
-        try{
-            x1Axis.setRange(dateFormat.parse("2007-08-20"),dateFormat.parse("2007-09-29"));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
-        }catch(Exception e){
+        try {
+            x1Axis.setRange(dateFormat.parse("2007-08-20"), dateFormat.parse("2007-09-29"));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
+        } catch (Exception e) {
             e.printStackTrace();
         }
         x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
         x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值
         x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置
         x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
-        x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY,7));//设置时间刻度的间隔，一般以周为单位
+        x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 7));//设置时间刻度的间隔，一般以周为单位
         x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
-        NumberAxis y1Axis=new NumberAxis();//设定y轴，就是数字轴
+        NumberAxis y1Axis = new NumberAxis();//设定y轴，就是数字轴
         y1Axis.setAutoRange(false);//不使用自动设定范围
-        y1Axis.setRange(minValue*0.9, highValue*1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
-        y1Axis.setTickUnit(new NumberTickUnit((highValue*1.1-minValue*0.9)/10));//设置刻度显示的密度
-        XYPlot plot1=new XYPlot(seriesCollection,x1Axis,y1Axis,candlestickRender);//设置画图区域对象
+        y1Axis.setRange(minValue * 0.9, highValue * 1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
+        y1Axis.setTickUnit(new NumberTickUnit((highValue * 1.1 - minValue * 0.9) / 10));//设置刻度显示的密度
+        XYPlot plot1 = new XYPlot(seriesCollection, x1Axis, y1Axis, candlestickRender);//设置画图区域对象
 
 
-
-        XYBarRenderer xyBarRender=new XYBarRenderer(){
+        XYBarRenderer xyBarRender = new XYBarRenderer() {
             private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值
-            public Paint getItemPaint(int i, int j){//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
-                if(seriesCollection.getCloseValue(i,j)>seriesCollection.getOpenValue(i,j)){//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
+
+            public Paint getItemPaint(int i, int j) {//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
+                if (seriesCollection.getCloseValue(i, j) > seriesCollection.getOpenValue(i, j)) {//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
                     return candlestickRender.getUpPaint();
-                }else{
+                } else {
                     return candlestickRender.getDownPaint();
                 }
-            }};
+            }
+        };
         xyBarRender.setMargin(0.1);//设置柱形图之间的间隔
-        NumberAxis y2Axis=new NumberAxis();//设置Y轴，为数值,后面的设置，参考上面的y轴设置
+        NumberAxis y2Axis = new NumberAxis();//设置Y轴，为数值,后面的设置，参考上面的y轴设置
         y2Axis.setAutoRange(false);
-        y2Axis.setRange(min2Value*0.9, high2Value*1.1);
-        y2Axis.setTickUnit(new NumberTickUnit((high2Value*1.1-min2Value*0.9)/4));
-        XYPlot plot2=new XYPlot(timeSeriesCollection,null,y2Axis,xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
+        y2Axis.setRange(min2Value * 0.9, high2Value * 1.1);
+        y2Axis.setTickUnit(new NumberTickUnit((high2Value * 1.1 - min2Value * 0.9) / 4));
+        XYPlot plot2 = new XYPlot(timeSeriesCollection, null, y2Axis, xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
         CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
         combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
         combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
@@ -370,82 +371,82 @@ public class CandlestickChartController {
         plot2.setBackgroundPaint(Color.black);
 
         //动态生成图片并展示
-        String path1="";
-        String path2="";
-        FileOutputStream out=null;
-        try{
-            String s=CandlestickChartController.class.getResource("/picture/").getFile();
-            String[] ss=s.split("/");
-            String t="";
-            for(int i=0;i<ss.length-3;i++){
-                t+=(ss[i]+"\\");
+        String path1 = "";
+        String path2 = "";
+        FileOutputStream out = null;
+        try {
+            String s = CandlestickChartController.class.getResource("/picture/").getFile();
+            String[] ss = s.split("/");
+            String t = "";
+            for (int i = 0; i < ss.length - 3; i++) {
+                t += (ss[i] + "\\");
             }
-            t=t.substring(1);
-            path2=t+"src\\main\\resources\\picture\\Kimage.jpeg";
-            path1=s+"Kimage.jpeg";
-            File file1=new File(path1);
-            File file2=new File(path2);
-            if(!file1.getParentFile().exists()){
+            t = t.substring(1);
+            path2 = t + "src\\main\\resources\\picture\\Kimage.jpeg";
+            path1 = s + "Kimage.jpeg";
+            File file1 = new File(path1);
+            File file2 = new File(path2);
+            if (!file1.getParentFile().exists()) {
                 file1.getParentFile().mkdirs();
             }
-            out=new FileOutputStream(file1);
-            ChartUtilities.writeChartAsJPEG(out,chart,600,600);
+            out = new FileOutputStream(file1);
+            ChartUtilities.writeChartAsJPEG(out, chart, 600, 600);
             out.flush();
             out.close();
-            out=new FileOutputStream(file2);
-            ChartUtilities.writeChartAsJPEG(out,chart,600,600);
+            out = new FileOutputStream(file2);
+            ChartUtilities.writeChartAsJPEG(out, chart, 600, 600);
             out.flush();
             out.close();
-        }
-        catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        javafx.scene.image.Image image=new javafx.scene.image.Image("/picture/Kimage.jpeg");
-        ImageView im=new ImageView(image);
-        gridPane.add(im,0,0);
+        javafx.scene.image.Image image = new javafx.scene.image.Image("/picture/Kimage.jpeg");
+        ImageView im = new ImageView(image);
+        gridPane.add(im, 0, 0);
     }
 
     /**
      * 为蜡烛图注入数据
+     *
      * @param ohlcSeries
      * @param stockVO
      * @return
      */
-    private OHLCSeries addCandlestickChartData(OHLCSeries ohlcSeries , StockVO stockVO){
-        double [] open=stockVO.getOpen();
-        double [] high=stockVO.getHigh();
-        double [] low=stockVO.getLow();
-        double [] close=stockVO.getClose();
-        LocalDate startLocalDate=startTimeDatePicker.getValue();
-        Date startDate=this.changeDateStyle(startLocalDate);
-        int year=startDate.getYear();
-        int month=startDate.getMonth();
-        int day=startDate.getDay();
-        for(int i=0;i<open.length;i++){
-            ohlcSeries.add(new Day(year+i,month+i,day+i),open[i],high[i],low[i],close[i]);
+    private OHLCSeries addCandlestickChartData(OHLCSeries ohlcSeries, StockVO stockVO) {
+        double[] open = stockVO.getOpen();
+        double[] high = stockVO.getHigh();
+        double[] low = stockVO.getLow();
+        double[] close = stockVO.getClose();
+        LocalDate startLocalDate = startTimeDatePicker.getValue();
+        Date startDate = this.changeDateStyle(startLocalDate);
+        int year = startDate.getYear();
+        int month = startDate.getMonth();
+        int day = startDate.getDay();
+        for (int i = 0; i < open.length; i++) {
+            ohlcSeries.add(new Day(year + i, month + i, day + i), open[i], high[i], low[i], close[i]);
         }
         return ohlcSeries;
     }
 
     /**
      * 为成交量图注入数据
+     *
      * @param timeSeries
      * @param stockVO
      * @return
      */
-    private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries , StockVO stockVO){
-        int [] volume=stockVO.getVolume();
-        LocalDate startLocalDate=startTimeDatePicker.getValue();
-        Date startDate=this.changeDateStyle(startLocalDate);
-        int year=startDate.getYear();
-        int month=startDate.getMonth();
-        int day=startDate.getDay();
-        for(int i=0;i<volume.length;i++){
-            timeSeries.add(new Day(year+i,month+i,day+i),volume[i]);
+    private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries, StockVO stockVO) {
+        int[] volume = stockVO.getVolume();
+        LocalDate startLocalDate = startTimeDatePicker.getValue();
+        Date startDate = this.changeDateStyle(startLocalDate);
+        int year = startDate.getYear();
+        int month = startDate.getMonth();
+        int day = startDate.getDay();
+        for (int i = 0; i < volume.length; i++) {
+            timeSeries.add(new Day(year + i, month + i, day + i), volume[i]);
         }
         return timeSeries;
     }
@@ -454,7 +455,7 @@ public class CandlestickChartController {
     /**
      * 绘制均线图
      */
-    private void createEMA(){
+    private void createEMA() {
         lineChart.getData().clear();
         final CategoryAxis xAxis = new CategoryAxis();
         final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
@@ -482,7 +483,6 @@ public class CandlestickChartController {
 //        XYChart.Series series_average60= new XYChart.Series();
 //        series_average60=this.addEMAData(series_average60,average60);
 //        series_average60.setName("60天");
-
 
 
         XYChart.Series series1 = new XYChart.Series();
@@ -533,30 +533,32 @@ public class CandlestickChartController {
 
         lineChart.getData().addAll(series1, series2, series3);
         gridPane.getChildren().clear();
-        gridPane.add(lineChart,1,0);
+        gridPane.add(lineChart, 1, 0);
 
     }
 
     /**
      * 对均线图进行数据注入
+     *
      * @param series
      * @param data
      * @return
      */
-    private XYChart.Series addEMAData(XYChart.Series series,double[] data){
+    private XYChart.Series addEMAData(XYChart.Series series, double[] data) {
 
-        for(int i=0;i<data.length;i++){
-            series.getData().add(new XYChart.Data(i+1,data[i]));
+        for (int i = 0; i < data.length; i++) {
+            series.getData().add(new XYChart.Data(i + 1, data[i]));
         }
         return series;
     }
 
     /**
      * 将Localdate转化为Date
+     *
      * @param localDate
      * @return
      */
-    private Date changeDateStyle(LocalDate localDate){
+    private Date changeDateStyle(LocalDate localDate) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
         Date date = Date.from(instant);
@@ -565,6 +567,7 @@ public class CandlestickChartController {
 
     /**
      * 根据条件寻找对应股票
+     *
      * @return
      */
     /*private StockVO getStockVOByCondition(){

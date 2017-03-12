@@ -16,11 +16,8 @@ public class Main extends Application {
     private Stage stage;
 
 
-
     // 内部窗口
     private SplitPane rootLayout;
-
-
 
 
     private Scene scene;
@@ -30,6 +27,7 @@ public class Main extends Application {
 
     /**
      * 初始化界面
+     *
      * @param primaryStage
      * @throws Exception
      */
@@ -40,12 +38,11 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
-        Net net=new Net();
+        Net net = new Net();
         net.setupNet();
         this.gotoClientOverview();
 
     }
-
 
 
     /**
@@ -72,7 +69,7 @@ public class Main extends Application {
     /**
      * 跳转到K线图界面
      */
-    public void gotoCandlestickChart(){
+    public void gotoCandlestickChart() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/CandlestickChart.fxml"));
@@ -89,7 +86,7 @@ public class Main extends Application {
     /**
      * 跳转到股票比较功能界面
      */
-    public void gotoCompareFunction(){
+    public void gotoCompareFunction() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Contrast.fxml"));
@@ -106,7 +103,7 @@ public class Main extends Application {
     /**
      * 跳转到市场温度计界面
      */
-    public void gotoThermometer(){
+    public void gotoThermometer() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Thermometer.fxml"));
