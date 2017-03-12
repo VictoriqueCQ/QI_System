@@ -6,10 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -65,6 +62,22 @@ public class ContrastController extends Application {
 
     @FXML
     private Button delete;
+
+    @FXML
+    private TableColumn stockName;
+
+    @FXML
+    private TableColumn stockID;
+
+    @FXML
+    private TableColumn minPrice;
+
+    @FXML
+    private TableColumn maxPrice;
+
+    @FXML
+    private TableColumn riseAndDown;
+
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
    /* @FXML
@@ -275,7 +288,7 @@ public class ContrastController extends Application {
 
                    }
     public void setTableContrast(){
-
+//        stockName.setCellValueFactory("sad");
 
 
     }
