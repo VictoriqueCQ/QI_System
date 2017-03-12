@@ -11,27 +11,25 @@ import java.util.Date;
  */
 public class Single_Search_data_ImplTest {
     private Single_Search_data_Impl singleSearchData;
-
     @Before
     public void setUp() throws Exception {
-        DataReader_CSV dataReader_csv = new DataReader_CSV();
-        singleSearchData = new Single_Search_data_Impl(dataReader_csv.read());
+        DataReader_CSV dataReader_csv=new DataReader_CSV();
+        singleSearchData=new Single_Search_data_Impl(dataReader_csv.read());
     }
 
     @Test
     public void getStockListByID() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yy");
-        Date date1 = sdf.parse("4/22/14");
-        Date date2 = sdf.parse("4/29/14");
-        singleSearchData.getStockListByID(1, date1, date2);
+        SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
+        Date date1=sdf.parse("4/22/14");
+        Date date2=sdf.parse("4/29/14");
+        //singleSearchData.getStockListByID(1,date1,date2);
     }
 
     @Test
     public void getStockListByName() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yy");
-        Date date1 = sdf.parse("4/22/14");
-        Date date2 = sdf.parse("4/29/14");
-        singleSearchData.getStockListByName("深发展Ａ", date1, date2);
+        //singleSearchData.getStockListByName("深发展Ａ",date1,date2);
+        String[] quest={"0","STOCK","1","NULL","4/22/14","4/29/14"};
+        singleSearchData.getStockList(quest);
     }
 
 }
