@@ -1,28 +1,26 @@
-.label{
-    -fx-base:rgb(0,0,0);
-    -fx-text-fill:rgb(240,150,96);
+.label {
+    -fx-base: rgb(0, 0, 0);
+    -fx-text-fill: rgb(240, 150, 96);
     -fx-font-size: 1em;
 }
 
-
-
-.label_warning{
-    -fx-base:rgb(0,0,0);
-    -fx-text-fill:rgb(240,150,96);
+.label_warning {
+    -fx-base: rgb(0, 0, 0);
+    -fx-text-fill: rgb(240, 150, 96);
     -fx-font-size: 8em;
 
 }
 
-.search_button{
-    -fx-text-fill:rgb(240,150,96);
+.search_button {
+    -fx-text-fill: rgb(240, 150, 96);
 }
 
-.date-picker .label{
-    -fx-text-fill:rgb(100,100,100);
+.date-picker .label {
+    -fx-text-fill: rgb(100, 100, 100);
 }
 
-.date-picker .button{
-    -fx-base:rgb(100,100,100);
+.date-picker .button {
+    -fx-base: rgb(100, 100, 100);
 }
 
 .date-picker > .arrow-button {
@@ -32,60 +30,67 @@
 }
 
 .date-picker > .text-field {
-    -fx-background-color: rgb(100,100,100);;
+    -fx-background-color: rgb(100, 100, 100);;
     -fx-background-insets: 1 0 1 1;
     -fx-background-radius: 2 0 0 2;
 }
-.date-picker > .text-field{
-    -fx-border-color: rgb(100,100,100);
+
+.date-picker > .text-field {
+    -fx-border-color: rgb(100, 100, 100);
     -fx-text-fill: #AAACAF;
 }
-.date-picker > .text-field:selected{
+
+.date-picker > .text-field:selected {
     -fx-border-color: #161618;
 }
 
-.date-picker-popup{
-    -fx-control-inner-background:#161618;
-    -fx-control-inner-border-color:#161618;
+.date-picker-popup {
+    -fx-control-inner-background: #161618;
+    -fx-control-inner-border-color: #161618;
 }
 
-.date-picker-popup > .month-year-pane{
+.date-picker-popup > .month-year-pane {
     -fx-background-color: #161618;
     -fx-border-color: #161618;
 }
-.date-picker-popup > * > .date-cell{
+
+.date-picker-popup > * > .date-cell {
     -fx-background-color: #161618;
     -fx-border-color: #AAACAF;
     -fx-text-fill: #AAACAF;
 }
 
-.date-picker-popup > * > .day-cell:hover{
+.date-picker-popup > * > .day-cell:hover {
     -fx-background-color: #243C62;
 }
 
-.combo-box-base{
+.combo-box-base {
     -fx-border-color: transparent;
     -fx-background-color: transparent;
 }
-.combo-box-base:editable > .arrow-button{
+
+.combo-box-base:editable > .arrow-button {
     -fx-border-color: #161618;
     -fx-background-color: #161618;
 }
-.date-picker:editable > .arrow-button:hover{
+
+.date-picker:editable > .arrow-button:hover {
     -fx-border-color: white;
     -fx-background-color: black;
 }
-.date-picker:editable > .arrow-button > .arrow:hover{
+
+.date-picker:editable > .arrow-button > .arrow:hover {
     -fx-border-color: #243C62;
     -fx-background-color: #243C62;
 }
-.date-picker-popup > * > .spinner > .button:hover{
+
+.date-picker-popup > * > .spinner > .button:hover {
     -fx-background-color: #243C62;
 }
 
-.headTextFieldText{
+.headTextFieldText {
     -fx-background-radius: 20px;
-    -fx-background-color: rgb(100,100,100);
+    -fx-background-color: rgb(100, 100, 100);
     -fx-border-radius: 20px;
     -fx-text-fill: #AAACAF;
 }
@@ -95,14 +100,42 @@
     -fx-effect: null;
 }
 
-.default-color0.chart-series-line { -fx-stroke: #FFFFFF; }
-.default-color1.chart-series-line { -fx-stroke: #ffff00; }
-.default-color2.chart-series-line { -fx-stroke: #b23aee; }
-.default-color3.chart-series-line { -fx-stroke: #66CD00; }
-.default-color4.chart-series-line { -fx-stroke: #63B8FF; }
+.default-color0.chart-series-line {
+    -fx-stroke: #FFFFFF;
+}
 
-.default-color0.chart-line-symbol { -fx-background-color: #ffffff, #ffffff; }
-.default-color1.chart-line-symbol { -fx-background-color: #ffff00, #ffff00; }
-.default-color2.chart-line-symbol { -fx-background-color: #b23aee, #b23aee; }
-.default-color3.chart-line-symbol { -fx-background-color: #66CD00, #66CD00; }
-.default-color4.chart-line-symbol { -fx-background-color: #63B8FF, #63B8FF; }
+.default-color1.chart-series-line {
+    -fx-stroke: #ffff00;
+}
+
+.default-color2.chart-series-line {
+    -fx-stroke: #b23aee;
+}
+
+.default-color3.chart-series-line {
+    -fx-stroke: #66CD00;
+}
+
+.default-color4.chart-series-line {
+    -fx-stroke: #63B8FF;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #ffffff, #ffffff;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #ffff00, #ffff00;
+}
+
+.default-color2.chart-line-symbol {
+    -fx-background-color: #b23aee, #b23aee;
+}
+
+.default-color3.chart-line-symbol {
+    -fx-background-color: #66CD00, #66CD00;
+}
+
+.default-color4.chart-line-symbol {
+    -fx-background-color: #63B8FF, #63B8FF;
+}

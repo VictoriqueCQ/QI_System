@@ -12,46 +12,47 @@ class SwitchNode {
     private ClientServer clientServer;
     private DataServer dataServer;
 
-    void run(){
-        clientServer=new ClientServer(9000);
-        dataServer=new DataServer(9001);
+    void run() {
+        clientServer = new ClientServer(9000);
+        dataServer = new DataServer(9001);
         clientServer.start();
         dataServer.start();
     }
 
-    public class ClientServer extends Thread{
+    public class ClientServer extends Thread {
         private int port;
 
-        ClientServer(int port){
-            this.port=port;
+        ClientServer(int port) {
+            this.port = port;
         }
 
-        public void run(){
-            try{
-                ServerSocket cServer=new ServerSocket(port);
-                while(true){
-                    Socket socket=cServer.accept();
+        public void run() {
+            try {
+                ServerSocket cServer = new ServerSocket(port);
+                while (true) {
+                    Socket socket = cServer.accept();
                     (new ClientNodeThread(socket)).run();
                     System.out.println("client connected");
                 }
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
     }
 
-    public class DataServer extends Thread{
+    public class DataServer extends Thread {
         private int port;
-        DataServer(int port){
-            this.port=port;
+
+        DataServer(int port) {
+            this.port = port;
         }
 
-        public void run(){
+        public void run() {
             try {
                 ServerSocket cServer = new ServerSocket(port);//注册数据服务器
-                while(true){
-                    Socket socket=cServer.accept();
+                while (true) {
+                    Socket socket = cServer.accept();
                     (new DataNodeThread(socket)).run();
                     System.out.println("data connected");
                 }

@@ -9,14 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import quantour.po.MarketPO;
@@ -25,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -183,19 +182,7 @@ ThermometerController implements Initializable {
     }
 
     public void setPieChart() {
-//        显示区域所占比例，暂时尚未时间如何添加
-//        Label caption = new Label("");
-//        caption.setTextFill(Color.DARKORANGE);
-//        caption.setStyle("-fx-font: 24 arial;");
-//        pieChart.getData().stream().forEach((data) -> {
-//            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-//                    (MouseEvent e) -> {
-//                        caption.setTranslateX(e.getSceneX());
-//                        caption.setTranslateY(e.getSceneY());
-//                        caption.setText(String.valueOf(data.getPieValue())
-//                                + "%");
-//                    });
-//        });
+//
 //        当鼠标移入饼图块时，该块位置发生偏移，鼠标离开后，该块回复到原来位置。暂时尚未实现效果
 //        d1.getNode().setOnMouseEntered(new MouseHoverAnimation(d1, pieChart));
 //        d1.getNode().setOnMouseExited(new MouseExitAnimation());
@@ -213,6 +200,19 @@ ThermometerController implements Initializable {
 //        d5.getNode().setOnMouseExited(new MouseExitAnimation());
 
         pieChart.getData().setAll(pieChartData);
+        final Label caption = new Label("");
+        caption.setTextFill(Color.DARKORANGE);
+        caption.setStyle("-fx-font: 24 arial;");
+        pieChart.getData().stream().forEach(data -> {
+            data.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED,
+                    (MouseEvent e) -> {
+                        caption.setTranslateX(e.getSceneX());
+                        caption.setTranslateY(e.getSceneY());
+                        caption.setText(String.valueOf(data.getPieValue())
+                                + "%");
+                    });
+        });
+
         pieChart.setAnimated(false);
     }
 
@@ -229,6 +229,12 @@ ThermometerController implements Initializable {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = time.atStartOfDay(zone).toInstant();
         Date date = Date.from(instant);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        String dateString = simpleDateFormat.format(date);
+        Net net = new Net();
+        net.actionPerformed("MARKET\tdateString\n");
+        String allStocksMessage = net.run();
+
 //        Overall_Search_bl overall_search_bl=new Overall_Search_bl_Impl();
 //        overall_search_bl.getMarketInfo(date);
 //        searchButton.getStyleClass().add("button");
@@ -290,12 +296,12 @@ ThermometerController implements Initializable {
 
         //当鼠标进入按钮时添加阴影特效
         DropShadow shadow = new DropShadow();
-        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e) -> {
             searchButton.setEffect(shadow);
         });
 
         //当鼠标离开按钮时移除阴影效果
-        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e) -> {
             searchButton.setEffect(null);
         });
     }
@@ -305,35 +311,34 @@ ThermometerController implements Initializable {
     }
 
 
-
-    public void getMarketVO() {
-
-        Iterator<MarketPO> iter = marketPOList.iterator();
-
-        while (iter.hasNext()) {
-            MarketPO marketPO = iter.next();
-
-            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
-
-            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
-
-            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
-
-            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
-
-            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
-
-            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
-
-            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
-
-            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-
-        }
-    }
+//    public void getMarketVO() {
+//
+//        Iterator<MarketPO> iter = marketPOList.iterator();
+//
+//        while (iter.hasNext()) {
+//            MarketPO marketPO = iter.next();
+//
+//            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
+//
+//            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
+//
+//            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
+//
+//            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
+//
+//            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
+//
+//            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
+//
+//            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
+//
+//            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+//                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+//                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+//                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+//
+//        }
+//    }
 
 //    public void go(){
 //        setupNet();//建立网络连接
@@ -409,75 +414,75 @@ ThermometerController implements Initializable {
     }
 
 
-    static class MouseHoverAnimation implements EventHandler {
-        static final Duration ANIMATION_DURATION = new Duration(500);
-        static final double ANIMATION_DISTANCE = 0.15;
-        private double cos;
-        private double sin;
-        private PieChart chart;
-
-        public MouseHoverAnimation(PieChart.Data d, PieChart chart) {
-            this.chart = chart;
-            double start = 0;
-            double angle = calcAngle(d);
-            for (PieChart.Data tmp : chart.getData()) {
-                if (tmp == d) {
-                    break;
-                }
-                start += calcAngle(tmp);
-            }
-
-            cos = Math.cos(Math.toRadians(start + angle / 2));
-            sin = Math.sin(Math.toRadians(start + angle / 2));
-        }
-
-        public void handle(MouseEvent arg0) {
-            Node n = (Node) arg0.getSource();
-            double minX = Double.MAX_VALUE;
-            double maxX = Double.MAX_VALUE * -1;
-
-            for (PieChart.Data d : chart.getData()) {
-                minX = Math
-                        .min(minX, d.getNode().getBoundsInParent().getMinX());
-                maxX = Math
-                        .max(maxX, d.getNode().getBoundsInParent().getMaxX());
-            }
-
-            double radius = maxX - minX;
-            System.out.println("cos:" + cos);
-            System.out.println("sin" + sin);
-            TranslateTransitionBuilder.create()
-                    .toX((radius * ANIMATION_DISTANCE) * cos)
-                    .toY((radius * ANIMATION_DISTANCE) * (-sin))
-                    .duration(ANIMATION_DURATION).node(n).build().play();
-        }
-
-        private static double calcAngle(PieChart.Data d) {
-            double total = 0;
-            for (PieChart.Data tmp : d.getChart().getData()) {
-                total += tmp.getPieValue();
-            }
-            return 360 * (d.getPieValue() / total);
-        }
-
-        @Override
-        public void handle(Event event) {
-            // TODO Auto-generated method stub
-
-        }
-    }
-
-    static class MouseExitAnimation implements EventHandler {
-        public void handle(MouseEvent event) {
-            TranslateTransitionBuilder.create().toX(0).toY(0)
-                    .duration(new Duration(500)).node((Node) event.getSource())
-                    .build().play();
-        }
-
-        @Override
-        public void handle(Event event) {
-            // TODO Auto-generated method stub
-
-        }
-    }
+//    static class MouseHoverAnimation implements EventHandler {
+//        static final Duration ANIMATION_DURATION = new Duration(500);
+//        static final double ANIMATION_DISTANCE = 0.15;
+//        private double cos;
+//        private double sin;
+//        private PieChart chart;
+//
+//        public MouseHoverAnimation(PieChart.Data d, PieChart chart) {
+//            this.chart = chart;
+//            double start = 0;
+//            double angle = calcAngle(d);
+//            for (PieChart.Data tmp : chart.getData()) {
+//                if (tmp == d) {
+//                    break;
+//                }
+//                start += calcAngle(tmp);
+//            }
+//
+//            cos = Math.cos(Math.toRadians(start + angle / 2));
+//            sin = Math.sin(Math.toRadians(start + angle / 2));
+//        }
+//
+//        public void handle(MouseEvent arg0) {
+//            Node n = (Node) arg0.getSource();
+//            double minX = Double.MAX_VALUE;
+//            double maxX = Double.MAX_VALUE * -1;
+//
+//            for (PieChart.Data d : chart.getData()) {
+//                minX = Math
+//                        .min(minX, d.getNode().getBoundsInParent().getMinX());
+//                maxX = Math
+//                        .max(maxX, d.getNode().getBoundsInParent().getMaxX());
+//            }
+//
+//            double radius = maxX - minX;
+//            System.out.println("cos:" + cos);
+//            System.out.println("sin" + sin);
+//            TranslateTransitionBuilder.create()
+//                    .toX((radius * ANIMATION_DISTANCE) * cos)
+//                    .toY((radius * ANIMATION_DISTANCE) * (-sin))
+//                    .duration(ANIMATION_DURATION).node(n).build().play();
+//        }
+//
+//        private static double calcAngle(PieChart.Data d) {
+//            double total = 0;
+//            for (PieChart.Data tmp : d.getChart().getData()) {
+//                total += tmp.getPieValue();
+//            }
+//            return 360 * (d.getPieValue() / total);
+//        }
+//
+//        @Override
+//        public void handle(Event event) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//    }
+//
+//    static class MouseExitAnimation implements EventHandler {
+//        public void handle(MouseEvent event) {
+//            TranslateTransitionBuilder.create().toX(0).toY(0)
+//                    .duration(new Duration(500)).node((Node) event.getSource())
+//                    .build().play();
+//        }
+//
+//        @Override
+//        public void handle(Event event) {
+//            // TODO Auto-generated method stub
+//
+//        }
+//    }
 }
