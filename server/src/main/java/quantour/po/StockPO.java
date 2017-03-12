@@ -2,6 +2,7 @@ package quantour.po;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by dell on 2017/3/4.
@@ -17,6 +18,7 @@ public class StockPO {
     private double[] close;
     private int[] volume;//交易数
     private double[] adjClose;//复权后
+    private List<Date> dates;
     private double[] average5;
     private double[] average10;
     private double[] average20;
@@ -26,8 +28,9 @@ public class StockPO {
     private double variance;//相对方差
 
     public StockPO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
-                   double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
-                   double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
+                   double[] close, int[] volume, double[] adjClose, List<Date> dates, double[] average5,
+                   double[] average10, double[] average20, double[] average30, double[] average60,
+                   ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -38,6 +41,7 @@ public class StockPO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
+        this.dates = dates;
         this.average5 = average5;
         this.average10 = average10;
         this.average20 = average20;
@@ -85,6 +89,10 @@ public class StockPO {
 
     public double[] getAdjClose() {
         return adjClose;
+    }
+
+    public List<Date> getDates() {
+        return dates;
     }
 
     public double[] getAverage5() {
