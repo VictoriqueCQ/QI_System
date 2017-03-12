@@ -3,6 +3,8 @@ package ui;/**
  */
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -15,7 +17,9 @@ import quantour.vo.StockVO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class ContrastController extends Application {
     private Main main;
@@ -64,19 +68,22 @@ public class ContrastController extends Application {
     private Button delete;
 
     @FXML
-    private TableColumn stockName;
+    private TableView<StockModle> stockTable;
 
     @FXML
-    private TableColumn stockID;
+    private TableColumn<StockModle,String> stockName;
 
     @FXML
-    private TableColumn minPrice;
+    private TableColumn<StockModle,Integer>stockID;
 
     @FXML
-    private TableColumn maxPrice;
+    private TableColumn<StockModle,Double> minPrice;
 
     @FXML
-    private TableColumn riseAndDown;
+    private TableColumn<StockModle,Double> maxPrice;
+
+    @FXML
+    private TableColumn<StockModle,String> riseAndDown;
 
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
@@ -289,9 +296,36 @@ public class ContrastController extends Application {
                    }
     public void setTableContrast(){
 //        stockName.setCellValueFactory("sad");
+        StockModle stockModle = stockVOtoStockModle(stock1);
+        ObservableList<StockModle> models = FXCollections.observableArrayList();
+        models.add(stockModle);
+        stockTable.setItems(models);
 
 
     }
+    public StockModle stockVOtoStockModle(StockVO stockVO){
+        StockModle modle = new StockModle();
+        modle.setID(stockVO.getCode());
+        double[] low = new double[stockVO.getLow().length];
+        double minTemp = low[0];
+        for(int i=0;i<low.length;i++){
+            if(low[i]<minTemp){minTemp=low[i];}
+        }
+        modle.setMinPrice(minTemp);
+
+        double[]high = new double[stockVO.getHigh().length];
+        double maxTemp = high[0];
+        for(int i=0;i<high.length;i++){
+            if(low[i]>maxTemp){maxTemp=high[i];}
+        }
+        modle.setMaxPrice(maxTemp);
+
+        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length-1]-stockVO.getClose()[0])/stockVO.getClose()[0];
+
+        modle.setRiseAndDown(riseAndDown*100+"%");
+        return modle;
+    }
+
     public void setClosePriceLine(){
         XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("股票一");
@@ -316,7 +350,7 @@ public class ContrastController extends Application {
         Date d1  = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            d1 = df.parse("2015-07-07");
+            d1 = df.parse("2015-12-30");
         } catch (ParseException e) {
             e.printStackTrace();
         }
