@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import quantour.vo.StockVO;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -297,23 +298,33 @@ public class ContrastController extends Application {
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");*/
         double[] d = new double[3];
+        Date d2=new Date();
         d[0]=100;d[1]=2;d[2]=30;
-        Date d1=new Date(2015,7,6);
+        Date d1  = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            d1 = df.parse("2015-07-07");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
         for(int i = 0;i<d.length;i++){
 
-            Calendar c   =   new GregorianCalendar();
-            c.setTime(d1);
-            
 
-            c.add(c.DATE,i);
+//            Calendar c   =   new GregorianCalendar();
+//            c.setTime(d1);
 
 
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+//            c.add(c.DATE,i);
+
+
+//            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 //            java.util.Date date=new java.util.Date();
-            String s=sdf.format(c.getTime());
+//            String s=sdf.format(c.getTime());
 
-            series.getData().add(new XYChart.Data(s, d[i]));
+            series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() +(long)i* 24 * 60 * 60 * 1000)), d[i]));
 
 
             closePriceLine.getData().add(series);
