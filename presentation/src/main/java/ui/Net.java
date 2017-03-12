@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -27,6 +28,14 @@ public class Net {
 
     }
 
+    public void closeSock(){
+        try {
+            sock.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public Socket getSock() {
         return this.sock;
     }
@@ -39,11 +48,10 @@ public class Net {
         return this.pw;
     }
 
-    String output;
-    String input;
 
     public String run() {
         String message;
+        String output="";
         try {
             while (true) {
                 while ((message = br.readLine()) != null) {
@@ -65,7 +73,5 @@ public class Net {
             ep.printStackTrace();
         }
 
-//        input.setText("");
-//        input.requestFocus();
     }
 }
