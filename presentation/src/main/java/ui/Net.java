@@ -14,53 +14,54 @@ public class Net {
     private BufferedReader br;
     private PrintWriter pw;
 
-    public void setupNet(){
-        try{
-            sock=new Socket("127.0.0.1",9000);
-            InputStreamReader is=new InputStreamReader(sock.getInputStream());
-            br=new BufferedReader(is);
-            pw=new PrintWriter(sock.getOutputStream());
+    public void setupNet() {
+        try {
+            sock = new Socket("127.0.0.1", 9000);
+            InputStreamReader is = new InputStreamReader(sock.getInputStream());
+            br = new BufferedReader(is);
+            pw = new PrintWriter(sock.getOutputStream());
             System.out.println("Network established.");
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public Socket getSock(){
+    public Socket getSock() {
         return this.sock;
     }
 
-    public BufferedReader getBufferedReader(){
+    public BufferedReader getBufferedReader() {
         return this.br;
     }
 
-    public PrintWriter getPrintWriter(){
+    public PrintWriter getPrintWriter() {
         return this.pw;
     }
 
     String output;
     String input;
 
-    public void run(){
+    public String run() {
         String message;
-        try{
-            while(true){
-                while((message=br.readLine())!=null){
-                    System.out.println("read: "+message);
-                    output+=(message+"\n");
+        try {
+            while (true) {
+                while ((message = br.readLine()) != null) {
+                    System.out.println("read: " + message);
+                    output += (message + "\n");
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return output;
     }
 
-    public void actionPerformed(String input){
-        try{
+    public void actionPerformed(String input) {
+        try {
             pw.write(input);
             pw.flush();
-        }catch(Exception ep){
+        } catch (Exception ep) {
             ep.printStackTrace();
         }
 
