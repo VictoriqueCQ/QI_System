@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/CandlestickChartCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CandlestickChartController">
    <children>
-      <GridPane fx:id="gridPane" layoutX="557.0" layoutY="64.0" prefHeight="556.0" prefWidth="1200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+      <GridPane fx:id="gridPane" layoutX="557.0" layoutY="64.0" prefHeight="556.0" prefWidth="1200.0" styleClass="gridpane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -18,12 +18,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="572.0" prefWidth="716.0" styleClass="label_warning" text="  股市有风险">
+            <Label prefHeight="572.0" prefWidth="716.0" styleClass="label_warning">
                <font>
                   <Font size="51.0" />
                </font>
             </Label>
-            <Label styleClass="label_warning" text=" 入市需谨慎" GridPane.columnIndex="1" />
+            <Label styleClass="label_warning" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="265.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
