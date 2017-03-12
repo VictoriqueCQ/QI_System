@@ -1,19 +1,24 @@
 package quantour.bl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by dell on 2017/3/12.
  */
-public class ResultMap {
-    private static Map<Integer,String> map;
+class ResultMap {
+    private static Map<Integer,String> map=new HashMap<>();
 
-    private static void write(){
-
+    static void write(int id, String result){
+        map.put(id,result);
     }
 
-    private static void get(){
+    static String get(int id){
+        return map.get(id);
+    }
 
+    static void delete(int id){
+        map.remove(id);
     }
 
 }
