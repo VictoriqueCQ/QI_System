@@ -38,7 +38,8 @@ import java.util.ResourceBundle;
 /**
  * Created by Administrator on 2017/3/3.
  */
-public class ThermometerController implements Initializable {
+public class
+ThermometerController implements Initializable {
     private Main main;
 
     Socket socket;
