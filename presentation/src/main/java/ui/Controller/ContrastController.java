@@ -28,7 +28,7 @@ public class ContrastController extends Application {
     private Main main;
 
 
-    private List<StockVO> allStock ;//所有股票
+    private List<StockVO> allStock;//所有股票
     private StockVO stock1;
     private StockVO stock2;
 
@@ -37,14 +37,13 @@ public class ContrastController extends Application {
     private TextField addName1;
 
     @FXML
-    private  TextField addName2;
+    private TextField addName2;
 
     @FXML
     private DatePicker startTimeDatePicker;
 
     @FXML
     private DatePicker endTimeDatePicker;
-
 
 
     @FXML
@@ -74,19 +73,19 @@ public class ContrastController extends Application {
     private TableView<StockModle> stockTable;
 
     @FXML
-    private TableColumn<StockModle,String> stockName;
+    private TableColumn<StockModle, String> stockName;
 
     @FXML
-    private TableColumn<StockModle,Integer>stockID;
+    private TableColumn<StockModle, Integer> stockID;
 
     @FXML
-    private TableColumn<StockModle,Double> minPrice;
+    private TableColumn<StockModle, Double> minPrice;
 
     @FXML
-    private TableColumn<StockModle,Double> maxPrice;
+    private TableColumn<StockModle, Double> maxPrice;
 
     @FXML
-    private TableColumn<StockModle,String> riseAndDown;
+    private TableColumn<StockModle, String> riseAndDown;
 
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
@@ -100,7 +99,7 @@ public class ContrastController extends Application {
 //    private Map<String, XYChart.Series<Number, Number>> seriesMap;
 
     @FXML
-    private void updateEndTimeDatePicker(){
+    private void updateEndTimeDatePicker() {
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -112,13 +111,13 @@ public class ContrastController extends Application {
 
                                 if (item.isBefore(
                                         startTimeDatePicker.getValue().plusDays(1))
-                                        ){
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
                                 if (item.isAfter(
-                                        LocalDate.of(2014,4,30))
-                                        ){
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -131,7 +130,7 @@ public class ContrastController extends Application {
     }
 
     @FXML
-    private void updateStartTimeDatePicker(){
+    private void updateStartTimeDatePicker() {
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -143,13 +142,13 @@ public class ContrastController extends Application {
 
                                 if (item.isAfter(
                                         endTimeDatePicker.getValue().minusDays(1))
-                                        ){
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
                                 if (item.isBefore(
-                                        LocalDate.of(2005,2,1))
-                                        ){
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -167,8 +166,8 @@ public class ContrastController extends Application {
 //    XYChart.Series series33 = new XYChart.Series();
 
 
-    private void setDatePicker(){
-        startTimeDatePicker.setValue(LocalDate.of(2005,2,1));
+    private void setDatePicker() {
+        startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -179,8 +178,8 @@ public class ContrastController extends Application {
                                 super.updateItem(item, empty);
 
                                 if (item.isBefore(
-                                        LocalDate.of(2005,2,1))
-                                        ){
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -199,8 +198,8 @@ public class ContrastController extends Application {
                                 super.updateItem(item, empty);
 
                                 if (item.isAfter(
-                                        LocalDate.of(2014,4,30))
-                                        ){
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
@@ -209,7 +208,7 @@ public class ContrastController extends Application {
                     }
                 };
         endTimeDatePicker.setDayCellFactory(dayCellFactory2);
-        endTimeDatePicker.setValue(LocalDate.of(2014,4,30));
+        endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
 
     }
 
@@ -230,7 +229,7 @@ public class ContrastController extends Application {
     }
 
     @FXML
-    public void addCompare(){
+    public void addCompare() {
 
 //        xAxis.setLabel("Number of Month");
         //creating the chart
@@ -274,10 +273,6 @@ public class ContrastController extends Application {
         setIncomeLine2();
 
 
-
-
-
-
 //        seriesMap.put(stock.getStockCode(), series);
     }
 
@@ -285,19 +280,22 @@ public class ContrastController extends Application {
     /**
      * cyy
      * 判断是否存在
-     * */
- 	  public boolean Judge(String name){
-      boolean b =false;
-      Iterator<StockVO> iter = allStock.iterator();
-       while(iter.hasNext()){
-           StockVO stock = iter.next();
-        if(name==stock.getName()){b=true;}
+     */
+    public boolean Judge(String name) {
+        boolean b = false;
+        Iterator<StockVO> iter = allStock.iterator();
+        while (iter.hasNext()) {
+            StockVO stock = iter.next();
+            if (name == stock.getName()) {
+                b = true;
+            }
 
-                       }
-          return b;
+        }
+        return b;
 
-                   }
-    public void setTableContrast(){
+    }
+
+    public void setTableContrast() {
 //        stockName.setCellValueFactory("sad");
         StockModle stockModle = stockVOtoStockModle(stock1);
         ObservableList<StockModle> models = FXCollections.observableArrayList();
@@ -306,30 +304,35 @@ public class ContrastController extends Application {
 
 
     }
-    public StockModle stockVOtoStockModle(StockVO stockVO){
+
+    public StockModle stockVOtoStockModle(StockVO stockVO) {
         StockModle modle = new StockModle();
         modle.setID(stockVO.getCode());
         double[] low = new double[stockVO.getLow().length];
         double minTemp = low[0];
-        for(int i=0;i<low.length;i++){
-            if(low[i]<minTemp){minTemp=low[i];}
+        for (int i = 0; i < low.length; i++) {
+            if (low[i] < minTemp) {
+                minTemp = low[i];
+            }
         }
         modle.setMinPrice(minTemp);
 
-        double[]high = new double[stockVO.getHigh().length];
+        double[] high = new double[stockVO.getHigh().length];
         double maxTemp = high[0];
-        for(int i=0;i<high.length;i++){
-            if(low[i]>maxTemp){maxTemp=high[i];}
+        for (int i = 0; i < high.length; i++) {
+            if (low[i] > maxTemp) {
+                maxTemp = high[i];
+            }
         }
         modle.setMaxPrice(maxTemp);
 
-        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length-1]-stockVO.getClose()[0])/stockVO.getClose()[0];
+        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
 
-        modle.setRiseAndDown(riseAndDown*100+"%");
+        modle.setRiseAndDown(riseAndDown * 100 + "%");
         return modle;
     }
 
-    public void setClosePriceLine(){
+    public void setClosePriceLine() {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("股票一");
         //populating the series with data
@@ -348,9 +351,11 @@ public class ContrastController extends Application {
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");*/
         double[] d = new double[3];
-        Date d2=new Date();
-        d[0]=100;d[1]=2;d[2]=30;
-        Date d1  = new Date();
+        Date d2 = new Date();
+        d[0] = 100;
+        d[1] = 2;
+        d[2] = 30;
+        Date d1 = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             d1 = df.parse("2015-12-30");
@@ -359,8 +364,7 @@ public class ContrastController extends Application {
         }
 
 
-
-        for(int i = 0;i<d.length;i++){
+        for (int i = 0; i < d.length; i++) {
 
 
 //            Calendar c   =   new GregorianCalendar();
@@ -374,7 +378,7 @@ public class ContrastController extends Application {
 //            java.util.Date date=new java.util.Date();
 //            String s=sdf.format(c.getTime());
 
-            series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() +(long)i* 24 * 60 * 60 * 1000)), d[i]));
+            series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() + (long) i * 24 * 60 * 60 * 1000)), d[i]));
 
 
             closePriceLine.getData().add(series);
@@ -394,7 +398,8 @@ public class ContrastController extends Application {
         }*/
 
     }
-    public void setIncomeLine(){
+
+    public void setIncomeLine() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("股票一");
         //populating the series with data
@@ -413,7 +418,8 @@ public class ContrastController extends Application {
         IncomeLine.getData().add(series);
         System.out.print("aaaaaaa");
     }
-    public void setIncomeLine2(){
+
+    public void setIncomeLine2() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("股票一");
         //populating the series with data
