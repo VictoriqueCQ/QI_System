@@ -22,6 +22,7 @@ public class Main extends Application {
 
 
 
+
     private Scene scene;
 
     private final double MINIMUM_WINDOW_WIDTH = 400.0;
@@ -39,8 +40,13 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
+        Net net=new Net();
+        net.setupNet();
         this.gotoClientOverview();
+
     }
+
+
 
     /**
      * 跳转到客户界面
