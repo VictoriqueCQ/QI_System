@@ -1,4 +1,4 @@
-package ui;
+package ui.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -24,6 +24,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import quantour.vo.StockVO;
+import ui.Main;
+import ui.Net;
 
 import java.awt.*;
 import java.io.File;
@@ -36,16 +38,13 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-//import quantour.bl.Single_Search_bl_Impl;
-
-//import javafx.scene.paint.Paint;
-
 
 /**
  * Created by xjwhhh on 2017/3/4.
  */
 public class CandlestickChartController {
     private Main main;
+    Net net = new Net();
 
 //    Single_Search_bl single_search_bl=new Single_Search_bl_Impl();
 
@@ -565,26 +564,29 @@ public class CandlestickChartController {
         return date;
     }
 
-    /**
-     * 根据条件寻找对应股票
-     *
-     * @return
-     */
-    /*private StockVO getStockVOByCondition(){
-        String stockName=stockNameTextField.getText();
-        String stockID=stockNumberTextField.getText();
-        LocalDate startLocalDate=startTimeDatePicker.getValue();
-        LocalDate endLocalDate=endTimeDatePicker.getValue();
-        Date startDate=this.changeDateStyle(startLocalDate);
-        Date endDate=this.changeDateStyle(endLocalDate);
-        StockSearchConditionVO stockSearchConditionVO=new StockSearchConditionVO(stockID,stockName,startDate,endDate);
-//        StockVO stockVO=single_search_bl.findStock(stockSearchConditionVO);
-//        return stockVO;
-        
+//    /**
+//     * 根据条件寻找对应股票
+//     *
+//     * @return
+//     */
+//    private StockVO getStockVOByCondition() {
+//        String stockName = stockNameTextField.getText();
+//        String stockID = stockNumberTextField.getText();
+//        LocalDate startLocalDate = startTimeDatePicker.getValue();
+//        LocalDate endLocalDate = endTimeDatePicker.getValue();
+//        Date startDate = this.changeDateStyle(startLocalDate);
+//        Date endDate = this.changeDateStyle(endLocalDate);
+//        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd ");
+//        String starttime = format.format(startDate);
+//        String endtime = format.format(endDate);
+//        String input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+//        net.actionPerformed(input);
+//        String json = net.run();
+//
+//
+//
+//    }
 
-
-    }
-*/
     public void setMain(Main main) {
         this.main = main;
         this.setDatePicker();
