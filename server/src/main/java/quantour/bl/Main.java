@@ -5,9 +5,9 @@ package quantour.bl;
  */
 public class Main {
     public static void main(String[] args) {
-        QuestQue questQue=new QuestQue();
-        ResultMap resultMap=new ResultMap();
-        SwitchNode switchNode=new SwitchNode();
+        QuestQue questQue = new QuestQue();
+        ResultMap resultMap = new ResultMap();
+        SwitchNode switchNode = new SwitchNode();
         switchNode.run();
     }
 }
