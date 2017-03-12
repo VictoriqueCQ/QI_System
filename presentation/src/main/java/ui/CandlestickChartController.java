@@ -23,21 +23,18 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import quantour.bl.Single_Search_bl_Impl;
-import quantour.blservice.Single_Search_bl;
 import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+
+//import quantour.bl.Single_Search_bl_Impl;
 
 //import javafx.scene.paint.Paint;
 
@@ -48,7 +45,7 @@ import java.util.Date;
 public class CandlestickChartController {
     private Main main;
 
-    Single_Search_bl single_search_bl=new Single_Search_bl_Impl();
+//    Single_Search_bl single_search_bl=new Single_Search_bl_Impl();
 
     @FXML
     private GridPane gridPane;
@@ -576,8 +573,11 @@ public class CandlestickChartController {
         Date startDate=this.changeDateStyle(startLocalDate);
         Date endDate=this.changeDateStyle(endLocalDate);
         StockSearchConditionVO stockSearchConditionVO=new StockSearchConditionVO(stockID,stockName,startDate,endDate);
-        StockVO stockVO=single_search_bl.findStock(stockSearchConditionVO);
-        return stockVO;
+//        StockVO stockVO=single_search_bl.findStock(stockSearchConditionVO);
+//        return stockVO;
+        
+
+
     }
 
     public void setMain(Main main) {
