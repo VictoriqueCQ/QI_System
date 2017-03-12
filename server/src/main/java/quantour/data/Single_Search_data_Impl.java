@@ -3,11 +3,14 @@ package quantour.data;
 import quantour.dataservice.Single_Search_data;
 import quantour.po.StockPO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by dell on 2017/3/4.
@@ -20,14 +23,23 @@ public class Single_Search_data_Impl implements Single_Search_data {
     }
 
     @Override
-    public StockPO getStockListByID(int stockID, Date startTime, Date endTime) {
+    public StockPO getStockList(String[] quest) throws ParseException {
+        SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
+        if(quest[2].equals("NULL")){
+            return getStockListByName(quest[3],sdf.parse(quest[4]),sdf.parse(quest[5]));
+        }
+        else{
+            return getStockListByID(Integer.parseInt(quest[2]),sdf.parse(quest[4]),sdf.parse(quest[5]));
+        }
+    }
+
+    private StockPO getStockListByID(int stockID, Date startTime, Date endTime) {
         List<Stock> singleStockList = stockList.stream().filter(stock -> stock.getCode() == stockID).
                 collect(Collectors.toList());//得到ID的该股票信息
         return getStockListByDate(singleStockList, startTime, endTime);
     }
 
-    @Override
-    public StockPO getStockListByName(String stockName, Date startTime, Date endTime) {
+    private StockPO getStockListByName(String stockName, Date startTime, Date endTime) {
         List<Stock> singleStockList = stockList.stream().filter(stock -> stock.getName().equals(stockName)).
                 collect(Collectors.toList());//得到该name的股票信息，完全匹配
 
@@ -36,63 +48,67 @@ public class Single_Search_data_Impl implements Single_Search_data {
 
     /*得到某日期间的股票并计算相关数值，生成StockPO*/
     private StockPO getStockListByDate(List<Stock> singleStockList, Date startTime, Date endTime) {
-        List<Stock> resultList = singleStockList.stream().
-                filter(stock -> stock.getDate().compareTo(endTime) <= 0).
-                filter(stock -> stock.getDate().compareTo(startTime) >= 0).
+        List<Stock> resultList=singleStockList.stream().
+                filter(stock -> stock.getDate().compareTo(endTime)<=0).
+                filter(stock -> stock.getDate().compareTo(startTime)>=0).
                 sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());//得到某日期间的股票信息
-        int startSerial = resultList.get(0).getSerial();
-        int endSerial = resultList.get(resultList.size() - 1).getSerial();
+        int startSerial=resultList.get(0).getSerial();
+        int endSerial=resultList.get(resultList.size()-1).getSerial();
 
-        if (resultList.isEmpty()) {
+        if(resultList.isEmpty()){
             return null;
-        } else {
-            String name = resultList.get(0).getName();
-            int code = resultList.get(0).getCode();
-            double[] open = resultList.parallelStream().mapToDouble(Stock::getOpen).toArray();
-            double[] high = resultList.parallelStream().mapToDouble(Stock::getHigh).toArray();
-            double[] low = resultList.parallelStream().mapToDouble(Stock::getLow).toArray();
-            double[] close = resultList.parallelStream().mapToDouble(Stock::getClose).toArray();
-            int[] volume = resultList.parallelStream().mapToInt(Stock::getVolume).toArray();
-            double[] adjClose = resultList.parallelStream().mapToDouble(Stock::getAdjClose).toArray();
+        }
+        else {
+            String name=resultList.get(0).getName();
+            int code=resultList.get(0).getCode();
+            double[] open= resultList.parallelStream().mapToDouble(Stock::getOpen).toArray();
+            double[] high=resultList.parallelStream().mapToDouble(Stock::getHigh).toArray();
+            double[] low=resultList.parallelStream().mapToDouble(Stock::getLow).toArray();
+            double[] close=resultList.parallelStream().mapToDouble(Stock::getClose).toArray();
+            int[] volume=resultList.parallelStream().mapToInt(Stock::getVolume).toArray();
+            double[] adjClose=resultList.parallelStream().mapToDouble(Stock::getAdjClose).toArray();
+            Stream<Date> dateStream=resultList.parallelStream().map(Stock::getDate);
+            List<Date> dates=dateStream.collect(Collectors.toList());
 
-            double[] average5 = getAverageByInterval(singleStockList, 5, startSerial, endSerial);
-            double[] average10 = getAverageByInterval(singleStockList, 10, startSerial, endSerial);
-            double[] average20 = getAverageByInterval(singleStockList, 20, startSerial, endSerial);
-            double[] average30 = getAverageByInterval(singleStockList, 30, startSerial, endSerial);
-            double[] average60 = getAverageByInterval(singleStockList, 60, startSerial, endSerial);
+            double[] average5=getAverageByInterval(singleStockList,5,startSerial,endSerial);
+            double[] average10=getAverageByInterval(singleStockList,10,startSerial,endSerial);
+            double[] average20=getAverageByInterval(singleStockList,20,startSerial,endSerial);
+            double[] average30=getAverageByInterval(singleStockList,30,startSerial,endSerial);
+            double[] average60=getAverageByInterval(singleStockList,60,startSerial,endSerial);
 
-            ArrayList<Double> profit = new ArrayList<>();
-            for (int i = 1; i < resultList.size(); i++) {
-                profit.add(Math.log(close[i] / close[i - 1]));
+            ArrayList<Double> profit=new ArrayList<>();
+            for(int i=1;i<resultList.size();i++){
+                profit.add(Math.log(close[i]/close[i-1]));
             }
-            double average = profit.stream().reduce(0.0, (x, y) -> x + y) / (resultList.size() - 1);
-            double sum = 0.0;
-            for (double x : profit) {
-                sum += x * x;
+            double average=profit.stream().reduce(0.0,(x,y)->x+y)/(resultList.size()-1);
+            double sum=0.0;
+            for(double x:profit){
+                sum+=x*x;
             }
-            double variance = sum / (resultList.size() - 1) - average * average;
+            double variance=sum/(resultList.size()-1)-average*average;
 
-            return new StockPO(name, code, startTime, endTime, open, high, low, close, volume, adjClose, average5, average10,
-                    average20, average30, average60, profit, variance);
+            return new StockPO(name,code,startTime,endTime,open,high,low,close,volume,adjClose,dates,average5,average10,
+                    average20,average30,average60,profit,variance);
         }
 
     }
 
-    private double[] getAverageByInterval(List<Stock> singleStockList, int interval, int startSerial, int endSerial) {
+    private double[] getAverageByInterval(List<Stock> singleStockList,int interval,int startSerial,int endSerial){
         double[] averageByInterval;
-        if (startSerial + interval >= singleStockList.size() && endSerial + interval >= singleStockList.size()) {
+        if(startSerial+interval>=singleStockList.size()&&endSerial+interval>=singleStockList.size()){
             return null;
-        } else {
-            averageByInterval = new double[endSerial - startSerial + 1];
         }
-        for (int i = startSerial; i <= endSerial; i++) {
-            int temp = interval - 1;
-            double partialSum = 0.0;
-            while ((temp >= 0) && (i + temp < singleStockList.size())) {
-                partialSum += singleStockList.get(i + temp).getClose();
-                temp--;
-            }
-            averageByInterval[i] = partialSum / (double) interval;
+        else {
+            averageByInterval = new double[endSerial - startSerial+1];
+        }
+        for(int i=startSerial;i<=endSerial;i++){
+                int temp = interval-1;
+                double partialSum = 0.0;
+                while ((temp >= 0) && (i + temp < singleStockList.size())) {
+                    partialSum += singleStockList.get(i + temp).getClose();
+                    temp--;
+                }
+                averageByInterval[i] = partialSum / (double) interval;
         }
         return averageByInterval;
     }
