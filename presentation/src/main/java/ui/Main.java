@@ -7,6 +7,10 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ui.Controller.CandlestickChartController;
+import ui.Controller.ClientOverviewController;
+import ui.Controller.ContrastController;
+import ui.Controller.ThermometerController;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,8 +42,8 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
-        Net net = new Net();
-        net.setupNet();
+//        Net net = new Net();
+//        net.setupNet();
         this.gotoClientOverview();
 
     }
