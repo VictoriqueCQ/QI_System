@@ -45,11 +45,11 @@
                      <children>
                         <TableView layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="500.0" stylesheets="@css/TableViewCSS.css">
                           <columns>
-                            <TableColumn prefWidth="100.0" text="股票名称" />
-                            <TableColumn prefWidth="100.0" text="股票价格" />
-                              <TableColumn prefWidth="100.0" text="最低值" />
-                              <TableColumn prefWidth="100.0" text="最高值" />
-                              <TableColumn prefWidth="100.0" text="涨跌幅" />
+                            <TableColumn fx:id="stockName" prefWidth="100.0" text="股票名称" />
+                            <TableColumn fx:id="stockID" prefWidth="100.0" text="股票编号" />
+                              <TableColumn fx:id="minPrice" prefWidth="100.0" text="最低值" />
+                              <TableColumn fx:id="maxPrice" prefWidth="100.0" text="最高值" />
+                              <TableColumn fx:id="riseAndDown" prefWidth="100.0" text="涨跌幅" />
                           </columns>
                         </TableView>
                      </children>
@@ -75,7 +75,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <LineChart fx:id="IncomeLine2" layoutX="605.0" layoutY="22.0" prefHeight="305.0" prefWidth="461.0">
+                        <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="338.0" prefWidth="497.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -83,14 +83,12 @@
                             <NumberAxis side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="22.0" prefHeight="295.0" prefWidth="417.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
+                        <TableView layoutX="636.0" layoutY="61.0" prefHeight="89.0" prefWidth="242.0">
+                          <columns>
+                            <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称" />
+                            <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差" />
+                          </columns>
+                        </TableView>
                      </children></AnchorPane>
               </content>
             </Tab>
