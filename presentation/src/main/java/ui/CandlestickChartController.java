@@ -23,11 +23,13 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
-import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -565,7 +567,7 @@ public class CandlestickChartController {
      * 根据条件寻找对应股票
      * @return
      */
-    private StockVO getStockVOByCondition(){
+    /*private StockVO getStockVOByCondition(){
         String stockName=stockNameTextField.getText();
         String stockID=stockNumberTextField.getText();
         LocalDate startLocalDate=startTimeDatePicker.getValue();
@@ -579,7 +581,7 @@ public class CandlestickChartController {
 
 
     }
-
+*/
     public void setMain(Main main) {
         this.main = main;
         this.setDatePicker();
