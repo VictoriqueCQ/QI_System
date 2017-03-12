@@ -20,7 +20,7 @@ public class Stock {
 
     Stock(int serial, Date date, double open, double high, double low, double close, int volume, double adjClose,
           int code, String name, String market) {
-        this.serial=serial;
+        this.serial = serial;
         this.date = date;
         this.open = open;
         this.high = high;

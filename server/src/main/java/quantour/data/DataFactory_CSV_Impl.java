@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * Created by dell on 2017/3/4.
  */
-public class DataFactory_CSV_Impl implements DataFactory{
-    private static DataFactory_CSV_Impl dataFactoryCvs=null;
+public class DataFactory_CSV_Impl implements DataFactory {
+    private static DataFactory_CSV_Impl dataFactoryCvs = null;
 
     private Overall_Search_data overallSearchData;
     private Single_Search_data singleSearchData;
@@ -19,16 +19,16 @@ public class DataFactory_CSV_Impl implements DataFactory{
     private List<Stock> stockList;
 
     private DataFactory_CSV_Impl() throws ParseException {
-        DataReader_CSV dataReader_CSV =new DataReader_CSV();
+        DataReader_CSV dataReader_CSV = new DataReader_CSV();
         //stockPOList= dataReader_CSV.read();
-        stockList=dataReader_CSV.read();
-        overallSearchData=new Overall_Search_data_Impl(stockList);
-        singleSearchData=new Single_Search_data_Impl(stockList);
+        stockList = dataReader_CSV.read();
+        overallSearchData = new Overall_Search_data_Impl(stockList);
+        singleSearchData = new Single_Search_data_Impl(stockList);
     }
 
     public static DataFactory_CSV_Impl getInstance() throws ParseException {
-        if(dataFactoryCvs==null){
-            dataFactoryCvs=new DataFactory_CSV_Impl();
+        if (dataFactoryCvs == null) {
+            dataFactoryCvs = new DataFactory_CSV_Impl();
         }
         return dataFactoryCvs;
     }

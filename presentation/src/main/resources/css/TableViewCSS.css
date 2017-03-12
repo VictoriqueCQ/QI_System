@@ -1,13 +1,13 @@
-.table-view{
-	-fx-background-color: #ffffff;
+.table-view {
+    -fx-background-color: #ffffff;
 }
 
-.table-view .column-header{
-	-fx-background-color: #000000;
+.table-view .column-header {
+    -fx-background-color: #000000;
 }
 
 .table-row-cell {
-    -fx-background-color:rgb(226,238,196), rgb(226,238,196);
+    -fx-background-color: rgb(226, 238, 196), rgb(226, 238, 196);
 }
 
 .table-row-cell:selected {
@@ -15,10 +15,10 @@
 
 }
 
-.table-cell{
-	-fx-text-fill: rgb(102,153,102);
+.table-cell {
+    -fx-text-fill: rgb(102, 153, 102);
 }
 
-.label{
-	-fx-text-fill: rgb(240,150,96);
+.label {
+    -fx-text-fill: rgb(240, 150, 96);
 }
