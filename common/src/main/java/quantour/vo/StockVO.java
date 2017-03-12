@@ -27,6 +27,7 @@ public class StockVO {
     private double variance;//相对方差
 
 
+
     public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
                    double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
                    double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
@@ -68,6 +69,8 @@ public class StockVO {
         this.profit = stockPO.getProfit();
 
     }*/
+
+
 
     public String getName() {
         return name;
