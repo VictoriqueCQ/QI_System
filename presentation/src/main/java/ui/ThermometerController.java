@@ -19,8 +19,6 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
-import quantour.bl.Overall_Search_bl_Impl;
-import quantour.blservice.Overall_Search_bl;
 import quantour.po.MarketPO;
 
 import java.io.BufferedReader;
@@ -34,6 +32,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+
+//import quantour.bl.Overall_Search_bl_Impl;
 
 /**
  * Created by Administrator on 2017/3/3.
@@ -229,8 +229,8 @@ ThermometerController implements Initializable {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = time.atStartOfDay(zone).toInstant();
         Date date = Date.from(instant);
-        Overall_Search_bl overall_search_bl=new Overall_Search_bl_Impl();
-        overall_search_bl.getMarketInfo(date);
+//        Overall_Search_bl overall_search_bl=new Overall_Search_bl_Impl();
+//        overall_search_bl.getMarketInfo(date);
 //        searchButton.getStyleClass().add("button");
         //处理Action
 //        searchButton.setOnAction((ActionEvent e)->{
