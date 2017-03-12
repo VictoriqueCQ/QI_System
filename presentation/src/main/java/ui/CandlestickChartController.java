@@ -23,6 +23,10 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import quantour.bl.Single_Search_bl_Impl;
+import quantour.blservice.Single_Search_bl;
+import quantour.vo.StockSearchConditionVO;
+import quantour.vo.StockVO;
 
 import java.awt.*;
 import java.io.File;
@@ -30,7 +34,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 //import javafx.scene.paint.Paint;
 
@@ -39,8 +46,9 @@ import java.time.LocalDate;
  * Created by xjwhhh on 2017/3/4.
  */
 public class CandlestickChartController {
-    //要不要做日K，周K，月K
     private Main main;
+
+    Single_Search_bl single_search_bl=new Single_Search_bl_Impl();
 
     @FXML
     private GridPane gridPane;
@@ -69,6 +77,9 @@ public class CandlestickChartController {
     @FXML
     private Button searchButton;
 
+    /**
+     * 在开始时间选取后更新结束时间可选日期
+     */
     @FXML
     private void updateEndTimeDatePicker(){
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -100,6 +111,9 @@ public class CandlestickChartController {
         endTimeDatePicker.setDayCellFactory(dayCellFactory1);
     }
 
+    /**
+     * 在结束时间选取后更新开始时间可选日期
+     */
     @FXML
     private void updateStartTimeDatePicker(){
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -135,12 +149,11 @@ public class CandlestickChartController {
     private void search(){
         this.createEMA();
         this.createCandlestickChart();
-        this.setImage();
-//        this.createCandlestickChart1();
-
-
     }
 
+    /**
+     * 初始化日期选择器可选时间
+     */
     private void setDatePicker(){
         startTimeDatePicker.setValue(LocalDate.of(2005,2,1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -187,13 +200,20 @@ public class CandlestickChartController {
 
     }
 
-
+    /**
+     * 绘制K线图
+     */
     private void createCandlestickChart(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值
         double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值
         double high2Value = Double.MIN_VALUE;//设置成交量的最大值
         double min2Value = Double.MAX_VALUE;//设置成交量的最低值
+
+//        OHLCSeries series = new OHLCSeries("");
+//        StockVO stockVO=this.getStockVOByCondition();
+//        series =this.addCandlestickChartData(series,stockVO);
+
         OHLCSeries series = new OHLCSeries("");//蜡烛图，高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
         series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
         series.add(new Day(27, 9, 2007), 8.9, 9.06, 8.83, 8.96);
@@ -227,7 +247,10 @@ public class CandlestickChartController {
         series.add(new Day(20, 8, 2007), 7.02, 7.19, 6.94, 7.14);
         final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
         seriesCollection.addSeries(series);
+
         TimeSeries series2=new TimeSeries("");//对应时间成交量数据
+//        TimeSeries series2=new TimeSeries("");//对应时间成交量数据
+//        series2=this.adTimeSeriesCollectionData(series2,stockVO);
         series2.add(new Day(28, 9, 2007), 260659400/100);
         series2.add(new Day(27, 9, 2007), 119701900/100);
         series2.add(new Day(26, 9, 2007), 109719000/100);
@@ -382,26 +405,86 @@ public class CandlestickChartController {
             e.printStackTrace();
         }
 
-    }
-
-    private void setImage(){
         javafx.scene.image.Image image=new javafx.scene.image.Image("/picture/Kimage.jpeg");
         ImageView im=new ImageView(image);
         gridPane.add(im,0,0);
     }
 
-//
+    /**
+     * 为蜡烛图注入数据
+     * @param ohlcSeries
+     * @param stockVO
+     * @return
+     */
+    private OHLCSeries addCandlestickChartData(OHLCSeries ohlcSeries , StockVO stockVO){
+        double [] open=stockVO.getOpen();
+        double [] high=stockVO.getHigh();
+        double [] low=stockVO.getLow();
+        double [] close=stockVO.getClose();
+        LocalDate startLocalDate=startTimeDatePicker.getValue();
+        Date startDate=this.changeDateStyle(startLocalDate);
+        int year=startDate.getYear();
+        int month=startDate.getMonth();
+        int day=startDate.getDay();
+        for(int i=0;i<open.length;i++){
+            ohlcSeries.add(new Day(year+i,month+i,day+i),open[i],high[i],low[i],close[i]);
+        }
+        return ohlcSeries;
+    }
+
+    /**
+     * 为成交量图注入数据
+     * @param timeSeries
+     * @param stockVO
+     * @return
+     */
+    private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries , StockVO stockVO){
+        int [] volume=stockVO.getVolume();
+        LocalDate startLocalDate=startTimeDatePicker.getValue();
+        Date startDate=this.changeDateStyle(startLocalDate);
+        int year=startDate.getYear();
+        int month=startDate.getMonth();
+        int day=startDate.getDay();
+        for(int i=0;i<volume.length;i++){
+            timeSeries.add(new Day(year+i,month+i,day+i),volume[i]);
+        }
+        return timeSeries;
+    }
 
 
-
+    /**
+     * 绘制均线图
+     */
     private void createEMA(){
         lineChart.getData().clear();
         final CategoryAxis xAxis = new CategoryAxis();
         final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
-        xAxis.setLabel("Month");
+        xAxis.setLabel("day");
+        lineChart.setTitle("均线图(EMA)");
+//        数据注入
+//        this.getStockVOByCondition();
+//        double[] average5=stockVO.getAverage5();
+//        double[] average10=stockVO.getAverage10();
+//        double[] average20=stockVO.getAverage20();
+//        double[] average30=stockVO.getAverage30();
+//        double[] average60=stockVO.getAverage60();
+//        XYChart.Series series_average5 = new XYChart.Series();
+//        series_average5=this.addEMAData(series_average5,average5);
+//        series_average5.setName("5天");
+//        XYChart.Series series_average10 = new XYChart.Series();
+//        series_average10=this.addEMAData(series_average10,average10);
+//        series_average10.setName("10天");
+//        XYChart.Series series_average20 = new XYChart.Series();
+//        series_average20=this.addEMAData(series_average20,average20);
+//        series_average20.setName("20天");
+//        XYChart.Series series_average30 = new XYChart.Series();
+//        series_average30=this.addEMAData(series_average30,average30);
+//        series_average30.setName("30天");
+//        XYChart.Series series_average60= new XYChart.Series();
+//        series_average60=this.addEMAData(series_average60,average60);
+//        series_average60.setName("60天");
 
 
-        lineChart.setTitle("Stock Monitoring, 2010");
 
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Portfolio 1");
@@ -461,13 +544,41 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    private XYChart.Series addData(XYChart.Series series,int [] data){
+    private XYChart.Series addEMAData(XYChart.Series series,double[] data){
+
         for(int i=0;i<data.length;i++){
             series.getData().add(new XYChart.Data(i+1,data[i]));
         }
         return series;
     }
 
+    /**
+     * 将Localdate转化为Date
+     * @param localDate
+     * @return
+     */
+    private Date changeDateStyle(LocalDate localDate){
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+        Date date = Date.from(instant);
+        return date;
+    }
+
+    /**
+     * 根据条件寻找对应股票
+     * @return
+     */
+    private StockVO getStockVOByCondition(){
+        String stockName=stockNameTextField.getText();
+        String stockID=stockNumberTextField.getText();
+        LocalDate startLocalDate=startTimeDatePicker.getValue();
+        LocalDate endLocalDate=endTimeDatePicker.getValue();
+        Date startDate=this.changeDateStyle(startLocalDate);
+        Date endDate=this.changeDateStyle(endLocalDate);
+        StockSearchConditionVO stockSearchConditionVO=new StockSearchConditionVO(stockID,stockName,startDate,endDate);
+        StockVO stockVO=single_search_bl.findStock(stockSearchConditionVO);
+        return stockVO;
+    }
 
     public void setMain(Main main) {
         this.main = main;
