@@ -5,5 +5,6 @@ package quantour.dataservice;
  */
 public interface DataFactory {
     Overall_Search_data getOverallSearch();
+
     Single_Search_data getSingleSearch();
 }

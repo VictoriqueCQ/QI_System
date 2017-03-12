@@ -5,7 +5,7 @@ package ui;
  * 异常弹窗
  */
 public class ExceptionTips {
-    public ExceptionTips(String content){
+    public ExceptionTips(String content) {
 
 
     }
