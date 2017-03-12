@@ -19,9 +19,9 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import quantour.bl.Overall_Search_bl_Impl;
 import quantour.blservice.Overall_Search_bl;
 import quantour.po.MarketPO;
-import quantour.vo.MarketVO;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -223,11 +223,12 @@ public class ThermometerController implements Initializable {
 
 
     @FXML
-    public void setSearchButton(Overall_Search_bl overall_search_bl) {
+    public void setSearchButton() {
         LocalDate time = datePicker.getValue();
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = time.atStartOfDay(zone).toInstant();
         Date date = Date.from(instant);
+        Overall_Search_bl overall_search_bl=new Overall_Search_bl_Impl();
         overall_search_bl.getMarketInfo(date);
 //        searchButton.getStyleClass().add("button");
         //处理Action
