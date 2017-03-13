@@ -7,7 +7,8 @@ import quantour.dataservice.Single_Search_data;
 import quantour.po.MarketPO;
 import quantour.po.StockPO;
 
-import java.io.PrintWriter;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,15 +19,16 @@ import java.util.Date;
 class ResultSender{
     private DataFactory dataFactory;
     private String quest;
-    private PrintWriter printWriter;
-
-    ResultSender(String quest, PrintWriter printWriter) throws ParseException {
+    private DataOutputStream dataOutputStream;
+    
+    ResultSender(String quest, DataOutputStream dataOutputStream) throws ParseException {
         dataFactory=DataFactory_CSV_Impl.getInstance();
         this.quest=quest;
-        this.printWriter=printWriter;
+        this.dataOutputStream=dataOutputStream;
     }
 
-    void run() throws ParseException {
+
+    void run() throws ParseException, IOException {
         SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
         String[] questContent=quest.split("\t");
         if (questContent[1].equals("STOCK")){
@@ -34,8 +36,7 @@ class ResultSender{
             StockPO stockPO=single_search_data.getStockList(questContent);
 
             JSONArray jsonArray=JSONArray.fromObject(stockPO);
-            printWriter.write(jsonArray.toString());
-            printWriter.flush();
+            dataOutputStream.writeUTF(jsonArray.toString());
         }
         else if (questContent[1].equals("MARKET")){
             Date date=null;
@@ -44,8 +45,7 @@ class ResultSender{
             MarketPO marketPO=overall_search_data.getMarketInfo(date);
 
             JSONArray jsonArray=JSONArray.fromObject(marketPO);
-            printWriter.write(jsonArray.toString());
-            printWriter.flush();
+            dataOutputStream.writeUTF(jsonArray.toString());
         }
         else{
             System.out.println("wrong");//此处应改为exception

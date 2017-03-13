@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
-    Net net = new Net();
+    Net net;
     // 主窗口
     private Stage stage;
 
@@ -38,6 +38,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        net = new Net();
         stage = primaryStage;
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
