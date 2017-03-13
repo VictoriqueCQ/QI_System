@@ -175,18 +175,18 @@ ThermometerController implements Initializable {
 
     public void setPieChart() {
 //        显示区域所占比例，暂时尚未时间如何添加
-        Label caption = new Label("");
-        caption.setTextFill(Color.DARKORANGE);
-        caption.setStyle("-fx-font: 24 arial;");
-        pieChart.getData().stream().forEach((data) -> {
-            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-                    (MouseEvent e) -> {
-                        caption.setTranslateX(e.getSceneX());
-                        caption.setTranslateY(e.getSceneY());
-                        caption.setText(String.valueOf(data.getPieValue())
-                                + "%");
-                    });
-        });
+//        Label caption = new Label("");
+//        caption.setTextFill(Color.DARKORANGE);
+//        caption.setStyle("-fx-font: 24 arial;");
+//        pieChart.getData().stream().forEach((data) -> {
+//            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
+//                    (MouseEvent e) -> {
+//                        caption.setTranslateX(e.getSceneX());
+//                        caption.setTranslateY(e.getSceneY());
+//                        caption.setText(String.valueOf(data.getPieValue())
+//                                + "%");
+//                    });
+//        });
 //        当鼠标移入饼图块时，该块位置发生偏移，鼠标离开后，该块回复到原来位置。暂时尚未实现效果
 //        d1.getNode().setOnMouseEntered(new MouseHoverAnimation(d1, pieChart));
 //        d1.getNode().setOnMouseExited(new MouseExitAnimation());
@@ -202,6 +202,7 @@ ThermometerController implements Initializable {
 //
 //        d5.getNode().setOnMouseEntered(new MouseHoverAnimation(d5, pieChart));
 //        d5.getNode().setOnMouseExited(new MouseExitAnimation());
+
 
         pieChart.getData().setAll(pieChartData);
         pieChart.setAnimated(false);
@@ -242,69 +243,27 @@ ThermometerController implements Initializable {
 //        }
 //    }
 
-    @FXML
-    public void setSearchButton() {
-        LocalDate time = datePicker.getValue();
-        ZoneId zone = ZoneId.systemDefault();
-        Instant instant = time.atStartOfDay(zone).toInstant();
-        Date date = Date.from(instant);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        String dateString = simpleDateFormat.format(date);
+    //这个方法之后会删除
+    public void testPresentation(){
+        volumn = "100000";
 
-        net.actionPerformed("MARKET\t" + dateString + "\n");
-        String stocksMessages;
-        stocksMessages = net.run();
-        if (stocksMessages == null) {
-            System.out.println("No data on that day!");
-        } else {
-            System.out.println(stocksMessages + " getted");
+        NumberOfStocksLimitedUp = 50;
 
-            JsonUtil jsonUtil = new JsonUtil();
-            MarketVO marketVO_middleState = new MarketVO();
-            MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
+        NumberOfStocksLimitedDown = 25;
 
-            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
+        NumberOfStocksUpOverFivePerCent = 80;
 
-            NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
+        NumberOfStocksDownOverFivePerCent = 40;
 
-            NumberOfStocksLimitedDown = marketVO.getLimitDownNum();
+        NumberOfStocksUpOverFivePerCentPerDay = 60;
 
-            NumberOfStocksUpOverFivePerCent = marketVO.getOverFivePerNum();
+        NumberOfStocksDownOverFivePerCentPerDay = 30;
 
-            NumberOfStocksDownOverFivePerCent = marketVO.getBelowFivePerNum();
-
-            NumberOfStocksUpOverFivePerCentPerDay = marketVO.getOc_overPFivePerNum();
-
-            NumberOfStocksDownOverFivePerCentPerDay = marketVO.getOc_belowMFivePerNum();
-
-            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-        }
-
-
-//        volumn = stocksMessages[0];
-//
-//        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
-//
-//        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
-//
-//        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
-//
-//        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
-//
-//        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
-//
-//        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
-//
-//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-
-
+        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 
         //以下是饼图数据
         PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
@@ -319,18 +278,107 @@ ThermometerController implements Initializable {
 
         pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
 
-        setBarChart_1();
-
-        setBarChart_2();
-
-        setBarChart_3();
-
-        setPieChart();
-
         System.out.println("Search the data and show the volumn.");
 
         volumnTextField.setText(volumn);
 
+        this.setBarChart_1();
+        this.setBarChart_2();
+        this.setBarChart_3();
+        this.setPieChart();
+
+    }
+
+    //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
+    @FXML
+    public void setSearchButton() {
+//        LocalDate time = datePicker.getValue();
+//        ZoneId zone = ZoneId.systemDefault();
+//        Instant instant = time.atStartOfDay(zone).toInstant();
+//        Date date = Date.from(instant);
+//
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+//        String dateString = simpleDateFormat.format(date);
+////
+////        net.actionPerformed("MARKET\t" + dateString + "\n");
+////        String stocksMessages;
+////        stocksMessages = net.run();
+////        if (stocksMessages == null) {
+////            System.out.println("No data on that day!");
+////        } else {
+////            System.out.println(stocksMessages + " getted");
+////
+////            JsonUtil jsonUtil = new JsonUtil();
+////            MarketVO marketVO_middleState = new MarketVO();
+////            MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
+////
+////            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
+////
+////            NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
+////
+////            NumberOfStocksLimitedDown = marketVO.getLimitDownNum();
+////
+////            NumberOfStocksUpOverFivePerCent = marketVO.getOverFivePerNum();
+////
+////            NumberOfStocksDownOverFivePerCent = marketVO.getBelowFivePerNum();
+////
+////            NumberOfStocksUpOverFivePerCentPerDay = marketVO.getOc_overPFivePerNum();
+////
+////            NumberOfStocksDownOverFivePerCentPerDay = marketVO.getOc_belowMFivePerNum();
+////
+////            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+////                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+////                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+////                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+////        }
+//
+//
+////        volumn = stocksMessages[0];
+////
+////        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
+////
+////        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
+////
+////        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
+////
+////        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
+////
+////        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
+////
+////        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
+////
+////        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+////                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+////                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+////                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+//
+//
+//
+//        //以下是饼图数据
+//        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
+//
+//        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
+//
+//        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票", NumberOfStocksChangedWithinFivePerCent);
+//
+//        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票", NumberOfStocksDownOverFivePerCent);
+//
+//        PieChart.Data d5 = new PieChart.Data("跌停股票", NumberOfStocksLimitedDown);
+//
+//        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
+//
+//        setBarChart_1();
+//
+//        setBarChart_2();
+//
+//        setBarChart_3();
+//
+//        setPieChart();
+//
+//        System.out.println("Search the data and show the volumn.");
+//
+//        volumnTextField.setText(volumn);
+//
 
         //给按钮添加立体特效
         Light.Distant light = new Light.Distant();
@@ -358,8 +406,9 @@ ThermometerController implements Initializable {
     }
 
     public void setMain(Main main) {
-//        go();
-//        this.setSearchButton();
+
+        this.testPresentation();
+
         this.main = main;
         this.setDatePicker();
     }
