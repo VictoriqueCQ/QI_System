@@ -80,13 +80,13 @@ public class ContrastController extends Application {
     private TableColumn<StockModle, String> stockName;
 
     @FXML
-    private TableColumn<StockModle, Integer> stockID;
+    private TableColumn<StockModle, String> stockID;
 
     @FXML
-    private TableColumn<StockModle, Double> minPrice;
+    private TableColumn<StockModle, String> minPrice;
 
     @FXML
-    private TableColumn<StockModle, Double> maxPrice;
+    private TableColumn<StockModle, String> maxPrice;
 
     @FXML
     private TableColumn<StockModle, String> riseAndDown;
@@ -307,9 +307,9 @@ public class ContrastController extends Application {
 
 
         setTableContrast();
-        setClosePriceLine();
-        setIncomeLine();
-        setIncomeLine2();
+//        setClosePriceLine();
+//        setIncomeLine();
+//        setIncomeLine2();
 
 
 //        seriesMap.put(stock.getStockCode(), series);
@@ -336,6 +336,11 @@ public class ContrastController extends Application {
 
     public void setTableContrast() {
 //        stockName.setCellValueFactory("sad");
+        stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        stockID.setCellValueFactory(celldata -> celldata.getValue().idProperty());
+        minPrice.setCellValueFactory(celldata -> celldata.getValue().minPriceProperty());
+        maxPrice.setCellValueFactory(celldata -> celldata.getValue().maxPriceProperty());
+        riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
         StockModle stockModle1 = stockVOtoStockModle(stock1);
         StockModle stockModle2 = stockVOtoStockModle(stock2);
 
@@ -345,7 +350,7 @@ public class ContrastController extends Application {
 
         stockTable.setItems(models);
 
-
+        System.out.print("fghj");
     }
 
     public StockModle stockVOtoStockModle(StockVO stockVO) {
@@ -422,8 +427,6 @@ public class ContrastController extends Application {
 //            String s=sdf.format(c.getTime());
 
             series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() + (long) i * 24 * 60 * 60 * 1000)), d[i]));
-
-
             closePriceLine.getData().add(series);
 
         }
