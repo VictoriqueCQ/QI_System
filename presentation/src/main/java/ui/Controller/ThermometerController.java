@@ -18,6 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import quantour.po.MarketPO;
+import quantour.vo.MarketVO;
+import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
@@ -40,7 +42,7 @@ public class
 ThermometerController implements Initializable {
     private Main main;
 
-    private List<MarketPO> marketPOList;//市场上所有股票数据
+//    private List<MarketPO> marketPOList;//市场上所有股票数据
 
     Net net = new Net();
 
@@ -254,28 +256,58 @@ ThermometerController implements Initializable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
         String dateString = simpleDateFormat.format(date);
 
-        net.actionPerformed("MARKET\tdateString\n");
-        String[] stocksMessages = new String[7];
-        stocksMessages = net.run().split("\n");
+        net.actionPerformed("MARKET\t" + dateString + "\n");
+        String stocksMessages;
+        stocksMessages = net.run();
+        if (stocksMessages==null){
+            System.out.println("No data on that day!");
+        }else{
+            System.out.println(stocksMessages+" getted");
+            JsonUtil jsonUtil = new JsonUtil();
+            MarketVO marketVO_middleState = new MarketVO();
+            MarketVO marketVO = (MarketVO)jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
+            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
 
-        volumn = stocksMessages[0];
+            NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
 
-        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
+            NumberOfStocksLimitedDown = marketVO.getLimitDownNum();
 
-        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
+            NumberOfStocksUpOverFivePerCent = marketVO.getOverFivePerNum();
 
-        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
+            NumberOfStocksDownOverFivePerCent = marketVO.getBelowFivePerNum();
 
-        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
+            NumberOfStocksUpOverFivePerCentPerDay = marketVO.getOc_overPFivePerNum();
 
-        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
+            NumberOfStocksDownOverFivePerCentPerDay = marketVO.getOc_belowMFivePerNum();
 
-        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
+            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+        }
 
-        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+
+
+
+
+//        volumn = stocksMessages[0];
+//
+//        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
+//
+//        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
+//
+//        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
+//
+//        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
+//
+//        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
+//
+//        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
+//
+//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 
 //        private double totalDeal;
 //        private int limitUpNum;
@@ -328,12 +360,12 @@ ThermometerController implements Initializable {
 
         //当鼠标进入按钮时添加阴影特效
         DropShadow shadow = new DropShadow();
-        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e)->{
+        searchButton.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent e) -> {
             searchButton.setEffect(shadow);
         });
 
         //当鼠标离开按钮时移除阴影效果
-        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e)->{
+        searchButton.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent e) -> {
             searchButton.setEffect(null);
         });
     }
