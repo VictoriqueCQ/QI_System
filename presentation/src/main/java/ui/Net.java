@@ -53,11 +53,10 @@ public class Net {
         String message;
         String output = "";
         try {
-            while (true) {
                 while ((message = br.readLine()) != null) {
                     System.out.println("read: " + message);
                     output += (message + "\n");
-                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
