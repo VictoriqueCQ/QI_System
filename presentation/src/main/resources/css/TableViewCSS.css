@@ -11,8 +11,7 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: white;
-
+    -fx-background-color: rgb(100, 100, 100);
 }
 
 .table-cell {
