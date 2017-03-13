@@ -47,7 +47,7 @@ import java.util.List;
  */
 public class CandlestickChartController {
     private Main main;
-    Net net = new Net();
+    Net net ;
 
 
     @FXML
@@ -613,8 +613,9 @@ public class CandlestickChartController {
         }
     }
 
-    public void setMain(Main main) {
+    public void setMain(Main main,Net net) {
         this.main = main;
+        this.net=net;
         this.setDatePicker();
     }
 }
