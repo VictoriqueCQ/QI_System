@@ -28,10 +28,10 @@ public class Net {
 
     }
 
-    public void closeSock(){
+    public void closeSock() {
         try {
             sock.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -51,7 +51,7 @@ public class Net {
 
     public String run() {
         String message;
-        String output="";
+        String output = "";
         try {
             while (true) {
                 while ((message = br.readLine()) != null) {
