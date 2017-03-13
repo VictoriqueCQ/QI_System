@@ -7,49 +7,55 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/ContrastCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ContrastController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0"
+            prefWidth="1200.0" stylesheets="@css/ContrastCSS.css" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ContrastController">
     <children>
         <Label layoutX="33.0" layoutY="25.0" prefHeight="34.0" prefWidth="124.0" styleClass="label_tip" text="设置对比">
             <font>
-                <Font size="21.0" />
+                <Font size="21.0"/>
             </font>
         </Label>
         <Label layoutX="79.0" layoutY="60.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
         <Label layoutX="260.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
             <font>
-                <Font size="17.0" />
+                <Font size="17.0"/>
             </font>
         </Label>
         <Label layoutX="481.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
             <font>
-                <Font size="20.0" />
+                <Font size="20.0"/>
             </font>
         </Label>
-        <DatePicker fx:id="startTimeDatePicker" layoutX="551.0" layoutY="72.0" onAction="#updateEndTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
+        <DatePicker fx:id="startTimeDatePicker" layoutX="551.0" layoutY="72.0" onAction="#updateEndTimeDatePicker"
+                    prefHeight="10.0" prefWidth="124.0"/>
         <Label layoutX="682.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
             <font>
-                <Font size="17.0" />
+                <Font size="17.0"/>
             </font>
         </Label>
-        <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
-        <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比" />
-        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="409.0" prefWidth="1097.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="56.0">
+        <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker"
+                    prefHeight="10.0" prefWidth="124.0"/>
+        <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比"/>
+        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="409.0" prefWidth="1097.0" tabClosingPolicy="UNAVAILABLE"
+                 AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="56.0">
             <tabs>
                 <Tab text="总况">
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="stockTable" layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="500.0" stylesheets="@css/TableViewCSS.css">
+                                <TableView fx:id="stockTable" layoutX="334.0" layoutY="36.0" prefHeight="273.0"
+                                           prefWidth="500.0" stylesheets="@css/TableViewCSS.css">
                                     <columns>
-                                        <TableColumn fx:id="stockName" prefWidth="100.0" text="股票名称" />
-                                        <TableColumn fx:id="stockID" prefWidth="100.0" text="股票编号" />
-                                        <TableColumn fx:id="minPrice" prefWidth="100.0" text="最低值" />
-                                        <TableColumn fx:id="maxPrice" prefWidth="100.0" text="最高值" />
-                                        <TableColumn fx:id="riseAndDown" prefWidth="100.0" text="涨跌幅" />
+                                        <TableColumn fx:id="stockName" prefWidth="100.0" text="股票名称"/>
+                                        <TableColumn fx:id="stockID" prefWidth="100.0" text="股票编号"/>
+                                        <TableColumn fx:id="minPrice" prefWidth="100.0" text="最低值"/>
+                                        <TableColumn fx:id="maxPrice" prefWidth="100.0" text="最高值"/>
+                                        <TableColumn fx:id="riseAndDown" prefWidth="100.0" text="涨跌幅"/>
                                     </columns>
                                 </TableView>
                             </children>
@@ -60,12 +66,13 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" prefHeight="276.0" prefWidth="492.0">
+                                <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" prefHeight="276.0"
+                                           prefWidth="492.0">
                                     <xAxis>
-                                        <CategoryAxis label="日期" />
+                                        <CategoryAxis label="日期"/>
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis label="收盘价" side="LEFT" />
+                                        <NumberAxis label="收盘价" side="LEFT"/>
                                     </yAxis>
                                 </LineChart>
                             </children>
@@ -76,18 +83,19 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="338.0" prefWidth="497.0">
+                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="338.0"
+                                           prefWidth="497.0">
                                     <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
+                                        <CategoryAxis side="BOTTOM"/>
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis side="LEFT" />
+                                        <NumberAxis side="LEFT"/>
                                     </yAxis>
                                 </LineChart>
                                 <TableView layoutX="636.0" layoutY="61.0" prefHeight="89.0" prefWidth="242.0">
                                     <columns>
-                                        <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称" />
-                                        <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差" />
+                                        <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称"/>
+                                        <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差"/>
                                     </columns>
                                 </TableView>
                             </children>
@@ -96,8 +104,10 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
-        <TextField fx:id="addName1" layoutX="149.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
-        <TextField fx:id="addName2" layoutX="286.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
+        <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认"/>
+        <TextField fx:id="addName1" layoutX="149.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0"
+                   styleClass="TextFieldText"/>
+        <TextField fx:id="addName2" layoutX="286.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0"
+                   styleClass="TextFieldText"/>
     </children>
 </AnchorPane>
