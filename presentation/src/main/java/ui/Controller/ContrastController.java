@@ -27,6 +27,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class ContrastController extends Application {
     private Main main;
@@ -97,6 +98,8 @@ public class ContrastController extends Application {
     private StockModel stockModel2;
 
     private ObservableList<StockModel> models;
+
+    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
@@ -314,8 +317,8 @@ public class ContrastController extends Application {
 
 
         setTableContrast();
-//        setClosePriceLine();
-//        setIncomeLine();
+        setClosePriceLine();
+        setIncomeLine();
 //        setIncomeLine2();
 
 
@@ -508,7 +511,8 @@ public class ContrastController extends Application {
     private void removeCompare(){
 
             stockTable.getItems().removeAll(models);
-            
+            closePriceLine.getData().removeAll();
+
 
 
 
