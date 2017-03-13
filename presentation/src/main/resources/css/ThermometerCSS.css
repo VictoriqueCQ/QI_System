@@ -1,6 +1,6 @@
 
 .label {
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill: rgb(240, 240, 240);
     -fx-font-size: 1.5em;
 }
 
@@ -15,17 +15,37 @@
 .button {
     -fx-font: 22 arial;
     -fx-base: rgb(0, 0, 0);
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill: rgb(240, 240, 240);
 }
 
 .chart-pie-label {
-    -fx-fill: rgb(240, 150, 96);
+    -fx-fill: rgb(240, 240, 240);
     -fx-font-size: 0.9em;
 }
 
 .chart-pie-label-line {
-    -fx-stroke: rgb(240, 150, 96);
-    -fx-fill: rgb(240, 150, 96);
+    -fx-stroke: rgb(240, 240, 240);
+    -fx-fill: rgb(240, 240, 240);
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: #ffa500;
+}
+
+.default-color1.chart-pie {
+    -fx-pie-color: #860061;
+}
+
+.default-color2.chart-pie {
+    -fx-pie-color: #ffd700;
+}
+
+.default-color3.chart-pie {
+    -fx-pie-color: #adff2f;
+}
+
+.default-color4.chart-pie {
+    -fx-pie-color: #ff5700;
 }
 
 .chart-legend {
@@ -34,31 +54,31 @@
 }
 
 .chart-legend-item {
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill: rgb(240, 240, 240);
     -fx-font-size: 1.2em;
 }
 
 .axis-label {
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill: rgb(240, 240, 240);
     -fx-font-size: 1.5em;
 }
 
 .axis {
     -fx-font-size: 1.2em;
-    -fx-tick-label-fill: rgb(240, 150, 96);
+    -fx-tick-label-fill: rgb(240, 240, 240);
     -fx-font-family: Tahoma;
     -fx-tick-length: 20;
     -fx-minor-tick-length: 10;
 }
 
 .axis-tick-mark {
-    -fx-stroke: #637040;
+    -fx-stroke: rgb(64, 199, 232);
     -fx-stroke-width: 3;
 
 }
 
 .axis-minor-tick-mark {
-    -fx-stroke: #859656;
+    -fx-stroke: rgb(64, 199, 232);
 }
 
 .TextFieldText {
