@@ -36,7 +36,7 @@
             </font>
         </Label>
         <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
-        <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" text="移除对比" />
+        <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
         <TabPane layoutX="47.0" layoutY="131.0" prefHeight="409.0" prefWidth="1097.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="56.0">
             <tabs>
                 <Tab text="总况">
