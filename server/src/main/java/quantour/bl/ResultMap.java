@@ -10,6 +10,7 @@ class ResultMap {
     private static Map<Integer, String> map = new HashMap<>();
 
     static void write(int id, String result) {
+        System.out.println(result);
         map.put(id, result);
     }
 

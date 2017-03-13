@@ -586,7 +586,7 @@ public class CandlestickChartController {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd ");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy ");
         String starttime = format.format(startDate);
         String endtime = format.format(endDate);
         //检查输入是否完整
@@ -596,7 +596,8 @@ public class CandlestickChartController {
         }
         //TODO
         else {
-            String input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+            //String input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+            String input="STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
             System.out.print(1);
             net.actionPerformed(input);
 
