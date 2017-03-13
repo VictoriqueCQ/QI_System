@@ -9,5 +9,6 @@ public class Main {
         ResultMap resultMap = new ResultMap();
         SwitchNode switchNode = new SwitchNode();
         switchNode.run();
+        System.out.print("yes");
     }
 }

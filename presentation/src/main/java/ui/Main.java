@@ -42,8 +42,8 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
-//        Net net = new Net();
-//        net.setupNet();
+        Net net = new Net();
+        net.setupNet();
         this.gotoClientOverview();
 
     }
