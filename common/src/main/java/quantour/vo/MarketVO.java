@@ -24,6 +24,10 @@ public class MarketVO {
         this.oc_belowMFivePerNum = oc_belowMFivePerNum;
     }
 
+    public MarketVO(){
+
+    }
+
     public double getTotalDeal() {
         return totalDeal;
     }
