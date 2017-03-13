@@ -8,8 +8,8 @@ import java.net.Socket;
  */
 public class DataNodeThread implements Runnable {
     private Socket socket;
-    private BufferedReader br;
-    private PrintWriter printWriter;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
 
     DataNodeThread(Socket socket) {
         this.socket = socket;
@@ -18,25 +18,25 @@ public class DataNodeThread implements Runnable {
     @Override
     public void run() {
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
-            br = new BufferedReader(inputStreamReader);
-            printWriter = new PrintWriter(socket.getOutputStream());
+            dataInputStream=new DataInputStream(socket.getInputStream());
+            dataOutputStream=new DataOutputStream(socket.getOutputStream());
 
-            String quest = null;
+            String quest = "";
             while (socket.isConnected()) {
                 if ((quest = QuestQue.get()) == null) {
                     continue;
                 }
                 String[] readKey = quest.split("\t");
                 int key = Integer.parseInt(readKey[0]);
-                printWriter.write(quest);
-                printWriter.flush();
+                System.out.println(key);
+                dataOutputStream.writeUTF(quest);
                 Thread.sleep(100);
 
-                String result = null;
-                while ((result = br.readLine()) == null) {
+                String result = "";
+                while ((result = dataInputStream.readUTF()) == null) {
                     Thread.sleep(100);
                 }
+                System.out.println(result);
                 ResultMap.write(key, result);
             }
         } catch (IOException e) {

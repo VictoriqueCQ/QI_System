@@ -8,7 +8,6 @@ import java.net.Socket;
  * Created by dell on 2017/3/11.
  */
 class SwitchNode {
-    //private Stack<Socket> dataServerStack;
     private ClientServer clientServer;
     private DataServer dataServer;
 

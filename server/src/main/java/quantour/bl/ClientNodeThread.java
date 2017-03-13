@@ -1,6 +1,8 @@
 package quantour.bl;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -8,8 +10,8 @@ import java.net.Socket;
  */
 public class ClientNodeThread implements Runnable {
     private Socket socket;
-    private BufferedReader br;
-    private PrintWriter printWriter;
+    private DataInputStream dataInputStream;
+    private DataOutputStream dataOutputStream;
 
     ClientNodeThread(Socket socket) {
         this.socket = socket;
@@ -18,11 +20,11 @@ public class ClientNodeThread implements Runnable {
     @Override
     public void run() {
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
-            br = new BufferedReader(inputStreamReader);
-            printWriter = new PrintWriter(socket.getOutputStream());
+            dataOutputStream=new DataOutputStream(socket.getOutputStream());
+            dataInputStream=new DataInputStream(socket.getInputStream());
 
-            String quest = br.readLine();
+            String quest = dataInputStream.readUTF();
+
             while (quest != null) {
                 int key = QuestQue.write(quest);
                 Thread.sleep(100);
@@ -30,10 +32,12 @@ public class ClientNodeThread implements Runnable {
                 while ((result = ResultMap.get(key)) == null) {
                     Thread.sleep(100);
                 }
-                printWriter.write(result);
-                printWriter.flush();
+                dataOutputStream.writeUTF(result);
+                System.out.println(result);
                 ResultMap.delete(key);
+                quest=dataInputStream.readUTF();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
