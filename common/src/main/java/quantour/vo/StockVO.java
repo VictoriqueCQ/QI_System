@@ -2,6 +2,7 @@ package quantour.vo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 单只股票VO
@@ -18,6 +19,7 @@ public class StockVO {
     private double[] close;
     private int[] volume;//交易数
     private double[] adjClose;//复权后
+    private List<Date> dates;
     private double[] average5;
     private double[] average10;
     private double[] average20;
@@ -27,7 +29,7 @@ public class StockVO {
     private double variance;//相对方差
 
     public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
-                   double[] close, int[] volume, double[] adjClose, double[] average5, double[] average10,
+                   double[] close, int[] volume, double[] adjClose, List<Date> dates,double[] average5, double[] average10,
                    double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
@@ -39,6 +41,7 @@ public class StockVO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
+        this.dates=dates;
         this.average5 = average5;
         this.average10 = average10;
         this.average20 = average20;
@@ -47,6 +50,9 @@ public class StockVO {
         this.variance = variance;
         this.profit = profit;
     }
+    public StockVO(){
+
+    };
     /*public StockVO(StockPO stockPO){
         this.name = stockPO.getName();
         this.code = stockPO.getCode();
@@ -107,6 +113,8 @@ public class StockVO {
     public double[] getAdjClose() {
         return adjClose;
     }
+
+    public List<Date> getDates(){return dates;}
 
     public double[] getAverage5() {
         return average5;
