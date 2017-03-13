@@ -214,6 +214,7 @@ public class CandlestickChartController {
         StockVO stockVO=this.getStockVOByCondition();
         if(!(stockVO==null)){
             series =this.addCandlestickChartData(series,stockVO);
+            System.out.print("4");
         }
         else {
             series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
@@ -253,7 +254,9 @@ public class CandlestickChartController {
         TimeSeries series2 = new TimeSeries("");//对应时间成交量数据
         if(!(stockVO==null)){
             series2=this.adTimeSeriesCollectionData(series2,stockVO);
+            System.out.print("3");
         }
+
         else {
             series2.add(new Day(28, 9, 2007), 260659400 / 100);
             series2.add(new Day(27, 9, 2007), 119701900 / 100);
@@ -427,12 +430,15 @@ public class CandlestickChartController {
         double[] high = stockVO.getHigh();
         double[] low = stockVO.getLow();
         double[] close = stockVO.getClose();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         List <Date> dates=stockVO.getDates();
         for (int i = 0; i < open.length; i++) {
-            int year = dates.get(i).getYear();
-            int month = dates.get(i).getMonth();
-            int day = dates.get(i).getDay();
-            ohlcSeries.add(new Day(year, month, day), open[i], high[i], low[i], close[i]);
+            String s=format.format(dates.get(i));
+            String[] str=s.split("/");
+            int year = Integer.parseInt(str[0]);
+            int month =Integer.parseInt(str[1]);
+            int day =Integer.parseInt(str[2]);
+            ohlcSeries.add(new Day(day,month, year), open[i], high[i], low[i], close[i]);
         }
         return ohlcSeries;
     }
@@ -447,11 +453,14 @@ public class CandlestickChartController {
     private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries, StockVO stockVO) {
         int[] volume = stockVO.getVolume();
         List <Date> dates=stockVO.getDates();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = 0; i < volume.length; i++) {
-            int year = dates.get(i).getYear();
-            int month = dates.get(i).getMonth();
-            int day = dates.get(i).getDay();
-            timeSeries.add(new Day(year,month,day),volume[i]);
+            String s=format.format(dates.get(i));
+            String[] str=s.split("/");
+            int year = Integer.parseInt(str[0]);
+            int month =Integer.parseInt(str[1]);
+            int day =Integer.parseInt(str[2]);
+            timeSeries.add(new Day(day,month,year),volume[i]);
         }
         return timeSeries;
     }
@@ -475,76 +484,79 @@ public class CandlestickChartController {
             double[] average20 = stockVO.getAverage20();
             double[] average30 = stockVO.getAverage30();
             double[] average60 = stockVO.getAverage60();
+            List<Date> dates=stockVO.getDates();
             XYChart.Series series_average5 = new XYChart.Series();
-            series_average5 = this.addEMAData(series_average5, average5);
+            series_average5 = this.addEMAData(series_average5, average5,dates);
             series_average5.setName("5天");
             XYChart.Series series_average10 = new XYChart.Series();
-            series_average10 = this.addEMAData(series_average10, average10);
+            series_average10 = this.addEMAData(series_average10, average10,dates);
             series_average10.setName("10天");
             XYChart.Series series_average20 = new XYChart.Series();
-            series_average20 = this.addEMAData(series_average20, average20);
+            series_average20 = this.addEMAData(series_average20, average20,dates);
             series_average20.setName("20天");
             XYChart.Series series_average30 = new XYChart.Series();
-            series_average30 = this.addEMAData(series_average30, average30);
+            series_average30 = this.addEMAData(series_average30, average30,dates);
             series_average30.setName("30天");
             XYChart.Series series_average60 = new XYChart.Series();
-            series_average60 = this.addEMAData(series_average60, average60);
+            series_average60 = this.addEMAData(series_average60, average60,dates);
             series_average60.setName("60天");
             lineChart.getData().addAll(series_average5,series_average10,series_average20,series_average30,series_average60);
             gridPane.getChildren().clear();
             gridPane.add(lineChart, 1, 0);
         }
 
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("Portfolio 1");
+        else {
 
-        series1.getData().add(new XYChart.Data("Jan", 23));
-        series1.getData().add(new XYChart.Data("Feb", 14));
-        series1.getData().add(new XYChart.Data("Mar", 15));
-        series1.getData().add(new XYChart.Data("Apr", 24));
-        series1.getData().add(new XYChart.Data("May", 34));
-        series1.getData().add(new XYChart.Data("Jun", 36));
-        series1.getData().add(new XYChart.Data("Jul", 22));
-        series1.getData().add(new XYChart.Data("Aug", 45));
-        series1.getData().add(new XYChart.Data("Sep", 43));
-        series1.getData().add(new XYChart.Data("Oct", 17));
-        series1.getData().add(new XYChart.Data("Nov", 29));
-        series1.getData().add(new XYChart.Data("Dec", 25));
+            XYChart.Series series1 = new XYChart.Series();
+            series1.setName("Portfolio 1");
 
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Portfolio 2");
-        series2.getData().add(new XYChart.Data("Jan", 33));
-        series2.getData().add(new XYChart.Data("Feb", 34));
-        series2.getData().add(new XYChart.Data("Mar", 25));
-        series2.getData().add(new XYChart.Data("Apr", 44));
-        series2.getData().add(new XYChart.Data("May", 39));
-        series2.getData().add(new XYChart.Data("Jun", 16));
-        series2.getData().add(new XYChart.Data("Jul", 55));
-        series2.getData().add(new XYChart.Data("Aug", 54));
-        series2.getData().add(new XYChart.Data("Sep", 48));
-        series2.getData().add(new XYChart.Data("Oct", 27));
-        series2.getData().add(new XYChart.Data("Nov", 37));
-        series2.getData().add(new XYChart.Data("Dec", 29));
+            series1.getData().add(new XYChart.Data("Jan", 23));
+            series1.getData().add(new XYChart.Data("Feb", 14));
+            series1.getData().add(new XYChart.Data("Mar", 15));
+            series1.getData().add(new XYChart.Data("Apr", 24));
+            series1.getData().add(new XYChart.Data("May", 34));
+            series1.getData().add(new XYChart.Data("Jun", 36));
+            series1.getData().add(new XYChart.Data("Jul", 22));
+            series1.getData().add(new XYChart.Data("Aug", 45));
+            series1.getData().add(new XYChart.Data("Sep", 43));
+            series1.getData().add(new XYChart.Data("Oct", 17));
+            series1.getData().add(new XYChart.Data("Nov", 29));
+            series1.getData().add(new XYChart.Data("Dec", 25));
 
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("Portfolio 3");
-        series3.getData().add(new XYChart.Data("Jan", 44));
-        series3.getData().add(new XYChart.Data("Feb", 35));
-        series3.getData().add(new XYChart.Data("Mar", 36));
-        series3.getData().add(new XYChart.Data("Apr", 33));
-        series3.getData().add(new XYChart.Data("May", 31));
-        series3.getData().add(new XYChart.Data("Jun", 26));
-        series3.getData().add(new XYChart.Data("Jul", 22));
-        series3.getData().add(new XYChart.Data("Aug", 25));
-        series3.getData().add(new XYChart.Data("Sep", 43));
-        series3.getData().add(new XYChart.Data("Oct", 44));
-        series3.getData().add(new XYChart.Data("Nov", 45));
-        series3.getData().add(new XYChart.Data("Dec", 44));
+            XYChart.Series series2 = new XYChart.Series();
+            series2.setName("Portfolio 2");
+            series2.getData().add(new XYChart.Data("Jan", 33));
+            series2.getData().add(new XYChart.Data("Feb", 34));
+            series2.getData().add(new XYChart.Data("Mar", 25));
+            series2.getData().add(new XYChart.Data("Apr", 44));
+            series2.getData().add(new XYChart.Data("May", 39));
+            series2.getData().add(new XYChart.Data("Jun", 16));
+            series2.getData().add(new XYChart.Data("Jul", 55));
+            series2.getData().add(new XYChart.Data("Aug", 54));
+            series2.getData().add(new XYChart.Data("Sep", 48));
+            series2.getData().add(new XYChart.Data("Oct", 27));
+            series2.getData().add(new XYChart.Data("Nov", 37));
+            series2.getData().add(new XYChart.Data("Dec", 29));
 
-        lineChart.getData().addAll(series1, series2, series3);
-        gridPane.getChildren().clear();
-        gridPane.add(lineChart, 1, 0);
+            XYChart.Series series3 = new XYChart.Series();
+            series3.setName("Portfolio 3");
+            series3.getData().add(new XYChart.Data("Jan", 44));
+            series3.getData().add(new XYChart.Data("Feb", 35));
+            series3.getData().add(new XYChart.Data("Mar", 36));
+            series3.getData().add(new XYChart.Data("Apr", 33));
+            series3.getData().add(new XYChart.Data("May", 31));
+            series3.getData().add(new XYChart.Data("Jun", 26));
+            series3.getData().add(new XYChart.Data("Jul", 22));
+            series3.getData().add(new XYChart.Data("Aug", 25));
+            series3.getData().add(new XYChart.Data("Sep", 43));
+            series3.getData().add(new XYChart.Data("Oct", 44));
+            series3.getData().add(new XYChart.Data("Nov", 45));
+            series3.getData().add(new XYChart.Data("Dec", 44));
 
+            lineChart.getData().addAll(series1, series2, series3);
+            gridPane.getChildren().clear();
+            gridPane.add(lineChart, 1, 0);
+        }
     }
 
     /**
@@ -554,9 +566,11 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    private XYChart.Series addEMAData(XYChart.Series series, double[] data) {
+    private XYChart.Series addEMAData(XYChart.Series series, double[] data,List<Date> dates) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = 0; i < data.length; i++) {
-            series.getData().add(new XYChart.Data(i + 1, data[i]));
+            String s=format.format(dates.get(i));
+            series.getData().add(new XYChart.Data(s, data[i]));
         }
         return series;
     }
@@ -596,20 +610,12 @@ public class CandlestickChartController {
         }
         //TODO
         else {
-            //String input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
             String input="STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
-            System.out.print(1);
             net.actionPerformed(input);
-
-            System.out.print(2);
             String json = net.run();
-
-            System.out.print(json + "fvghj");
-            System.out.print(3);
             JsonUtil jsonUtil = new JsonUtil();
             StockVO stockVO1 = new StockVO();
             StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
-            System.out.print(stockVO.getName());
             return stockVO;
         }
     }

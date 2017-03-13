@@ -37,6 +37,11 @@ public class ClientOverviewController implements Initializable {
     @FXML
     private Button thermometerButton;
 
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private Button registerButton;
 
     @FXML
     private Label nameLabel;
@@ -63,6 +68,16 @@ public class ClientOverviewController implements Initializable {
     @FXML
     private void gotoThermometer() throws RemoteException {
         main.gotoThermometer();
+    }
+
+    @FXML
+    private void login() {
+        main.gotoLogin();
+    }
+
+    @FXML
+    private void register() {
+
     }
 
 
@@ -92,8 +107,6 @@ public class ClientOverviewController implements Initializable {
     public void setMain(Main main) {
         this.main = main;
         setButtonText();
-        nameLabel.setText("牛二");
-        telLabel.setText("1234567890987");
     }
 
 }

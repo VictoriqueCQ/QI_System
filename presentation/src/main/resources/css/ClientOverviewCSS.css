@@ -4,7 +4,7 @@
 
 .label {
     -fx-text-fill: rgb(255, 255, 255);
-    -fx-font-size: 1em;
+    -fx-font-size: 2em;
 }
 
 .button {
@@ -26,7 +26,7 @@
 }
 
 .label_logo {
-    -fx-background-image: url("/picture/股票分析系统3.jpg");
+    -fx-background-image: url("/picture/logo.jpg");
 }
 
 .label_client_picture {

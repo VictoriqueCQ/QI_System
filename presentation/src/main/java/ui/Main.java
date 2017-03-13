@@ -7,10 +7,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ui.Controller.CandlestickChartController;
-import ui.Controller.ClientOverviewController;
-import ui.Controller.ContrastController;
-import ui.Controller.ThermometerController;
+import ui.Controller.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +16,7 @@ public class Main extends Application {
     Net net;
     // 主窗口
     private Stage stage;
+    private Stage stage1;
 
 
     // 内部窗口
@@ -48,6 +46,24 @@ public class Main extends Application {
         net.setupNet();
         this.gotoClientOverview();
 
+    }
+
+    public void gotoLogin(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Login.fxml"));
+
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            LoginController controller = (LoginController) fxmlLoader.getController();
+            controller.setMain(this);
+            stage1 = new Stage(StageStyle.UNDECORATED);
+            stage1.setScene(new Scene(insidePane));
+            stage1.setAlwaysOnTop(true);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
 
@@ -100,7 +116,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ContrastController controller = (ContrastController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this,net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -117,7 +133,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this,net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
