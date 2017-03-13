@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
+    Net net = new Net();
     // 主窗口
     private Stage stage;
 
@@ -42,7 +43,7 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
-        Net net = new Net();
+
         net.setupNet();
         this.gotoClientOverview();
 
@@ -81,7 +82,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this,net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
