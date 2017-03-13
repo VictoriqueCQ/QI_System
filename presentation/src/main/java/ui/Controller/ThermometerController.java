@@ -214,35 +214,35 @@ ThermometerController implements Initializable {
 //
 //        });
 //    }
-
-    public void getMarketVO() {
-
-        Iterator<MarketPO> iter = marketPOList.iterator();
-
-        while (iter.hasNext()) {
-            MarketPO marketPO = iter.next();
-
-            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
-
-            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
-
-            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
-
-            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
-
-            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
-
-            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
-
-            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
-
-            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-
-        }
-    }
+//
+//    public void getMarketVO() {
+//
+//        Iterator<MarketPO> iter = marketPOList.iterator();
+//
+//        while (iter.hasNext()) {
+//            MarketPO marketPO = iter.next();
+//
+//            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
+//
+//            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
+//
+//            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
+//
+//            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
+//
+//            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
+//
+//            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
+//
+//            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
+//
+//            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+//                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+//                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+//                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+//
+//        }
+//    }
 
     @FXML
     public void setSearchButton() {
@@ -251,7 +251,7 @@ ThermometerController implements Initializable {
         Instant instant = time.atStartOfDay(zone).toInstant();
         Date date = Date.from(instant);
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
         String dateString = simpleDateFormat.format(date);
 
         net.actionPerformed("MARKET\tdateString\n");
