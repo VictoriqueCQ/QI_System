@@ -287,10 +287,19 @@ public class ContrastController extends Application {
         StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(null,stockName2,startDate,endDate);
 
         stock1 = getStockVoByCondition(searchConditionVO1);
+
+        double[]open = {1,2,3};
+        double[]high = {1,2,3};
+        double[]low = {1,2,3};
+        double[]close={1,2,3};
+        stock1 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
+
+
         if(stock1==null){
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
         stock2 = getStockVoByCondition(searchConditionVO2);
+        stock2 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
         if(stock1==null){
             AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
         }
