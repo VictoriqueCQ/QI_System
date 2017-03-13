@@ -21,9 +21,6 @@ import quantour.po.MarketPO;
 import ui.Main;
 import ui.Net;
 
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -347,7 +344,7 @@ ThermometerController implements Initializable {
 
     public void setMain(Main main) {
 //        go();
-        this.setSearchButton();
+//        this.setSearchButton();
         this.main = main;
         this.setDatePicker();
     }

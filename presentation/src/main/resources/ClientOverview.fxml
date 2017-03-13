@@ -27,7 +27,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="exitButoon" mnemonicParsing="false" onAction="#exit" prefHeight="51.0" prefWidth="51.0" styleClass="button1" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
+                                <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefHeight="51.0" prefWidth="51.0" styleClass="button1" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
                                 <Label prefHeight="158.0" prefWidth="420.0" styleClass="label_logo" />
                                 <GridPane GridPane.columnIndex="1">
                                     <columnConstraints>
