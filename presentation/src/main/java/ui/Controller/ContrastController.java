@@ -17,7 +17,7 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.AlertUtil;
 import ui.Main;
-import ui.StockModle;
+import ui.StockModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,22 +74,22 @@ public class ContrastController extends Application {
     private Button delete;
 
     @FXML
-    private TableView<StockModle> stockTable;
+    private TableView<StockModel> stockTable;
 
     @FXML
-    private TableColumn<StockModle, String> stockName;
+    private TableColumn<StockModel, String> stockName1;
 
     @FXML
-    private TableColumn<StockModle, String> stockID;
+    private TableColumn<StockModel, String> stockID;
 
     @FXML
-    private TableColumn<StockModle, String> minPrice;
+    private TableColumn<StockModel, String> minPrice;
 
     @FXML
-    private TableColumn<StockModle, String> maxPrice;
+    private TableColumn<StockModel, String> maxPrice;
 
     @FXML
-    private TableColumn<StockModle, String> riseAndDown;
+    private TableColumn<StockModel, String> riseAndDown;
 
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
@@ -335,27 +335,26 @@ public class ContrastController extends Application {
     }
 
     public void setTableContrast() {
-//        stockName.setCellValueFactory("sad");
-        stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        stockName1.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
         stockID.setCellValueFactory(celldata -> celldata.getValue().idProperty());
         minPrice.setCellValueFactory(celldata -> celldata.getValue().minPriceProperty());
         maxPrice.setCellValueFactory(celldata -> celldata.getValue().maxPriceProperty());
         riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
-        StockModle stockModle1 = stockVOtoStockModle(stock1);
-        StockModle stockModle2 = stockVOtoStockModle(stock2);
-
-        ObservableList<StockModle> models = FXCollections.observableArrayList();
-        models.add(stockModle1);
-        models.add(stockModle2);
-
+        StockModel stockModel1 = stockVOtoStockModle(stock1);
+        StockModel stockModel2 = stockVOtoStockModle(stock2);
+        System.out.print(stockModel1.getName());
+        ObservableList<StockModel> models = FXCollections.observableArrayList();
+        models.add(stockModel1);
+        models.add(stockModel2);
         stockTable.setItems(models);
 
         System.out.print("fghj");
     }
 
-    public StockModle stockVOtoStockModle(StockVO stockVO) {
-        StockModle modle = new StockModle();
-        modle.setID(stockVO.getCode());
+    public StockModel stockVOtoStockModle(StockVO stockVO) {
+        StockModel model = new StockModel();
+        model.setName(stockVO.getName());
+        model.setID(stockVO.getCode());
         double[] low = new double[stockVO.getLow().length];
         double minTemp = low[0];
         for (int i = 0; i < low.length; i++) {
@@ -363,7 +362,7 @@ public class ContrastController extends Application {
                 minTemp = low[i];
             }
         }
-        modle.setMinPrice(minTemp);
+        model.setMinPrice(minTemp);
 
         double[] high = new double[stockVO.getHigh().length];
         double maxTemp = high[0];
@@ -372,12 +371,12 @@ public class ContrastController extends Application {
                 maxTemp = high[i];
             }
         }
-        modle.setMaxPrice(maxTemp);
+        model.setMaxPrice(maxTemp);
 
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
 
-        modle.setRiseAndDown(riseAndDown * 100 + "%");
-        return modle;
+        model.setRiseAndDown(riseAndDown * 100 + "%");
+        return model;
     }
 
     public void setClosePriceLine() {
