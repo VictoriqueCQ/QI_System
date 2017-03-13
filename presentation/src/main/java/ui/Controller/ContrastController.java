@@ -17,6 +17,7 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.AlertUtil;
 import ui.Main;
+import ui.Net;
 import ui.StockModel;
 
 import java.text.ParseException;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class ContrastController extends Application {
     private Main main;
 
-
+    private Net net;
     private List<StockVO> allStock;//所有股票
     private StockVO stock1;
     private StockVO stock2;
@@ -227,20 +228,13 @@ public class ContrastController extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     @Override
     public void start(Stage primaryStage) {
 
     }
 
-    public void setMain(Main main) {
-//        setCompare();
-        this.main = main;
-        this.setDatePicker();
-    }
+
 
     @FXML
     public void addCompare() {
@@ -523,6 +517,13 @@ public class ContrastController extends Application {
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
         Date date = Date.from(instant);
         return date;
+    }
+
+    public void setMain(Main main,Net net) {
+//        setCompare();
+        this.main = main;
+        this.net=net;
+        this.setDatePicker();
     }
 
 }
