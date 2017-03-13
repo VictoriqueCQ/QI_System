@@ -1,9 +1,6 @@
 package ui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -15,12 +12,17 @@ public class Net {
     private BufferedReader br;
     private PrintWriter pw;
 
+    private DataInputStream inputStream;
+    private DataOutputStream outputStream;
+
     public void setupNet() {
         try {
             sock = new Socket("127.0.0.1", 9000);
-            InputStreamReader is = new InputStreamReader(sock.getInputStream());
-            br = new BufferedReader(is);
-            pw = new PrintWriter(sock.getOutputStream());
+//            InputStreamReader is = new InputStreamReader(sock.getInputStream());
+//            br = new BufferedReader(is);
+//            pw = new PrintWriter(sock.getOutputStream());
+            inputStream=new DataInputStream(sock.getInputStream());
+            outputStream=new DataOutputStream(sock.getOutputStream());
             System.out.println("Network established.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +55,7 @@ public class Net {
         String message;
         String output = "";
         try {
-                while ((message = br.readLine()) != null) {
+                while ((message = inputStream.readUTF()) != null) {
                     System.out.println("read: " + message);
                     output += (message + "\n");
 
@@ -66,8 +68,11 @@ public class Net {
 
     public void actionPerformed(String input) {
         try {
-            pw.write(input);
-            pw.flush();
+//            pw.write(input);
+//            pw.flush();
+            outputStream.writeUTF(input);
+
+//            outputStream.close();
         } catch (Exception ep) {
             ep.printStackTrace();
         }
