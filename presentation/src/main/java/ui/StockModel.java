@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 /**
  * Created by chenyuyan on 12/3/17.
  */
-public class StockModle {
+public class StockModel {
     private final SimpleStringProperty name;
 
     private final SimpleStringProperty id;
@@ -16,7 +16,7 @@ public class StockModle {
 
     private final SimpleStringProperty riseAndDown;
 
-    public StockModle() {
+    public StockModel() {
         name = new SimpleStringProperty();
         id = new SimpleStringProperty();
         minPrice = new SimpleStringProperty();
@@ -29,7 +29,7 @@ public class StockModle {
     }
 
     public void setName(String name) {
-        this.name.set(String.valueOf(name));
+        this.name.set(name);
     }
 
     public SimpleStringProperty nameProperty() {
@@ -48,9 +48,7 @@ public class StockModle {
         return id;
     }
 
-    public String getMinPrice() {
-        return minPrice.get();
-    }
+    public String getMinPrice() {return minPrice.get();}
 
     public void setMinPrice(double minPrice) {
         this.minPrice.set(String.valueOf(minPrice));
