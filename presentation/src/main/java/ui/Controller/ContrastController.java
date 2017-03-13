@@ -91,6 +91,13 @@ public class ContrastController extends Application {
     @FXML
     private TableColumn<StockModel, String> riseAndDown;
 
+
+    private  StockModel stockModel1;
+
+    private StockModel stockModel2;
+
+    private ObservableList<StockModel> models;
+
 //    private Map<String, XYChart.Series<String, Number>> seriesMap;
 
    /* @FXML
@@ -340,10 +347,10 @@ public class ContrastController extends Application {
         minPrice.setCellValueFactory(celldata -> celldata.getValue().minPriceProperty());
         maxPrice.setCellValueFactory(celldata -> celldata.getValue().maxPriceProperty());
         riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
-        StockModel stockModel1 = stockVOtoStockModle(stock1);
-        StockModel stockModel2 = stockVOtoStockModle(stock2);
+        stockModel1 = stockVOtoStockModle(stock1);
+        stockModel2 = stockVOtoStockModle(stock2);
         System.out.print(stockModel1.getName());
-        ObservableList<StockModel> models = FXCollections.observableArrayList();
+        models = FXCollections.observableArrayList();
         models.add(stockModel1);
         models.add(stockModel2);
         stockTable.setItems(models);
@@ -493,6 +500,15 @@ public class ContrastController extends Application {
 
 
         return null;
+
+
+
+    }
+    @FXML
+    private void removeCompare(){
+
+            stockTable.getItems().removeAll(models);
+            
 
 
 
