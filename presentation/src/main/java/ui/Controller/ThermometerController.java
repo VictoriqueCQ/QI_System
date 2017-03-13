@@ -1,33 +1,24 @@
 package ui.Controller;
 
-import javafx.animation.TranslateTransitionBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.chart.*;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import javafx.util.Duration;
-import quantour.vo.MarketVO;
-import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -37,10 +28,10 @@ import java.util.ResourceBundle;
 public class
 ThermometerController implements Initializable {
     private Main main;
+    private Net net;
 
 //    private List<MarketPO> marketPOList;//市场上所有股票数据
 
-    Net net = new Net();
 
     @FXML
     private DatePicker datePicker;
@@ -405,11 +396,12 @@ ThermometerController implements Initializable {
 
     }
 
-    public void setMain(Main main) {
+    public void setMain(Main main,Net net) {
 
         this.testPresentation();
 
         this.main = main;
+        this.net=net;
         this.setDatePicker();
     }
 
