@@ -13,13 +13,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
+import ui.AlertUtil;
 import ui.Main;
 import ui.StockModle;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -34,10 +38,10 @@ public class ContrastController extends Application {
 
 
     @FXML
-    private TextField addName1;
+    private TextField nameTextField1;
 
     @FXML
-    private TextField addName2;
+    private TextField nameTextField2;
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -267,6 +271,32 @@ public class ContrastController extends Application {
             setIncomeLine2();
 
          }*/
+
+        String stockName1 = nameTextField1.getText();
+        String stockName2 = nameTextField2.getText();
+        LocalDate startLocalDate = startTimeDatePicker.getValue();
+        LocalDate endLocalDate = endTimeDatePicker.getValue();
+        Date startDate = this.changeDateStyle(startLocalDate);
+        Date endDate = this.changeDateStyle(endLocalDate);
+        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd ");
+        String starttime = format.format(startDate);
+        String endtime = format.format(endDate);
+
+
+        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(null,stockName1,startDate,endDate);
+        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(null,stockName2,startDate,endDate);
+
+        stock1 = getStockVoByCondition(searchConditionVO1);
+        if(stock1==null){
+            AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
+        }
+        stock2 = getStockVoByCondition(searchConditionVO2);
+        if(stock1==null){
+            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
+        }
+
+
+
         setTableContrast();
         setClosePriceLine();
         setIncomeLine();
@@ -297,9 +327,13 @@ public class ContrastController extends Application {
 
     public void setTableContrast() {
 //        stockName.setCellValueFactory("sad");
-        StockModle stockModle = stockVOtoStockModle(stock1);
+        StockModle stockModle1 = stockVOtoStockModle(stock1);
+        StockModle stockModle2 = stockVOtoStockModle(stock2);
+
         ObservableList<StockModle> models = FXCollections.observableArrayList();
-        models.add(stockModle);
+        models.add(stockModle1);
+        models.add(stockModle2);
+
         stockTable.setItems(models);
 
 
@@ -439,4 +473,25 @@ public class ContrastController extends Application {
         System.out.print("aaaaaaa");
 
     }
+
+    private StockVO getStockVoByCondition(StockSearchConditionVO searchConditionVO){
+        if(searchConditionVO.getStockName()==""){
+            AlertUtil.showErrorAlert("对不起，您未输入股票信息");
+            return null;
+        }
+
+
+        return null;
+
+
+
+    }
+
+    private Date changeDateStyle(LocalDate localDate) {
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+        Date date = Date.from(instant);
+        return date;
+    }
+
 }
