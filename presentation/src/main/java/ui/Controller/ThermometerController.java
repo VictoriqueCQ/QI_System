@@ -14,11 +14,17 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import quantour.vo.MarketVO;
+import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -236,114 +242,25 @@ ThermometerController implements Initializable {
 
 
     //这个方法之后会删除
-    public void testPresentation(){
-        volumn = "100000";
-
-        NumberOfStocksLimitedUp = 50;
-
-        NumberOfStocksLimitedDown = 25;
-
-        NumberOfStocksUpOverFivePerCent = 80;
-
-        NumberOfStocksDownOverFivePerCent = 40;
-
-        NumberOfStocksUpOverFivePerCentPerDay = 60;
-
-        NumberOfStocksDownOverFivePerCentPerDay = 30;
-
-        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-
-        //以下是饼图数据
-        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
-
-        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
-
-        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票", NumberOfStocksChangedWithinFivePerCent);
-
-        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票", NumberOfStocksDownOverFivePerCent);
-
-        PieChart.Data d5 = new PieChart.Data("跌停股票", NumberOfStocksLimitedDown);
-
-        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
-
-        System.out.println("Search the data and show the volumn.");
-
-        volumnTextField.setText(volumn);
-
-        this.setBarChart_1();
-        this.setBarChart_2();
-        this.setBarChart_3();
-        this.setPieChart();
-
-    }
-
-    //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
-    @FXML
-    public void setSearchButton() {
-//        LocalDate time = datePicker.getValue();
-//        ZoneId zone = ZoneId.systemDefault();
-//        Instant instant = time.atStartOfDay(zone).toInstant();
-//        Date date = Date.from(instant);
+//    public void testPresentation(){
+//        volumn = "100000";
 //
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-//        String dateString = simpleDateFormat.format(date);
-////
-////        net.actionPerformed("MARKET\t" + dateString + "\n");
-////        String stocksMessages;
-////        stocksMessages = net.run();
-////        if (stocksMessages == null) {
-////            System.out.println("No data on that day!");
-////        } else {
-////            System.out.println(stocksMessages + " getted");
-////
-////            JsonUtil jsonUtil = new JsonUtil();
-////            MarketVO marketVO_middleState = new MarketVO();
-////            MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
-////
-////            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
-////
-////            NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
-////
-////            NumberOfStocksLimitedDown = marketVO.getLimitDownNum();
-////
-////            NumberOfStocksUpOverFivePerCent = marketVO.getOverFivePerNum();
-////
-////            NumberOfStocksDownOverFivePerCent = marketVO.getBelowFivePerNum();
-////
-////            NumberOfStocksUpOverFivePerCentPerDay = marketVO.getOc_overPFivePerNum();
-////
-////            NumberOfStocksDownOverFivePerCentPerDay = marketVO.getOc_belowMFivePerNum();
-////
-////            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-////                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-////                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-////                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-////        }
+//        NumberOfStocksLimitedUp = 50;
 //
+//        NumberOfStocksLimitedDown = 25;
 //
-////        volumn = stocksMessages[0];
-////
-////        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
-////
-////        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
-////
-////        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
-////
-////        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
-////
-////        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
-////
-////        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
-////
-////        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-////                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-////                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-////                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+//        NumberOfStocksUpOverFivePerCent = 80;
 //
+//        NumberOfStocksDownOverFivePerCent = 40;
 //
+//        NumberOfStocksUpOverFivePerCentPerDay = 60;
+//
+//        NumberOfStocksDownOverFivePerCentPerDay = 30;
+//
+//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 //
 //        //以下是饼图数据
 //        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
@@ -358,18 +275,107 @@ ThermometerController implements Initializable {
 //
 //        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
 //
-//        setBarChart_1();
-//
-//        setBarChart_2();
-//
-//        setBarChart_3();
-//
-//        setPieChart();
-//
 //        System.out.println("Search the data and show the volumn.");
 //
 //        volumnTextField.setText(volumn);
 //
+//        this.setBarChart_1();
+//        this.setBarChart_2();
+//        this.setBarChart_3();
+//        this.setPieChart();
+//
+//    }
+
+    //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
+    @FXML
+    public void setSearchButton() {
+        LocalDate time = datePicker.getValue();
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = time.atStartOfDay(zone).toInstant();
+        Date date = Date.from(instant);
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        String dateString = simpleDateFormat.format(date);
+
+        net.actionPerformed("MARKET\t" + dateString + "\n");
+        String stocksMessages;
+        stocksMessages = net.run();
+        if (stocksMessages == null) {
+            System.out.println("No data on that day!");
+        } else {
+            System.out.println(stocksMessages + " getted");
+
+            JsonUtil jsonUtil = new JsonUtil();
+            MarketVO marketVO_middleState = new MarketVO();
+            MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
+
+            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
+
+            NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
+
+            NumberOfStocksLimitedDown = marketVO.getLimitDownNum();
+
+            NumberOfStocksUpOverFivePerCent = marketVO.getOverFivePerNum();
+
+            NumberOfStocksDownOverFivePerCent = marketVO.getBelowFivePerNum();
+
+            NumberOfStocksUpOverFivePerCentPerDay = marketVO.getOc_overPFivePerNum();
+
+            NumberOfStocksDownOverFivePerCentPerDay = marketVO.getOc_belowMFivePerNum();
+
+            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+        }
+
+
+//        volumn = stocksMessages[0];
+//
+//        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
+//
+//        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
+//
+//        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
+//
+//        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
+//
+//        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
+//
+//        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
+//
+//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
+//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
+//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
+//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
+
+
+
+        //以下是饼图数据
+        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
+
+        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
+
+        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票", NumberOfStocksChangedWithinFivePerCent);
+
+        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票", NumberOfStocksDownOverFivePerCent);
+
+        PieChart.Data d5 = new PieChart.Data("跌停股票", NumberOfStocksLimitedDown);
+
+        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
+
+        setBarChart_1();
+
+        setBarChart_2();
+
+        setBarChart_3();
+
+        setPieChart();
+
+        System.out.println("Search the data and show the volumn.");
+
+        volumnTextField.setText(volumn);
+
 
         //给按钮添加立体特效
         Light.Distant light = new Light.Distant();
@@ -398,7 +404,7 @@ ThermometerController implements Initializable {
 
     public void setMain(Main main,Net net) {
 
-        this.testPresentation();
+//        this.testPresentation();
 
         this.main = main;
         this.net=net;
