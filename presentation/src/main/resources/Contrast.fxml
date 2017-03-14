@@ -84,10 +84,10 @@
                                         <NumberAxis side="LEFT" />
                                     </yAxis>
                                 </LineChart>
-                                <TableView fx:id="varianceTable" layoutX="824.0" layoutY="57.0" prefHeight="89.0" prefWidth="242.0" stylesheets="@css/TableViewCSS.css">
+                                <TableView fx:id="varianceTable" layoutX="824.0" layoutY="57.0" prefHeight="89.0" prefWidth="280.0" stylesheets="@css/TableViewCSS.css">
                                     <columns>
                                         <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称" />
-                                        <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差" />
+                                        <TableColumn fx:id="variance" prefWidth="150.0" text="对数收益方差" />
                                     </columns>
                                 </TableView>
                             </children>
