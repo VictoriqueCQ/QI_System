@@ -19,78 +19,74 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@css/ThermometerCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ui.Controller.ThermometerController">
+<AnchorPane stylesheets="@css/ThermometerCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ThermometerController">
     <children>
-        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                  prefHeight="640.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <BarChart fx:id="barChart_1" GridPane.rowIndex="2">
                     <xAxis>
-                        <CategoryAxis fx:id="TypeOfStock_1" side="BOTTOM"/>
+                        <CategoryAxis fx:id="TypeOfStock_1" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis fx:id="NumberOfStock_1" label="单位：只"/>
+                        <NumberAxis fx:id="NumberOfStock_1" label="单位：只" />
                     </yAxis>
                 </BarChart>
                 <BarChart fx:id="barChart_2" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <xAxis>
-                        <CategoryAxis fx:id="TypeOfStock_2" side="BOTTOM"/>
+                        <CategoryAxis fx:id="TypeOfStock_2" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis fx:id="NumberOfStock_2" label="单位：只"/>
+                        <NumberAxis fx:id="NumberOfStock_2" label="单位：只" />
                     </yAxis>
                 </BarChart>
                 <BarChart fx:id="barChart_3" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     <xAxis>
-                        <CategoryAxis fx:id="TypeOfStock_3" side="BOTTOM"/>
+                        <CategoryAxis fx:id="TypeOfStock_3" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                        <NumberAxis fx:id="NumberOfStock_3" label="单位：只" side="LEFT"/>
+                        <NumberAxis fx:id="NumberOfStock_3" label="单位：只" side="LEFT" />
                     </yAxis>
                 </BarChart>
                 <GridPane GridPane.rowIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                             <children>
-                                <DatePicker fx:id="datePicker" layoutY="69.0" prefHeight="23.0" prefWidth="135.0"/>
+                                <DatePicker fx:id="datePicker" layoutY="69.0" prefHeight="23.0" prefWidth="135.0" />
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
                                 <Label layoutX="14.0" layoutY="50.0" prefHeight="65.0" prefWidth="144.0" text="选择日期">
                                     <font>
-                                        <Font size="20.0"/>
+                                        <Font size="20.0" />
                                     </font>
                                 </Label>
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                             <children>
-                                <Button fx:id="searchButton" layoutX="34.0" layoutY="59.0" onAction="#setSearchButton"
-                                        text="查询">
+                                <Button fx:id="searchButton" layoutX="34.0" layoutY="59.0" onAction="#setSearchButton" text="查询">
                                     <font>
-                                        <Font size="14.0"/>
+                                        <Font size="14.0" />
                                     </font>
                                 </Button>
                             </children>
@@ -99,20 +95,25 @@
                             <children>
                                 <Label layoutX="14.0" layoutY="14.0" text="今日交易量">
                                     <font>
-                                        <Font size="20.0"/>
+                                        <Font size="20.0" />
                                     </font>
                                 </Label>
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <TextField fx:id="volumnTextField" layoutY="11.0" prefHeight="40.0" prefWidth="200.0"
-                                           styleClass="TextFieldText"/>
+                                <TextField fx:id="volumnTextField" layoutY="11.0" prefHeight="40.0" prefWidth="200.0" styleClass="TextFieldText" />
                             </children>
                         </AnchorPane>
                     </children>
                 </GridPane>
-                <PieChart fx:id="pieChart" title="所有股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <PieChart fx:id="pieChart" title="所有股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TableView fx:id="stockConditionTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="stockType" prefWidth="207.0" text="股票类型" />
+                <TableColumn fx:id="stockNumber" prefWidth="192.0" text="股票数量" />
+              </columns>
+            </TableView>
             </children>
         </GridPane>
     </children>
