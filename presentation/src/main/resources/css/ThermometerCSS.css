@@ -29,23 +29,23 @@
 }
 
 .default-color0.chart-pie {
-    -fx-pie-color: #ffa500;
+    -fx-pie-color: rgb(255,0,0);
 }
 
 .default-color1.chart-pie {
-    -fx-pie-color: #860061;
+    -fx-pie-color: rgb(255,0,255);
 }
 
 .default-color2.chart-pie {
-    -fx-pie-color: #ffd700;
+    -fx-pie-color: rgb(255,240,0);
 }
 
 .default-color3.chart-pie {
-    -fx-pie-color: #adff2f;
+    -fx-pie-color: rgb(0,0,255);
 }
 
 .default-color4.chart-pie {
-    -fx-pie-color: #ff5700;
+    -fx-pie-color: rgb(0,255,0);
 }
 
 .chart-legend {
@@ -161,3 +161,27 @@
     -fx-background-color: #243C62;
 }
 
+.table-view {
+    -fx-background-color: #000000;
+}
+
+.table-view .column-header {
+    -fx-background-color: #000000;
+}
+
+.table-row-cell {
+    -fx-background-color: #000000;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgb(100, 100, 100);
+}
+
+.table-cell {
+    -fx-text-fill: rgb(240, 150, 96);
+    -fx-alignment: CENTER;
+}
+
+.label {
+    -fx-text-fill: rgb(240, 150, 96);
+}
