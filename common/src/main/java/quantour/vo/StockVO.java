@@ -19,7 +19,7 @@ public class StockVO {
     private double[] close;
     private int[] volume;//交易数
     private double[] adjClose;//复权后
-    private List<Date> dates;
+    private List<String> dates;
     private double[] average5;
     private double[] average10;
     private double[] average20;
@@ -29,7 +29,7 @@ public class StockVO {
     private double variance;//相对方差
 
     public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
-                   double[] close, int[] volume, double[] adjClose, List<Date> dates,double[] average5, double[] average10,
+                   double[] close, int[] volume, double[] adjClose, List<String> dates,double[] average5, double[] average10,
                    double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
@@ -154,9 +154,9 @@ public class StockVO {
         this.adjClose=adjClose;
     }
 
-    public List<Date> getDates(){return dates;}
+    public List<String> getDates(){return dates;}
 
-    public void setDates(List<Date> dates){
+    public void setDates(List<String> dates){
         this.dates=dates;
     }
 

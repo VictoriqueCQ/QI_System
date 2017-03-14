@@ -1,12 +1,10 @@
 package quantour.po;
 
-import java.math.BigInteger;
-
 /**
  * Created by dell on 2017/3/4.
  */
 public class MarketPO {
-    private BigInteger totalDeal;
+    private double totalDeal;
     private int limitUpNum;
     private int limitDownNum;
     private int overFivePerNum;//涨幅超过5%的股票数
@@ -14,7 +12,7 @@ public class MarketPO {
     private int oc_overPFivePerNum;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
     private int oc_belowMFivePerNum;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
 
-    public MarketPO(BigInteger totalDeal, int limitUpNum, int limitDownNum, int overFivePerNum, int belowFivePerNum,
+    public MarketPO(double totalDeal, int limitUpNum, int limitDownNum, int overFivePerNum, int belowFivePerNum,
                     int oc_overPFivePerNum, int oc_belowMFivePerNum) {
         this.totalDeal = totalDeal;
         this.limitUpNum = limitUpNum;
@@ -25,7 +23,7 @@ public class MarketPO {
         this.oc_belowMFivePerNum = oc_belowMFivePerNum;
     }
 
-    public BigInteger getTotalDeal() {
+    public double getTotalDeal() {
         return totalDeal;
     }
 

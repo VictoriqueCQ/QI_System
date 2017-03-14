@@ -323,10 +323,10 @@ public class CandlestickChartController {
         double[] low = stockVO.getLow();
         double[] close = stockVO.getClose();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        List<Date> dates = stockVO.getDates();
+        List<String> dates = stockVO.getDates();
         for (int i = 0; i < open.length; i++) {
-            String s = format.format(dates.get(i));
-            String[] str = s.split("/");
+            //String s = format.format(dates.get(i));
+            String[] str = dates.get(i).split("/");
             int year = Integer.parseInt(str[0]);
             int month = Integer.parseInt(str[1]);
             int day = Integer.parseInt(str[2]);
@@ -344,11 +344,11 @@ public class CandlestickChartController {
      */
     private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries, StockVO stockVO) {
         int[] volume = stockVO.getVolume();
-        List<Date> dates = stockVO.getDates();
+        List<String> dates = stockVO.getDates();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = 0; i < volume.length; i++) {
-            String s = format.format(dates.get(i));
-            String[] str = s.split("/");
+            //String s = format.format(dates.get(i));
+            String[] str = dates.get(i).split("/");
             int year = Integer.parseInt(str[0]);
             int month = Integer.parseInt(str[1]);
             int day = Integer.parseInt(str[2]);
@@ -376,7 +376,7 @@ public class CandlestickChartController {
             double[] average20 = stockVO.getAverage20();
             double[] average30 = stockVO.getAverage30();
             double[] average60 = stockVO.getAverage60();
-            List<Date> dates = stockVO.getDates();
+            List<String> dates = stockVO.getDates();
             XYChart.Series series_average5 = new XYChart.Series();
             series_average5 = this.addEMAData(series_average5, average5, dates);
             series_average5.setName("5天");
@@ -403,11 +403,11 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    private XYChart.Series addEMAData(XYChart.Series series, double[] data, List<Date> dates) {
+    private XYChart.Series addEMAData(XYChart.Series series, double[] data, List<String> dates) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = data.length - 1; i >= 0; i--) {
-            String s = format.format(dates.get(i));
-            series.getData().add(new XYChart.Data(s, data[i]));
+//            String s = format.format(dates.get(i));
+            series.getData().add(new XYChart.Data(dates.get(i), data[i]));
         }
         return series;
     }
