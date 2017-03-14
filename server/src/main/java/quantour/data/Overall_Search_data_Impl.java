@@ -15,8 +15,8 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
     private List<Stock> marketList;
     private Map<Integer, List<Stock>> marketMap;
 
-    private final Date LOWER_BOUND = new SimpleDateFormat("mm/dd/yy").parse("02/01/05");
-    private final Date UPPER_BOUND = new SimpleDateFormat("mm/dd/yy").parse("04/30/14");
+    private final Date LOWER_BOUND = new SimpleDateFormat("MM/dd/yy").parse("02/01/05");
+    private final Date UPPER_BOUND = new SimpleDateFormat("MM/dd/yy").parse("04/30/14");
 
     Overall_Search_data_Impl(List<Stock> stockList) throws ParseException {
         this.marketList = stockList;
