@@ -139,3 +139,24 @@
 .default-color4.chart-line-symbol {
     -fx-background-color: #63B8FF, #63B8FF;
 }
+
+.tab {
+    -fx-font-size: 1.6em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:top {
+    -fx-background-color: black;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: rgb(240, 150, 96);
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: #000000;
+}
+
+.tab-pane {
+    -fx-border-color: rgb(240, 150, 96);
+}
