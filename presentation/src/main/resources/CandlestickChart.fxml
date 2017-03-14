@@ -87,7 +87,10 @@
         <tabs>
           <Tab text="K线图">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane fx:id="insidePane" layoutX="55.0" layoutY="45.0" prefHeight="417.0" prefWidth="1030.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="均线图">
