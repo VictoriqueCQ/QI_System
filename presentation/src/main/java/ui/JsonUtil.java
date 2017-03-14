@@ -3,7 +3,6 @@ package ui;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class JsonUtil {
 		jsonStr=jsonStr.substring(1,jsonStr.length()-2);
 		JSONObject jsonResult =JSONObject.fromObject(jsonStr);
 		Map<String, Class> classMap = new HashMap<String, Class>();
-		classMap.put("dates", Date.class);
+		classMap.put("dates", String.class);
 		T t=(T)JSONObject.toBean(jsonResult,obj,classMap);
 		return t;
 	}
