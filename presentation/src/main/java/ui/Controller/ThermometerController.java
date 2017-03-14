@@ -120,8 +120,8 @@ ThermometerController implements Initializable {
                 new AllStockConditionModel("跌停股票数",String.valueOf(NumberOfStocksLimitedDown)),
                 new AllStockConditionModel("涨幅超过5%的股票数",String.valueOf(NumberOfStocksUpOverFivePerCent)),
                 new AllStockConditionModel("跌幅超过5%的股票数",String.valueOf(NumberOfStocksDownOverFivePerCent)),
-                new AllStockConditionModel("开盘-收盘大于5%*上一个交易日收盘价的股票数",String.valueOf(NumberOfStocksUpOverFivePerCentPerDay)),
-                new AllStockConditionModel("开盘-收盘小于-5%*上一个交易日收盘价的股票数", String.valueOf(NumberOfStocksDownOverFivePerCentPerDay)),
+                new AllStockConditionModel("日增幅大于5%股票数",String.valueOf(NumberOfStocksUpOverFivePerCentPerDay)),
+                new AllStockConditionModel("日增幅小于5%股票数", String.valueOf(NumberOfStocksDownOverFivePerCentPerDay)),
                 new AllStockConditionModel("涨跌幅小于5%股票数",String.valueOf(NumberOfStocksChangedWithinFivePerCent))
         );
 
@@ -187,8 +187,8 @@ ThermometerController implements Initializable {
         barChart_3.setCategoryGap(90);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
         series3.setName("开盘-收盘超过5%*上一个交易日收盘价的股票情况");
-        series3.getData().add(new XYChart.Data<>("开盘-收盘大于5%*上一个交易日收盘价的股票数", NumberOfStocksUpOverFivePerCentPerDay));
-        series3.getData().add(new XYChart.Data<>("开盘-收盘小于-5%*上一个交易日收盘价的股票数", NumberOfStocksDownOverFivePerCentPerDay));
+        series3.getData().add(new XYChart.Data<>("日增幅大于5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
+        series3.getData().add(new XYChart.Data<>("日增幅小于5%股票数", NumberOfStocksDownOverFivePerCentPerDay));
         barChart_3.getData().clear();
         barChart_3.layout();
         barChart_3.getData().add(series3);
@@ -395,6 +395,8 @@ ThermometerController implements Initializable {
         setBarChart_3();
 
         setPieChart();
+
+        setTableView();
 
         System.out.println("Search the data and show the volumn.");
 
