@@ -36,7 +36,7 @@ public class DataNodeThread implements Runnable {
                 while ((result = dataInputStream.readUTF()) == null) {
                     Thread.sleep(100);
                 }
-                System.out.println(result);
+                //System.out.println(result);
                 ResultMap.write(key, result);
             }
         } catch (IOException e) {

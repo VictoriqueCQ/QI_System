@@ -71,6 +71,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
             Stream<Date> dateStream=resultList.parallelStream().map(Stock::getDate);
             List<Date> dates=dateStream.collect(Collectors.toList());
 
+            System.out.println(startSerial+" "+endSerial);
             double[] average5=getAverageByInterval(singleStockList,5,startSerial,endSerial);
             double[] average10=getAverageByInterval(singleStockList,10,startSerial,endSerial);
             double[] average20=getAverageByInterval(singleStockList,20,startSerial,endSerial);
@@ -109,7 +110,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
                     partialSum += singleStockList.get(i + temp).getClose();
                     temp--;
                 }
-                averageByInterval[i] = partialSum / (double) interval;
+                averageByInterval[i-startSerial] = partialSum / (double) interval;
         }
         return averageByInterval;
     }

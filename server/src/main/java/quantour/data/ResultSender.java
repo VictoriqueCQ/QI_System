@@ -29,7 +29,7 @@ class ResultSender{
 
 
     void run() throws ParseException, IOException {
-        SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
         String[] questContent=quest.split("\t");
         if (questContent[1].equals("STOCK")){
             Single_Search_data single_search_data=dataFactory.getSingleSearch();
