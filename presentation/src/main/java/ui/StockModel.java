@@ -48,7 +48,9 @@ public class StockModel {
         return id;
     }
 
-    public String getMinPrice() {return minPrice.get();}
+    public String getMinPrice() {
+        return minPrice.get();
+    }
 
     public void setMinPrice(double minPrice) {
         this.minPrice.set(String.valueOf(minPrice));
