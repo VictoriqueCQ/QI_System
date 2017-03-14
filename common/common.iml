@@ -17,55 +17,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/commons-beanutils-1.7.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/commons-beanutils-1.7.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/commons-collections-3.2.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/commons-lang-2.4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/commons-logging-1.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/ezmorph-1.0.4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jar包/json-lib-2.2.3-jdk13.jar!/" />
+          <root url="file://$MODULE_DIR$/.." />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/commons-collections-3.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/commons-lang-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/commons-logging-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/ezmorph-1.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/lib/json-lib-2.2.3-jdk13.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/../presentation/src/main/java" />
+          <root url="file://$MODULE_DIR$/../presentation/src/test" />
+          <root url="file://$MODULE_DIR$/../server/src/main/java" />
+          <root url="file://$MODULE_DIR$/../server/src/test/java" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>

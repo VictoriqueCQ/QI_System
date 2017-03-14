@@ -1,5 +1,6 @@
 package ui.Controller;
 
+import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -8,9 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.*;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
@@ -29,10 +30,6 @@ import ui.Main;
 import ui.Net;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -46,9 +43,11 @@ import java.util.List;
  */
 public class CandlestickChartController {
     private Main main;
-    Net net ;
+    private Net net;
+    private StockVO stockVO;
 
-
+    @FXML
+    private AnchorPane insidePane;
 
     @FXML
     private javafx.scene.chart.NumberAxis number = new javafx.scene.chart.NumberAxis();
@@ -142,10 +141,13 @@ public class CandlestickChartController {
         startTimeDatePicker.setDayCellFactory(dayCellFactory1);
     }
 
+    /**
+     * 搜索按钮，根据条件显示K线图和均线图
+     */
     @FXML
     private void search() {
         this.createEMA();
-        this.createCandlestickChart();
+        insidePane.getChildren().add(this.createCandlestickChart());
     }
 
     /**
@@ -153,6 +155,7 @@ public class CandlestickChartController {
      */
     private void setDatePicker() {
         startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
+        endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
                     @Override
@@ -168,20 +171,6 @@ public class CandlestickChartController {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #000000;");
                                 }
-                            }
-                        };
-                    }
-                };
-        startTimeDatePicker.setDayCellFactory(dayCellFactory1);
-        final Callback<DatePicker, DateCell> dayCellFactory2 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
                                 if (item.isAfter(
                                         LocalDate.of(2014, 4, 30))
                                         ) {
@@ -192,15 +181,14 @@ public class CandlestickChartController {
                         };
                     }
                 };
-        endTimeDatePicker.setDayCellFactory(dayCellFactory2);
-        endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
-
+        startTimeDatePicker.setDayCellFactory(dayCellFactory1);
+        endTimeDatePicker.setDayCellFactory(dayCellFactory1);
     }
 
     /**
      * 绘制K线图
      */
-    private void createCandlestickChart() {
+    private SwingNode createCandlestickChart() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值
         double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值
@@ -208,84 +196,16 @@ public class CandlestickChartController {
         double min2Value = Double.MAX_VALUE;//设置成交量的最低值
 
         OHLCSeries series = new OHLCSeries("");//蜡烛图，高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
-        StockVO stockVO=this.getStockVOByCondition();
-        if(!(stockVO==null)){
-            series =this.addCandlestickChartData(series,stockVO);
-            System.out.print("4");
+        if (!(stockVO == null)) {
+            series = this.addCandlestickChartData(series, stockVO);
         }
-//        else {
-//            series.add(new Day(28, 9, 2007), 9.2, 9.58, 9.16, 9.34);
-//            series.add(new Day(27, 9, 2007), 8.9, 9.06, 8.83, 8.96);
-//            series.add(new Day(26, 9, 2007), 9.0, 9.1, 8.82, 9.04);
-//            series.add(new Day(25, 9, 2007), 9.25, 9.33, 8.88, 9.00);
-//            series.add(new Day(24, 9, 2007), 9.05, 9.50, 8.91, 9.25);
-//            series.add(new Day(21, 9, 2007), 8.68, 9.05, 8.40, 9.00);
-//            series.add(new Day(20, 9, 2007), 8.68, 8.95, 8.50, 8.69);
-//            series.add(new Day(19, 9, 2007), 8.80, 8.94, 8.50, 8.66);
-//            series.add(new Day(18, 9, 2007), 8.88, 9.17, 8.69, 8.80);
-//            series.add(new Day(17, 9, 2007), 8.26, 8.98, 8.15, 8.89);
-//            series.add(new Day(14, 9, 2007), 8.44, 8.45, 8.13, 8.33);
-//            series.add(new Day(13, 9, 2007), 8.13, 8.46, 7.97, 8.42);
-//            series.add(new Day(12, 9, 2007), 8.2, 8.4, 7.81, 8.13);
-//            series.add(new Day(11, 9, 2007), 9.0, 9.0, 8.1, 8.24);
-//            series.add(new Day(10, 9, 2007), 8.6, 9.03, 8.40, 8.95);
-//            series.add(new Day(7, 9, 2007), 8.89, 9.04, 8.70, 8.73);
-//            series.add(new Day(6, 9, 2007), 8.4, 9.08, 8.33, 8.88);
-//            series.add(new Day(5, 9, 2007), 8.2, 8.74, 8.17, 8.36);
-//            series.add(new Day(4, 9, 2007), 7.7, 8.46, 7.67, 8.27);
-//            series.add(new Day(3, 9, 2007), 7.5, 7.8, 7.48, 7.69);
-//            series.add(new Day(31, 8, 2007), 7.4, 7.6, 7.28, 7.43);
-//            series.add(new Day(30, 8, 2007), 7.42, 7.56, 7.31, 7.40);
-//            series.add(new Day(29, 8, 2007), 7.42, 7.66, 7.22, 7.33);
-//            series.add(new Day(28, 8, 2007), 7.31, 7.70, 7.15, 7.56);
-//            series.add(new Day(27, 8, 2007), 7.05, 7.46, 7.02, 7.41);
-//            series.add(new Day(24, 8, 2007), 7.05, 7.09, 6.90, 6.99);
-//            series.add(new Day(23, 8, 2007), 7.12, 7.16, 7.00, 7.03);
-//            series.add(new Day(22, 8, 2007), 6.96, 7.15, 6.93, 7.11);
-//            series.add(new Day(21, 8, 2007), 7.10, 7.15, 7.02, 7.07);
-//            series.add(new Day(20, 8, 2007), 7.02, 7.19, 6.94, 7.14);
-//        }
         final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
         seriesCollection.addSeries(series);
 
         TimeSeries series2 = new TimeSeries("");//对应时间成交量数据
-        if(!(stockVO==null)){
-            series2=this.adTimeSeriesCollectionData(series2,stockVO);
-            System.out.print("3");
+        if (!(stockVO == null)) {
+            series2 = this.adTimeSeriesCollectionData(series2, stockVO);
         }
-
-//        else {
-//            series2.add(new Day(28, 9, 2007), 260659400 / 100);
-//            series2.add(new Day(27, 9, 2007), 119701900 / 100);
-//            series2.add(new Day(26, 9, 2007), 109719000 / 100);
-//            series2.add(new Day(25, 9, 2007), 178492400 / 100);
-//            series2.add(new Day(24, 9, 2007), 269978500 / 100);
-//            series2.add(new Day(21, 9, 2007), 361042300 / 100);
-//            series2.add(new Day(20, 9, 2007), 173912600 / 100);
-//            series2.add(new Day(19, 9, 2007), 154622600 / 100);
-//            series2.add(new Day(18, 9, 2007), 200661600 / 100);
-//            series2.add(new Day(17, 9, 2007), 312799600 / 100);
-//            series2.add(new Day(14, 9, 2007), 141652900 / 100);
-//            series2.add(new Day(13, 9, 2007), 221260400 / 100);
-//            series2.add(new Day(12, 9, 2007), 274795400 / 100);
-//            series2.add(new Day(11, 9, 2007), 289287300 / 100);
-//            series2.add(new Day(10, 9, 2007), 289063600 / 100);
-//            series2.add(new Day(7, 9, 2007), 351575300 / 100);
-//            series2.add(new Day(6, 9, 2007), 451357300 / 100);
-//            series2.add(new Day(5, 9, 2007), 442421200 / 100);
-//            series2.add(new Day(4, 9, 2007), 671942600 / 100);
-//            series2.add(new Day(3, 9, 2007), 349647800 / 100);
-//            series2.add(new Day(31, 8, 2007), 225339300 / 100);
-//            series2.add(new Day(30, 8, 2007), 160048200 / 100);
-//            series2.add(new Day(29, 8, 2007), 247341700 / 100);
-//            series2.add(new Day(28, 8, 2007), 394975400 / 100);
-//            series2.add(new Day(27, 8, 2007), 475797500 / 100);
-//            series2.add(new Day(24, 8, 2007), 297679500 / 100);
-//            series2.add(new Day(23, 8, 2007), 191760600 / 100);
-//            series2.add(new Day(22, 8, 2007), 232570200 / 100);
-//            series2.add(new Day(21, 8, 2007), 215693200 / 100);
-//            series2.add(new Day(20, 8, 2007), 200287500 / 100);
-//        }
         TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
         timeSeriesCollection.addSeries(series2);
 
@@ -301,9 +221,7 @@ public class CandlestickChartController {
                     minValue = seriesCollection.getLowValue(i, j);
                 }
             }
-
         }
-
 
         //获取最高值和最低值
         int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
@@ -317,7 +235,6 @@ public class CandlestickChartController {
                     min2Value = timeSeriesCollection.getYValue(i, j);
                 }
             }
-
         }
 
 
@@ -330,7 +247,11 @@ public class CandlestickChartController {
         DateAxis x1Axis = new DateAxis();//设置x轴，也就是时间轴
         x1Axis.setAutoRange(false);//设置不采用自动设置时间范围
         try {
-            x1Axis.setRange(dateFormat.parse("2007-08-20"), dateFormat.parse("2007-09-29"));//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
+            LocalDate startLocalDate = startTimeDatePicker.getValue();
+            LocalDate endLocalDate = endTimeDatePicker.getValue().plusDays(1);
+            Date startDate = this.changeDateStyle(startLocalDate);
+            Date endDate = this.changeDateStyle(endLocalDate);
+            x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -342,11 +263,12 @@ public class CandlestickChartController {
         x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
         NumberAxis y1Axis = new NumberAxis();//设定y轴，就是数字轴
         y1Axis.setAutoRange(false);//不使用自动设定范围
+        System.out.print(minValue);
+        System.out.print(highValue);
         y1Axis.setRange(minValue * 0.9, highValue * 1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
         y1Axis.setTickUnit(new NumberTickUnit((highValue * 1.1 - minValue * 0.9) / 10));//设置刻度显示的密度
         XYPlot plot1 = new XYPlot(seriesCollection, x1Axis, y1Axis, candlestickRender);//设置画图区域对象
 
-        System.out.print("7");
         XYBarRenderer xyBarRender = new XYBarRenderer() {
             private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值
 
@@ -381,41 +303,11 @@ public class CandlestickChartController {
         plot1.setBackgroundPaint(Color.black);
         plot2.setBackgroundPaint(Color.black);
 
-
-        //动态生成图片并展示
-        String path1 = "";
-        String path2 = "";
-        FileOutputStream out = null;
-        try {
-            String s = CandlestickChartController.class.getResource("/picture/").getFile();
-            String[] ss = s.split("/");
-            String t = "";
-            for (int i = 0; i < ss.length - 3; i++) {
-                t += (ss[i] + "\\");
-            }
-            t = t.substring(1);
-            path2 = t + "src\\main\\resources\\picture\\Kimage.jpeg";
-            path1 = s + "Kimage.jpeg";
-            File file1 = new File(path1);
-            File file2 = new File(path2);
-            if (!file1.getParentFile().exists()) {
-                file1.getParentFile().mkdirs();
-            }
-            out = new FileOutputStream(file1);
-            ChartUtilities.writeChartAsJPEG(out, chart, 600, 600);
-            out.flush();
-            out.close();
-            out = new FileOutputStream(file2);
-            ChartUtilities.writeChartAsJPEG(out, chart, 600, 600);
-            out.flush();
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        javafx.scene.image.Image image = new javafx.scene.image.Image("/picture/Kimage.jpeg");
-        ImageView im = new ImageView(image);
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(2200, 950));
+        SwingNode swingNode = new SwingNode();
+        swingNode.setContent(chartPanel);
+        return swingNode;
     }
 
     /**
@@ -431,21 +323,14 @@ public class CandlestickChartController {
         double[] low = stockVO.getLow();
         double[] close = stockVO.getClose();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        List <Date> dates=stockVO.getDates();
-        System.out.println(open[0]);
-        System.out.println(high[0]);
-        System.out.println(low[0]);
-        System.out.println(close[0]);
-        String str1=format.format(dates.get(0));
-        System.out.println(str1);
-        System.out.println(open.length);
+        List<Date> dates = stockVO.getDates();
         for (int i = 0; i < open.length; i++) {
-            String s=format.format(dates.get(i));
-            String[] str=s.split("/");
+            String s = format.format(dates.get(i));
+            String[] str = s.split("/");
             int year = Integer.parseInt(str[0]);
-            int month =Integer.parseInt(str[1]);
-            int day =Integer.parseInt(str[2]);
-            ohlcSeries.add(new Day(day,month, year), open[i], high[i], low[i], close[i]);
+            int month = Integer.parseInt(str[1]);
+            int day = Integer.parseInt(str[2]);
+            ohlcSeries.add(new Day(day, month, year), open[i], high[i], low[i], close[i]);
         }
         return ohlcSeries;
     }
@@ -459,21 +344,18 @@ public class CandlestickChartController {
      */
     private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries, StockVO stockVO) {
         int[] volume = stockVO.getVolume();
-        List <Date> dates=stockVO.getDates();
+        List<Date> dates = stockVO.getDates();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        String str1=format.format(dates.get(0));
-        System.out.println(str1);
-        System.out.println(volume[0]);
-        System.out.println(volume.length);
         for (int i = 0; i < volume.length; i++) {
-            String s=format.format(dates.get(i));
-            String[] str=s.split("/");
+            String s = format.format(dates.get(i));
+            String[] str = s.split("/");
             int year = Integer.parseInt(str[0]);
-            int month =Integer.parseInt(str[1]);
-            int day =Integer.parseInt(str[2]);
-            timeSeries.add(new Day(day,month,year),volume[i]);
+            int month = Integer.parseInt(str[1]);
+            int day = Integer.parseInt(str[2]);
+            timeSeries.add(new Day(day, month, year), volume[i]);
         }
         return timeSeries;
+
     }
 
 
@@ -486,83 +368,31 @@ public class CandlestickChartController {
         final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
         xAxis.setLabel("day");
         lineChart.setTitle("均线图(EMA)");
-
         //数据注入
-        StockVO stockVO= this.getStockVOByCondition();
-        if(!(stockVO==null)) {
+        stockVO = this.getStockVOByCondition();
+        if (!(stockVO == null)) {
             double[] average5 = stockVO.getAverage5();
             double[] average10 = stockVO.getAverage10();
             double[] average20 = stockVO.getAverage20();
             double[] average30 = stockVO.getAverage30();
             double[] average60 = stockVO.getAverage60();
-            List<Date> dates=stockVO.getDates();
+            List<Date> dates = stockVO.getDates();
             XYChart.Series series_average5 = new XYChart.Series();
-            series_average5 = this.addEMAData(series_average5, average5,dates);
+            series_average5 = this.addEMAData(series_average5, average5, dates);
             series_average5.setName("5天");
             XYChart.Series series_average10 = new XYChart.Series();
-            series_average10 = this.addEMAData(series_average10, average10,dates);
+            series_average10 = this.addEMAData(series_average10, average10, dates);
             series_average10.setName("10天");
             XYChart.Series series_average20 = new XYChart.Series();
-            series_average20 = this.addEMAData(series_average20, average20,dates);
+            series_average20 = this.addEMAData(series_average20, average20, dates);
             series_average20.setName("20天");
             XYChart.Series series_average30 = new XYChart.Series();
-            series_average30 = this.addEMAData(series_average30, average30,dates);
+            series_average30 = this.addEMAData(series_average30, average30, dates);
             series_average30.setName("30天");
             XYChart.Series series_average60 = new XYChart.Series();
-            series_average60 = this.addEMAData(series_average60, average60,dates);
+            series_average60 = this.addEMAData(series_average60, average60, dates);
             series_average60.setName("60天");
-            lineChart.getData().addAll(series_average5,series_average10,series_average20,series_average30,series_average60);
-        }
-
-        else {
-
-            XYChart.Series series1 = new XYChart.Series();
-            series1.setName("Portfolio 1");
-
-            series1.getData().add(new XYChart.Data("Jan", 23));
-            series1.getData().add(new XYChart.Data("Feb", 14));
-            series1.getData().add(new XYChart.Data("Mar", 15));
-            series1.getData().add(new XYChart.Data("Apr", 24));
-            series1.getData().add(new XYChart.Data("May", 34));
-            series1.getData().add(new XYChart.Data("Jun", 36));
-            series1.getData().add(new XYChart.Data("Jul", 22));
-            series1.getData().add(new XYChart.Data("Aug", 45));
-            series1.getData().add(new XYChart.Data("Sep", 43));
-            series1.getData().add(new XYChart.Data("Oct", 17));
-            series1.getData().add(new XYChart.Data("Nov", 29));
-            series1.getData().add(new XYChart.Data("Dec", 25));
-
-            XYChart.Series series2 = new XYChart.Series();
-            series2.setName("Portfolio 2");
-            series2.getData().add(new XYChart.Data("Jan", 33));
-            series2.getData().add(new XYChart.Data("Feb", 34));
-            series2.getData().add(new XYChart.Data("Mar", 25));
-            series2.getData().add(new XYChart.Data("Apr", 44));
-            series2.getData().add(new XYChart.Data("May", 39));
-            series2.getData().add(new XYChart.Data("Jun", 16));
-            series2.getData().add(new XYChart.Data("Jul", 55));
-            series2.getData().add(new XYChart.Data("Aug", 54));
-            series2.getData().add(new XYChart.Data("Sep", 48));
-            series2.getData().add(new XYChart.Data("Oct", 27));
-            series2.getData().add(new XYChart.Data("Nov", 37));
-            series2.getData().add(new XYChart.Data("Dec", 29));
-
-            XYChart.Series series3 = new XYChart.Series();
-            series3.setName("Portfolio 3");
-            series3.getData().add(new XYChart.Data("Jan", 44));
-            series3.getData().add(new XYChart.Data("Feb", 35));
-            series3.getData().add(new XYChart.Data("Mar", 36));
-            series3.getData().add(new XYChart.Data("Apr", 33));
-            series3.getData().add(new XYChart.Data("May", 31));
-            series3.getData().add(new XYChart.Data("Jun", 26));
-            series3.getData().add(new XYChart.Data("Jul", 22));
-            series3.getData().add(new XYChart.Data("Aug", 25));
-            series3.getData().add(new XYChart.Data("Sep", 43));
-            series3.getData().add(new XYChart.Data("Oct", 44));
-            series3.getData().add(new XYChart.Data("Nov", 45));
-            series3.getData().add(new XYChart.Data("Dec", 44));
-
-            lineChart.getData().addAll(series1, series2, series3);
+            lineChart.getData().addAll(series_average5, series_average10, series_average20, series_average30, series_average60);
         }
     }
 
@@ -573,10 +403,10 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    private XYChart.Series addEMAData(XYChart.Series series, double[] data,List<Date> dates) {
+    private XYChart.Series addEMAData(XYChart.Series series, double[] data, List<Date> dates) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        for (int i = data.length-1; i>=0; i--) {
-            String s=format.format(dates.get(i));
+        for (int i = data.length - 1; i >= 0; i--) {
+            String s = format.format(dates.get(i));
             series.getData().add(new XYChart.Data(s, data[i]));
         }
         return series;
@@ -611,13 +441,12 @@ public class CandlestickChartController {
         String starttime = format.format(startDate);
         String endtime = format.format(endDate);
         //检查输入是否完整
-        if(stockName.equals("")&&stockID.equals("")){
+        if (stockName.equals("") && stockID.equals("")) {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
-        //TODO
         else {
-            String input="STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
+            String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
             net.actionPerformed(input);
             String json = net.run();
             JsonUtil jsonUtil = new JsonUtil();
@@ -627,9 +456,9 @@ public class CandlestickChartController {
         }
     }
 
-    public void setMain(Main main,Net net) {
+    public void setMain(Main main, Net net) {
         this.main = main;
-        this.net=net;
+        this.net = net;
         this.setDatePicker();
     }
 }
