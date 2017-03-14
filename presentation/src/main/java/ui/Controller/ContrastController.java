@@ -284,13 +284,11 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd ");
-        String starttime = format.format(startDate);
-        String endtime = format.format(endDate);
 
 
-        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(null,stockName1,startDate,endDate);
-        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(null,stockName2,startDate,endDate);
+
+        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(stockName1,null,startDate,endDate);
+        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(stockName2,null,startDate,endDate);
 
         stock1 = getStockVoByCondition(searchConditionVO1);
 
@@ -318,6 +316,8 @@ public class ContrastController extends Application {
 
         setIncomeLine(stock1.getDates(), stock1.getName(),stock1.getProfit());
         setIncomeLine(stock2.getDates(),stock2.getName(),stock2.getProfit());
+        setVariance();
+
 
 //        setIncomeLine2();
 
@@ -394,7 +394,7 @@ public class ContrastController extends Application {
         series1.setName(name);
 //        List<Date> dates1 = stock1.getDates();
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
         for (int i = dates.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i));
             series1.getData().add(new XYChart.Data(s, close[i]));
@@ -467,7 +467,7 @@ public class ContrastController extends Application {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName(name);
         //populating the series with data
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
         for (int i = dates.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i));
             series.getData().add(new XYChart.Data(s, income.get(i)));
@@ -498,8 +498,13 @@ public class ContrastController extends Application {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
-        Date starttime = searchConditionVO.getStartTime();
-        Date endtime = searchConditionVO.getEndTime();
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy ");
+        String starttime = format.format(searchConditionVO.getStartTime());
+        String endtime = format.format(searchConditionVO.getEndTime());
+
+//        String starttime = searchConditionVO.getStartTime();
+//        Date endtime = searchConditionVO.getEndTime();
         String stockID = searchConditionVO.getStockID();
 
         String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
