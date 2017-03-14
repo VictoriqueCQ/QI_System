@@ -33,6 +33,7 @@ public class ClientNodeThread implements Runnable {
                     Thread.sleep(100);
                 }
                 dataOutputStream.writeUTF(result);
+                dataOutputStream.flush();
                 System.out.println(result);
                 ResultMap.delete(key);
                 quest=dataInputStream.readUTF();
