@@ -83,7 +83,7 @@
                 <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0" prefWidth="90.0" styleClass="search_button" text="搜索" GridPane.columnIndex="4" />
             </children>
         </GridPane>
-      <TabPane layoutX="295.0" layoutY="177.0" prefHeight="250.0" prefWidth="592.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
+      <TabPane layoutX="295.0" layoutY="68.0" prefHeight="572.0" prefWidth="1180.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="68.0">
         <tabs>
           <Tab text="K线图">
             <content>
