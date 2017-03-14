@@ -19,7 +19,7 @@ public class DataReader_CSV {
     private String path;
 
     DataReader_CSV() {
-        path="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data.csv";
+        path="\\QI_System\\server\\stock_data.csv";
     }
 
     public DataReader_CSV(String path) {
