@@ -95,10 +95,7 @@
     -fx-text-fill: #AAACAF;
 }
 
-.chart-series-line {
-    -fx-stroke-width: 2px;
-    -fx-effect: null;
-}
+
 
 .default-color0.chart-series-line {
     -fx-stroke: #FFFFFF;
@@ -160,3 +157,8 @@
 .tab-pane {
     -fx-border-color: rgb(240, 150, 96);
 }
+
+.chart-legend{
+    -fx-background-color:transparent;
+}
+
