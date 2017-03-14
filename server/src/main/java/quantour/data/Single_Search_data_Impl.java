@@ -3,6 +3,7 @@ package quantour.data;
 import quantour.dataservice.Single_Search_data;
 import quantour.po.StockPO;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
  */
 public class Single_Search_data_Impl implements Single_Search_data {
     private List<Stock> stockList;
+    private SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
 
     Single_Search_data_Impl(List<Stock> stockList) {
         this.stockList = stockList;
@@ -24,7 +26,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
 
     @Override
     public StockPO getStockList(String[] quest) throws ParseException {
-        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
+
         if(quest[2].equals("NULL")){
             return getStockListByName(quest[3],sdf.parse(quest[4]),sdf.parse(quest[5]));
         }
@@ -110,7 +112,8 @@ public class Single_Search_data_Impl implements Single_Search_data {
                     partialSum += singleStockList.get(i + temp).getClose();
                     temp--;
                 }
-                averageByInterval[i-startSerial] = partialSum / (double) interval;
+                BigDecimal bg=new BigDecimal(partialSum / (double) interval).setScale(2,BigDecimal.ROUND_HALF_UP);
+                averageByInterval[i-startSerial] =bg.doubleValue();
         }
         return averageByInterval;
     }
