@@ -5,16 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import quantour.vo.MarketVO;
+import ui.AllStockConditionModel;
 import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
@@ -26,6 +24,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.StringJoiner;
 
 
 /**
@@ -36,8 +35,16 @@ ThermometerController implements Initializable {
     private Main main;
     private Net net;
 
-//    private List<MarketPO> marketPOList;//市场上所有股票数据
+    @FXML
+    private TableView<AllStockConditionModel> stockConditionTable;
 
+    @FXML
+    private TableColumn<AllStockConditionModel, String> stockType;
+
+    @FXML
+    private TableColumn<AllStockConditionModel, String> stockNumber;
+
+    private ObservableList<AllStockConditionModel> data;
 
     @FXML
     private DatePicker datePicker;
@@ -103,6 +110,24 @@ ThermometerController implements Initializable {
 
     }
 
+    private void setTableView(){
+
+        stockType.setCellValueFactory(celldata -> celldata.getValue().StockTypeProperty());
+        stockNumber.setCellValueFactory(celldata -> celldata.getValue().StockNumberProperty());
+
+        data = FXCollections.observableArrayList(
+                new AllStockConditionModel("涨停股票数",String.valueOf(NumberOfStocksLimitedUp)),
+                new AllStockConditionModel("跌停股票数",String.valueOf(NumberOfStocksLimitedDown)),
+                new AllStockConditionModel("涨幅超过5%的股票数",String.valueOf(NumberOfStocksUpOverFivePerCent)),
+                new AllStockConditionModel("跌幅超过5%的股票数",String.valueOf(NumberOfStocksDownOverFivePerCent)),
+                new AllStockConditionModel("开盘-收盘大于5%*上一个交易日收盘价的股票数",String.valueOf(NumberOfStocksUpOverFivePerCentPerDay)),
+                new AllStockConditionModel("开盘-收盘小于-5%*上一个交易日收盘价的股票数", String.valueOf(NumberOfStocksDownOverFivePerCentPerDay)),
+                new AllStockConditionModel("涨跌幅小于5%股票数",String.valueOf(NumberOfStocksChangedWithinFivePerCent))
+        );
+
+        stockConditionTable.setItems(data);
+    }
+
     private void setDatePicker() {
         datePicker.setValue(LocalDate.of(2005, 2, 1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -161,9 +186,9 @@ ThermometerController implements Initializable {
     private void setBarChart_3() {
         barChart_3.setCategoryGap(90);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
-        series3.setName("日增幅超过5%股票情况");
-        series3.getData().add(new XYChart.Data<>("日增幅超过5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
-        series3.getData().add(new XYChart.Data<>("日跌幅超过5%股票数", NumberOfStocksDownOverFivePerCentPerDay));
+        series3.setName("开盘-收盘超过5%*上一个交易日收盘价的股票情况");
+        series3.getData().add(new XYChart.Data<>("开盘-收盘大于5%*上一个交易日收盘价的股票数", NumberOfStocksUpOverFivePerCentPerDay));
+        series3.getData().add(new XYChart.Data<>("开盘-收盘小于-5%*上一个交易日收盘价的股票数", NumberOfStocksDownOverFivePerCentPerDay));
         barChart_3.getData().clear();
         barChart_3.layout();
         barChart_3.getData().add(series3);
@@ -350,7 +375,6 @@ ThermometerController implements Initializable {
 //                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 
 
-
         //以下是饼图数据
         PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
 
@@ -402,12 +426,12 @@ ThermometerController implements Initializable {
 
     }
 
-    public void setMain(Main main,Net net) {
+    public void setMain(Main main, Net net) {
 
 //        this.testPresentation();
 
         this.main = main;
-        this.net=net;
+        this.net = net;
         this.setDatePicker();
     }
 
