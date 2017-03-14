@@ -15,21 +15,14 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
-import ui.AlertUtil;
-import ui.Main;
-import ui.Net;
-import ui.StockModel;
+import ui.*;
 
-import java.text.ParseException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import java.util.*;
 public class ContrastController extends Application {
     private Main main;
 
@@ -79,6 +72,10 @@ public class ContrastController extends Application {
     private TableView<StockModel> stockTable;
 
     @FXML
+    private TableView<StockModel> varianceTable;
+
+
+    @FXML
     private TableColumn<StockModel, String> stockName1;
 
     @FXML
@@ -93,6 +90,11 @@ public class ContrastController extends Application {
     @FXML
     private TableColumn<StockModel, String> riseAndDown;
 
+    @FXML
+    private  TableColumn<StockModel,String> variance;
+
+    @FXML
+    private TableColumn<StockModel,String> stockName;
 
     private  StockModel stockModel1;
 
@@ -282,37 +284,41 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd ");
-        String starttime = format.format(startDate);
-        String endtime = format.format(endDate);
 
 
-        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(null,stockName1,startDate,endDate);
-        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(null,stockName2,startDate,endDate);
+
+        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(stockName1,null,startDate,endDate);
+        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(stockName2,null,startDate,endDate);
 
         stock1 = getStockVoByCondition(searchConditionVO1);
 
-        double[]open = {1,2,3};
-        double[]high = {1,2,3};
-        double[]low = {1,2,3};
-        double[]close={1,2,3};
-        stock1 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
+//        double[]open = {1,2,3};
+//        double[]high = {1,2,3};
+//        double[]low = {1,2,3};
+//        double[]close={1,2,3};
+//        stock1 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
 
 
         if(stock1==null){
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
         stock2 = getStockVoByCondition(searchConditionVO2);
-        stock2 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
-        if(stock1==null){
+//        stock2 = new StockVO("aaa",123,null,null,open,high,low,close,null,null,null,null,null,null,null,null,null,2.3);
+        if(stock2==null){
             AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
         }
 
 
 
         setTableContrast();
-        setClosePriceLine();
-        setIncomeLine();
+        setClosePriceLine(stock1.getClose(),stock1.getDates(),stock1.getName());
+        setClosePriceLine(stock2.getClose(),stock2.getDates(),stock2.getName());
+
+        setIncomeLine(stock1.getDates(), stock1.getName(),stock1.getProfit());
+        setIncomeLine(stock2.getDates(),stock2.getName(),stock2.getProfit());
+        setVariance();
+
+
 //        setIncomeLine2();
 
 
@@ -376,16 +382,31 @@ public class ContrastController extends Application {
             }
         }
         model.setMaxPrice(maxTemp);
+        double dd = 2.00;
 
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-
+        DecimalFormat   df   =new  DecimalFormat("#.00");
+        df.format(riseAndDown);
         model.setRiseAndDown(riseAndDown * 100 + "%");
+//        System.out.print("asaaaaaaaasagdsagdjasdasd"+stockVO.getVariance());
+        model.setVariance(stockVO.getVariance());
+//        System.out.print("asaaaaaaaasagdsagdjasdasd"+model.getVariance());
         return model;
     }
 
-    public void setClosePriceLine() {
-        XYChart.Series<String, Double> series = new XYChart.Series<>();
-        series.setName("股票一");
+    public void setClosePriceLine(double[]close,List<Date> dates,String name) {
+
+        XYChart.Series<String, Double> series1 = new XYChart.Series<>();
+        series1.setName(name);
+//        List<Date> dates1 = stock1.getDates();
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        for (int i = dates.size() - 1; i >= 0; i--) {
+            String s = format.format(dates.get(i));
+            series1.getData().add(new XYChart.Data(s, close[i]));
+        }
+
+
         //populating the series with data
         /*series.getData().add(new XYChart.Data("a", 23));
         series.getData().add(new XYChart.Data("b", 14));
@@ -401,7 +422,7 @@ public class ContrastController extends Application {
         series.getData().add(new XYChart.Data("l", 25));
         closePriceLine.getData().add(series);
         System.out.print("aaaaaaa");*/
-        double[] d = new double[3];
+       /* double[] d = new double[3];
         Date d2 = new Date();
         d[0] = 100;
         d[1] = 2;
@@ -415,7 +436,7 @@ public class ContrastController extends Application {
         }
 
 
-        for (int i = 0; i < d.length; i++) {
+        for (int i = 0; i < d.length; i++) {*/
 
 
 //            Calendar c   =   new GregorianCalendar();
@@ -429,8 +450,8 @@ public class ContrastController extends Application {
 //            java.util.Date date=new java.util.Date();
 //            String s=sdf.format(c.getTime());
 
-            series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() + (long) i * 24 * 60 * 60 * 1000)), d[i]));
-            closePriceLine.getData().add(series);
+//            series.getData().add(new XYChart.Data(df.format(new Date(d1.getTime() + (long) i * 24 * 60 * 60 * 1000)), d[i]));
+            closePriceLine.getData().add(series1);
 
         }
 
@@ -446,46 +467,35 @@ public class ContrastController extends Application {
 
         }*/
 
-    }
 
-    public void setIncomeLine() {
+
+    public void setIncomeLine(List<Date> dates, String name, ArrayList<Double> income) {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("股票一");
+        series.setName(name);
         //populating the series with data
-        series.getData().add(new XYChart.Data("a", 23));
-        series.getData().add(new XYChart.Data("b", 14));
-        series.getData().add(new XYChart.Data("c", 15));
-        series.getData().add(new XYChart.Data("d", 24));
-        series.getData().add(new XYChart.Data("e", 34));
-        series.getData().add(new XYChart.Data("f", 36));
-        series.getData().add(new XYChart.Data("g", 22));
-        series.getData().add(new XYChart.Data("h", 45));
-        series.getData().add(new XYChart.Data("i", 43));
-        series.getData().add(new XYChart.Data("j", 17));
-        series.getData().add(new XYChart.Data("k", 29));
-        series.getData().add(new XYChart.Data("l", 25));
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        for (int i = income.size()-1;i>=0;i--) {
+            String s = format.format(dates.get(i+1));
+            series.getData().add(new XYChart.Data(s, income.get(i)));
+        }
+
         IncomeLine.getData().add(series);
-        System.out.print("aaaaaaa");
+//        System.out.print("aaaaaaa");
     }
 
-    public void setIncomeLine2() {
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("股票一");
-        //populating the series with data
-        series.getData().add(new XYChart.Data("a", 23));
-        series.getData().add(new XYChart.Data("b", 14));
-        series.getData().add(new XYChart.Data("c", 15));
-        series.getData().add(new XYChart.Data("d", 24));
-        series.getData().add(new XYChart.Data("e", 34));
-        series.getData().add(new XYChart.Data("f", 36));
-        series.getData().add(new XYChart.Data("g", 22));
-        series.getData().add(new XYChart.Data("h", 45));
-        series.getData().add(new XYChart.Data("i", 43));
-        series.getData().add(new XYChart.Data("j", 17));
-        series.getData().add(new XYChart.Data("k", 29));
-        series.getData().add(new XYChart.Data("l", 25));
-        IncomeLine2.getData().add(series);
-        System.out.print("aaaaaaa");
+    public void setVariance() {
+        stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        variance.setCellValueFactory(celldata -> celldata.getValue().varianceProperty());
+
+
+        System.out.print(stockModel1.getName());
+        models = FXCollections.observableArrayList();
+        models.add(stockModel1);
+        models.add(stockModel2);
+        varianceTable.setItems(models);
+
+        System.out.print("fghj");
+
 
     }
 
@@ -495,8 +505,23 @@ public class ContrastController extends Application {
             return null;
         }
 
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy ");
+        String starttime = format.format(searchConditionVO.getStartTime());
+        String endtime = format.format(searchConditionVO.getEndTime());
 
-        return null;
+//        String starttime = searchConditionVO.getStartTime();
+//        Date endtime = searchConditionVO.getEndTime();
+        String stockID = searchConditionVO.getStockID();
+
+        String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
+        net.actionPerformed(input);
+        String json = net.run();
+        JsonUtil jsonUtil = new JsonUtil();
+        StockVO stockVO1 = new StockVO();
+        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
+
+        return stockVO;
+
 
 
 
