@@ -49,7 +49,7 @@
                                         <TableColumn fx:id="stockID" prefWidth="220.0" text="股票编号" />
                                         <TableColumn fx:id="minPrice" prefWidth="220.0" text="最低值" />
                                         <TableColumn fx:id="maxPrice" prefWidth="220.0" text="最高值" />
-                                        <TableColumn fx:id="riseAndDown" prefWidth="200.0" text="涨跌幅" />
+                                        <TableColumn fx:id="riseAndDown" prefWidth="198.0" text="涨跌幅" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -59,20 +59,16 @@
                 <Tab text="每日收盘价">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                        <ScrollPane layoutX="10.0" layoutY="10.0" prefViewportHeight="402.0" prefViewportWidth="1078.0">
-                           <content>
-                                      <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" minWidth="1000.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                                          <xAxis>
-                                              <CategoryAxis label="日期" />
-                                          </xAxis>
-                                          <yAxis>
-                                              <NumberAxis label="收盘价" side="LEFT" />
-                                          </yAxis>
-                                      </LineChart>
-                           </content>
-                        </ScrollPane>
-                            </children>
+                     <children>
+                        <LineChart fx:id="closePriceLine" minWidth="1000.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <xAxis>
+                              <CategoryAxis label="日期" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis label="收盘价" side="LEFT" />
+                           </yAxis>
+                        </LineChart>
+                     </children>
                         </AnchorPane>
                     </content>
                 </Tab>
