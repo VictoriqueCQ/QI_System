@@ -22,7 +22,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-
+import java.text.DecimalFormat;
 public class ContrastController extends Application {
     private Main main;
 
@@ -382,10 +382,13 @@ public class ContrastController extends Application {
             }
         }
         model.setMaxPrice(maxTemp);
+        double dd = 2.00;
 
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-
+        DecimalFormat   df   =new  DecimalFormat("#.00");
+        df.format(riseAndDown);
         model.setRiseAndDown(riseAndDown * 100 + "%");
+        model.setVariance(stockVO.getVariance().toString());
         return model;
     }
 
@@ -468,9 +471,9 @@ public class ContrastController extends Application {
         series.setName(name);
         //populating the series with data
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
-        for (int i = dates.size() - 1; i >= 0; i--) {
+        for (int i = 1 ;i<dates.size();i++) {
             String s = format.format(dates.get(i));
-            series.getData().add(new XYChart.Data(s, income.get(i)));
+            series.getData().add(new XYChart.Data(s, income.get(i-1)));
         }
 
         IncomeLine.getData().add(series);
@@ -479,7 +482,7 @@ public class ContrastController extends Application {
 
     public void setVariance() {
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
-        variance.setCellValueFactory(celldata -> celldata.getValue().idProperty());
+        variance.setCellValueFactory(celldata -> celldata.getValue().varianceProperty());
 
 
         System.out.print(stockModel1.getName());
