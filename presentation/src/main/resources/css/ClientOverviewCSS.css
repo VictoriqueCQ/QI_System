@@ -25,6 +25,8 @@
     -fx-background-color: #000000;
 }
 
+
+
 .label_logo {
     -fx-background-image: url("/picture/logo.jpg");
 }
