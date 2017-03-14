@@ -116,3 +116,23 @@
     -fx-border-radius: 20px;
     -fx-text-fill: #AAACAF;
 }
+
+.default-color0.chart-series-line {
+    -fx-stroke: #a020f0;
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #ffff00;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #a020f0, #a020f0;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #ffff00, #ffff00;
+}
+
+.chart-legend{
+    -fx-background-color:transparent;
+}

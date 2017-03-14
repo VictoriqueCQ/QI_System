@@ -37,19 +37,19 @@
         </Label>
         <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
         <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
-        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="409.0" prefWidth="1097.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
             <tabs>
                 <Tab text="总况">
                     <content>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="stockTable" layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="502.0" stylesheets="@css/TableViewCSS.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="36.0">
+                                <TableView fx:id="stockTable" layoutX="334.0" layoutY="36.0" prefHeight="273.0" prefWidth="1000.0" stylesheets="@css/TableViewCSS.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                     <columns>
-                                        <TableColumn fx:id="stockName1" prefWidth="100.0" text="股票名称" />
-                                        <TableColumn fx:id="stockID" prefWidth="100.0" text="股票编号" />
-                                        <TableColumn fx:id="minPrice" prefWidth="100.0" text="最低值" />
-                                        <TableColumn fx:id="maxPrice" prefWidth="100.0" text="最高值" />
-                                        <TableColumn fx:id="riseAndDown" prefWidth="100.0" text="涨跌幅" />
+                                        <TableColumn fx:id="stockName1" prefWidth="220.0" text="股票名称" />
+                                        <TableColumn fx:id="stockID" prefWidth="220.0" text="股票编号" />
+                                        <TableColumn fx:id="minPrice" prefWidth="220.0" text="最低值" />
+                                        <TableColumn fx:id="maxPrice" prefWidth="220.0" text="最高值" />
+                                        <TableColumn fx:id="riseAndDown" prefWidth="200.0" text="涨跌幅" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -60,14 +60,18 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" prefHeight="276.0" prefWidth="492.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                                    <xAxis>
-                                        <CategoryAxis label="日期" />
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis label="收盘价" side="LEFT" />
-                                    </yAxis>
-                                </LineChart>
+                        <ScrollPane layoutX="10.0" layoutY="10.0" prefViewportHeight="402.0" prefViewportWidth="1078.0">
+                           <content>
+                                      <LineChart fx:id="closePriceLine" layoutX="293.0" layoutY="37.0" minWidth="1000.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                          <xAxis>
+                                              <CategoryAxis label="日期" />
+                                          </xAxis>
+                                          <yAxis>
+                                              <NumberAxis label="收盘价" side="LEFT" />
+                                          </yAxis>
+                                      </LineChart>
+                           </content>
+                        </ScrollPane>
                             </children>
                         </AnchorPane>
                     </content>
@@ -76,7 +80,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="360.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="10.0">
+                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="360.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="10.0">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>
@@ -84,7 +88,7 @@
                                         <NumberAxis side="LEFT" />
                                     </yAxis>
                                 </LineChart>
-                                <TableView fx:id="varianceTable" layoutX="680.0" layoutY="61.0" prefHeight="89.0" prefWidth="242.0" stylesheets="@css/TableViewCSS.css">
+                                <TableView fx:id="varianceTable" layoutX="824.0" layoutY="57.0" prefHeight="89.0" prefWidth="242.0" stylesheets="@css/TableViewCSS.css">
                                     <columns>
                                         <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称" />
                                         <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差" />
