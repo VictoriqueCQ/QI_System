@@ -19,8 +19,8 @@ public class DataReader_CSV {
     private String path;
 
     DataReader_CSV() {
-        path="D:\\QI_System\\server\\stock_data.csv";
-        //path ="C:\\Users\\xjwhh\\Desktop\\data.txt";
+//        path="D:\\QI_System\\server\\stock_data.csv";
+        path ="C:\\Users\\xjwhh\\Desktop\\data.txt";
     }
 
     public DataReader_CSV(String path) {

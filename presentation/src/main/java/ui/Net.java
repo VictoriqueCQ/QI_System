@@ -18,16 +18,12 @@ public class Net {
     public void setupNet() {
         try {
             sock = new Socket("127.0.0.1", 9000);
-//            InputStreamReader is = new InputStreamReader(sock.getInputStream());
-//            br = new BufferedReader(is);
-//            pw = new PrintWriter(sock.getOutputStream());
-            inputStream=new DataInputStream(sock.getInputStream());
-            outputStream=new DataOutputStream(sock.getOutputStream());
+            inputStream = new DataInputStream(sock.getInputStream());
+            outputStream = new DataOutputStream(sock.getOutputStream());
             System.out.println("Network established.");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void closeSock() {
@@ -55,11 +51,8 @@ public class Net {
         String message;
         String output = "";
         try {
-               message = inputStream.readUTF();
-//                    System.out.println("read: " + message);
-                    output += (message + "\n");
-
-
+            message = inputStream.readUTF();
+            output += (message + "\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,14 +61,10 @@ public class Net {
 
     public void actionPerformed(String input) {
         try {
-//            pw.write(input);
-//            pw.flush();
             outputStream.writeUTF(input);
-
-//            outputStream.close();
         } catch (Exception ep) {
             ep.printStackTrace();
         }
-
     }
+
 }
