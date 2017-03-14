@@ -200,7 +200,7 @@ public class StockVO {
         this.average60=average60;
     }
 
-    public Double getVariance() {
+    public double getVariance() {
         return variance;
     }
 
