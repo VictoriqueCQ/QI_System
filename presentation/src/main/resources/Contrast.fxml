@@ -76,7 +76,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="338.0" prefWidth="497.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="591.0" AnchorPane.topAnchor="10.0">
+                                <LineChart fx:id="IncomeLine" layoutX="53.0" layoutY="3.0" prefHeight="360.0" prefWidth="500.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="450.0" AnchorPane.topAnchor="10.0">
                                     <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                     </xAxis>
@@ -84,7 +84,7 @@
                                         <NumberAxis side="LEFT" />
                                     </yAxis>
                                 </LineChart>
-                                <TableView layoutX="636.0" layoutY="61.0" prefHeight="89.0" prefWidth="242.0" stylesheets="@css/TableViewCSS.css">
+                                <TableView fx:id="varianceTable" layoutX="680.0" layoutY="61.0" prefHeight="89.0" prefWidth="242.0" stylesheets="@css/TableViewCSS.css">
                                     <columns>
                                         <TableColumn fx:id="stockName" prefWidth="120.0" text="股票名称" />
                                         <TableColumn fx:id="variance" prefWidth="120.0" text="对数收益方差" />
