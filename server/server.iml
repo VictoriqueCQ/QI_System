@@ -20,10 +20,6 @@
         <jarDirectory url="file://$USER_HOME$/Desktop/软工三/NanDa2-1Server/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
-    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="library" name="Maven: org.clojure:data.json:0.2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.clojure:clojure:1.4.0" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
@@ -99,5 +95,10 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="module" module-name="common" />
+    <orderEntry type="library" name="Maven: org.clojure:data.json:0.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.clojure:clojure:1.4.0" level="project" />
   </component>
 </module>
