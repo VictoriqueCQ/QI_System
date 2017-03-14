@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 public class JsonUtil {
 	/**
@@ -30,7 +31,7 @@ public class JsonUtil {
 		jsonStr=jsonStr.substring(1,jsonStr.length()-2);
 		JSONObject jsonResult =JSONObject.fromObject(jsonStr);
 		Map<String, Class> classMap = new HashMap<String, Class>();
-		classMap.put("dates", String.class);
+		classMap.put("dates", Date.class);
 		T t=(T)JSONObject.toBean(jsonResult,obj,classMap);
 		return t;
 	}
