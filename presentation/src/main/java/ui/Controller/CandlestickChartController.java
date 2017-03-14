@@ -50,13 +50,13 @@ public class CandlestickChartController {
     private AnchorPane insidePane;
 
     @FXML
-    private javafx.scene.chart.NumberAxis number = new javafx.scene.chart.NumberAxis();
+    private javafx.scene.chart.NumberAxis number= new javafx.scene.chart.NumberAxis();
 
     @FXML
     private CategoryAxis time = new CategoryAxis();
 
     @FXML
-    private LineChart<String, Number> lineChart = new LineChart<String, Number>(time, number);
+    private LineChart<String, Number> lineChart =new LineChart<String, Number>(time, number);;
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -72,6 +72,7 @@ public class CandlestickChartController {
 
     @FXML
     private Button searchButton;
+
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -147,14 +148,22 @@ public class CandlestickChartController {
     @FXML
     private void search() {
         this.createEMA();
-        insidePane.getChildren().add(this.createCandlestickChart());
+        SwingNode swingNode=this.createCandlestickChart();
+        if(swingNode!=null) {
+            insidePane.getChildren().add(swingNode);
+        }
+        else{
+            AlertUtil.showErrorAlert("对不起，不存在这只股票");
+        }
     }
+
+
 
     /**
      * 初始化日期选择器可选时间
      */
     private void setDatePicker() {
-        startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
+        startTimeDatePicker.setValue(LocalDate.of(2014, 2, 1));
         endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
@@ -198,116 +207,117 @@ public class CandlestickChartController {
         OHLCSeries series = new OHLCSeries("");//蜡烛图，高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
         if (!(stockVO == null)) {
             series = this.addCandlestickChartData(series, stockVO);
-        }
-        final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
-        seriesCollection.addSeries(series);
 
-        TimeSeries series2 = new TimeSeries("");//对应时间成交量数据
-        if (!(stockVO == null)) {
-            series2 = this.adTimeSeriesCollectionData(series2, stockVO);
-        }
-        TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
-        timeSeriesCollection.addSeries(series2);
 
-        //获取K线数据的最高值和最低值
-        int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
-        for (int i = 0; i < seriesCount; i++) {
-            int itemCount = seriesCollection.getItemCount(i);//每一个序列有多少个数据项
-            for (int j = 0; j < itemCount; j++) {
-                if (highValue < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
-                    highValue = seriesCollection.getHighValue(i, j);
-                }
-                if (minValue > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
-                    minValue = seriesCollection.getLowValue(i, j);
-                }
-            }
-        }
+            final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
+            seriesCollection.addSeries(series);
 
-        //获取最高值和最低值
-        int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
-        for (int i = 0; i < seriesCount2; i++) {
-            int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项
-            for (int j = 0; j < itemCount; j++) {
-                if (high2Value < timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
-                    high2Value = timeSeriesCollection.getYValue(i, j);
-                }
-                if (min2Value > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
-                    min2Value = timeSeriesCollection.getYValue(i, j);
+            TimeSeries series2 = new TimeSeries("");//对应时间成交量数据series2 = this.adTimeSeriesCollectionData(series2, stockVO);
+            TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
+            timeSeriesCollection.addSeries(series2);
+
+            series2=this.adTimeSeriesCollectionData(series2,stockVO);
+            //获取K线数据的最高值和最低值
+            int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
+            for (int i = 0; i < seriesCount; i++) {
+                int itemCount = seriesCollection.getItemCount(i);//每一个序列有多少个数据项
+                for (int j = 0; j < itemCount; j++) {
+                    if (highValue < seriesCollection.getHighValue(i, j)) {//取第i个序列中的第j个数据项的最大值
+                        highValue = seriesCollection.getHighValue(i, j);
+                    }
+                    if (minValue > seriesCollection.getLowValue(i, j)) {//取第i个序列中的第j个数据项的最小值
+                        minValue = seriesCollection.getLowValue(i, j);
+                    }
                 }
             }
-        }
 
-
-        final CandlestickRenderer candlestickRender = new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
-        candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
-        candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
-        candlestickRender.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
-        candlestickRender.setUpPaint(Color.RED);//设置股票上涨的K线图颜色
-        candlestickRender.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色
-        DateAxis x1Axis = new DateAxis();//设置x轴，也就是时间轴
-        x1Axis.setAutoRange(false);//设置不采用自动设置时间范围
-        try {
-            LocalDate startLocalDate = startTimeDatePicker.getValue();
-            LocalDate endLocalDate = endTimeDatePicker.getValue().plusDays(1);
-            Date startDate = this.changeDateStyle(startLocalDate);
-            Date endDate = this.changeDateStyle(endLocalDate);
-            x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
-        x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值
-        x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置
-        x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
-        x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 7));//设置时间刻度的间隔，一般以周为单位
-        x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
-        NumberAxis y1Axis = new NumberAxis();//设定y轴，就是数字轴
-        y1Axis.setAutoRange(false);//不使用自动设定范围
-        System.out.print(minValue);
-        System.out.print(highValue);
-        y1Axis.setRange(minValue * 0.9, highValue * 1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
-        y1Axis.setTickUnit(new NumberTickUnit((highValue * 1.1 - minValue * 0.9) / 10));//设置刻度显示的密度
-        XYPlot plot1 = new XYPlot(seriesCollection, x1Axis, y1Axis, candlestickRender);//设置画图区域对象
-
-        XYBarRenderer xyBarRender = new XYBarRenderer() {
-            private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值
-
-            public Paint getItemPaint(int i, int j) {//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
-                if (seriesCollection.getCloseValue(i, j) > seriesCollection.getOpenValue(i, j)) {//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
-                    return candlestickRender.getUpPaint();
-                } else {
-                    return candlestickRender.getDownPaint();
+            //获取最高值和最低值
+            int seriesCount2 = timeSeriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
+            for (int i = 0; i < seriesCount2; i++) {
+                int itemCount = timeSeriesCollection.getItemCount(i);//每一个序列有多少个数据项
+                for (int j = 0; j < itemCount; j++) {
+                    if (high2Value < timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                        high2Value = timeSeriesCollection.getYValue(i, j);
+                    }
+                    if (min2Value > timeSeriesCollection.getYValue(i, j)) {//取第i个序列中的第j个数据项的值
+                        min2Value = timeSeriesCollection.getYValue(i, j);
+                    }
                 }
             }
-        };
-        xyBarRender.setMargin(0.1);//设置柱形图之间的间隔
-        NumberAxis y2Axis = new NumberAxis();//设置Y轴，为数值,后面的设置，参考上面的y轴设置
-        y2Axis.setAutoRange(false);
-        y2Axis.setRange(min2Value * 0.9, high2Value * 1.1);
-        y2Axis.setTickUnit(new NumberTickUnit((high2Value * 1.1 - min2Value * 0.9) / 4));
-        XYPlot plot2 = new XYPlot(timeSeriesCollection, null, y2Axis, xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
-        CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
-        combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
-        combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
-        combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间
-        JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
-        //颜色设置
-        chart.setBackgroundPaint(Color.black);
-        x1Axis.setTickMarkPaint(Color.yellow);
-        y1Axis.setTickMarkPaint(Color.yellow);
-        y2Axis.setTickMarkPaint(Color.yellow);
-        x1Axis.setTickLabelPaint(Color.white);
-        y1Axis.setTickLabelPaint(Color.white);
-        y2Axis.setTickLabelPaint(Color.white);
-        plot1.setBackgroundPaint(Color.black);
-        plot2.setBackgroundPaint(Color.black);
 
-        ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(2200, 950));
-        SwingNode swingNode = new SwingNode();
-        swingNode.setContent(chartPanel);
-        return swingNode;
+            final CandlestickRenderer candlestickRender = new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
+            candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
+            candlestickRender.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_AVERAGE);//设置如何对K线图的宽度进行设定
+            candlestickRender.setAutoWidthGap(0.001);//设置各个K线图之间的间隔
+            candlestickRender.setUpPaint(Color.RED);//设置股票上涨的K线图颜色
+            candlestickRender.setDownPaint(Color.GREEN);//设置股票下跌的K线图颜色
+            DateAxis x1Axis = new DateAxis();//设置x轴，也就是时间轴
+            x1Axis.setAutoRange(false);//设置不采用自动设置时间范围
+            try {
+                LocalDate startLocalDate = startTimeDatePicker.getValue();
+                LocalDate endLocalDate = endTimeDatePicker.getValue().plusDays(1);
+                Date startDate = this.changeDateStyle(startLocalDate);
+                Date endDate = this.changeDateStyle(endLocalDate);
+                x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            x1Axis.setTimeline(SegmentedTimeline.newMondayThroughFridayTimeline());//设置时间线显示的规则，用这个方法就摒除掉了周六和周日这些没有交易的日期(很多人都不知道有此方法)，使图形看上去连续
+            x1Axis.setAutoTickUnitSelection(false);//设置不采用自动选择刻度值
+            x1Axis.setTickMarkPosition(DateTickMarkPosition.MIDDLE);//设置标记的位置
+            x1Axis.setStandardTickUnits(DateAxis.createStandardDateTickUnits());//设置标准的时间刻度单位
+            x1Axis.setTickUnit(new DateTickUnit(DateTickUnit.DAY, 7));//设置时间刻度的间隔，一般以周为单位
+            x1Axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));//设置显示时间的格式
+            NumberAxis y1Axis = new NumberAxis();//设定y轴，就是数字轴
+            y1Axis.setAutoRange(false);//不使用自动设定范围
+            y1Axis.setRange(minValue * 0.9, highValue * 1.1);//设定y轴值的范围，比最低值要低一些，比最大值要大一些，这样图形看起来会美观些
+            y1Axis.setTickUnit(new NumberTickUnit((highValue * 1.1 - minValue * 0.9) / 10));//设置刻度显示的密度
+            XYPlot plot1 = new XYPlot(seriesCollection, x1Axis, y1Axis, candlestickRender);//设置画图区域对象
+
+            XYBarRenderer xyBarRender = new XYBarRenderer() {
+                private static final long serialVersionUID = 1L;//为了避免出现警告消息，特设定此值
+
+                public Paint getItemPaint(int i, int j) {//匿名内部类用来处理当日的成交量柱形图的颜色与K线图的颜色保持一致
+                    if (seriesCollection.getCloseValue(i, j) > seriesCollection.getOpenValue(i, j)) {//收盘价高于开盘价，股票上涨，选用股票上涨的颜色
+                        return candlestickRender.getUpPaint();
+                    } else {
+                        return candlestickRender.getDownPaint();
+                    }
+                }
+            };
+            xyBarRender.setMargin(0.1);//设置柱形图之间的间隔
+            NumberAxis y2Axis = new NumberAxis();//设置Y轴，为数值,后面的设置，参考上面的y轴设置
+            y2Axis.setAutoRange(false);
+            y2Axis.setRange(min2Value * 0.9, high2Value * 1.1);
+            y2Axis.setTickUnit(new NumberTickUnit((high2Value * 1.1 - min2Value * 0.9) / 4));
+            XYPlot plot2 = new XYPlot(timeSeriesCollection, null, y2Axis, xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
+            CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
+            combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
+            combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
+            combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间
+            JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
+
+            //颜色设置
+            chart.setBackgroundPaint(Color.black);
+            x1Axis.setTickMarkPaint(Color.yellow);
+            y1Axis.setTickMarkPaint(Color.yellow);
+            y2Axis.setTickMarkPaint(Color.yellow);
+            x1Axis.setTickLabelPaint(Color.white);
+            y1Axis.setTickLabelPaint(Color.white);
+            y2Axis.setTickLabelPaint(Color.white);
+            plot1.setBackgroundPaint(Color.black);
+            plot2.setBackgroundPaint(Color.black);
+
+            ChartPanel chartPanel = new ChartPanel(chart);
+            chartPanel.setPreferredSize(new Dimension(2200, 950));
+            SwingNode swingNode = new SwingNode();
+            swingNode.setContent(chartPanel);
+            return swingNode;
+        }
+        else{
+            return null;
+        }
     }
 
     /**
@@ -323,10 +333,10 @@ public class CandlestickChartController {
         double[] low = stockVO.getLow();
         double[] close = stockVO.getClose();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        List<String> dates = stockVO.getDates();
+        List<Date> dates = stockVO.getDates();
         for (int i = 0; i < open.length; i++) {
-            //String s = format.format(dates.get(i));
-            String[] str = dates.get(i).split("/");
+            String s = format.format(dates.get(i));
+            String[] str = s.split("/");
             int year = Integer.parseInt(str[0]);
             int month = Integer.parseInt(str[1]);
             int day = Integer.parseInt(str[2]);
@@ -344,11 +354,11 @@ public class CandlestickChartController {
      */
     private TimeSeries adTimeSeriesCollectionData(TimeSeries timeSeries, StockVO stockVO) {
         int[] volume = stockVO.getVolume();
-        List<String> dates = stockVO.getDates();
+        List<Date> dates = stockVO.getDates();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = 0; i < volume.length; i++) {
-            //String s = format.format(dates.get(i));
-            String[] str = dates.get(i).split("/");
+            String s = format.format(dates.get(i));
+            String[] str = s.split("/");
             int year = Integer.parseInt(str[0]);
             int month = Integer.parseInt(str[1]);
             int day = Integer.parseInt(str[2]);
@@ -363,20 +373,54 @@ public class CandlestickChartController {
      * 绘制均线图
      */
     private void createEMA() {
+
         lineChart.getData().clear();
-        final CategoryAxis xAxis = new CategoryAxis();
-        final javafx.scene.chart.NumberAxis yAxis = new javafx.scene.chart.NumberAxis();
-        xAxis.setLabel("day");
+
         lineChart.setTitle("均线图(EMA)");
         //数据注入
         stockVO = this.getStockVOByCondition();
+
         if (!(stockVO == null)) {
             double[] average5 = stockVO.getAverage5();
             double[] average10 = stockVO.getAverage10();
             double[] average20 = stockVO.getAverage20();
             double[] average30 = stockVO.getAverage30();
             double[] average60 = stockVO.getAverage60();
-            List<String> dates = stockVO.getDates();
+            List<Date> dates = stockVO.getDates();
+            double lowest=average5[0];
+            double highest=0;
+            for (int i = 0; i < average5.length; i++) {
+                if (lowest > average5[i]) {
+                    lowest = average5[i];
+                }
+                if (lowest > average10[i]) {
+                    lowest = average10[i];
+                }
+                if (lowest > average20[i]) {
+                    lowest = average20[i];
+                }
+                if (lowest > average30[i]) {
+                    lowest = average30[i];
+                }
+                if (lowest > average60[i]) {
+                    lowest = average60[i];
+                }
+                if (highest < average5[i]) {
+                    highest = average5[i];
+                }
+                if (highest < average10[i]) {
+                    highest = average10[i];
+                }
+                if (highest < average20[i]) {
+                    highest = average20[i];
+                }
+                if (highest < average30[i]) {
+                    highest = average30[i];
+                }
+                if (highest > average60[i]) {
+                    highest = average60[i];
+                }
+            }
             XYChart.Series series_average5 = new XYChart.Series();
             series_average5 = this.addEMAData(series_average5, average5, dates);
             series_average5.setName("5天");
@@ -393,6 +437,13 @@ public class CandlestickChartController {
             series_average60 = this.addEMAData(series_average60, average60, dates);
             series_average60.setName("60天");
             lineChart.getData().addAll(series_average5, series_average10, series_average20, series_average30, series_average60);
+//            number.setAutoRanging(false);
+            number.setForceZeroInRange(false);
+            number.setLowerBound(5);
+            System.out.print(number.getLowerBound());
+            number.setUpperBound(highest * 1.1);
+            System.out.print(number.getUpperBound());
+            number.setTickUnit((highest*1.1-5)/10);
         }
     }
 
@@ -403,11 +454,11 @@ public class CandlestickChartController {
      * @param data
      * @return
      */
-    private XYChart.Series addEMAData(XYChart.Series series, double[] data, List<String> dates) {
+    private XYChart.Series addEMAData(XYChart.Series series, double[] data, List<Date> dates) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = data.length - 1; i >= 0; i--) {
-//            String s = format.format(dates.get(i));
-            series.getData().add(new XYChart.Data(dates.get(i), data[i]));
+            String s = format.format(dates.get(i));
+            series.getData().add(new XYChart.Data(s, data[i]));
         }
         return series;
     }
@@ -440,20 +491,31 @@ public class CandlestickChartController {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy ");
         String starttime = format.format(startDate);
         String endtime = format.format(endDate);
+
+        String input="";
         //检查输入是否完整
         if (stockName.equals("") && stockID.equals("")) {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
-        else {
-            String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
-            net.actionPerformed(input);
-            String json = net.run();
-            JsonUtil jsonUtil = new JsonUtil();
-            StockVO stockVO1 = new StockVO();
-            StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
-            return stockVO;
+
+        else if(!stockName.equals("") && stockID.equals("")){
+             input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+
         }
+        else if(stockName.equals("") && (!stockID.equals(""))){
+            input="STOCK\t" + stockID + "\t" + "null" + "\t" + starttime + "\t" + endtime + "\n";
+        }
+        else{
+            input="STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+        }
+
+        net.actionPerformed(input);
+        String json = net.run();
+        JsonUtil jsonUtil = new JsonUtil();
+        StockVO stockVO1 = new StockVO();
+        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
+        return stockVO;
     }
 
     public void setMain(Main main, Net net) {
