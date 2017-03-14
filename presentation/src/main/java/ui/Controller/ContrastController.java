@@ -388,7 +388,7 @@ public class ContrastController extends Application {
         DecimalFormat   df   =new  DecimalFormat("#.00");
         df.format(riseAndDown);
         model.setRiseAndDown(riseAndDown * 100 + "%");
-        model.setVariance(stockVO.getVariance().toString());
+        model.setVariance(stockVO.getVariance());
         return model;
     }
 
@@ -489,7 +489,7 @@ public class ContrastController extends Application {
         models = FXCollections.observableArrayList();
         models.add(stockModel1);
         models.add(stockModel2);
-        stockTable.setItems(models);
+        varianceTable.setItems(models);
 
         System.out.print("fghj");
 

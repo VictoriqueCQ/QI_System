@@ -89,7 +89,7 @@ public class StockModel {
 
     public String getVariance(){return variance.get();}
 
-    public void setVariance(String variance){this.variance.set(String.valueOf(variance));}
+    public void setVariance(double variance){this.variance.set(String.valueOf(variance));}
 
     public SimpleStringProperty varianceProperty(){return variance;}
 }
