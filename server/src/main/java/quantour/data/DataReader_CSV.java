@@ -19,8 +19,8 @@ public class DataReader_CSV {
     private String path;
 
     DataReader_CSV() {
-        //path="D:\\QI_System\\server\\stock_data.csv";
-        path ="C:\\Users\\xjwhh\\Desktop\\data.txt";
+        path="D:\\QI_System\\server\\stock_data.csv";
+        //path ="C:\\Users\\xjwhh\\Desktop\\data.txt";
     }
 
     public DataReader_CSV(String path) {
@@ -31,7 +31,7 @@ public class DataReader_CSV {
         List<Stock> stockList = new ArrayList<>();
         File f = new File(path);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
             br.readLine();//标题行
