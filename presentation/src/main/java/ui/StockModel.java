@@ -16,12 +16,15 @@ public class StockModel {
 
     private final SimpleStringProperty riseAndDown;
 
+    private final SimpleStringProperty variance;
+
     public StockModel() {
         name = new SimpleStringProperty();
         id = new SimpleStringProperty();
         minPrice = new SimpleStringProperty();
         maxPrice = new SimpleStringProperty();
         riseAndDown = new SimpleStringProperty();
+        variance = new SimpleStringProperty();
     }
 
     public String getName() {
@@ -84,5 +87,9 @@ public class StockModel {
         return riseAndDown;
     }
 
+    public String getVariance(){return variance.get();}
 
+    public void setVariance(String variance){this.variance.set(String.valueOf(variance));}
+
+    public SimpleStringProperty varianceProperty(){return variance;}
 }
