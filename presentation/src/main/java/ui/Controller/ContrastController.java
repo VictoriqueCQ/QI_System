@@ -17,12 +17,12 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.*;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-import java.text.DecimalFormat;
 public class ContrastController extends Application {
     private Main main;
 
@@ -388,11 +388,14 @@ public class ContrastController extends Application {
         DecimalFormat   df   =new  DecimalFormat("#.00");
         df.format(riseAndDown);
         model.setRiseAndDown(riseAndDown * 100 + "%");
+//        System.out.print("asaaaaaaaasagdsagdjasdasd"+stockVO.getVariance());
         model.setVariance(stockVO.getVariance());
+//        System.out.print("asaaaaaaaasagdsagdjasdasd"+model.getVariance());
         return model;
     }
 
     public void setClosePriceLine(double[]close,List<Date> dates,String name) {
+
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         series1.setName(name);
 //        List<Date> dates1 = stock1.getDates();
@@ -471,9 +474,9 @@ public class ContrastController extends Application {
         series.setName(name);
         //populating the series with data
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
-        for (int i = 1 ;i<dates.size();i++) {
-            String s = format.format(dates.get(i));
-            series.getData().add(new XYChart.Data(s, income.get(i-1)));
+        for (int i = income.size()-1;i>=0;i--) {
+            String s = format.format(dates.get(i+1));
+            series.getData().add(new XYChart.Data(s, income.get(i)));
         }
 
         IncomeLine.getData().add(series);
