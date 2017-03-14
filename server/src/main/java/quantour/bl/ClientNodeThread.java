@@ -28,7 +28,7 @@ public class ClientNodeThread implements Runnable {
             while (quest != null) {
                 int key = QuestQue.write(quest);
                 Thread.sleep(100);
-                String result = "";
+                String result;
                 while ((result = ResultMap.get(key)) == null) {
                     Thread.sleep(100);
                 }
