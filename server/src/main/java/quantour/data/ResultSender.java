@@ -22,7 +22,7 @@ class ResultSender{
     private DataOutputStream dataOutputStream;
     
     ResultSender(String quest, DataOutputStream dataOutputStream) throws ParseException {
-        dataFactory=DataFactory_CSV_Impl.getInstance();
+        this.dataFactory=DataFactory_CSV_Impl.getInstance();
         this.quest=quest;
         this.dataOutputStream=dataOutputStream;
     }
@@ -37,6 +37,7 @@ class ResultSender{
 
             JSONArray jsonArray=JSONArray.fromObject(stockPO);
             dataOutputStream.writeUTF(jsonArray.toString());
+            dataOutputStream.flush();
         }
         else if (questContent[1].equals("MARKET")){
             Date date=null;
@@ -46,6 +47,7 @@ class ResultSender{
 
             JSONArray jsonArray=JSONArray.fromObject(marketPO);
             dataOutputStream.writeUTF(jsonArray.toString());
+            dataOutputStream.flush();
         }
         else{
             System.out.println("wrong");//此处应改为exception
