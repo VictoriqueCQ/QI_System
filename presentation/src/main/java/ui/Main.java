@@ -13,7 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends Application {
+
     Net net;
+
     // 主窗口
     private Stage stage;
     private Stage stage1;
@@ -21,10 +23,7 @@ public class Main extends Application {
 
     // 内部窗口
     private SplitPane rootLayout;
-
-
     private Scene scene;
-
     private final double MINIMUM_WINDOW_WIDTH = 400.0;
     private final double MINIMUM_WINDOW_HEIGHT = 250.0;
 
@@ -82,6 +81,7 @@ public class Main extends Application {
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
+
             stage.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
