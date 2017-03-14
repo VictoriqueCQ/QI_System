@@ -24,7 +24,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
 
     @Override
     public StockPO getStockList(String[] quest) throws ParseException {
-        SimpleDateFormat sdf=new SimpleDateFormat("mm/dd/yy");
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
         if(quest[2].equals("NULL")){
             return getStockListByName(quest[3],sdf.parse(quest[4]),sdf.parse(quest[5]));
         }
@@ -51,7 +51,8 @@ public class Single_Search_data_Impl implements Single_Search_data {
         List<Stock> resultList=singleStockList.stream().
                 filter(stock -> stock.getDate().compareTo(endTime)<=0).
                 filter(stock -> stock.getDate().compareTo(startTime)>=0).
-                sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());//得到某日期间的股票信息
+                sorted(Comparator.comparing(Stock::getSerial)).
+                collect(Collectors.toList());//得到某日期间的股票信息
         int startSerial=resultList.get(0).getSerial();
         int endSerial=resultList.get(resultList.size()-1).getSerial();
 
