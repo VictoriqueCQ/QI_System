@@ -48,15 +48,23 @@ public class Net {
 
 
     public String run() {
-        String message;
-        String output = "";
+//        String message;
+//        String output = "";
+        StringBuilder sb=new StringBuilder();
         try {
-            message = inputStream.readUTF();
-            output += (message + "\n");
+//            message = inputStream.readUTF();
+//            output += (message + "\n");
+            int length=inputStream.readInt();
+            for(int i=0;i<length;i++){
+                sb.append(inputStream.readUTF());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return output;
+//        return output;
+
+        return sb.toString();
+
     }
 
     public void actionPerformed(String input) {
