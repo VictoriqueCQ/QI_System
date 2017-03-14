@@ -3,6 +3,7 @@ package quantour.data;
 import quantour.dataservice.Overall_Search_data;
 import quantour.po.MarketPO;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,7 +29,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         List<Stock> today = marketList.parallelStream().filter(stock -> stock.getDate().compareTo(date) == 0).
                 sorted(Comparator.comparing(Stock::getCode)).collect(Collectors.toList());
 
-        long sum = today.parallelStream().mapToInt(Stock::getVolume).reduce(0, (x, y) -> x + y);
+        BigInteger sum = new BigInteger(String.valueOf(today.parallelStream().mapToInt(Stock::getVolume).reduce(0, (x, y) -> x + y)));
 
         //计算涨停和跌停的
         int limitUpNum = countNumOfIncreasing(today, 0.1);
