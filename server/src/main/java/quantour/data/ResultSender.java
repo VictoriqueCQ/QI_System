@@ -41,12 +41,11 @@ class ResultSender{
             int j=(int)(result.length()/100)+1;
             dataOutputStream.writeInt(j);
             for(int i=0;i<j;i++) {
-                if(i==j-1){
+                if (i==j-1){
                     dataOutputStream.writeUTF(result.substring(i*100));
+                    break;
                 }
-                else {
-                    dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
-                }
+                dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
             }
         }
         else if (questContent[1].equals("MARKET")){
@@ -59,8 +58,12 @@ class ResultSender{
             String result=jsonArray.toString();
             int j=(int)(result.length()/100)+1;
             dataOutputStream.writeInt(j);
-            for(int i=0;i<=j;i++) {
-                dataOutputStream.writeUTF(result.substring(i*10,(i+1)*10-1));
+            for(int i=0;i<j;i++) {
+                if (i==j-1){
+                    dataOutputStream.writeUTF(result.substring(i*100));
+                    break;
+                }
+                dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
             }
         }
         else{
