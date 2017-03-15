@@ -8,34 +8,36 @@ import java.util.Map;
 import java.util.Date;
 
 public class JsonUtil {
-	/**
-	 * java类转json类
-	 * @param obj
-	 * @param <T>
-	 * @return
-	 * @throws IOException
-	 */
-	public  <T> JSONObject objectToJson(T obj) throws IOException {
-	JSONObject jsonStu = JSONObject.fromObject(obj);
-	return jsonStu;
-	}
+    /**
+     * java类转json类
+     *
+     * @param obj
+     * @param <T>
+     * @return
+     * @throws IOException
+     */
+    public <T> JSONObject objectToJson(T obj) throws IOException {
+        JSONObject jsonStu = JSONObject.fromObject(obj);
+        return jsonStu;
+    }
 
-	/**
-	 * json字符串转java类
-	 * @param jsonStr
-	 * @param obj
-	 * @param <T>
-	 * @return
-	 */
-	public  <T> Object JSONToObj(String jsonStr, Class<T> obj) {
+    /**
+     * json字符串转java类
+     *
+     * @param jsonStr
+     * @param obj
+     * @param <T>
+     * @return
+     */
+    public <T> Object JSONToObj(String jsonStr, Class<T> obj) {
 //		System.out.println(jsonStr);
-		jsonStr=jsonStr.substring(1,jsonStr.length()-1);
+        jsonStr = jsonStr.substring(1, jsonStr.length() - 1);
 //		System.out.print(jsonStr);
-		JSONObject jsonResult =JSONObject.fromObject(jsonStr);
-		Map<String, Class> classMap = new HashMap<String, Class>();
-		classMap.put("dates", Date.class);
-		T t=(T)JSONObject.toBean(jsonResult,obj,classMap);
-		return t;
-	}
+        JSONObject jsonResult = JSONObject.fromObject(jsonStr);
+        Map<String, Class> classMap = new HashMap<String, Class>();
+        classMap.put("dates", Date.class);
+        T t = (T) JSONObject.toBean(jsonResult, obj, classMap);
+        return t;
+    }
 
 }

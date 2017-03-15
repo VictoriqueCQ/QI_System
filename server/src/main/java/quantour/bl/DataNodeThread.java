@@ -18,8 +18,8 @@ public class DataNodeThread implements Runnable {
     @Override
     public void run() {
         try {
-            dataInputStream=new DataInputStream(socket.getInputStream());
-            dataOutputStream=new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             String quest = "";
             while (socket.isConnected()) {
@@ -32,12 +32,12 @@ public class DataNodeThread implements Runnable {
                 dataOutputStream.writeUTF(quest);
                 Thread.sleep(100);
 
-                StringBuilder sb=new StringBuilder();
-                int length=dataInputStream.readInt();
-                for(int i=0;i<length;i++){
+                StringBuilder sb = new StringBuilder();
+                int length = dataInputStream.readInt();
+                for (int i = 0; i < length; i++) {
                     sb.append(dataInputStream.readUTF());
                 }
-                String result=sb.toString();
+                String result = sb.toString();
                 System.out.println(result);
                 ResultMap.write(key, result);
             }

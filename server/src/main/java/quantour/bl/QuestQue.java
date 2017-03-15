@@ -16,7 +16,7 @@ class QuestQue {
     }
 
     static String get() {
-        String s=queue.poll();
+        String s = queue.poll();
         /*if(s!=null) {
             System.out.println("get "+s);
         }*/

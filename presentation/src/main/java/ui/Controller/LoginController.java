@@ -8,11 +8,11 @@ import ui.Main;
 public class LoginController {
     private Main main;
 
-    public LoginController(){
+    public LoginController() {
 
     }
 
-    public void setMain(Main main){
-        this.main=main;
+    public void setMain(Main main) {
+        this.main = main;
     }
 }
