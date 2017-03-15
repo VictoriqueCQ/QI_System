@@ -28,7 +28,9 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
 
     @Override
     public MarketPO getMarketInfo(Date date) throws ArrayIndexOutOfBoundsException {
-        List<Stock> today = marketList.parallelStream().filter(stock -> stock.getDate().compareTo(date) == 0).
+        List<Stock> today = marketList.parallelStream().
+                filter(stock -> stock.getDate().compareTo(date) == 0).
+                filter(stock -> stock.getVolume()!=0).
                 sorted(Comparator.comparing(Stock::getCode)).collect(Collectors.toList());
 
         double sum = today.parallelStream().mapToDouble(Stock::getVolume).reduce(0.0, (x, y) -> x + y);
@@ -63,7 +65,14 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
 
         return (int) today.parallelStream().
                 filter(stock -> {
-                    Stock previous = marketList.get(marketList.indexOf(stock) + 1);
+                    int i=1;
+                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                    while(stock.getVolume()==0||(stock.getCode()!=previous.getCode())) {
+                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    }
+                    if(stock.getCode()!=previous.getCode()){
+                        return false;
+                    }
                     return previous.getSerial() != 0 && (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
                 }).
                 count();
@@ -73,7 +82,14 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
 
         return (int) today.parallelStream().
                 filter(stock -> {
-                    Stock previous = marketList.get(marketList.indexOf(stock) + 1);
+                    int i=1;
+                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                    while(stock.getVolume()==0||(stock.getCode()!=previous.getCode())) {
+                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    }
+                    if(stock.getCode()!=previous.getCode()){
+                        return false;
+                    }
                     return previous.getSerial() != 0 && (stock.getClose() - previous.getClose()) / previous.getClose() <= percentage;
                 }).
                 count();
