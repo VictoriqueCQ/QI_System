@@ -20,7 +20,7 @@ public class Overall_Search_data_ImplTest {
 
     @Test
     public void getMarketInfo() throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("mm/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         Date date = sdf.parse("4/28/14");
         overallSearchData.getMarketInfo(date);
     }
