@@ -62,7 +62,7 @@ public class Net {
             e.printStackTrace();
         }
 //        return output;
-
+        System.out.println(sb.toString());
         return sb.toString();
 
     }

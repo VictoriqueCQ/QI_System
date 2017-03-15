@@ -50,13 +50,14 @@ public class CandlestickChartController {
     private AnchorPane insidePane;
 
     @FXML
-    private javafx.scene.chart.NumberAxis number= new javafx.scene.chart.NumberAxis();
+    private javafx.scene.chart.NumberAxis number = new javafx.scene.chart.NumberAxis();
 
     @FXML
     private CategoryAxis time = new CategoryAxis();
 
     @FXML
-    private LineChart<String, Number> lineChart =new LineChart<String, Number>(time, number);;
+    private LineChart<String, Number> lineChart = new LineChart<String, Number>(time, number);
+    ;
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -148,15 +149,13 @@ public class CandlestickChartController {
     @FXML
     private void search() {
         this.createEMA();
-        SwingNode swingNode=this.createCandlestickChart();
-        if(swingNode!=null) {
+        SwingNode swingNode = this.createCandlestickChart();
+        if (swingNode != null) {
             insidePane.getChildren().add(swingNode);
-        }
-        else{
+        } else {
             AlertUtil.showErrorAlert("对不起，不存在这只股票");
         }
     }
-
 
 
     /**
@@ -216,7 +215,7 @@ public class CandlestickChartController {
             TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
             timeSeriesCollection.addSeries(series2);
 
-            series2=this.adTimeSeriesCollectionData(series2,stockVO);
+            series2 = this.adTimeSeriesCollectionData(series2, stockVO);
             //获取K线数据的最高值和最低值
             int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
             for (int i = 0; i < seriesCount; i++) {
@@ -314,8 +313,7 @@ public class CandlestickChartController {
             SwingNode swingNode = new SwingNode();
             swingNode.setContent(chartPanel);
             return swingNode;
-        }
-        else{
+        } else {
             return null;
         }
     }
@@ -387,8 +385,8 @@ public class CandlestickChartController {
             double[] average30 = stockVO.getAverage30();
             double[] average60 = stockVO.getAverage60();
             List<Date> dates = stockVO.getDates();
-            double lowest=average5[0];
-            double highest=0;
+            double lowest = average5[0];
+            double highest = 0;
             for (int i = 0; i < average5.length; i++) {
                 if (lowest > average5[i]) {
                     lowest = average5[i];
@@ -443,7 +441,7 @@ public class CandlestickChartController {
             System.out.print(number.getLowerBound());
             number.setUpperBound(highest * 1.1);
             System.out.print(number.getUpperBound());
-            number.setTickUnit((highest*1.1-5)/10);
+            number.setTickUnit((highest * 1.1 - 5) / 10);
         }
     }
 
@@ -492,22 +490,18 @@ public class CandlestickChartController {
         String starttime = format.format(startDate);
         String endtime = format.format(endDate);
 
-        String input="";
+        String input = "";
         //检查输入是否完整
         if (stockName.equals("") && stockID.equals("")) {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
-        }
+        } else if (!stockName.equals("") && stockID.equals("")) {
+            input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
 
-        else if(!stockName.equals("") && stockID.equals("")){
-             input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
-
-        }
-        else if(stockName.equals("") && (!stockID.equals(""))){
-            input="STOCK\t" + stockID + "\t" + "null" + "\t" + starttime + "\t" + endtime + "\n";
-        }
-        else{
-            input="STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+        } else if (stockName.equals("") && (!stockID.equals(""))) {
+            input = "STOCK\t" + stockID + "\t" + "null" + "\t" + starttime + "\t" + endtime + "\n";
+        } else {
+            input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
         }
 
         net.actionPerformed(input);

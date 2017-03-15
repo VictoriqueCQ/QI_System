@@ -124,7 +124,8 @@ ThermometerController implements Initializable {
                 new AllStockConditionModel("日增幅小于5%股票数", String.valueOf(NumberOfStocksDownOverFivePerCentPerDay)),
                 new AllStockConditionModel("涨跌幅小于5%股票数",String.valueOf(NumberOfStocksChangedWithinFivePerCent))
         );
-
+        stockConditionTable.getStyleClass().add("edge-to-edge");
+        stockConditionTable.getStyleClass().add("noborder");
         stockConditionTable.setItems(data);
     }
 
@@ -160,7 +161,7 @@ ThermometerController implements Initializable {
 
     //以下都是模拟数据
     private void setBarChart_1() {
-        barChart_1.setCategoryGap(90);
+        barChart_1.setCategoryGap(107);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         series1.setName("涨跌停股票情况");
         series1.getData().add(new XYChart.Data<>("涨停股票数", NumberOfStocksLimitedUp));
@@ -172,7 +173,7 @@ ThermometerController implements Initializable {
     }
 
     private void setBarChart_2() {
-        barChart_2.setCategoryGap(90);
+        barChart_2.setCategoryGap(107);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("涨跌幅超过5%股票情况");
         series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", NumberOfStocksUpOverFivePerCent));
@@ -184,7 +185,7 @@ ThermometerController implements Initializable {
     }
 
     private void setBarChart_3() {
-        barChart_3.setCategoryGap(90);
+        barChart_3.setCategoryGap(107);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
         series3.setName("开盘-收盘超过5%*上一个交易日收盘价的股票情况");
         series3.getData().add(new XYChart.Data<>("日增幅大于5%股票数", NumberOfStocksUpOverFivePerCentPerDay));
