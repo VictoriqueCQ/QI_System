@@ -20,8 +20,8 @@ public class ClientNodeThread implements Runnable {
     @Override
     public void run() {
         try {
-            dataOutputStream=new DataOutputStream(socket.getOutputStream());
-            dataInputStream=new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
 
             String quest = dataInputStream.readUTF();
 
@@ -33,18 +33,18 @@ public class ClientNodeThread implements Runnable {
                     Thread.sleep(100);
                 }
 
-                int j=(int)(result.length()/100)+1;
+                int j = (int) (result.length() / 100) + 1;
                 dataOutputStream.writeInt(j);
-                for(int i=0;i<j;i++) {
-                    if (i==j-1){
-                        dataOutputStream.writeUTF(result.substring(i*100));
+                for (int i = 0; i < j; i++) {
+                    if (i == j - 1) {
+                        dataOutputStream.writeUTF(result.substring(i * 100));
                         break;
                     }
                     dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
                 }
                 System.out.println(result);
                 ResultMap.delete(key);
-                quest=dataInputStream.readUTF();
+                quest = dataInputStream.readUTF();
             }
 
         } catch (IOException e) {
