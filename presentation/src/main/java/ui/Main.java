@@ -47,7 +47,7 @@ public class Main extends Application {
 
     }
 
-    public void gotoLogin(){
+    public void gotoLogin() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Login.fxml"));
@@ -99,7 +99,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
-            controller.setMain(this,net);
+            controller.setMain(this, net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -116,7 +116,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ContrastController controller = (ContrastController) fxmlLoader.getController();
-            controller.setMain(this,net);
+            controller.setMain(this, net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -133,7 +133,7 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 640);
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
-            controller.setMain(this,net);
+            controller.setMain(this, net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }

@@ -7,7 +7,7 @@
 }
 
 .table-row-cell {
-    -fx-background-color:#000000;
+    -fx-background-color: #000000;
 }
 
 .table-row-cell:selected {
@@ -16,7 +16,7 @@
 
 .table-cell {
     -fx-text-fill: rgb(240, 150, 96);
-    -fx-alignment:CENTER;
+    -fx-alignment: CENTER;
 }
 
 .label {

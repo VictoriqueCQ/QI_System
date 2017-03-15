@@ -87,9 +87,15 @@ public class StockModel {
         return riseAndDown;
     }
 
-    public String getVariance(){return variance.get();}
+    public String getVariance() {
+        return variance.get();
+    }
 
-    public void setVariance(String variance){this.variance.set(variance);}
+    public void setVariance(String variance) {
+        this.variance.set(variance);
+    }
 
-    public SimpleStringProperty varianceProperty(){return variance;}
+    public SimpleStringProperty varianceProperty() {
+        return variance;
+    }
 }
