@@ -36,13 +36,17 @@ public class Single_Search_data_Impl implements Single_Search_data {
     }
 
     private StockPO getStockListByID(int stockID, Date startTime, Date endTime) {
-        List<Stock> singleStockList = stockList.stream().filter(stock -> stock.getCode() == stockID).
+        List<Stock> singleStockList = stockList.stream().
+                filter(stock -> stock.getCode() == stockID).
+                filter(stock -> stock.getVolume()!=0).
                 collect(Collectors.toList());//得到ID的该股票信息
         return getStockListByDate(singleStockList, startTime, endTime);
     }
 
     private StockPO getStockListByName(String stockName, Date startTime, Date endTime) {
-        List<Stock> singleStockList = stockList.stream().filter(stock -> stock.getName().equals(stockName)).
+        List<Stock> singleStockList = stockList.stream().
+                filter(stock -> stock.getName().equals(stockName)).
+                filter(stock -> stock.getVolume()!=0).
                 collect(Collectors.toList());//得到该name的股票信息，完全匹配
 
         return getStockListByDate(singleStockList, startTime, endTime);
@@ -56,7 +60,8 @@ public class Single_Search_data_Impl implements Single_Search_data {
                 sorted(Comparator.comparing(Stock::getSerial)).
                 collect(Collectors.toList());//得到某日期间的股票信息
         int startSerial=resultList.get(0).getSerial();
-        int endSerial=resultList.get(resultList.size()-1).getSerial();
+        //int endSerial=resultList.get(resultList.size()-1).getSerial();
+        int size=resultList.size();
 
         if(resultList.isEmpty()){
             return null;
@@ -73,16 +78,16 @@ public class Single_Search_data_Impl implements Single_Search_data {
             Stream<Date> dateStream=resultList.parallelStream().map(Stock::getDate);
             List<Date> dates=dateStream.collect(Collectors.toList());
 
-            System.out.println(startSerial+" "+endSerial);
-            double[] average5=getAverageByInterval(singleStockList,5,startSerial,endSerial);
-            double[] average10=getAverageByInterval(singleStockList,10,startSerial,endSerial);
-            double[] average20=getAverageByInterval(singleStockList,20,startSerial,endSerial);
-            double[] average30=getAverageByInterval(singleStockList,30,startSerial,endSerial);
-            double[] average60=getAverageByInterval(singleStockList,60,startSerial,endSerial);
+            System.out.println(startSerial+" "+size);
+            double[] average5=getAverageByInterval(singleStockList,5,startSerial,size);
+            double[] average10=getAverageByInterval(singleStockList,10,startSerial,size);
+            double[] average20=getAverageByInterval(singleStockList,20,startSerial,size);
+            double[] average30=getAverageByInterval(singleStockList,30,startSerial,size);
+            double[] average60=getAverageByInterval(singleStockList,60,startSerial,size);
 
             ArrayList<Double> profit=new ArrayList<>();
             for(int i=1;i<resultList.size();i++){
-                profit.add(Math.log(close[i]/close[i-1]));
+                profit.add(Math.log(adjClose[i]/adjClose[i-1]));
             }
             double average=profit.stream().reduce(0.0,(x,y)->x+y)/(resultList.size()-1);
             double sum=0.0;
@@ -97,19 +102,19 @@ public class Single_Search_data_Impl implements Single_Search_data {
 
     }
 
-    private double[] getAverageByInterval(List<Stock> singleStockList,int interval,int startSerial,int endSerial){
+    private double[] getAverageByInterval(List<Stock> singleStockList,int interval,int startSerial,int size){
         double[] averageByInterval;
-        if(startSerial+interval>=singleStockList.size()&&endSerial+interval>=singleStockList.size()){
+        if(startSerial+interval>=singleStockList.size()&&startSerial+size-1+interval>=singleStockList.size()){
             return null;
         }
         else {
-            averageByInterval = new double[endSerial - startSerial+1];
+            averageByInterval = new double[size];
         }
-        for(int i=startSerial;i<=endSerial;i++){
+        for(int i=startSerial;i<startSerial+size;i++){
                 int temp = interval-1;
                 double partialSum = 0.0;
                 while ((temp >= 0) && (i + temp < singleStockList.size())) {
-                    partialSum += singleStockList.get(i + temp).getClose();
+                    partialSum += singleStockList.get(i + temp).getAdjClose();
                     temp--;
                 }
                 BigDecimal bg=new BigDecimal(partialSum / (double) interval).setScale(2,BigDecimal.ROUND_HALF_UP);

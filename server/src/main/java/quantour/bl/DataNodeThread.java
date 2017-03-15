@@ -32,11 +32,13 @@ public class DataNodeThread implements Runnable {
                 dataOutputStream.writeUTF(quest);
                 Thread.sleep(100);
 
-                String result = "";
-                while ((result = dataInputStream.readUTF()) == null) {
-                    Thread.sleep(100);
+                StringBuilder sb=new StringBuilder();
+                int length=dataInputStream.readInt();
+                for(int i=0;i<length;i++){
+                    sb.append(dataInputStream.readUTF());
                 }
-                //System.out.println(result);
+                String result=sb.toString();
+                System.out.println(result);
                 ResultMap.write(key, result);
             }
         } catch (IOException e) {

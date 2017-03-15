@@ -32,8 +32,17 @@ public class ClientNodeThread implements Runnable {
                 while ((result = ResultMap.get(key)) == null) {
                     Thread.sleep(100);
                 }
-                dataOutputStream.writeUTF(result);
-                dataOutputStream.flush();
+
+                int j=(int)(result.length()/100)+1;
+                dataOutputStream.writeInt(j);
+                for(int i=0;i<j;i++) {
+                    if(i==j-1){
+                        dataOutputStream.writeUTF(result.substring(i*100));
+                    }
+                    else {
+                        dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
+                    }
+                }
                 System.out.println(result);
                 ResultMap.delete(key);
                 quest=dataInputStream.readUTF();
