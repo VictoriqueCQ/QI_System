@@ -46,13 +46,29 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         //计算开盘-收盘大于5%*上一个交易日收盘价的股票个数和开盘-收盘小于-5%*上一个交易日收盘价的股票个数
         int oc_overPFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
-                    Stock previous = marketList.get(marketList.indexOf(stock) + 1);
+                    int i=1;
+                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                    while(marketList.indexOf(stock) + i<marketList.size()&&
+                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
+                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    }
+                    if(stock.getCode()!=previous.getCode()){
+                        return false;
+                    }
                     return previous.getSerial() != 0 && stock.getClose() - stock.getOpen() > 0.05 * previous.getClose();
                 }).
                 count();
         int oc_belowMFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
-                    Stock previous = marketList.get(marketList.indexOf(stock) + 1);
+                    int i=1;
+                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                    while(marketList.indexOf(stock) + i<marketList.size()&&
+                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
+                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    }
+                    if(stock.getCode()!=previous.getCode()){
+                        return false;
+                    }
                     return previous.getSerial() != 0 && stock.getClose() - stock.getOpen() < -0.05 * previous.getClose();
                 }).
                 count();
@@ -67,10 +83,11 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                 filter(stock -> {
                     int i=1;
                     Stock previous = marketList.get(marketList.indexOf(stock) + i);
-                    while(stock.getVolume()==0||(stock.getCode()!=previous.getCode())) {
+                    while(marketList.indexOf(stock) + i<marketList.size()&&
+                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
                         previous = marketList.get(marketList.indexOf(stock) + i);
                     }
-                    if(stock.getCode()!=previous.getCode()){
+                    if(marketList.indexOf(stock) + i<marketList.size()&&stock.getCode()!=previous.getCode()){
                         return false;
                     }
                     return previous.getSerial() != 0 && (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
