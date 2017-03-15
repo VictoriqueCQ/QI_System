@@ -36,8 +36,18 @@ class ResultSender{
             StockPO stockPO=single_search_data.getStockList(questContent);
 
             JSONArray jsonArray=JSONArray.fromObject(stockPO);
-            dataOutputStream.writeUTF(jsonArray.toString());
-            dataOutputStream.flush();
+            String result=jsonArray.toString();
+            System.out.println(result);
+            int j=(int)(result.length()/100)+1;
+            dataOutputStream.writeInt(j);
+            for(int i=0;i<j;i++) {
+                if(i==j-1){
+                    dataOutputStream.writeUTF(result.substring(i*100));
+                }
+                else {
+                    dataOutputStream.writeUTF(result.substring(i * 100, (i + 1) * 100));
+                }
+            }
         }
         else if (questContent[1].equals("MARKET")){
             Date date=null;
@@ -46,8 +56,12 @@ class ResultSender{
             MarketPO marketPO=overall_search_data.getMarketInfo(date);
 
             JSONArray jsonArray=JSONArray.fromObject(marketPO);
-            dataOutputStream.writeUTF(jsonArray.toString());
-            dataOutputStream.flush();
+            String result=jsonArray.toString();
+            int j=(int)(result.length()/100)+1;
+            dataOutputStream.writeInt(j);
+            for(int i=0;i<=j;i++) {
+                dataOutputStream.writeUTF(result.substring(i*10,(i+1)*10-1));
+            }
         }
         else{
             System.out.println("wrong");//此处应改为exception
