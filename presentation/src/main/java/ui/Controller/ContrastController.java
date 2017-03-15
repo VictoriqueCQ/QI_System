@@ -103,7 +103,10 @@ public class ContrastController extends Application {
 
     private ObservableList<StockModel> models;
 
-    private Map<String, XYChart.Series<String, Number>> seriesMap;
+    private  ObservableList<StockModel> models2;
+
+
+    private Map<String, XYChart.Series<String, Double>> seriesMap;
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -287,7 +290,7 @@ public class ContrastController extends Application {
         model.setID(stockVO.getCode());
         double[] low = stockVO.getLow();
         double minTemp = low[0];
-        System.out.print("dhaudgaygduyagd" + minTemp);
+//        System.out.print("dhaudgaygduyagd"+minTemp);
         for (int i = 0; i < low.length; i++) {
             if (low[i] < minTemp) {
                 minTemp = low[i];
@@ -306,15 +309,25 @@ public class ContrastController extends Application {
         model.setMaxPrice(maxTemp);
         double dd = 2.00;
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-        riseAndDown = riseAndDown * 100;
+        riseAndDown = riseAndDown*100;
         DecimalFormat df = new DecimalFormat("#.00");
 //        df.format(riseAndDown);
         model.setRiseAndDown(df.format(riseAndDown) + "%");
 //        DecimalFormat d = new DecimalFormat("#.00");
 //        System.out.print(stockVO.getVariance());
-        model.setVariance(String.format("%.2f", stockVO.getVariance()));
+        double d = stockVO.getVariance();
+
+        model.setVariance(String.valueOf(d));
         return model;
     }
+
+    /**
+     * chenyuyan
+     * 设置每日收盘价折线图
+     * @param close
+     * @param dates
+     * @param name
+     */
 
     public void setClosePriceLine(double[] close, List<Date> dates, String name) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
@@ -324,9 +337,18 @@ public class ContrastController extends Application {
             String s = format.format(dates.get(i));
             series1.getData().add(new XYChart.Data(s, close[i]));
         }
+
         closePriceLine.getData().add(series1);
 
     }
+
+    /**
+     * chenyuyan
+     * 设置收益率折线图
+     * @param dates
+     * @param name
+     * @param income
+     */
 
 
     public void setIncomeLine(List<Date> dates, String name, ArrayList<Double> income) {
@@ -341,13 +363,17 @@ public class ContrastController extends Application {
         IncomeLine.getData().add(series);
     }
 
+    /**
+     * chenyuyan
+     * 设置收益率方差
+     */
     public void setVariance() {
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
         variance.setCellValueFactory(celldata -> celldata.getValue().varianceProperty());
-        models = FXCollections.observableArrayList();
-        models.add(stockModel1);
-        models.add(stockModel2);
-        varianceTable.setItems(models);
+        models2 = FXCollections.observableArrayList();
+        models2.add(stockModel1);
+        models2.add(stockModel2);
+        varianceTable.setItems(models2);
     }
 
     private StockVO getStockVoByCondition(StockSearchConditionVO searchConditionVO) {
@@ -371,7 +397,16 @@ public class ContrastController extends Application {
     @FXML
     private void removeCompare() {
         stockTable.getItems().removeAll(models);
-        closePriceLine.getData().removeAll();
+//        XYChart.Series<String, Double> removeSeries = seriesMap.get(stock1.getName());
+
+//         closePriceLine.getData().removeAll(removeSeries);
+
+
+        IncomeLine.getData().removeAll();
+
+//        removeSeries = seriesMap.get(stock2.getName());
+//        closePriceLine.getData().removeAll(removeSeries);
+        varianceTable.getItems().removeAll(models2);
     }
 
     private Date changeDateStyle(LocalDate localDate) {
@@ -385,5 +420,11 @@ public class ContrastController extends Application {
         this.main = main;
         this.net = net;
         this.setDatePicker();
+    }
+    @FXML
+    private void initialize(){
+        nameTextField1.setText("请输入股票名");
+        nameTextField2.setText("请输入股票名");
+
     }
 }
