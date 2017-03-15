@@ -29,23 +29,23 @@
 }
 
 .default-color0.chart-pie {
-    -fx-pie-color: rgb(255,0,0);
+    -fx-pie-color: rgb(255, 0, 0);
 }
 
 .default-color1.chart-pie {
-    -fx-pie-color: rgb(255,0,255);
+    -fx-pie-color: rgb(255, 0, 255);
 }
 
 .default-color2.chart-pie {
-    -fx-pie-color: rgb(255,240,0);
+    -fx-pie-color: rgb(255, 240, 60);
 }
 
 .default-color3.chart-pie {
-    -fx-pie-color: rgb(0,0,255);
+    -fx-pie-color: rgb(0, 0, 255);
 }
 
 .default-color4.chart-pie {
-    -fx-pie-color: rgb(0,255,0);
+    -fx-pie-color: rgb(0, 255, 0);
 }
 
 .chart-legend {
@@ -184,4 +184,19 @@
 
 .label {
     -fx-text-fill: rgb(240, 150, 96);
+}
+
+.table-view > .virtual-flow > .scroll-bar > .track-background {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.table-view > .virtual-flow > .scroll-bar > .track {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.noborder {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
 }

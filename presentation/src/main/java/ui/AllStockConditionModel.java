@@ -14,7 +14,7 @@ public class AllStockConditionModel {
         this.StockNumber = new SimpleStringProperty(number);
     }
 
-    public SimpleStringProperty StockTypeProperty(){
+    public SimpleStringProperty StockTypeProperty() {
         return StockType;
     }
 
@@ -26,7 +26,7 @@ public class AllStockConditionModel {
         this.StockType.set(stockType);
     }
 
-    public SimpleStringProperty StockNumberProperty(){
+    public SimpleStringProperty StockNumberProperty() {
         return StockNumber;
     }
 

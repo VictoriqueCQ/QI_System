@@ -287,7 +287,7 @@ public class ContrastController extends Application {
         model.setID(stockVO.getCode());
         double[] low = stockVO.getLow();
         double minTemp = low[0];
-        System.out.print("dhaudgaygduyagd"+minTemp);
+        System.out.print("dhaudgaygduyagd" + minTemp);
         for (int i = 0; i < low.length; i++) {
             if (low[i] < minTemp) {
                 minTemp = low[i];
@@ -306,13 +306,13 @@ public class ContrastController extends Application {
         model.setMaxPrice(maxTemp);
         double dd = 2.00;
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-        riseAndDown = riseAndDown*100;
+        riseAndDown = riseAndDown * 100;
         DecimalFormat df = new DecimalFormat("#.00");
 //        df.format(riseAndDown);
         model.setRiseAndDown(df.format(riseAndDown) + "%");
 //        DecimalFormat d = new DecimalFormat("#.00");
 //        System.out.print(stockVO.getVariance());
-        model.setVariance(String.format("%.2f",stockVO.getVariance()));
+        model.setVariance(String.format("%.2f", stockVO.getVariance()));
         return model;
     }
 
