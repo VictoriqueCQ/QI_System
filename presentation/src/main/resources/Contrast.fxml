@@ -14,29 +14,29 @@
                 <Font size="21.0" />
             </font>
         </Label>
-        <Label layoutX="79.0" layoutY="60.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
+        <Label layoutX="44.0" layoutY="60.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="260.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
+        <Label layoutX="237.0" layoutY="72.0" prefHeight="21.0" prefWidth="26.0" text="VS" textFill="#a40b0b">
             <font>
                 <Font size="17.0" />
             </font>
         </Label>
-        <Label layoutX="481.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
+        <Label layoutX="600.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <DatePicker fx:id="startTimeDatePicker" layoutX="551.0" layoutY="72.0" onAction="#updateEndTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
-        <Label layoutX="682.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
+        <DatePicker fx:id="startTimeDatePicker" layoutX="690.0" layoutY="72.0" onAction="#updateEndTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
+        <Label layoutX="820.0" layoutY="62.0" prefHeight="48.0" prefWidth="41.0" text="——" textFill="#141313">
             <font>
                 <Font size="17.0" />
             </font>
         </Label>
-        <DatePicker fx:id="endTimeDatePicker" layoutX="713.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
-        <Button fx:id="delete" layoutX="975.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
+        <DatePicker fx:id="endTimeDatePicker" layoutX="850.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" />
+        <Button fx:id="delete" layoutX="1075.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
         <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
             <tabs>
                 <Tab text="总况">
@@ -96,8 +96,14 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="ensure" layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
-        <TextField fx:id="nameTextField1" layoutX="149.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
-        <TextField fx:id="nameTextField2" layoutX="286.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
+        <Button fx:id="ensure" layoutX="1000.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="确认" />
+        <TextField fx:id="nameTextField1" layoutX="129.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
+        <TextField fx:id="nameTextField2" layoutX="264.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
+      <Label layoutX="373.0" layoutY="64.0" prefHeight="48.0" prefWidth="85.0" text="搜索方式">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="searchWayChoice" layoutX="435.0" layoutY="74.0" prefHeight="27.0" prefWidth="93.0" />
     </children>
 </AnchorPane>

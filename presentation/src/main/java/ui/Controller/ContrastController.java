@@ -108,6 +108,9 @@ public class ContrastController extends Application {
 
     private Map<String, XYChart.Series<String, Double>> seriesMap;
 
+    @FXML
+    private ChoiceBox searchWayChoice;
+
     /**
      * 在开始时间选取后更新结束时间可选日期
      */
@@ -425,8 +428,8 @@ public class ContrastController extends Application {
     }
     @FXML
     private void initialize(){
-        nameTextField1.setText("请输入股票名");
-        nameTextField2.setText("请输入股票名");
+        searchWayChoice.setItems(FXCollections.observableArrayList(
+                "股票名称搜索", "股票编号搜索"));
 
     }
 }
