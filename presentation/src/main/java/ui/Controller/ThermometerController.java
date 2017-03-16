@@ -17,6 +17,7 @@ import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -234,6 +235,7 @@ ThermometerController implements Initializable {
 
 
 
+
     //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
     @FXML
     public void setSearchButton() {
@@ -257,7 +259,11 @@ ThermometerController implements Initializable {
             MarketVO marketVO_middleState = new MarketVO();
             MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
 
-            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
+            System.err.println(marketVO.getTotalDeal());
+
+            BigDecimal bd = new BigDecimal(marketVO.getTotalDeal());
+
+            volumn = bd.toPlainString();//获取交易量信息
 
             NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
 
@@ -278,24 +284,6 @@ ThermometerController implements Initializable {
         }
 
 
-//        volumn = stocksMessages[0];
-//
-//        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
-//
-//        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
-//
-//        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
-//
-//        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
-//
-//        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
-//
-//        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
-//
-//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 
 
         //以下是饼图数据
