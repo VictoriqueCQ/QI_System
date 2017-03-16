@@ -408,6 +408,7 @@ public class ContrastController extends Application {
 //        closePriceLine.getData().removeAll(removeSeries);
         varianceTable.getItems().removeAll(models2);
         closePriceLine.getData().clear();
+        IncomeLine.getData().clear();
     }
 
     private Date changeDateStyle(LocalDate localDate) {
