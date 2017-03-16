@@ -407,6 +407,7 @@ public class ContrastController extends Application {
 //        removeSeries = seriesMap.get(stock2.getName());
 //        closePriceLine.getData().removeAll(removeSeries);
         varianceTable.getItems().removeAll(models2);
+        closePriceLine.getData().clear();
     }
 
     private Date changeDateStyle(LocalDate localDate) {
