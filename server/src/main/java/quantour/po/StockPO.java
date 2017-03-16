@@ -26,11 +26,12 @@ public class StockPO {
     private double[] average60;
     private ArrayList<Double> profit;//每日收益率
     private double variance;//相对方差
+    private int size;
 
     public StockPO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
                    double[] close, int[] volume, double[] adjClose, List<Date> dates, double[] average5,
-                   double[] average10, double[] average20, double[] average30, double[] average60,
-                   ArrayList<Double> profit, double variance) {
+                   double[] average10, double[] average20, double[] average30,
+                   double[] average60, ArrayList<Double> profit, double variance, int size) {
         this.name = name;
         this.code = code;
         this.start = start;
@@ -49,6 +50,7 @@ public class StockPO {
         this.average60 = average60;
         this.profit = profit;
         this.variance = variance;
+        this.size = size;
     }
 
     public String getName() {
@@ -121,5 +123,9 @@ public class StockPO {
 
     public double getVariance() {
         return variance;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

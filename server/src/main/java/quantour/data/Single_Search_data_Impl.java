@@ -60,8 +60,12 @@ public class Single_Search_data_Impl implements Single_Search_data {
                 sorted(Comparator.comparing(Stock::getSerial)).
                 collect(Collectors.toList());//得到某日期间的股票信息
         int startSerial=resultList.get(0).getSerial();
-        //int endSerial=resultList.get(resultList.size()-1).getSerial();
         int size=resultList.size();
+        Stock stock=singleStockList.get(size-1);
+        int index=singleStockList.indexOf(stock);
+        if(index+1<singleStockList.size()){
+            resultList.add(singleStockList.get(index+1));
+        }
 
         if(resultList.isEmpty()){
             return null;
@@ -86,8 +90,8 @@ public class Single_Search_data_Impl implements Single_Search_data {
             double[] average60=getAverageByInterval(singleStockList,60,startSerial,size);
 
             ArrayList<Double> profit=new ArrayList<>();
-            for(int i=1;i<resultList.size();i++){
-                profit.add(Math.log(adjClose[i]/adjClose[i-1]));
+            for(int i=0;i<resultList.size()-1;i++){
+                profit.add(Math.log(adjClose[i]/adjClose[i+1]));
             }
             double average=profit.stream().reduce(0.0,(x,y)->x+y)/(resultList.size()-1);
             double sum=0.0;
@@ -97,7 +101,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
             double variance=sum/(resultList.size()-1)-average*average;
 
             return new StockPO(name,code,startTime,endTime,open,high,low,close,volume,adjClose,dates,average5,average10,
-                    average20,average30,average60,profit,variance);
+                    average20,average30,average60,profit,variance,size);
         }
 
     }
