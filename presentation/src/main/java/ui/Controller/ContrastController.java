@@ -226,16 +226,24 @@ public class ContrastController extends Application {
      */
     @FXML
     public void addCompare() {
+        StockSearchConditionVO searchConditionVO1;
+        StockSearchConditionVO searchConditionVO2;
+
         String stockName1 = nameTextField1.getText();
         String stockName2 = nameTextField2.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
+        if(searchWayChoice.getItems().equals("股票名称搜索")){
+            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
 
-        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+        }else {
 
+            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+        }
         stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
@@ -388,8 +396,14 @@ public class ContrastController extends Application {
         String starttime = format.format(searchConditionVO.getStartTime());
         String endtime = format.format(searchConditionVO.getEndTime());
         String stockID = searchConditionVO.getStockID();
-        String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
-        net.actionPerformed(input);
+        String stockName = searchConditionVO.getStockName();
+        String input;
+        if(stockID==null){
+            input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+        }else {
+            input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
+        }
+            net.actionPerformed(input);
         String json = net.run();
         JsonUtil jsonUtil = new JsonUtil();
         StockVO stockVO1 = new StockVO();
