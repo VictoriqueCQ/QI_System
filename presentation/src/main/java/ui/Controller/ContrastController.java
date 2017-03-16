@@ -390,7 +390,7 @@ public class ContrastController extends Application {
     }
 
     private StockVO getStockVoByCondition(StockSearchConditionVO searchConditionVO) {
-        if (searchConditionVO.getStockName() == "") {
+        if (searchConditionVO.getStockName() == ""&&searchConditionVO.getStockID()=="") {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
