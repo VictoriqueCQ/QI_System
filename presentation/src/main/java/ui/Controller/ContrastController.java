@@ -17,6 +17,7 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.*;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -327,8 +328,9 @@ public class ContrastController extends Application {
 //        DecimalFormat d = new DecimalFormat("#.00");
 //        System.out.print(stockVO.getVariance());
         double d = stockVO.getVariance();
-
-        model.setVariance(String.valueOf(d));
+        BigDecimal bd = new BigDecimal(d);
+        DecimalFormat df2 = new DecimalFormat("0.0000");
+        model.setVariance(df2.format(d));
         return model;
     }
 
