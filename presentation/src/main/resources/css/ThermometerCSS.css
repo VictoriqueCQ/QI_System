@@ -5,11 +5,11 @@
 }
 
 .data0.chart-bar {
-    -fx-bar-fill: rgb(255, 0, 0);
+    -fx-bar-fill: rgb(240, 0, 0);
 }
 
 .data1.chart-bar {
-    -fx-bar-fill: rgb(0, 255, 0);
+    -fx-bar-fill: rgb(0, 240, 0);
 }
 
 .button {
@@ -29,23 +29,23 @@
 }
 
 .default-color0.chart-pie {
-    -fx-pie-color: rgb(255, 0, 0);
+    -fx-pie-color: rgb(240, 0, 0);
 }
 
 .default-color1.chart-pie {
-    -fx-pie-color: rgb(255, 0, 255);
+    -fx-pie-color: rgb(240, 0, 240);
 }
 
 .default-color2.chart-pie {
-    -fx-pie-color: rgb(255, 240, 60);
+    -fx-pie-color: rgb(240, 240, 60);
 }
 
 .default-color3.chart-pie {
-    -fx-pie-color: rgb(0, 0, 255);
+    -fx-pie-color: rgb(0, 0, 240);
 }
 
 .default-color4.chart-pie {
-    -fx-pie-color: rgb(0, 255, 0);
+    -fx-pie-color: rgb(0, 240, 0);
 }
 
 .chart-legend {
