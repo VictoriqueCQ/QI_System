@@ -17,6 +17,7 @@ import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -231,86 +232,9 @@ ThermometerController implements Initializable {
         pieChart.setAnimated(false);
     }
 
-//    public void setDatepicker(){
-//        datePicker.setOnAction((ActionEvent e)->{
-//
-//        });
-//    }
-//
-//    public void getMarketVO() {
-//
-//        Iterator<MarketPO> iter = marketPOList.iterator();
-//
-//        while (iter.hasNext()) {
-//            MarketPO marketPO = iter.next();
-//
-//            volumn = String.valueOf(marketPO.getTotalDeal());//获取交易量信息
-//
-//            NumberOfStocksLimitedUp = marketPO.getLimitUpNum();
-//
-//            NumberOfStocksLimitedDown = marketPO.getLimitDownNum();
-//
-//            NumberOfStocksUpOverFivePerCent = marketPO.getOverFivePerNum();
-//
-//            NumberOfStocksDownOverFivePerCent = marketPO.getBelowFivePerNum();
-//
-//            NumberOfStocksUpOverFivePerCentPerDay = marketPO.getOc_overPFivePerNum();
-//
-//            NumberOfStocksDownOverFivePerCentPerDay = marketPO.getOc_belowMFivePerNum();
-//
-//            NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-//                    - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-//                    + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-//                    + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-//
-//        }
-//    }
 
 
-    //这个方法之后会删除
-//    public void testPresentation(){
-//        volumn = "100000";
-//
-//        NumberOfStocksLimitedUp = 50;
-//
-//        NumberOfStocksLimitedDown = 25;
-//
-//        NumberOfStocksUpOverFivePerCent = 80;
-//
-//        NumberOfStocksDownOverFivePerCent = 40;
-//
-//        NumberOfStocksUpOverFivePerCentPerDay = 60;
-//
-//        NumberOfStocksDownOverFivePerCentPerDay = 30;
-//
-//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
-//
-//        //以下是饼图数据
-//        PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
-//
-//        PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
-//
-//        PieChart.Data d3 = new PieChart.Data("涨跌幅小于5%股票", NumberOfStocksChangedWithinFivePerCent);
-//
-//        PieChart.Data d4 = new PieChart.Data("跌幅超过5%股票", NumberOfStocksDownOverFivePerCent);
-//
-//        PieChart.Data d5 = new PieChart.Data("跌停股票", NumberOfStocksLimitedDown);
-//
-//        pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
-//
-//        System.out.println("Search the data and show the volumn.");
-//
-//        volumnTextField.setText(volumn);
-//
-//        this.setBarChart_1();
-//        this.setBarChart_2();
-//        this.setBarChart_3();
-//        this.setPieChart();
-//
-//    }
+
 
     //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
     @FXML
@@ -335,7 +259,11 @@ ThermometerController implements Initializable {
             MarketVO marketVO_middleState = new MarketVO();
             MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
 
-            volumn = String.valueOf(marketVO.getTotalDeal());//获取交易量信息
+            System.err.println(marketVO.getTotalDeal());
+
+            BigDecimal bd = new BigDecimal(marketVO.getTotalDeal());
+
+            volumn = bd.toPlainString();//获取交易量信息
 
             NumberOfStocksLimitedUp = marketVO.getLimitUpNum();
 
@@ -356,24 +284,6 @@ ThermometerController implements Initializable {
         }
 
 
-//        volumn = stocksMessages[0];
-//
-//        NumberOfStocksLimitedUp = Integer.parseInt(stocksMessages[1]);
-//
-//        NumberOfStocksLimitedDown = Integer.parseInt(stocksMessages[2]);
-//
-//        NumberOfStocksUpOverFivePerCent = Integer.parseInt(stocksMessages[3]);
-//
-//        NumberOfStocksDownOverFivePerCent = Integer.parseInt(stocksMessages[4]);
-//
-//        NumberOfStocksUpOverFivePerCentPerDay = Integer.parseInt(stocksMessages[5]);
-//
-//        NumberOfStocksDownOverFivePerCentPerDay = Integer.parseInt(stocksMessages[6]);
-//
-//        NumberOfStocksChangedWithinFivePerCent = TOTAL_NUMBER_OF_STOCKS
-//                - (NumberOfStocksLimitedUp + NumberOfStocksLimitedDown
-//                + NumberOfStocksUpOverFivePerCent + NumberOfStocksDownOverFivePerCent
-//                + NumberOfStocksUpOverFivePerCentPerDay + NumberOfStocksDownOverFivePerCent);
 
 
         //以下是饼图数据

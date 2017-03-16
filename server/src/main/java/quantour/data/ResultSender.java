@@ -27,7 +27,6 @@ class ResultSender{
         this.dataOutputStream=dataOutputStream;
     }
 
-
     void run() throws ParseException, IOException {
         SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
         String[] questContent=quest.split("\t");
@@ -70,5 +69,4 @@ class ResultSender{
             System.out.println("wrong");//此处应改为exception
         }
     }
-
 }
