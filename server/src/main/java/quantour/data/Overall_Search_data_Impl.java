@@ -47,29 +47,39 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         int oc_overPFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
                     int i=1;
-                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
-                    while(marketList.indexOf(stock) + i<marketList.size()&&
-                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
-                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                stock.getClose() - stock.getOpen() > 0.05 * previous.getClose();
                     }
-                    if(stock.getCode()!=previous.getCode()){
+                    else{
                         return false;
                     }
-                    return previous.getSerial() != 0 && stock.getClose() - stock.getOpen() > 0.05 * previous.getClose();
                 }).
                 count();
         int oc_belowMFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
                     int i=1;
-                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
-                    while(marketList.indexOf(stock) + i<marketList.size()&&
-                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
-                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                stock.getClose() - stock.getOpen() < -0.05 * previous.getClose();
                     }
-                    if(stock.getCode()!=previous.getCode()){
+                    else{
                         return false;
                     }
-                    return previous.getSerial() != 0 && stock.getClose() - stock.getOpen() < -0.05 * previous.getClose();
                 }).
                 count();
 
@@ -82,15 +92,20 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         return (int) today.parallelStream().
                 filter(stock -> {
                     int i=1;
-                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
-                    while(marketList.indexOf(stock) + i<marketList.size()&&
-                            (stock.getVolume()==0||(stock.getCode()!=previous.getCode()))) {
-                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
                     }
-                    if(marketList.indexOf(stock) + i<marketList.size()&&stock.getCode()!=previous.getCode()){
+                    else{
                         return false;
                     }
-                    return previous.getSerial() != 0 && (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
                 }).
                 count();
     }
@@ -100,14 +115,20 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         return (int) today.parallelStream().
                 filter(stock -> {
                     int i=1;
-                    Stock previous = marketList.get(marketList.indexOf(stock) + i);
-                    while(stock.getVolume()==0||(stock.getCode()!=previous.getCode())) {
-                        previous = marketList.get(marketList.indexOf(stock) + i);
+                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                (stock.getClose() - previous.getClose()) / previous.getClose() <= percentage;
                     }
-                    if(stock.getCode()!=previous.getCode()){
+                    else{
                         return false;
                     }
-                    return previous.getSerial() != 0 && (stock.getClose() - previous.getClose()) / previous.getClose() <= percentage;
                 }).
                 count();
     }
