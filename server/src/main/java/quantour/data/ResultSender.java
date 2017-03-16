@@ -69,5 +69,4 @@ class ResultSender{
             System.out.println("wrong");//此处应改为exception
         }
     }
-
 }
