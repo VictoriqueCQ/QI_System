@@ -196,25 +196,22 @@ public class CandlestickChartController {
      * 绘制K线图
      */
     private SwingNode createCandlestickChart() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         double highValue = Double.MIN_VALUE;//设置K线数据当中的最大值
         double minValue = Double.MAX_VALUE;//设置K线数据当中的最小值
         double high2Value = Double.MIN_VALUE;//设置成交量的最大值
         double min2Value = Double.MAX_VALUE;//设置成交量的最低值
 
-        OHLCSeries series = new OHLCSeries("");//蜡烛图，高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
         if (!(stockVO == null)) {
+            OHLCSeries series = new OHLCSeries("");//蜡烛图，高开低收数据序列，股票K线图的四个数据，依次是开，高，低，收
             series = this.addCandlestickChartData(series, stockVO);
-
-
             final OHLCSeriesCollection seriesCollection = new OHLCSeriesCollection();//保留K线数据的数据集，必须申明为final，后面要在匿名内部类里面用到
             seriesCollection.addSeries(series);
 
             TimeSeries series2 = new TimeSeries("");//对应时间成交量数据series2 = this.adTimeSeriesCollectionData(series2, stockVO);
+            series2 = this.adTimeSeriesCollectionData(series2, stockVO);
             TimeSeriesCollection timeSeriesCollection = new TimeSeriesCollection();//保留成交量数据的集合
             timeSeriesCollection.addSeries(series2);
 
-            series2 = this.adTimeSeriesCollectionData(series2, stockVO);
             //获取K线数据的最高值和最低值
             int seriesCount = seriesCollection.getSeriesCount();//一共有多少个序列，目前为一个
             for (int i = 0; i < seriesCount; i++) {
@@ -242,7 +239,6 @@ public class CandlestickChartController {
                     }
                 }
             }
-
 
             final CandlestickRenderer candlestickRender = new CandlestickRenderer();//设置K线图的画图器，必须申明为final，后面要在匿名内部类里面用到
             candlestickRender.setUseOutlinePaint(true); //设置是否使用自定义的边框线，程序自带的边框线的颜色不符合中国股票市场的习惯
@@ -362,7 +358,6 @@ public class CandlestickChartController {
             timeSeries.add(new Day(day, month, year), volume[i]);
         }
         return timeSeries;
-
     }
 
 
@@ -370,13 +365,11 @@ public class CandlestickChartController {
      * 绘制均线图
      */
     private void createEMA() {
-
         lineChart.getData().clear();
-
         lineChart.setTitle("均线图(EMA)");
+
         //数据注入
         stockVO = this.getStockVOByCondition();
-
         if (!(stockVO == null)) {
             double[] average5 = stockVO.getAverage5();
             double[] average10 = stockVO.getAverage10();
@@ -434,12 +427,10 @@ public class CandlestickChartController {
             series_average60 = this.addEMAData(series_average60, average60, dates);
             series_average60.setName("60天");
             lineChart.getData().addAll(series_average5, series_average10, series_average20, series_average30, series_average60);
-//            number.setAutoRanging(false);
+            number.setAutoRanging(false);
             number.setForceZeroInRange(false);
             number.setLowerBound(5);
-            System.out.print(number.getLowerBound());
             number.setUpperBound(highest * 1.1);
-            System.out.print(number.getUpperBound());
             number.setTickUnit((highest * 1.1 - 5) / 10);
         }
     }
@@ -466,7 +457,7 @@ public class CandlestickChartController {
      * @param localDate
      * @return
      */
-    private Date changeDateStyle(LocalDate localDate) {
+    public Date changeDateStyle(LocalDate localDate) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
         return Date.from(instant);
@@ -477,7 +468,7 @@ public class CandlestickChartController {
      *
      * @return
      */
-    private StockVO getStockVOByCondition() {
+    public StockVO getStockVOByCondition() {
         String stockName = stockNameTextField.getText();
         String stockID = stockNumberTextField.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();

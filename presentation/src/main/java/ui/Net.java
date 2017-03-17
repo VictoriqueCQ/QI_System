@@ -9,13 +9,10 @@ import java.net.Socket;
 public class Net {
 
     private Socket sock;
-    private BufferedReader br;
-    private PrintWriter pw;
-
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
 
-    public void setupNet() {
+    public void setUpNet() {
         try {
             sock = new Socket("127.0.0.1", 9000);
             inputStream = new DataInputStream(sock.getInputStream());
@@ -38,35 +35,27 @@ public class Net {
         return this.sock;
     }
 
-    public BufferedReader getBufferedReader() {
-        return this.br;
-    }
-
-    public PrintWriter getPrintWriter() {
-        return this.pw;
-    }
-
-
+    /**
+     * 获取服务器返回的数据
+     * @return
+     */
     public String run() {
-//        String message;
-//        String output = "";
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         try {
-//            message = inputStream.readUTF();
-//            output += (message + "\n");
-            int length=inputStream.readInt();
-            for(int i=0;i<length;i++){
+            int length = inputStream.readInt();
+            for (int i = 0; i < length; i++) {
                 sb.append(inputStream.readUTF());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        return output;
-        System.out.println(sb.toString());
         return sb.toString();
-
     }
 
+    /**
+     * 传达指令给服务器
+     * @param input
+     */
     public void actionPerformed(String input) {
         try {
             outputStream.writeUTF(input);
@@ -74,5 +63,4 @@ public class Net {
             ep.printStackTrace();
         }
     }
-
 }

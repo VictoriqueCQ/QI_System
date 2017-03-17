@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 public class ClientOverviewController implements Initializable {
     private Main main;
 
-
     @FXML
     private SplitPane topSplitPane;
 
@@ -44,7 +43,6 @@ public class ClientOverviewController implements Initializable {
     @FXML
     private Label telLabel;
 
-
     @FXML
     private void exit() {
         main.exitSystem();
@@ -67,7 +65,8 @@ public class ClientOverviewController implements Initializable {
 
     @FXML
     private void login() {
-        main.gotoLogin();
+        //TODO
+//          main.gotoLogin();
     }
 
     @FXML
@@ -89,14 +88,11 @@ public class ClientOverviewController implements Initializable {
         thermometerButton.setEffect(l);
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     public ClientOverviewController() {
-
     }
 
     public void setMain(Main main) {

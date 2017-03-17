@@ -185,7 +185,7 @@ public class ContrastController extends Application {
      * 初始化日期选择器可选时间
      */
     private void setDatePicker() {
-        startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
+        startTimeDatePicker.setValue(LocalDate.of(2014, 2, 1));
         endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
