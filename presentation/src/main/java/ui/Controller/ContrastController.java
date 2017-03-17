@@ -110,7 +110,7 @@ public class ContrastController extends Application {
     private Map<String, XYChart.Series<String, Double>> seriesMap;
 
     @FXML
-    private ChoiceBox searchWayChoice;
+    private ChoiceBox<String> searchWayChoice;
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -236,10 +236,10 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        if(searchWayChoice.getItems().equals("股票名称搜索")){
+        if(searchWayChoice.getValue().equals("股票名称搜索")){
             searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
             searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
-
+            System.out.print("aaaaaaaaa");
         }else {
 
             searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
@@ -399,9 +399,11 @@ public class ContrastController extends Application {
         String endtime = format.format(searchConditionVO.getEndTime());
         String stockID = searchConditionVO.getStockID();
         String stockName = searchConditionVO.getStockName();
+//        System.out.print("dajsdja"+stockName);
         String input;
-        if(stockID==null){
-            input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+        if(stockID==null&&stockName!=null){
+            input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+            System.out.print("successs!!!!!");
         }else {
             input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
         }
