@@ -19,7 +19,7 @@ public class ThermometerControllerTest {
     @Test
     public void test_ChangeDateStyle(){
         LocalDate localDate = LocalDate.of(2010,1,1);
-        Date date = ThermometerController.changeDateStyle(localDate);
+        Date date = thermometerController.changeDateStyle(localDate);
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         String str=format.format(date);
         ArrayAssertions.assertEquals("2010/1/1",str);
