@@ -454,7 +454,8 @@ public class ContrastController extends Application {
         IncomeLine.getData().clear();
     }
 
-    private Date changeDateStyle(LocalDate localDate) {
+
+    public Date changeDateStyle(LocalDate localDate) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
         Date date = Date.from(instant);
