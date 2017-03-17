@@ -27,7 +27,7 @@ public class Single_Search_data_Impl implements Single_Search_data {
     @Override
     public StockPO getStockList(String[] quest) throws ParseException {
 
-        if(quest[2].equals("NULL")){
+        if(quest[2].toUpperCase().equals("NULL")){
             return getStockListByName(quest[3],sdf.parse(quest[4]),sdf.parse(quest[5]));
         }
         else{

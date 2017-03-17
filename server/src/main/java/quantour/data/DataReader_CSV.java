@@ -20,8 +20,8 @@ public class DataReader_CSV {
 
     DataReader_CSV() {
         //path="F:\\Java Code\\QI_System\\server\\stock_data.csv";
-        path="stock_data.csv";
-        //path="D:\\data.txt";
+        //path="stock_data.csv";
+        path="D:\\data.txt";
     }
 
     public DataReader_CSV(String path) {
