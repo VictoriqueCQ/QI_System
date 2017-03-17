@@ -185,7 +185,7 @@ public class ContrastController extends Application {
      * 初始化日期选择器可选时间
      */
     private void setDatePicker() {
-        startTimeDatePicker.setValue(LocalDate.of(2005, 2, 1));
+        startTimeDatePicker.setValue(LocalDate.of(2014, 2, 1));
         endTimeDatePicker.setValue(LocalDate.of(2014, 4, 30));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
                 new Callback<DatePicker, DateCell>() {
@@ -236,16 +236,38 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        if(searchWayChoice.getValue().equals("股票名称搜索")){
-            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
-            System.out.print("aaaaaaaaa");
-        }else {
 
-            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+            if (searchWayChoice.getValue().equals("股票名称搜索")){
+                searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+                searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
+
+            }else{
+                searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+                searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+            }
+
+            stock1 = getStockVoByCondition(searchConditionVO1);
+            if (stock1 == null) {
+                AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
+            }
+            stock2 = getStockVoByCondition(searchConditionVO2);
+            if (stock2 == null) {
+                AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
+            }
+
+            setTableContrast();
+            setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
+            setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
+            setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
+            setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
+            setVariance();
+
+
         }
-        stock1 = getStockVoByCondition(searchConditionVO1);
+
+
+
+        /*stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
@@ -259,8 +281,8 @@ public class ContrastController extends Application {
         setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
         setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
-        setVariance();
-    }
+        setVariance();*/
+
 
 
     /**
@@ -345,7 +367,7 @@ public class ContrastController extends Application {
     public void setClosePriceLine(double[] close, List<Date> dates, String name) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         series1.setName(name);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = dates.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i));
             series1.getData().add(new XYChart.Data(s, close[i]));
@@ -368,7 +390,7 @@ public class ContrastController extends Application {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName(name);
         //populating the series with data
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = income.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i + 1));
             series.getData().add(new XYChart.Data(s, income.get(i)));
@@ -448,6 +470,7 @@ public class ContrastController extends Application {
     private void initialize(){
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
+        searchWayChoice.getSelectionModel().select(0);
 
     }
 }

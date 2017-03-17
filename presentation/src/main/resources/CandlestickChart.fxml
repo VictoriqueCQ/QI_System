@@ -7,101 +7,89 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0"
-            prefWidth="1200.0" stylesheets="@css/CandlestickChartCSS.css" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.CandlestickChartController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/CandlestickChartCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.CandlestickChartController">
     <children>
-        <GridPane layoutX="265.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <GridPane layoutX="265.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="231.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="222.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="307.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.0" minWidth="10.0" prefWidth="317.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="231.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="235.0" minWidth="10.0" prefWidth="222.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="307.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.0" minWidth="10.0" prefWidth="317.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <GridPane prefHeight="77.0" prefWidth="236.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="3.0" prefWidth="31.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="56.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="121.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="72.0" minWidth="10.0" prefWidth="32.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="3.0" prefWidth="31.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="56.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="121.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="72.0" minWidth="10.0" prefWidth="32.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <DatePicker fx:id="startTimeDatePicker" onAction="#updateEndTimeDatePicker" prefHeight="13.0"
-                                    prefWidth="120.0" GridPane.columnIndex="2"/>
-                        <Label prefHeight="40.0" prefWidth="76.0" text="开始日期" GridPane.columnIndex="1"/>
+                        <DatePicker fx:id="startTimeDatePicker" onAction="#updateEndTimeDatePicker" prefHeight="13.0" prefWidth="120.0" stylesheets="@css/DatePickerCSS.css" GridPane.columnIndex="2" />
+                        <Label prefHeight="40.0" prefWidth="76.0" text="开始日期" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
                 <GridPane GridPane.columnIndex="1">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="52.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="134.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="49.0" minWidth="10.0" prefWidth="47.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="52.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="134.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="49.0" minWidth="10.0" prefWidth="47.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <DatePicker fx:id="endTimeDatePicker" onAction="#updateStartTimeDatePicker" prefHeight="0.0"
-                                    prefWidth="120.0" GridPane.columnIndex="1"/>
-                        <Label prefHeight="124.0" prefWidth="110.0" text="结束日期"/>
+                        <DatePicker fx:id="endTimeDatePicker" onAction="#updateStartTimeDatePicker" prefHeight="0.0" prefWidth="120.0" stylesheets="@css/DatePickerCSS.css" GridPane.columnIndex="1" />
+                        <Label prefHeight="124.0" prefWidth="110.0" text="结束日期" />
                     </children>
                 </GridPane>
                 <GridPane prefHeight="60.0" prefWidth="312.0" GridPane.columnIndex="2">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="65.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="208.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="40.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="65.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="208.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="169.0" minWidth="10.0" prefWidth="40.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0"/>
-                        <RowConstraints maxHeight="10.0" minHeight="0.0" prefHeight="0.0"/>
-                        <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints maxHeight="10.0" minHeight="0.0" prefHeight="0.0" />
+                        <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label prefHeight="40.0" prefWidth="188.0" text="股票编号"/>
-                        <TextField fx:id="stockNumberTextField" styleClass="headTextFieldText"
-                                   GridPane.columnIndex="1"/>
+                        <Label prefHeight="40.0" prefWidth="188.0" text="股票编号" />
+                        <TextField fx:id="stockNumberTextField" styleClass="headTextFieldText" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
                 <GridPane prefHeight="40.0" prefWidth="185.0" GridPane.columnIndex="3">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="64.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="211.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="40.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="64.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="211.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="40.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label prefHeight="40.0" prefWidth="237.0" text="股票名称"/>
-                        <TextField fx:id="stockNameTextField" styleClass="headTextFieldText" GridPane.columnIndex="1"/>
+                        <Label prefHeight="40.0" prefWidth="237.0" text="股票名称" />
+                        <TextField fx:id="stockNameTextField" styleClass="headTextFieldText" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
-                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0"
-                        prefWidth="90.0" styleClass="search_button" text="搜索" GridPane.columnIndex="4"/>
+                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="48.0" prefWidth="90.0" styleClass="search_button" text="搜索" GridPane.columnIndex="4" />
             </children>
         </GridPane>
-        <TabPane layoutX="295.0" layoutY="68.0" prefHeight="572.0" prefWidth="1180.0" tabClosingPolicy="UNAVAILABLE"
-                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                 AnchorPane.topAnchor="68.0">
+        <TabPane layoutX="295.0" layoutY="68.0" prefHeight="572.0" prefWidth="1180.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="68.0">
             <tabs>
                 <Tab text="K线图">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <AnchorPane fx:id="insidePane" layoutX="55.0" layoutY="45.0" prefHeight="417.0"
-                                            prefWidth="1030.0" AnchorPane.bottomAnchor="10.0"
-                                            AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                            AnchorPane.topAnchor="10.0"/>
+                                <AnchorPane fx:id="insidePane" layoutX="55.0" layoutY="45.0" prefHeight="417.0" prefWidth="1030.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -110,14 +98,12 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="lineChart" layoutX="268.0" layoutY="34.0"
-                                           AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
-                                           AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <LineChart fx:id="lineChart" layoutX="268.0" layoutY="34.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                     <xAxis>
-                                        <CategoryAxis side="BOTTOM"/>
+                                        <CategoryAxis side="BOTTOM" />
                                     </xAxis>
                                     <yAxis>
-                                        <NumberAxis side="LEFT"/>
+                                        <NumberAxis side="LEFT" />
                                     </yAxis>
                                 </LineChart>
                             </children>

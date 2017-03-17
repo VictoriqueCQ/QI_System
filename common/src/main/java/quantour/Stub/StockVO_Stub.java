@@ -1,34 +1,33 @@
-package quantour.vo;
+package quantour.Stub;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
- * 单只股票VO
- * Created by dell on 2017/3/4.
+ * Created by xjwhhh on 2017/3/17.
  */
-public class StockVO {
-    private String name;
-    private int code;
-    private Date start;
-    private Date over;
-    private double[] open;
-    private double[] high;
-    private double[] low;
-    private double[] close;
-    private int[] volume;//交易数
-    private double[] adjClose;//复权后
+public class StockVO_Stub {
+    private String name="深发展A";
+    private int code=1;
+    private Date start=new Date(2005,1,12);
+    private Date over=new Date(2014,3,2);
+    private double[] open={10};
+    private double[] high={11};
+    private double[] low={9};
+    private double[] close={10.4};
+    private int[] volume={100};//交易数
+    private double[] adjClose={10};//复权后
     private List<Date> dates;
-    private double[] average5;
-    private double[] average10;
-    private double[] average20;
-    private double[] average30;
-    private double[] average60;
+    private double[] average5={10};
+    private double[] average10={9};
+    private double[] average20={8};
+    private double[] average30={7};
+    private double[] average60={8};
     private ArrayList<Double> profit;//每日收益率
-    private double variance;//相对方差
+    private double variance=5;//相对方差
 
-    public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
+    public StockVO_Stub(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
                    double[] close, int[] volume, double[] adjClose, List<Date> dates,double[] average5, double[] average10,
                    double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
@@ -51,10 +50,11 @@ public class StockVO {
         this.profit = profit;
     }
 
-    public StockVO(){
-
+    public StockVO_Stub(){
+        Date date=new Date(2009,3,2);
+        this.dates.add(date);
+        this.profit.add(10.0);
     }
-
 
     public String getName() {
         return name;

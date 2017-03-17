@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -16,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@css/ThermometerCSS.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ThermometerController">
+<AnchorPane stylesheets="@css/ThermometerCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ThermometerController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -67,7 +73,7 @@
                     <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                             <children>
-                                <DatePicker fx:id="datePicker" layoutY="69.0" prefHeight="23.0" prefWidth="135.0" />
+                                <DatePicker fx:id="datePicker" layoutY="69.0" prefHeight="23.0" prefWidth="135.0" stylesheets="@css/DatePickerCSS.css" />
                             </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -105,11 +111,14 @@
                     </children>
                 </GridPane>
                 <PieChart fx:id="pieChart" title="所有股票情况" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TableView fx:id="stockConditionTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <TableView fx:id="stockConditionTable" prefHeight="290.0" prefWidth="400.0" stylesheets="@css/TableViewCSS.css" GridPane.columnIndex="2" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="stockType" prefWidth="200.0" text="股票类型" />
                 <TableColumn fx:id="stockNumber" prefWidth="200.0" text="股票数量" />
               </columns>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
             </TableView>
             </children>
         </GridPane>
