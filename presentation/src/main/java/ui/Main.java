@@ -42,7 +42,7 @@ public class Main extends Application {
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
 
-        net.setupNet();
+        net.setUpNet();
         this.gotoClientOverview();
 
     }
