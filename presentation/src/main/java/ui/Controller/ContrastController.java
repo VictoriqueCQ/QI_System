@@ -236,16 +236,42 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        if(searchWayChoice.getValue().equals("股票名称搜索")){
-            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
-            System.out.print("aaaaaaaaa");
-        }else {
+        if(searchWayChoice.isFocused()){
 
-            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+            if (searchWayChoice.getValue().equals("股票名称搜索")){
+                searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+                searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
+
+            }else{
+                searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+                searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+            }
+
+            stock1 = getStockVoByCondition(searchConditionVO1);
+            if (stock1 == null) {
+                AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
+            }
+            stock2 = getStockVoByCondition(searchConditionVO2);
+            if (stock2 == null) {
+                AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
+            }
+
+            setTableContrast();
+            setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
+            setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
+            setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
+            setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
+            setVariance();
+
+
         }
-        stock1 = getStockVoByCondition(searchConditionVO1);
+        else{
+            AlertUtil.showErrorAlert("请选择搜索方式");
+
+        }
+
+
+        /*stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
@@ -259,7 +285,7 @@ public class ContrastController extends Application {
         setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
         setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
-        setVariance();
+        setVariance();*/
     }
 
 
