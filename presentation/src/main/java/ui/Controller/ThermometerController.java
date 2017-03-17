@@ -33,103 +33,136 @@ import java.util.StringJoiner;
  */
 public class
 ThermometerController implements Initializable {
+
     private Main main;
+
     private Net net;
 
     @FXML
     private TableView<AllStockConditionModel> stockConditionTable;
 
+    //股票表格中的“股票类型”列
     @FXML
     private TableColumn<AllStockConditionModel, String> stockType;
 
+    //股票表格中的“股票数量”列
     @FXML
     private TableColumn<AllStockConditionModel, String> stockNumber;
 
+    //股票表格数据
     private ObservableList<AllStockConditionModel> data;
 
+    //日期选择器
     @FXML
     private DatePicker datePicker;
 
+    //“查询”按钮
     @FXML
     private Button searchButton;
 
+    //“今日交易量”具体数目所显示的区域
     @FXML
     private TextField volumnTextField;
 
+    //总股票数
     private static final int TOTAL_NUMBER_OF_STOCKS = 791;
 
+    //当日涨跌幅小于5%的股票数
     private int NumberOfStocksChangedWithinFivePerCent;
 
-    private String volumn;//交易量
+    //当日总交易量
+    private String volumn;
 
-    private int NumberOfStocksLimitedUp;//涨停股票
+    //当日涨停股票数
+    private int NumberOfStocksLimitedUp;
 
-    private int NumberOfStocksLimitedDown;//跌停股票
+    //当日跌停股票数
+    private int NumberOfStocksLimitedDown;
 
-    private int NumberOfStocksUpOverFivePerCent;//涨幅超过5%的股票数
+    //当日涨幅超过5%的股票数
+    private int NumberOfStocksUpOverFivePerCent;
 
-    private int NumberOfStocksDownOverFivePerCent;//跌幅超过5%的股票数
+    //当日跌幅超过5%的股票数
+    private int NumberOfStocksDownOverFivePerCent;//
 
-    private int NumberOfStocksUpOverFivePerCentPerDay;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
+    //开盘-收盘大于5%*上一个交易日收盘价的股票个数
+    private int NumberOfStocksUpOverFivePerCentPerDay;//
 
-    private int NumberOfStocksDownOverFivePerCentPerDay;//开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+    //开盘-收盘小于-5%*上一个交易日收盘价的股票个数
+    private int NumberOfStocksDownOverFivePerCentPerDay;//
 
+    //涨跌停股票数柱状图纵坐标
     @FXML
     private NumberAxis NumberOfStock_1 = new NumberAxis();
 
+    //涨跌幅超过5%股票柱状图纵坐标
     @FXML
     private NumberAxis NumberOfStock_2 = new NumberAxis();
 
+    //开盘-收盘大于/小于5%*上一个交易日收盘价的股票柱状图纵坐标
     @FXML
     private NumberAxis NumberOfStock_3 = new NumberAxis();
 
+    //涨跌停股票数柱状图横坐标
     @FXML
     private CategoryAxis TypeOfStock_1 = new CategoryAxis();
 
+    //涨跌幅超过5%股票柱状图横坐标
     @FXML
     private CategoryAxis TypeOfStock_2 = new CategoryAxis();
 
+    //开盘-收盘大于/小于5%*上一个交易日收盘价的股票柱状图横坐标
     @FXML
     private CategoryAxis TypeOfStock_3 = new CategoryAxis();
 
+    //涨跌停股票数柱状图
     @FXML
     private BarChart<String, Number> barChart_1 = new BarChart<String, Number>(TypeOfStock_1, NumberOfStock_1);
 
+    //涨跌幅超过5%股票柱状图
     @FXML
     private BarChart<String, Number> barChart_2 = new BarChart<String, Number>(TypeOfStock_2, NumberOfStock_2);
 
+    //开盘-收盘大于/小于5%*上一个交易日收盘价的股票柱状图
     @FXML
     private BarChart<String, Number> barChart_3 = new BarChart<String, Number>(TypeOfStock_3, NumberOfStock_3);
 
+    //所有股票情况的数据——饼图
     ObservableList<PieChart.Data> pieChartData;
 
+    //所有股票情况——饼图
     @FXML
     private PieChart pieChart = new PieChart();
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    private void setTableView(){
+    //表格set函数
+    private void setTableView() {
 
         stockType.setCellValueFactory(celldata -> celldata.getValue().StockTypeProperty());
         stockNumber.setCellValueFactory(celldata -> celldata.getValue().StockNumberProperty());
 
         data = FXCollections.observableArrayList(
-                new AllStockConditionModel("涨停股票数",String.valueOf(NumberOfStocksLimitedUp)),
-                new AllStockConditionModel("跌停股票数",String.valueOf(NumberOfStocksLimitedDown)),
-                new AllStockConditionModel("涨幅超过5%的股票数",String.valueOf(NumberOfStocksUpOverFivePerCent)),
-                new AllStockConditionModel("跌幅超过5%的股票数",String.valueOf(NumberOfStocksDownOverFivePerCent)),
-                new AllStockConditionModel("日增幅大于5%股票数",String.valueOf(NumberOfStocksUpOverFivePerCentPerDay)),
+                new AllStockConditionModel("涨停股票数", String.valueOf(NumberOfStocksLimitedUp)),
+                new AllStockConditionModel("跌停股票数", String.valueOf(NumberOfStocksLimitedDown)),
+                new AllStockConditionModel("涨幅超过5%的股票数", String.valueOf(NumberOfStocksUpOverFivePerCent)),
+                new AllStockConditionModel("跌幅超过5%的股票数", String.valueOf(NumberOfStocksDownOverFivePerCent)),
+                new AllStockConditionModel("日增幅大于5%股票数", String.valueOf(NumberOfStocksUpOverFivePerCentPerDay)),
                 new AllStockConditionModel("日增幅小于5%股票数", String.valueOf(NumberOfStocksDownOverFivePerCentPerDay)),
-                new AllStockConditionModel("涨跌幅小于5%股票数",String.valueOf(NumberOfStocksChangedWithinFivePerCent))
+                new AllStockConditionModel("涨跌幅小于5%股票数", String.valueOf(NumberOfStocksChangedWithinFivePerCent))
         );
+
+        //去掉表格的横向拖动器
         stockConditionTable.getStyleClass().add("edge-to-edge");
         stockConditionTable.getStyleClass().add("noborder");
         stockConditionTable.setItems(data);
     }
 
+    //日起选择器set函数
     private void setDatePicker() {
         datePicker.setValue(LocalDate.of(2005, 2, 1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -160,7 +193,7 @@ ThermometerController implements Initializable {
         datePicker.setDayCellFactory(dayCellFactory1);
     }
 
-    //以下都是模拟数据
+    //涨跌停股票柱状图set函数
     private void setBarChart_1() {
         barChart_1.setCategoryGap(107);
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
@@ -173,18 +206,22 @@ ThermometerController implements Initializable {
         barChart_1.setAnimated(false);
     }
 
+    //涨跌幅超过5%股票柱状图set函数
     private void setBarChart_2() {
         barChart_2.setCategoryGap(107);
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("涨跌幅超过5%股票情况");
         series2.getData().add(new XYChart.Data<>("涨幅超过5%股票数", NumberOfStocksUpOverFivePerCent));
         series2.getData().add(new XYChart.Data<>("跌幅超过5%股票数", NumberOfStocksDownOverFivePerCent));
+
+        //此处来源于stackoverflow，用来解决图表初次显示没有横坐标的bug，代价是图表的构造不再有明显动画效果
         barChart_2.getData().clear();
         barChart_2.layout();
         barChart_2.getData().add(series2);
         barChart_2.setAnimated(false);
     }
 
+    //开盘-收盘大于/小于5%*上一个交易日收盘价的股票柱状图set函数
     private void setBarChart_3() {
         barChart_3.setCategoryGap(107);
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();
@@ -197,70 +234,46 @@ ThermometerController implements Initializable {
         barChart_3.setAnimated(false);
     }
 
+    //所有股票情况饼图set函数
     public void setPieChart() {
-//        显示区域所占比例，暂时尚未时间如何添加
-//        Label caption = new Label("");
-//        caption.setTextFill(Color.DARKORANGE);
-//        caption.setStyle("-fx-font: 24 arial;");
-//        pieChart.getData().stream().forEach((data) -> {
-//            data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-//                    (MouseEvent e) -> {
-//                        caption.setTranslateX(e.getSceneX());
-//                        caption.setTranslateY(e.getSceneY());
-//                        caption.setText(String.valueOf(data.getPieValue())
-//                                + "%");
-//                    });
-//        });
-//        当鼠标移入饼图块时，该块位置发生偏移，鼠标离开后，该块回复到原来位置。暂时尚未实现效果
-//        d1.getNode().setOnMouseEntered(new MouseHoverAnimation(d1, pieChart));
-//        d1.getNode().setOnMouseExited(new MouseExitAnimation());
-//
-//        d2.getNode().setOnMouseEntered(new MouseHoverAnimation(d2, pieChart));
-//        d2.getNode().setOnMouseExited(new MouseExitAnimation());
-//
-//        d3.getNode().setOnMouseEntered(new MouseHoverAnimation(d3, pieChart));
-//        d3.getNode().setOnMouseExited(new MouseExitAnimation());
-//
-//        d4.getNode().setOnMouseEntered(new MouseHoverAnimation(d4, pieChart));
-//        d4.getNode().setOnMouseExited(new MouseExitAnimation());
-//
-//        d5.getNode().setOnMouseEntered(new MouseHoverAnimation(d5, pieChart));
-//        d5.getNode().setOnMouseExited(new MouseExitAnimation());
-
 
         pieChart.getData().setAll(pieChartData);
+        //限制多次查询时饼图构造的动画效果，避免图表被破坏
         pieChart.setAnimated(false);
     }
 
 
-
-
-
-    //这个方法在消除bug后将启用，测试界面色彩风格阶段将注释掉
+    //“查询”按钮set函数
     @FXML
     public void setSearchButton() {
+        //将datepicker获取的时间转为date累in个
         LocalDate time = datePicker.getValue();
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = time.atStartOfDay(zone).toInstant();
         Date date = Date.from(instant);
 
+        //将时间格式化
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
         String dateString = simpleDateFormat.format(date);
 
+        //调用Net类获得所查询日期的股票数据
         net.actionPerformed("MARKET\t" + dateString + "\n");
         String stocksMessages;
         stocksMessages = net.run();
         if (stocksMessages == null) {
+            //若当日没有数据，在控制台输出此字符串，界面中不够早任何图表和表格
             System.out.println("No data on that day!");
         } else {
             System.out.println(stocksMessages + " getted");
 
+            //json字符串转成MarketVO类型
             JsonUtil jsonUtil = new JsonUtil();
             MarketVO marketVO_middleState = new MarketVO();
             MarketVO marketVO = (MarketVO) jsonUtil.JSONToObj(stocksMessages, marketVO_middleState.getClass());
 
             System.err.println(marketVO.getTotalDeal());
 
+            //将交易量转成字符串且不用科学计数法
             BigDecimal bd = new BigDecimal(marketVO.getTotalDeal());
 
             volumn = bd.toPlainString();//获取交易量信息
@@ -284,9 +297,7 @@ ThermometerController implements Initializable {
         }
 
 
-
-
-        //以下是饼图数据
+        //构造饼图数据
         PieChart.Data d1 = new PieChart.Data("涨停股票", NumberOfStocksLimitedUp);
 
         PieChart.Data d2 = new PieChart.Data("涨幅超过5%股票", NumberOfStocksUpOverFivePerCent);
@@ -299,6 +310,7 @@ ThermometerController implements Initializable {
 
         pieChartData = FXCollections.observableArrayList(d1, d2, d3, d4, d5);
 
+        //构造各种图表和表格
         setBarChart_1();
 
         setBarChart_2();
@@ -341,82 +353,9 @@ ThermometerController implements Initializable {
 
     public void setMain(Main main, Net net) {
 
-
         this.main = main;
         this.net = net;
         this.setDatePicker();
     }
 
-
-//    static class MouseHoverAnimation implements EventHandler {
-//        static final Duration ANIMATION_DURATION = new Duration(500);
-//        static final double ANIMATION_DISTANCE = 0.15;
-//        private double cos;
-//        private double sin;
-//        private PieChart chart;
-//
-//        public MouseHoverAnimation(PieChart.Data d, PieChart chart) {
-//            this.chart = chart;
-//            double start = 0;
-//            double angle = calcAngle(d);
-//            for (PieChart.Data tmp : chart.getData()) {
-//                if (tmp == d) {
-//                    break;
-//                }
-//                start += calcAngle(tmp);
-//            }
-//
-//            cos = Math.cos(Math.toRadians(start + angle / 2));
-//            sin = Math.sin(Math.toRadians(start + angle / 2));
-//        }
-//
-//        public void handle(MouseEvent arg0) {
-//            Node n = (Node) arg0.getSource();
-//            double minX = Double.MAX_VALUE;
-//            double maxX = Double.MAX_VALUE * -1;
-//
-//            for (PieChart.Data d : chart.getData()) {
-//                minX = Math
-//                        .min(minX, d.getNode().getBoundsInParent().getMinX());
-//                maxX = Math
-//                        .max(maxX, d.getNode().getBoundsInParent().getMaxX());
-//            }
-//
-//            double radius = maxX - minX;
-//            System.out.println("cos:" + cos);
-//            System.out.println("sin" + sin);
-//            TranslateTransitionBuilder.create()
-//                    .toX((radius * ANIMATION_DISTANCE) * cos)
-//                    .toY((radius * ANIMATION_DISTANCE) * (-sin))
-//                    .duration(ANIMATION_DURATION).node(n).build().play();
-//        }
-//
-//        private static double calcAngle(PieChart.Data d) {
-//            double total = 0;
-//            for (PieChart.Data tmp : d.getChart().getData()) {
-//                total += tmp.getPieValue();
-//            }
-//            return 360 * (d.getPieValue() / total);
-//        }
-//
-//        @Override
-//        public void handle(Event event) {
-//
-//
-//        }
-//    }
-//
-//    static class MouseExitAnimation implements EventHandler {
-//        public void handle(MouseEvent event) {
-//            TranslateTransitionBuilder.create().toX(0).toY(0)
-//                    .duration(new Duration(500)).node((Node) event.getSource())
-//                    .build().play();
-//        }
-//
-//        @Override
-//        public void handle(Event event) {
-//
-//
-//        }
-//    }
 }
