@@ -35,6 +35,11 @@
 
 .choice-box {
     -fx-background-color: rgb(100, 100, 100);
+
+}
+
+.choice-box .label{
+    -fx-text-fill: #AAACAF;
 }
 
 .TextFieldText {

@@ -38,7 +38,7 @@ public class DataNodeThread implements Runnable {
                     sb.append(dataInputStream.readUTF());
                 }
                 String result = sb.toString();
-                 System.out.println(result);
+                System.out.println(result);
                 ResultMap.write(key, result);
             }
         } catch (IOException e) {

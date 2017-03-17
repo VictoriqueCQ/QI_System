@@ -29,7 +29,7 @@ public class StockVO {
     private double variance;//相对方差
 
     public StockVO(String name, int code, Date start, Date over, double[] open, double[] high, double[] low,
-                   double[] close, int[] volume, double[] adjClose, List<Date> dates,double[] average5, double[] average10,
+                   double[] close, int[] volume, double[] adjClose, List<Date> dates, double[] average5, double[] average10,
                    double[] average20, double[] average30, double[] average60, ArrayList<Double> profit, double variance) {
         this.name = name;
         this.code = code;
@@ -41,7 +41,7 @@ public class StockVO {
         this.close = close;
         this.volume = volume;
         this.adjClose = adjClose;
-        this.dates=dates;
+        this.dates = dates;
         this.average5 = average5;
         this.average10 = average10;
         this.average20 = average20;
@@ -51,7 +51,7 @@ public class StockVO {
         this.profit = profit;
     }
 
-    public StockVO(){
+    public StockVO() {
 
     }
 
@@ -60,139 +60,143 @@ public class StockVO {
         return name;
     }
 
-    public void setName(String name){
-        this.name=name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCode() {
         return code;
     }
 
-    public void setCode(int code){
-        this.code=code;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public Date getStart() {
         return start;
     }
 
-    public void setStart(Date date){
-        this.start=date;
+    public void setStart(Date date) {
+        this.start = date;
     }
 
     public Date getOver() {
         return over;
     }
 
-    public void setOver(Date date){
-        this.over=date;
+    public void setOver(Date date) {
+        this.over = date;
     }
 
     public double[] getOpen() {
         return open;
     }
 
-    public void setOpen(double [] open){
-        this.open=open;
+    public void setOpen(double[] open) {
+        this.open = open;
     }
 
     public double[] getHigh() {
         return high;
     }
 
-    public void setHigh(double [] high){
-        this.high=high;
+    public void setHigh(double[] high) {
+        this.high = high;
     }
 
     public double[] getLow() {
         return low;
     }
 
-    public void setLow(double [] low){
-        this.low=low;
+    public void setLow(double[] low) {
+        this.low = low;
     }
 
     public double[] getClose() {
         return close;
     }
 
-    public void setClose(double [] close){
-        this.close=close;
+    public void setClose(double[] close) {
+        this.close = close;
     }
 
     public int[] getVolume() {
         return volume;
     }
 
-    public void setVolume(int [] volume){
-        this.volume=volume;
+    public void setVolume(int[] volume) {
+        this.volume = volume;
     }
 
     public double[] getAdjClose() {
         return adjClose;
     }
 
-    public void setAdjClose(double [] adjClose){
-        this.adjClose=adjClose;
+    public void setAdjClose(double[] adjClose) {
+        this.adjClose = adjClose;
     }
 
-    public List<Date> getDates(){return dates;}
+    public List<Date> getDates() {
+        return dates;
+    }
 
-    public void setDates(List<Date> dates){
-        this.dates=dates;
+    public void setDates(List<Date> dates) {
+        this.dates = dates;
     }
 
     public double[] getAverage5() {
         return average5;
     }
 
-    public void setAverage5(double [] average5){
-        this.average5=average5;
+    public void setAverage5(double[] average5) {
+        this.average5 = average5;
     }
 
     public double[] getAverage10() {
         return average10;
     }
 
-    public void setAverage10(double [] average10){
-        this.average10=average10;
+    public void setAverage10(double[] average10) {
+        this.average10 = average10;
     }
 
     public double[] getAverage20() {
         return average20;
     }
 
-    public void setAverage20(double [] average20){
-        this.average20=average20;
+    public void setAverage20(double[] average20) {
+        this.average20 = average20;
     }
 
     public double[] getAverage30() {
         return average30;
     }
 
-    public void setAverage30(double [] average30){
-        this.average30=average30;
+    public void setAverage30(double[] average30) {
+        this.average30 = average30;
     }
 
     public double[] getAverage60() {
         return average60;
     }
 
-    public void setAverage60(double [] average60){
-        this.average60=average60;
+    public void setAverage60(double[] average60) {
+        this.average60 = average60;
     }
 
     public double getVariance() {
         return variance;
     }
 
-    public void setVariance(double variance){
-        this.variance=variance;
+    public void setVariance(double variance) {
+        this.variance = variance;
     }
 
-    public ArrayList<Double> getProfit(){return profit;}
+    public ArrayList<Double> getProfit() {
+        return profit;
+    }
 
-    public void setProfit(ArrayList<Double> profit){
-        this.profit=profit;
+    public void setProfit(ArrayList<Double> profit) {
+        this.profit = profit;
     }
 }

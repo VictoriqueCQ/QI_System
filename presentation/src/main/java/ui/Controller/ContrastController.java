@@ -104,7 +104,7 @@ public class ContrastController extends Application {
 
     private ObservableList<StockModel> models;
 
-    private  ObservableList<StockModel> models2;
+    private ObservableList<StockModel> models2;
 
 
     private Map<String, XYChart.Series<String, Double>> seriesMap;
@@ -237,33 +237,33 @@ public class ContrastController extends Application {
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
 
-            if (searchWayChoice.getValue().equals("股票名称搜索")){
-                searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
-                searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
+        if (searchWayChoice.getValue().equals("股票名称搜索")) {
+            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
 
-            }else{
-                searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-                searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
-            }
-
-            stock1 = getStockVoByCondition(searchConditionVO1);
-            if (stock1 == null) {
-                AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
-            }
-            stock2 = getStockVoByCondition(searchConditionVO2);
-            if (stock2 == null) {
-                AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
-            }
-
-            setTableContrast();
-            setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
-            setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
-            setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
-            setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
-            setVariance();
-
-
+        } else {
+            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
         }
+
+        stock1 = getStockVoByCondition(searchConditionVO1);
+        if (stock1 == null) {
+            AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
+        }
+        stock2 = getStockVoByCondition(searchConditionVO2);
+        if (stock2 == null) {
+            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
+        }
+
+        setTableContrast();
+        setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
+        setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
+        setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
+        setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
+        setVariance();
+
+
+    }
 
 
 
@@ -282,7 +282,6 @@ public class ContrastController extends Application {
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
         setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
         setVariance();*/
-
 
 
     /**
@@ -343,7 +342,7 @@ public class ContrastController extends Application {
         model.setMaxPrice(maxTemp);
         double dd = 2.00;
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-        riseAndDown = riseAndDown*100;
+        riseAndDown = riseAndDown * 100;
         DecimalFormat df = new DecimalFormat("#.00");
 //        df.format(riseAndDown);
         model.setRiseAndDown(df.format(riseAndDown) + "%");
@@ -359,6 +358,7 @@ public class ContrastController extends Application {
     /**
      * chenyuyan
      * 设置每日收盘价折线图
+     *
      * @param close
      * @param dates
      * @param name
@@ -380,6 +380,7 @@ public class ContrastController extends Application {
     /**
      * chenyuyan
      * 设置收益率折线图
+     *
      * @param dates
      * @param name
      * @param income
@@ -412,7 +413,7 @@ public class ContrastController extends Application {
     }
 
     private StockVO getStockVoByCondition(StockSearchConditionVO searchConditionVO) {
-        if (searchConditionVO.getStockName() == ""&&searchConditionVO.getStockID()=="") {
+        if (searchConditionVO.getStockName() == "" && searchConditionVO.getStockID() == "") {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
@@ -423,13 +424,13 @@ public class ContrastController extends Application {
         String stockName = searchConditionVO.getStockName();
 //        System.out.print("dajsdja"+stockName);
         String input;
-        if(stockID==null&&stockName!=null){
+        if (stockID == null && stockName != null) {
             input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
             System.out.print("successs!!!!!");
-        }else {
+        } else {
             input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
         }
-            net.actionPerformed(input);
+        net.actionPerformed(input);
         String json = net.run();
         JsonUtil jsonUtil = new JsonUtil();
         StockVO stockVO1 = new StockVO();
@@ -467,8 +468,9 @@ public class ContrastController extends Application {
         this.net = net;
         this.setDatePicker();
     }
+
     @FXML
-    private void initialize(){
+    private void initialize() {
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
         searchWayChoice.getSelectionModel().select(0);

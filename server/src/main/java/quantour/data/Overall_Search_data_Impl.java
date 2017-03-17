@@ -30,7 +30,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
     public MarketPO getMarketInfo(Date date) throws ArrayIndexOutOfBoundsException {
         List<Stock> today = marketList.parallelStream().
                 filter(stock -> stock.getDate().compareTo(date) == 0).
-                filter(stock -> stock.getVolume()!=0).
+                filter(stock -> stock.getVolume() != 0).
                 sorted(Comparator.comparing(Stock::getCode)).collect(Collectors.toList());
 
         double sum = today.parallelStream().mapToDouble(Stock::getVolume).reduce(0.0, (x, y) -> x + y);
@@ -46,8 +46,8 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
         //计算开盘-收盘大于5%*上一个交易日收盘价的股票个数和开盘-收盘小于-5%*上一个交易日收盘价的股票个数
         int oc_overPFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
-                    int i=1;
-                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
                         Stock previous = marketList.get(marketList.indexOf(stock) + i);
                         while (marketList.indexOf(stock) + i < marketList.size() &&
                                 previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
@@ -57,16 +57,15 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
                                 stock.getClose() - stock.getOpen() > 0.05 * previous.getClose();
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 }).
                 count();
         int oc_belowMFivePerNum = (int) today.parallelStream().
                 filter(stock -> {
-                    int i=1;
-                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
                         Stock previous = marketList.get(marketList.indexOf(stock) + i);
                         while (marketList.indexOf(stock) + i < marketList.size() &&
                                 previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
@@ -76,8 +75,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
                                 stock.getClose() - stock.getOpen() < -0.05 * previous.getClose();
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 }).
@@ -91,8 +89,8 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
 
         return (int) today.parallelStream().
                 filter(stock -> {
-                    int i=1;
-                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
                         Stock previous = marketList.get(marketList.indexOf(stock) + i);
                         while (marketList.indexOf(stock) + i < marketList.size() &&
                                 previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
@@ -102,8 +100,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
                                 (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 }).
@@ -114,8 +111,8 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
 
         return (int) today.parallelStream().
                 filter(stock -> {
-                    int i=1;
-                    if(marketList.indexOf(stock) + i<marketList.size()) {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
                         Stock previous = marketList.get(marketList.indexOf(stock) + i);
                         while (marketList.indexOf(stock) + i < marketList.size() &&
                                 previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
@@ -125,8 +122,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
                                 (stock.getClose() - previous.getClose()) / previous.getClose() <= percentage;
-                    }
-                    else{
+                    } else {
                         return false;
                     }
                 }).

@@ -27,9 +27,9 @@ public class DataService {
     private void setUpNet() {
         try {
             socket = new Socket("127.0.0.1", 9001);
-            dataInputStream=new DataInputStream(socket.getInputStream());
-            dataOutputStream=new DataOutputStream(socket.getOutputStream());
-            bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -45,9 +45,9 @@ public class DataService {
                 String quest = "";
                 quest = dataInputStream.readUTF();
                 System.out.println(quest);
-                (new ResultSender(quest,dataOutputStream)).run();
+                (new ResultSender(quest, dataOutputStream)).run();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

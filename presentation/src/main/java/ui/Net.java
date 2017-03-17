@@ -37,6 +37,7 @@ public class Net {
 
     /**
      * 获取服务器返回的数据
+     *
      * @return
      */
     public String run() {
@@ -54,6 +55,7 @@ public class Net {
 
     /**
      * 传达指令给服务器
+     *
      * @param input
      */
     public void actionPerformed(String input) {
