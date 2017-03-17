@@ -17,6 +17,7 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.*;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -107,6 +108,9 @@ public class ContrastController extends Application {
 
 
     private Map<String, XYChart.Series<String, Double>> seriesMap;
+
+    @FXML
+    private ChoiceBox<String> searchWayChoice;
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -223,16 +227,24 @@ public class ContrastController extends Application {
      */
     @FXML
     public void addCompare() {
+        StockSearchConditionVO searchConditionVO1;
+        StockSearchConditionVO searchConditionVO2;
+
         String stockName1 = nameTextField1.getText();
         String stockName2 = nameTextField2.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
+        if(searchWayChoice.getValue().equals("股票名称搜索")){
+            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
+            System.out.print("aaaaaaaaa");
+        }else {
 
-        StockSearchConditionVO searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-        StockSearchConditionVO searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
-
+            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+        }
         stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
@@ -316,8 +328,9 @@ public class ContrastController extends Application {
 //        DecimalFormat d = new DecimalFormat("#.00");
 //        System.out.print(stockVO.getVariance());
         double d = stockVO.getVariance();
-
-        model.setVariance(String.valueOf(d));
+        BigDecimal bd = new BigDecimal(d);
+        DecimalFormat df2 = new DecimalFormat("0.0000");
+        model.setVariance(df2.format(d));
         return model;
     }
 
@@ -377,7 +390,7 @@ public class ContrastController extends Application {
     }
 
     private StockVO getStockVoByCondition(StockSearchConditionVO searchConditionVO) {
-        if (searchConditionVO.getStockName() == "") {
+        if (searchConditionVO.getStockName() == ""&&searchConditionVO.getStockID()=="") {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         }
@@ -385,8 +398,16 @@ public class ContrastController extends Application {
         String starttime = format.format(searchConditionVO.getStartTime());
         String endtime = format.format(searchConditionVO.getEndTime());
         String stockID = searchConditionVO.getStockID();
-        String input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
-        net.actionPerformed(input);
+        String stockName = searchConditionVO.getStockName();
+//        System.out.print("dajsdja"+stockName);
+        String input;
+        if(stockID==null&&stockName!=null){
+            input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+            System.out.print("successs!!!!!");
+        }else {
+            input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
+        }
+            net.actionPerformed(input);
         String json = net.run();
         JsonUtil jsonUtil = new JsonUtil();
         StockVO stockVO1 = new StockVO();
@@ -425,8 +446,8 @@ public class ContrastController extends Application {
     }
     @FXML
     private void initialize(){
-        nameTextField1.setText("请输入股票名");
-        nameTextField2.setText("请输入股票名");
+        searchWayChoice.setItems(FXCollections.observableArrayList(
+                "股票名称搜索", "股票编号搜索"));
 
     }
 }
