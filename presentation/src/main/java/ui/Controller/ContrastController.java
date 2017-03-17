@@ -371,7 +371,7 @@ public class ContrastController extends Application {
     public void setClosePriceLine(double[] close, List<Date> dates, String name) {
         XYChart.Series<String, Double> series1 = new XYChart.Series<>();
         series1.setName(name);
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = dates.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i));
             series1.getData().add(new XYChart.Data(s, close[i]));
@@ -394,7 +394,7 @@ public class ContrastController extends Application {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName(name);
         //populating the series with data
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         for (int i = income.size() - 1; i >= 0; i--) {
             String s = format.format(dates.get(i + 1));
             series.getData().add(new XYChart.Data(s, income.get(i)));

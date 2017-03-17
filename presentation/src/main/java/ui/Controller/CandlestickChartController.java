@@ -468,7 +468,7 @@ public class CandlestickChartController {
      *
      * @return
      */
-    public StockVO getStockVOByCondition() {
+    private StockVO getStockVOByCondition() {
         String stockName = stockNameTextField.getText();
         String stockID = stockNumberTextField.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();

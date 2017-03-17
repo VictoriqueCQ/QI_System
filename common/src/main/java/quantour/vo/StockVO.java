@@ -50,29 +50,11 @@ public class StockVO {
         this.variance = variance;
         this.profit = profit;
     }
+
     public StockVO(){
 
-    };
-    /*public StockVO(StockPO stockPO){
-        this.name = stockPO.getName();
-        this.code = stockPO.getCode();
-        this.start = stockPO.getStart();
-        this.over = stockPO.getOver();
-        this.open  = stockPO.getOpen();
-        this.high = stockPO.getHigh();
-        this.low = stockPO.getLow();
-        this.close = stockPO.getClose();
-        this.volume = stockPO.getVolume();
-        this.adjClose = stockPO.getAdjClose();
-        this.average5 = stockPO.getAverage5();
-        this.average10 = stockPO.getAverage10();
-        this.average20 = stockPO.getAverage20();
-        this.average30 = stockPO.getAverage30();
-        this.average60 = stockPO.getAverage60();
-        this.variance = stockPO.getVariance();
-        this.profit = stockPO.getProfit();
+    }
 
-    }*/
 
     public String getName() {
         return name;
