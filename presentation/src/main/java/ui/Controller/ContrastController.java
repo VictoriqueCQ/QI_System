@@ -236,7 +236,6 @@ public class ContrastController extends Application {
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
         Date endDate = this.changeDateStyle(endLocalDate);
-        if(searchWayChoice.isFocused()){
 
             if (searchWayChoice.getValue().equals("股票名称搜索")){
                 searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
@@ -265,10 +264,7 @@ public class ContrastController extends Application {
 
 
         }
-        else{
-            AlertUtil.showErrorAlert("请选择搜索方式");
 
-        }
 
 
         /*stock1 = getStockVoByCondition(searchConditionVO1);
@@ -286,7 +282,7 @@ public class ContrastController extends Application {
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
         setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
         setVariance();*/
-    }
+
 
 
     /**
@@ -474,6 +470,7 @@ public class ContrastController extends Application {
     private void initialize(){
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
+        searchWayChoice.getSelectionModel().select(0);
 
     }
 }
