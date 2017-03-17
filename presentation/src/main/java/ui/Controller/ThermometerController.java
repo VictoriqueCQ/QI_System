@@ -242,19 +242,25 @@ ThermometerController implements Initializable {
         pieChart.setAnimated(false);
     }
 
+    //将datepicker获取的时间转为date类
+    public Date changeDateStyle(LocalDate localDate) {
+
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+        Date date = Date.from(instant);
+
+        return date;
+    }
 
     //“查询”按钮set函数
     @FXML
     public void setSearchButton() {
-        //将datepicker获取的时间转为date累in个
+        //获取datepicker所选的时间
         LocalDate time = datePicker.getValue();
-        ZoneId zone = ZoneId.systemDefault();
-        Instant instant = time.atStartOfDay(zone).toInstant();
-        Date date = Date.from(instant);
 
         //将时间格式化
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        String dateString = simpleDateFormat.format(date);
+        String dateString = simpleDateFormat.format(this.changeDateStyle(time));
 
         //调用Net类获得所查询日期的股票数据
         net.actionPerformed("MARKET\t" + dateString + "\n");

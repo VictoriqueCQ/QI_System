@@ -5,8 +5,8 @@ package quantour.Stub;
  */
 public class MarketVO_Stub {
     private double totalDeal = 3.141592653;
-    private int limitUpNum = 54;
-    private int limitDownNum = 3;
+    private int limitUpNum = 54;//涨停股票数
+    private int limitDownNum = 3;//跌停股票数
     private int overFivePerNum = 97;//涨幅超过5%的股票数
     private int belowFivePerNum = 23;//跌幅超过5%的股票数
     private int oc_overPFivePerNum = 76;//开盘-收盘大于5%*上一个交易日收盘价的股票个数
