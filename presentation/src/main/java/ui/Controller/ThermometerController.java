@@ -341,7 +341,6 @@ ThermometerController implements Initializable {
 
     public void setMain(Main main, Net net) {
 
-//        this.testPresentation();
 
         this.main = main;
         this.net = net;
