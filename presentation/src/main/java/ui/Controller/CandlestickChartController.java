@@ -56,8 +56,7 @@ public class CandlestickChartController {
     private CategoryAxis time = new CategoryAxis();
 
     @FXML
-    private LineChart<String, Number> lineChart = new LineChart<String, Number>(time, number);
-    ;
+    private LineChart<String, Number> lineChart = new LineChart<>(time, number);
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -470,8 +469,7 @@ public class CandlestickChartController {
     private Date changeDateStyle(LocalDate localDate) {
         ZoneId zone = ZoneId.systemDefault();
         Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
-        Date date = Date.from(instant);
-        return date;
+        return Date.from(instant);
     }
 
     /**
@@ -490,16 +488,16 @@ public class CandlestickChartController {
         String starttime = format.format(startDate);
         String endtime = format.format(endDate);
 
-        String input = "";
+        String input;
         //检查输入是否完整
         if (stockName.equals("") && stockID.equals("")) {
             AlertUtil.showErrorAlert("对不起，您未输入股票信息");
             return null;
         } else if (!stockName.equals("") && stockID.equals("")) {
-            input = "STOCK\t" + "null" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
+            input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
 
         } else if (stockName.equals("") && (!stockID.equals(""))) {
-            input = "STOCK\t" + stockID + "\t" + "null" + "\t" + starttime + "\t" + endtime + "\n";
+            input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
         } else {
             input = "STOCK\t" + stockID + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
         }
@@ -508,8 +506,7 @@ public class CandlestickChartController {
         String json = net.run();
         JsonUtil jsonUtil = new JsonUtil();
         StockVO stockVO1 = new StockVO();
-        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
-        return stockVO;
+        return (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
     }
 
     public void setMain(Main main, Net net) {
