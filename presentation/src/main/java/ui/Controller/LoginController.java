@@ -1,5 +1,7 @@
 package ui.Controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import ui.Main;
 
 /**
@@ -7,6 +9,24 @@ import ui.Main;
  */
 public class LoginController {
     private Main main;
+
+    @FXML
+    private TextField usernameTextField;
+
+    @FXML
+    private TextField passwordTextField;
+
+    @FXML
+    private void exitLogin(){
+        main.closeExtraStage();
+    }
+
+    @FXML
+    private void gotoRegist(){
+        main.gotoRegist();
+    }
+
+
 
     public LoginController() {
 

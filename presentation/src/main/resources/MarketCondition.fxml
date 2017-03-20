@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/MarketConditionCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.MarketConditionController">
+   <children>
+      <TableView layoutX="362.0" layoutY="254.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/TableViewCSS.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+        <columns>
+          <TableColumn prefWidth="147.5" text="股票名称" />
+          <TableColumn prefWidth="147.5" text="股票编号" />
+            <TableColumn prefWidth="147.5" text="开市价" />
+            <TableColumn prefWidth="147.5" text="最高价" />
+            <TableColumn prefWidth="147.5" text="最低价" />
+            <TableColumn prefWidth="147.5" text="闭市价" />
+            <TableColumn prefWidth="147.5" text="成交量" />
+            <TableColumn prefWidth="147.5" text="涨跌幅" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="400.0" maxWidth="500.0" minHeight="400.0" minWidth="500.0" prefHeight="400.0" prefWidth="500.0" stylesheets="@css/LoginCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.RegistController">
+   <children>
+      <TextField fx:id="usernameTextField" layoutX="228.0" layoutY="119.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
+      <Label layoutX="97.0" layoutY="119.0" prefHeight="31.0" prefWidth="70.0" text="账号：" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="97.0" layoutY="191.0" prefHeight="31.0" prefWidth="70.0" text="密码：" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="74.0" layoutY="261.0" prefHeight="31.0" prefWidth="115.0" text="确认密码：" textFill="WHITE">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="216.0" layoutY="43.0" prefHeight="38.0" prefWidth="69.0" text="注册" textFill="WHITE">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <Button alignment="CENTER" layoutX="428.0" layoutY="7.0" mnemonicParsing="false" onAction="#exitRegist" prefHeight="28.0" prefWidth="70.0" text="退出" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <PasswordField fx:id="passwordTextField1" layoutX="228.0" layoutY="191.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
+      <PasswordField fx:id="passwordTextField2" layoutX="228.0" layoutY="261.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
+      <Label fx:id="noLabel" layoutX="285.0" layoutY="161.0" text="该账号已被注册！">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="yesImage" fitHeight="40.0" fitWidth="45.0" layoutX="434.0" layoutY="115.0">
+         <image>
+            <Image url="/picture/可用.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="noImage" fitHeight="40.0" fitWidth="45.0" layoutX="434.0" layoutY="115.0">
+         <image>
+            <Image url="/picture/不可用.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="registButton" layoutX="150.0" layoutY="332.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="150.0" text="注册" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+   </children>
+</AnchorPane>

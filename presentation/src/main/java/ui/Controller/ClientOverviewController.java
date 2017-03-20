@@ -10,7 +10,6 @@ import javafx.scene.effect.Lighting;
 import ui.Main;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
 public class ClientOverviewController implements Initializable {
@@ -32,6 +31,9 @@ public class ClientOverviewController implements Initializable {
     private Button thermometerButton;
 
     @FXML
+    private Button marketConditionButton;
+
+    @FXML
     private Button loginButton;
 
     @FXML
@@ -49,29 +51,33 @@ public class ClientOverviewController implements Initializable {
     }
 
     @FXML
-    private void gotoCandlestickChar() throws RemoteException {
+    private void gotoMarketCondition(){
+        main.gotoMarketCondition();
+    }
+
+    @FXML
+    private void gotoCandlestickChar() {
         main.gotoCandlestickChart();
     }
 
     @FXML
-    private void gotoComparsion() throws RemoteException {
+    private void gotoComparsion()  {
         main.gotoCompareFunction();
     }
 
     @FXML
-    private void gotoThermometer() throws RemoteException {
+    private void gotoThermometer() {
         main.gotoThermometer();
     }
 
     @FXML
-    private void login() {
-        //TODO
-//          main.gotoLogin();
+    private void gotoLogin() {
+        main.gotoLogin();
     }
 
     @FXML
-    private void register() {
-
+    private void gotoRegist() {
+        main.gotoRegist();
     }
 
     /**
@@ -86,6 +92,7 @@ public class ClientOverviewController implements Initializable {
         imagekButton.setEffect(l);
         comparsionButton.setEffect(l);
         thermometerButton.setEffect(l);
+        marketConditionButton.setEffect(l);
     }
 
     @Override
@@ -98,6 +105,7 @@ public class ClientOverviewController implements Initializable {
     public void setMain(Main main) {
         this.main = main;
         setButtonText();
+        this.gotoMarketCondition();
     }
 
 }

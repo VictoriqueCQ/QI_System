@@ -18,7 +18,7 @@ public class Main extends Application {
 
     // 主窗口
     private Stage stage;
-    private Stage stage1;
+    private Stage stage1=new Stage(StageStyle.UNDECORATED);
 
 
     // 内部窗口
@@ -41,21 +41,40 @@ public class Main extends Application {
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
-
         net.setUpNet();
         this.gotoClientOverview();
 
     }
 
+    /**
+     * 登录界面
+     */
     public void gotoLogin() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Login.fxml"));
-
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             LoginController controller = (LoginController) fxmlLoader.getController();
             controller.setMain(this);
-            stage1 = new Stage(StageStyle.UNDECORATED);
+            stage1.setScene(new Scene(insidePane));
+            stage1.setAlwaysOnTop(true);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    /**
+     *  跳转到注册界面
+     */
+    public void gotoRegist() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Regist.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            RegistController registController = (RegistController) fxmlLoader.getController();
+            registController.setMain(this);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -81,8 +100,24 @@ public class Main extends Application {
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
-
             stage.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    /**
+     * 跳转到市场情况界面
+     */
+    public void gotoMarketCondition(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/MarketCondition.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 640);
+            rootLayout.getItems().set(1, insidePane);
+            MarketConditionController controller = (MarketConditionController) fxmlLoader.getController();
+            controller.setMain(this, net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -146,6 +181,33 @@ public class Main extends Application {
     public void exitSystem() {
         stage.close();
     }
+
+    /**
+     *  关闭弹窗
+     */
+    public void closeExtraStage() {
+        if (stage1!=null&&stage1.isShowing()) {
+            stage1.hide();
+        }
+    }
+//
+//    /**
+//     *  界面跳转
+//     * @param fxml
+//     * @return
+//     * @throws Exception
+//     */
+//    private Initializable replaceSceneContent(String fxml) throws Exception {
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(Main.class.getResource(fxml));
+//        AnchorPane pane = (AnchorPane) loader.load();
+//        this.scene = new Scene(pane);
+//        stage1.setScene(scene);
+//        stage1.sizeToScene();
+//        stage1.centerOnScreen();
+//        stage1.setResizable(false);
+//        return (Initializable) loader.getController();
+//    }
 
     public static void main(String[] args) {
         launch(args);

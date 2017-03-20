@@ -52,13 +52,13 @@
                                                 <Label fx:id="telLabel" prefHeight="151.0" prefWidth="457.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Label prefHeight="68.0" prefWidth="132.0" />
                                                 <Label prefHeight="69.0" prefWidth="143.0" GridPane.rowIndex="1" />
-                                                <Label fx:id="nameLabel" prefHeight="70.0" prefWidth="288.0" text="   游客" GridPane.columnIndex="1">
+                                                <Label fx:id="nameLabel" prefHeight="70.0" prefWidth="288.0" text="游客" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                                     <font>
                                                         <Font size="36.0" />
                                                     </font>
                                                 </Label>
-                                                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" prefHeight="5.0" prefWidth="100.0" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#register" prefWidth="100.0" text="注册" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#gotoLogin" prefHeight="5.0" prefWidth="100.0" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#gotoRegist" prefWidth="100.0" text="注册" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                             </children>
                                         </GridPane>
                                         <Label prefHeight="100.0" prefWidth="110.0" styleClass="label_client_picture" />
@@ -72,6 +72,7 @@
                     <children>
                         <GridPane layoutY="7.0" prefHeight="47.0" prefWidth="1198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
                             <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -80,9 +81,10 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="imagekButton" mnemonicParsing="false" onAction="#gotoCandlestickChar" prefHeight="98.0" prefWidth="400.0" text="K线图" />
-                                <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="104.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="1" />
-                                <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="126.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="2" />
+                                <Button fx:id="imagekButton" mnemonicParsing="false" onAction="#gotoCandlestickChar" prefHeight="98.0" prefWidth="400.0" text="K线图" GridPane.columnIndex="1" />
+                                <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="104.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="2" />
+                                <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="126.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="3" />
+                        <Button fx:id="marketConditionButton" mnemonicParsing="false" onAction="#gotoMarketCondition" prefHeight="86.0" prefWidth="366.0" text="市场情况" />
                             </children>
                         </GridPane>
                     </children>

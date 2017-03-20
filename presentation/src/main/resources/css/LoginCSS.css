@@ -1,0 +1,21 @@
+.root{
+    -fx-background-color:rgb(50,50,50);
+}
+
+.label {
+    -fx-text-fill: #AAACAF;
+    -fx-font-size: 1.5em;
+}
+
+.button{
+    -fx-base: rgb(0, 0, 0);
+    -fx-font-color:#AAACAF;
+    -fx-font-size: 1.2em;
+}
+
+.TextFieldText {
+    -fx-background-radius: 20px;
+    -fx-background-color: rgb(100, 100, 100);
+    -fx-border-radius: 20px;
+    -fx-text-fill: #AAACAF;
+}
