@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by dell on 2017/3/4.
  */
-public class Overall_Search_data_Impl implements Overall_Search_data {
+public class Overall_Search_data_Impl implements Overall_Search_data{
     private List<Stock> marketList;
     private Map<Integer, List<Stock>> marketMap;
 
@@ -24,6 +24,23 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
     Overall_Search_data_Impl(List<Stock> stockList) throws ParseException {
         this.marketList = stockList;
         marketMap = marketList.stream().collect(Collectors.groupingBy(Stock::getCode));
+    }
+
+    @Override
+    public DataClass get(String[] quest) {
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+            Date date = null;
+            date = sdf.parse(quest[2]);
+            DataClass market=getMarketInfo(date);
+            return market;
+        }catch (ParseException pe) {
+            pe.printStackTrace();
+            return null;
+        }catch (ArrayIndexOutOfBoundsException ae){
+            ae.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -128,5 +145,6 @@ public class Overall_Search_data_Impl implements Overall_Search_data {
                 }).
                 count();
     }
+
 
 }

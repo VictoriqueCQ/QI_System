@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by dell on 2017/3/9.
  */
-public class Stock {
+public class Stock extends DataClass {
     private int serial;
     private Date date;
     private double open;

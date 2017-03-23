@@ -11,7 +11,6 @@ public class DataService {
     private Socket socket;
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
-    private BufferedWriter bufferedWriter;
 
     public static void main(String[] args) {
         DataService dataService = new DataService();
@@ -29,7 +28,6 @@ public class DataService {
             socket = new Socket("127.0.0.1", 9001);
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
