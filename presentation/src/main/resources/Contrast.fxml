@@ -14,7 +14,7 @@
                 <Font size="21.0" />
             </font>
         </Label>
-        <Label layoutX="44.0" layoutY="60.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
+        <Label layoutX="65.0" layoutY="64.0" prefHeight="48.0" prefWidth="114.0" text="股票选择">
             <font>
                 <Font size="20.0" />
             </font>
@@ -37,7 +37,7 @@
         </Label>
         <DatePicker fx:id="endTimeDatePicker" layoutX="850.0" layoutY="72.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" stylesheets="@css/DatePickerCSS.css" />
         <Button fx:id="delete" layoutX="1075.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
-        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
             <tabs>
                 <Tab text="总况">
                     <content>

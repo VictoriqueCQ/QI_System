@@ -1,0 +1,4 @@
+.label{
+    -fx-background-image: url("picture/loading.gif");
+    -fx-background-size: cover;
+}

@@ -94,7 +94,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/ClientOverview.fxml"));
             rootLayout = (SplitPane) fxmlLoader.load();
             rootLayout.setPrefSize(1200, 800);
-            rootLayout.setDividerPositions(0.2f);
+            rootLayout.setDividerPositions(0.15f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
             controller.setMain(this);
             scene = new Scene(rootLayout);
@@ -114,7 +114,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/MarketCondition.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(1200, 640);
+            insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             MarketConditionController controller = (MarketConditionController) fxmlLoader.getController();
             controller.setMain(this, net);
@@ -131,7 +131,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/CandlestickChart.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(1200, 640);
+            insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
             controller.setMain(this, net);
@@ -148,7 +148,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Contrast.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(1200, 640);
+            insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             ContrastController controller = (ContrastController) fxmlLoader.getController();
             controller.setMain(this, net);
@@ -165,7 +165,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Thermometer.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(1200, 640);
+            insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
             controller.setMain(this, net);

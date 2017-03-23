@@ -321,6 +321,7 @@ public class CandlestickChartController {
      * @return
      */
     private OHLCSeries addCandlestickChartData(OHLCSeries ohlcSeries, StockVO stockVO) {
+        ohlcSeries.clear();
         double[] open = stockVO.getOpen();
         double[] high = stockVO.getHigh();
         double[] low = stockVO.getLow();
