@@ -29,8 +29,8 @@
       </Label>
       <Button layoutX="329.0" layoutY="315.0" mnemonicParsing="false" onAction="#gotoRegist" prefHeight="40.0" prefWidth="92.0" text="注册" />
       <PasswordField fx:id="passwordTextField" layoutX="196.0" layoutY="209.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
-      <Button layoutX="204.0" layoutY="315.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="92.0" text="登录" />
-      <Button layoutX="78.0" layoutY="315.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="92.0" text="修改密码" />
+      <Button layoutX="204.0" layoutY="315.0" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="92.0" text="登录" />
+      <Button layoutX="78.0" layoutY="315.0" mnemonicParsing="false" onAction="#gotoChangePassword" prefHeight="40.0" prefWidth="92.0" text="修改密码" />
       <Button alignment="CENTER" layoutX="430.0" mnemonicParsing="false" onAction="#exitLogin" prefHeight="28.0" prefWidth="70.0" text="退出" />
    </children>
 </AnchorPane>

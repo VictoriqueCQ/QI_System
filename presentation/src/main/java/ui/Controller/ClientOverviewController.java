@@ -102,10 +102,14 @@ public class ClientOverviewController implements Initializable {
     public ClientOverviewController() {
     }
 
-    public void setMain(Main main) {
+    public void setMain(Main main,boolean t) {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
+        if(t){
+            loginButton.setVisible(false);
+            registerButton.setVisible(false);
+        }
     }
 
 }

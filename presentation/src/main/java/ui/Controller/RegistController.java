@@ -102,6 +102,7 @@ public class RegistController {
 //                    passwordTextField1.getText());
 //            if (result == ResultMessage.Success) {
 //                AlertUtil.showInformationAlert("注册成功！");
+//                this.exitRegist();
 //                main.gotoLogin("client");
 //            } else {
 //                AlertUtil.showErrorAlert("对不起，注册失败，可能是用户名冲突或者网络问题。");
