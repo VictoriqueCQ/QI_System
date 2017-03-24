@@ -41,7 +41,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <AreaChart>
+                                          <AreaChart fx:id="areaChart_1" title="超额vs全样本-不同计算周期">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -49,7 +49,7 @@
                                               <NumberAxis side="LEFT" />
                                             </yAxis>
                                           </AreaChart>
-                                          <AreaChart GridPane.rowIndex="1">
+                                          <AreaChart fx:id="areaChart_2" title="策略胜率%-不同计算周期" GridPane.rowIndex="1">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -59,11 +59,11 @@
                                           </AreaChart>
                                        </children>
                                     </GridPane>
-                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
-                                        <TableColumn prefWidth="200.0" text="相对强弱计算周期" />
-                                        <TableColumn prefWidth="200.0" text="超额收益" />
-                                          <TableColumn prefWidth="200.0" text="1年内利率" />
+                                        <TableColumn fx:id="column_1" prefWidth="200.0" text="相对强弱计算周期" />
+                                        <TableColumn fx:id="column_2" prefWidth="200.0" text="超额收益" />
+                                          <TableColumn fx:id="column_3" prefWidth="200.0" text="1年内胜率%" />
                                       </columns>
                                     </TableView>
                                  </children>
