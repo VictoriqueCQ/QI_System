@@ -7,6 +7,6 @@ import java.text.ParseException;
 /**
  * Created by dell on 2017/3/4.
  */
-public interface Single_Search_data {
+public interface Single_Search_data extends Logic{
     StockPO getStockList(String[] quest) throws ParseException;
 }

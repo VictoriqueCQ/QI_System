@@ -16,12 +16,23 @@ import java.util.stream.Stream;
 /**
  * Created by dell on 2017/3/4.
  */
-public class Single_Search_data_Impl implements Single_Search_data {
+public class Single_Search_data_Impl implements Single_Search_data{
     private List<Stock> stockList;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
     Single_Search_data_Impl(List<Stock> stockList) {
         this.stockList = stockList;
+    }
+
+    @Override
+    public DataClass get(String[] quest) {
+        try {
+            DataClass stockList=getStockList(quest);
+            return stockList;
+        }catch (ParseException pe){
+            pe.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -123,5 +134,6 @@ public class Single_Search_data_Impl implements Single_Search_data {
         }
         return averageByInterval;
     }
+
 
 }

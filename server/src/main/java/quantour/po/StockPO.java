@@ -1,5 +1,7 @@
 package quantour.po;
 
+import quantour.data.DataClass;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * Created by dell on 2017/3/4.
  */
-public class StockPO {
+public class StockPO extends DataClass{
     private String name;
     private int code;
     private Date start;
