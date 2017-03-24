@@ -75,7 +75,7 @@ public class ClientOverviewController implements Initializable {
 
     @FXML
     private void gotoReturns(){
-
+        main.gotoReturns();
     }
 
     @FXML
