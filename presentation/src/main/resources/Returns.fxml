@@ -43,18 +43,18 @@
                                        <children>
                                           <AreaChart fx:id="areaChart_1" title="超额vs全样本-不同计算周期">
                                             <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
+                                              <NumberAxis fx:id="PeriodNumber_1" side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
-                                              <NumberAxis side="LEFT" />
+                                              <NumberAxis fx:id="PercentNumber_1" side="LEFT" />
                                             </yAxis>
                                           </AreaChart>
                                           <AreaChart fx:id="areaChart_2" title="策略胜率%-不同计算周期" GridPane.rowIndex="1">
                                             <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
+                                              <NumberAxis fx:id="PeriodNumber_2" side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
-                                              <NumberAxis side="LEFT" />
+                                              <NumberAxis fx:id="PercentNumber_2" side="LEFT" />
                                             </yAxis>
                                           </AreaChart>
                                        </children>

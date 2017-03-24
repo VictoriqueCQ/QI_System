@@ -136,6 +136,7 @@ public class ReturnsController implements Initializable {
         series.getData().add(new XYChart.Data<>(60,-0.2));
 
         areaChart_1.setHorizontalZeroLineVisible(true);
+        areaChart_1.getData().addAll(series);
     }
 
     private void setAreaChart_2(){
@@ -174,6 +175,7 @@ public class ReturnsController implements Initializable {
         series.getData().add(new XYChart.Data<>(60,51));
 
         areaChart_2.setHorizontalZeroLineVisible(true);
+        areaChart_2.getData().addAll(series);
     }
 
     public void ReturnsController(){

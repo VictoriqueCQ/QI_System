@@ -1,5 +1,5 @@
 .tab {
-    -fx-font-size: 1.6em;
+    -fx-font-size: 1em;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:top {
