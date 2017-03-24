@@ -54,7 +54,14 @@ public class ReturnsController implements Initializable {
     @FXML
     private AreaChart<Number, Number> areaChart_2 = new AreaChart<Number, Number>(PeriodNumber_2, PercentNumber_2);
 
+    @FXML
+    private CategoryAxis ReturnsNumber = new CategoryAxis();
 
+    @FXML
+    private NumberAxis FrequencyNumber = new NumberAxis();
+
+    @FXML
+    private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
     private void setTableView() {
         period.setCellValueFactory(celldata -> celldata.getValue().periodProperty());
@@ -177,7 +184,23 @@ public class ReturnsController implements Initializable {
         areaChart_2.getData().addAll(series);
     }
 
+    private void setBarChart(){
+        barChart.setBarGap(3);
+        barChart.setCategoryGap(20);
+        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
 
+        series1.getData().add(new XYChart.Data<>("2.00%",52));
+        series1.getData().add(new XYChart.Data<>("2.00%",-48));
+
+        series2.getData().add(new XYChart.Data<>("4.00%",44));
+        series2.getData().add(new XYChart.Data<>("4.00%",-40));
+
+        barChart.getData().clear();
+        barChart.layout();
+        barChart.getData().addAll(series1, series2);
+        barChart.setAnimated(false);
+    }
 
     public void ReturnsController() {
 
@@ -192,7 +215,7 @@ public class ReturnsController implements Initializable {
         setTableView();
         setAreaChart_1();
         setAreaChart_2();
-
+        setBarChart();
         this.main = main;
         this.net = net;
 
