@@ -174,6 +174,20 @@ public class Main extends Application {
         }
     }
 
+    public void gotoReturns(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Returns.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 680);
+            rootLayout.getItems().set(1, insidePane);
+            ReturnsController controller = (ReturnsController) fxmlLoader.getController();
+            controller.setMain(this, net);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
 
     /**
      * 退出系统

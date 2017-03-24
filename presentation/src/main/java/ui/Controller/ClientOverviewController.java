@@ -34,6 +34,9 @@ public class ClientOverviewController implements Initializable {
     private Button marketConditionButton;
 
     @FXML
+    private Button returnsButton;
+
+    @FXML
     private Button loginButton;
 
     @FXML
@@ -68,6 +71,11 @@ public class ClientOverviewController implements Initializable {
     @FXML
     private void gotoThermometer() {
         main.gotoThermometer();
+    }
+
+    @FXML
+    private void gotoReturns(){
+
     }
 
     @FXML
