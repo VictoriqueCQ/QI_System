@@ -18,7 +18,7 @@ import java.util.List;
 public class DataReader_CSV {
     private String path;
 
-    DataReader_CSV() {
+    DataReader_CSV() throws IOException {
         //path="F:\\Java Code\\QI_System\\server\\stock_data.csv";
         path = "stock_data.csv";
         //path="a.txt";

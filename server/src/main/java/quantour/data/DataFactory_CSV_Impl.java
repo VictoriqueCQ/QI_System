@@ -5,6 +5,7 @@ import quantour.dataservice.Overall_Search_data;
 import quantour.dataservice.Single_Search_data;
 import quantour.dataservice.User_data;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
 
     private List<Stock> stockList;
 
-    private DataFactory_CSV_Impl() throws ParseException {
+    private DataFactory_CSV_Impl() throws ParseException, IOException {
         DataReader_CSV dataReader_CSV = new DataReader_CSV();
         stockList = dataReader_CSV.read();
         overallSearchData = new Overall_Search_data_Impl(stockList);
@@ -28,7 +29,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         userData=new User_data_Impl();
     }
 
-    static DataFactory_CSV_Impl getInstance() throws ParseException {
+    static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
         if (dataFactoryCvs == null) {
             dataFactoryCvs = new DataFactory_CSV_Impl();
         }

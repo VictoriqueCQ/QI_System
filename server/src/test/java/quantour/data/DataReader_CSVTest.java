@@ -3,7 +3,6 @@ package quantour.data;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,7 +19,6 @@ public class DataReader_CSVTest {
     @Test
     public void read() throws Exception {
         List<Stock> list = dataReader_CSV.read();
-        Iterator itr = list.iterator();
         System.out.print(list.size());
         /*while (itr.hasNext()){
             Stock stock=(Stock)itr.next();

@@ -17,7 +17,7 @@ class ResultSender {
     private String quest;
     private DataOutputStream dataOutputStream;
 
-    ResultSender(String quest, DataOutputStream dataOutputStream) throws ParseException {
+    ResultSender(String quest, DataOutputStream dataOutputStream) throws ParseException, IOException {
         this.dataFactory = DataFactory_CSV_Impl.getInstance();
         this.quest = quest;
         this.dataOutputStream = dataOutputStream;
@@ -53,7 +53,7 @@ class ResultSender {
         JSONArray jsonArray = JSONArray.fromObject(result);
         String resultstr = jsonArray.toString();
         System.out.println(resultstr);
-        /*int j = (int) (resultstr.length() / 100) + 1;
+        int j = (int) (resultstr.length() / 100) + 1;
         dataOutputStream.writeInt(j);
         for (int i = 0; i < j; i++) {
             if (i == j - 1) {
@@ -61,6 +61,6 @@ class ResultSender {
                 break;
             }
             dataOutputStream.writeUTF(resultstr.substring(i * 100, (i + 1) * 100));
-        }*/
+        }
     }
 }
