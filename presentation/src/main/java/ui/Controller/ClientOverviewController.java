@@ -101,6 +101,7 @@ public class ClientOverviewController implements Initializable {
         comparsionButton.setEffect(l);
         thermometerButton.setEffect(l);
         marketConditionButton.setEffect(l);
+        returnsButton.setEffect(l);
     }
 
     @Override
