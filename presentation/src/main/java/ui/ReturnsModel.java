@@ -12,10 +12,14 @@ public class ReturnsModel {
 
     private final SimpleStringProperty percent;
 
-    public ReturnsModel() {
-        period = new SimpleStringProperty();
-        returns = new SimpleStringProperty();
-        percent = new SimpleStringProperty();
+    public ReturnsModel(String period, String returns, String percent) {
+        this.period = new SimpleStringProperty(period);
+        this.returns = new SimpleStringProperty(returns);
+        this.percent = new SimpleStringProperty(percent);
+    }
+
+    public SimpleStringProperty periodProperty(){
+        return period;
     }
 
     private String getPeriod() {
@@ -26,8 +30,8 @@ public class ReturnsModel {
         this.period.set(period);
     }
 
-    public SimpleStringProperty periodProperty(){
-        return period;
+    public SimpleStringProperty returnsProperty(){
+        return returns;
     }
 
     private String getReturns(){
@@ -38,8 +42,8 @@ public class ReturnsModel {
         this.returns.set(returns);
     }
 
-    public SimpleStringProperty returnsProperty(){
-        return returns;
+    public SimpleStringProperty percentProperty(){
+        return percent;
     }
 
     private String getPercent(){
@@ -50,7 +54,5 @@ public class ReturnsModel {
         this.percent.set(percent);
     }
 
-    public SimpleStringProperty percentProperty(){
-        return percent;
-    }
+
 }
