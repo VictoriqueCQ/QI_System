@@ -123,3 +123,12 @@
 .default-color2.chart-series-area-fill {
     -fx-fill: #d8bfd855;
 }
+
+
+.data0.chart-bar {
+    -fx-bar-fill: rgb(240, 0, 0);
+}
+
+.data1.chart-bar {
+    -fx-bar-fill: rgb(0, 240, 0);
+}
