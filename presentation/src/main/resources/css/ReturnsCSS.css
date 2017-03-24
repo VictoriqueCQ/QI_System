@@ -1,0 +1,125 @@
+.tab {
+    -fx-font-size: 1.6em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:top {
+    -fx-background-color: black;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: rgb(240, 150, 96);
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: #000000;
+}
+
+.tab-pane {
+    -fx-border-color: rgb(240, 150, 96);
+}
+
+
+
+.table-view {
+    -fx-background-color: #000000;
+}
+
+.table-view .column-header {
+    -fx-background-color: #000000;
+}
+
+.table-row-cell {
+    -fx-background-color: #000000;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgb(100, 100, 100);
+}
+
+.table-cell {
+    -fx-text-fill: rgb(240, 150, 96);
+    -fx-alignment: CENTER;
+}
+
+.label {
+    -fx-text-fill: rgb(240, 150, 96);
+}
+
+.table-view > .virtual-flow > .scroll-bar > .track-background {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.table-view > .virtual-flow > .scroll-bar > .track {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.noborder {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+}
+
+
+
+.axis-label {
+    -fx-text-fill: rgb(240, 240, 240);
+    -fx-font-size: 1.5em;
+}
+
+.axis {
+    -fx-font-size: 1.2em;
+    -fx-tick-label-fill: rgb(240, 240, 240);
+    -fx-font-family: Tahoma;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-tick-mark {
+    -fx-stroke: rgb(64, 199, 232);
+    -fx-stroke-width: 3;
+
+}
+
+.axis-minor-tick-mark {
+    -fx-stroke: rgb(64, 199, 232);
+}
+
+
+
+.default-color0.chart-area-symbol {
+    -fx-background-color: #e9967a, #ffa07a;
+}
+
+.default-color1.chart-area-symbol {
+    -fx-background-color: #f0e68c, #fffacd;
+}
+
+.default-color2.chart-area-symbol {
+    -fx-background-color: #dda0dd, #d8bfd855;
+}
+
+.default-color0.chart-series-area-line {
+    -fx-stroke: #e9967a;
+}
+
+.default-color1.chart-series-area-line {
+    -fx-stroke: #f0e68c;
+}
+
+.default-color2.chart-series-area-line {
+    -fx-stroke: #dda0dd;
+}
+
+.default-color0.chart-series-area-fill {
+    -fx-fill: #ffa07a55;
+}
+
+.default-color1.chart-series-area-fill {
+    -fx-fill: #fffacd55;
+}
+
+.default-color2.chart-series-area-fill {
+    -fx-fill: #d8bfd855;
+}
