@@ -61,9 +61,9 @@
                                     </GridPane>
                                     <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
-                                        <TableColumn fx:id="column_1" prefWidth="200.0" text="相对强弱计算周期" />
-                                        <TableColumn fx:id="column_2" prefWidth="200.0" text="超额收益" />
-                                          <TableColumn fx:id="column_3" prefWidth="200.0" text="1年内胜率%" />
+                                        <TableColumn fx:id="period" prefWidth="200.0" text="相对强弱计算周期" />
+                                        <TableColumn fx:id="returns" prefWidth="200.0" text="超额收益" />
+                                          <TableColumn fx:id="percent" prefWidth="200.0" text="1年内胜率%" />
                                       </columns>
                                     </TableView>
                                  </children>
