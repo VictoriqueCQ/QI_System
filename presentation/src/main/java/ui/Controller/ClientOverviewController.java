@@ -34,6 +34,9 @@ public class ClientOverviewController implements Initializable {
     private Button marketConditionButton;
 
     @FXML
+    private Button returnsButton;
+
+    @FXML
     private Button loginButton;
 
     @FXML
@@ -71,6 +74,11 @@ public class ClientOverviewController implements Initializable {
     }
 
     @FXML
+    private void gotoReturns(){
+        main.gotoReturns();
+    }
+
+    @FXML
     private void gotoLogin() {
         main.gotoLogin();
     }
@@ -93,6 +101,7 @@ public class ClientOverviewController implements Initializable {
         comparsionButton.setEffect(l);
         thermometerButton.setEffect(l);
         marketConditionButton.setEffect(l);
+        returnsButton.setEffect(l);
     }
 
     @Override
@@ -102,10 +111,14 @@ public class ClientOverviewController implements Initializable {
     public ClientOverviewController() {
     }
 
-    public void setMain(Main main) {
+    public void setMain(Main main,boolean t) {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
+        if(t){
+            loginButton.setVisible(false);
+            registerButton.setVisible(false);
+        }
     }
 
 }

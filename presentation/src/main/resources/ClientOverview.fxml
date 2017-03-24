@@ -77,6 +77,7 @@
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -86,6 +87,7 @@
                                 <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="30.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="2" />
                                 <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="30.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="3" />
                         <Button fx:id="marketConditionButton" mnemonicParsing="false" onAction="#gotoMarketCondition" prefHeight="30.0" prefWidth="366.0" text="市场情况" />
+                        <Button fx:id="returnsButton" mnemonicParsing="false" onAction="#gotoReturns" prefHeight="40.0" prefWidth="240.0" text="收益率" GridPane.columnIndex="4" />
                             </children>
                         </GridPane>
                     </children>

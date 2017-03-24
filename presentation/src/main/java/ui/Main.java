@@ -42,7 +42,7 @@ public class Main extends Application {
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
         net.setUpNet();
-        this.gotoClientOverview();
+        this.gotoClientOverview(false);
 
     }
 
@@ -84,11 +84,31 @@ public class Main extends Application {
         }
     }
 
+    /**
+     *  跳转到更改密码界面
+     */
+    public void gotoChangePassword() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/ChangePassword.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            ChangePasswordController registController = (ChangePasswordController) fxmlLoader.getController();
+            registController.setMain(this);
+            stage1.setScene(new Scene(insidePane));
+            stage1.setAlwaysOnTop(true);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+
 
     /**
      * 跳转到客户界面
      */
-    public void gotoClientOverview() {
+    public void gotoClientOverview(boolean t) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/ClientOverview.fxml"));
@@ -96,7 +116,7 @@ public class Main extends Application {
             rootLayout.setPrefSize(1200, 800);
             rootLayout.setDividerPositions(0.15f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this,t );
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -168,6 +188,20 @@ public class Main extends Application {
             insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             ThermometerController controller = (ThermometerController) fxmlLoader.getController();
+            controller.setMain(this, net);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void gotoReturns(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Returns.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 680);
+            rootLayout.getItems().set(1, insidePane);
+            ReturnsController controller = (ReturnsController) fxmlLoader.getController();
             controller.setMain(this, net);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
