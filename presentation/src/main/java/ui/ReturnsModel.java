@@ -1,4 +1,4 @@
-package ui.Controller;
+package ui;
 
 import javafx.beans.property.SimpleStringProperty;
 

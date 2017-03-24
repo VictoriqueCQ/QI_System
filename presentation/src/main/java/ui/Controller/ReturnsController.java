@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ui.Main;
 import ui.Net;
+import ui.ReturnsModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -89,7 +90,9 @@ public class ReturnsController implements Initializable {
 
     }
     public void setMain(Main main, Net net) {
-
+        setTableView();
+        setAreaChart_1();
+        setAreaChart_2();
         this.main = main;
         this.net = net;
 
