@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import ui.Main;
@@ -56,6 +53,15 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private AreaChart<Number, Number> areaChart_2 = new AreaChart<Number, Number>(PeriodNumber_2, PercentNumber_2);
+
+    @FXML
+    private NumberAxis Frequency = new NumberAxis();
+
+    @FXML
+    private NumberAxis Returns = new NumberAxis();
+
+    @FXML
+    private BarChart<Number, Number> barChart = new BarChart<Number, Number>(Returns, Frequency);
 
     private void setTableView(){
         period.setCellValueFactory(celldata->celldata.getValue().periodProperty());
@@ -176,6 +182,21 @@ public class ReturnsController implements Initializable {
 
         areaChart_2.setHorizontalZeroLineVisible(true);
         areaChart_2.getData().addAll(series);
+    }
+
+    private void setBarChart(){
+        barChart.setBarGap(0);
+        barChart.setCategoryGap(10);
+        XYChart.Series<Number, Number> series1 = new XYChart.Series<>();
+        XYChart.Series<Number, Number> series2 = new XYChart.Series<>();
+
+        series1.getData().add(new XYChart.Data<>());
+        series2.getData().add(new XYChart.Data<>());
+
+        barChart.getData().clear();
+        barChart.layout();
+        barChart.getData().addAll(series1,series2);
+        barChart.setAnimated(false);
     }
 
     public void ReturnsController(){
