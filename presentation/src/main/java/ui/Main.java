@@ -116,7 +116,7 @@ public class Main extends Application {
             rootLayout.setPrefSize(1200, 800);
             rootLayout.setDividerPositions(0.15f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this, t);
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
