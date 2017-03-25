@@ -56,6 +56,8 @@
     -fx-stroke: rgb(64, 199, 232);
 }
 
+
+
 .data0.chart-bar {
     -fx-bar-fill: rgb(240, 0, 0);
 }
@@ -64,6 +66,19 @@
     -fx-bar-fill: rgb(0, 240, 0);
 }
 
-.default-color0.chart-line-symbol {
-    -fx-background-color: #000000, #000000;
+.default-color0.chart-area-symbol {
+    -fx-background-color: #000000,#000000;
+}
+
+.default-color0.chart-bar-symbol {
+    -fx-background-color: #000000,#000000;
+}
+
+
+.default-color1.chart-bar-symbol {
+    -fx-background-color: #000000,#000000;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
 }
