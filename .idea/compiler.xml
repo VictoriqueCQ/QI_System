@@ -13,9 +13,9 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bl" target="1.8" />
-      <module name="common" target="1.8" />
+      <module name="common" target="1.5" />
       <module name="data" target="1.8" />
-      <module name="presentation" target="1.8" />
+      <module name="presentation" target="1.5" />
       <module name="QI_System" target="1.5" />
       <module name="server" target="1.8" />
     </bytecodeTargetLevel>
