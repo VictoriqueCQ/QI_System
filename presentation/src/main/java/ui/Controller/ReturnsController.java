@@ -22,18 +22,81 @@ public class ReturnsController implements Initializable {
 
     private Net net;
 
+    /*
+    *以下是累计收益率中的变量
+    *
+     */
+    //累计收益率图表
+    @FXML
+    private TableView cumulativeTableView;
+
+    //年化收益率
+    @FXML
+    private TableColumn yearReturns;
+
+    //基准年化收益率
+    @FXML
+    private TableColumn standardYearReturns;
+
+    //阿尔法
+    @FXML
+    private TableColumn alpha;
+
+    //贝塔
+    @FXML
+    private TableColumn beta;
+
+    //夏普比率
+    @FXML
+    private TableColumn sharp;
+
+    //收益波动率
+    @FXML
+    private TableColumn wave;
+
+    //信息比率
+    @FXML
+    private TableColumn information;
+
+    //最大回撤
+    @FXML
+    private TableColumn retreats;
+
+    //换手率
+    @FXML
+    private TableColumn changeHands;
+
+    @FXML
+    private NumberAxis returnsPercent = new NumberAxis();
+
+    @FXML
+    private CategoryAxis date = new CategoryAxis();
+
+    @FXML
+    private LineChart<String, Number> lineChart = new LineChart<String, Number>(date, returnsPercent);
+
+
+    /*
+    *以下是超额收益率的变量
+    *
+     */
+    //超额收益率中的表格
     @FXML
     private TableView<ReturnsModel> tableView;
 
+    //相对强弱计算周期
     @FXML
     private TableColumn<ReturnsModel, String> period;
 
+    //超额收益
     @FXML
     private TableColumn<ReturnsModel, String> returns;
 
+    //1年内收益
     @FXML
     private TableColumn<ReturnsModel, String> percent;
 
+    //表格中数据
     private ObservableList<ReturnsModel> data;
 
     @FXML
@@ -54,6 +117,10 @@ public class ReturnsController implements Initializable {
     @FXML
     private AreaChart<Number, Number> areaChart_2 = new AreaChart<Number, Number>(PeriodNumber_2, PercentNumber_2);
 
+    /*
+    *以下是相对收益指数的数据
+    *
+     */
     @FXML
     private CategoryAxis ReturnsNumber = new CategoryAxis();
 
@@ -62,6 +129,15 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
+
+    
+    private void setCumulativeTableView(){
+
+    }
+
+    private void setLineChart(){
+
+    }
 
 
     private void setTableView() {
@@ -73,7 +149,7 @@ public class ReturnsController implements Initializable {
                 new ReturnsModel("2", "0.8%", "58%"),
                 new ReturnsModel("4", "2.9%", "65%"),
                 new ReturnsModel("6", "3.0%", "65%"),
-                new ReturnsModel("8", "2.7%", "585"),
+                new ReturnsModel("8", "2.7%", "58%"),
                 new ReturnsModel("10", "2.5%", "60%"),
                 new ReturnsModel("12", "1.2%", "53%"),
                 new ReturnsModel("14", "0.8%", "53%"),
@@ -192,9 +268,9 @@ public class ReturnsController implements Initializable {
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
 
         series1.getData().add(new XYChart.Data<>("2.00%",52));
-        series1.getData().add(new XYChart.Data<>("4.00%",-48));
+        series1.getData().add(new XYChart.Data<>("2.00%",44));
 
-        series2.getData().add(new XYChart.Data<>("2.00%",44));
+        series2.getData().add(new XYChart.Data<>("4.00%",-48));
         series2.getData().add(new XYChart.Data<>("4.00%",-40));
 
         barChart.getData().clear();
