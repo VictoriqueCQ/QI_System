@@ -232,11 +232,13 @@ public class ContrastController extends Application {
      */
     @FXML
     public void addCompare() {
-        StockSearchConditionVO searchConditionVO1;
-        StockSearchConditionVO searchConditionVO2;
+        if(number<5){
 
-        String stockName1 = nameTextField1.getText();
-        String stockName2 = nameTextField2.getText();
+        StockSearchConditionVO searchConditionVO1;
+//        StockSearchConditionVO searchConditionVO2;
+
+        String stockName1 = stockField.getText();
+//        String stockName2 = nameTextField2.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
@@ -244,28 +246,31 @@ public class ContrastController extends Application {
 
         if (searchWayChoice.getValue().equals("股票名称搜索")) {
             searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
+//            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
 
         } else {
             searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+//            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
         }
 
         stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
-        stock2 = getStockVoByCondition(searchConditionVO2);
-        if (stock2 == null) {
-            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
-        }
+//        stock2 = getStockVoByCondition(searchConditionVO2);
+//        if (stock2 == null) {
+//            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
+//        }
 
         setTableContrast();
         setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
-        setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
+//        setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
-        setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
+//        setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
         setVariance();
+        } else{
+            AlertUtil.showConfirmingAlert("对不起，您选择比较股票数过多");
+        }
 
 
     }
