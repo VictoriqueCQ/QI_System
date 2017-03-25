@@ -30,7 +30,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
     public DataClass get(String[] quest) {
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
-            Date date = null;
+            Date date;
             date = sdf.parse(quest[2]);
             DataClass market=getMarketInfo(date);
             return market;
@@ -53,8 +53,47 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
         double sum = today.parallelStream().mapToDouble(Stock::getVolume).reduce(0.0, (x, y) -> x + y);
 
         //计算涨停和跌停的
-        int limitUpNum = countNumOfIncreasing(today, 0.1);
-        int limitDownNum = countNumOfDecresing(today, -0.1);
+        int limitUpNum = (int) today.parallelStream().
+                filter(stock -> {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                ((stock.getClose() - previous.getClose()) / previous.getClose() >=0.1||
+                                        (stock.getName().startsWith("ST")&&
+                                                (stock.getClose() - previous.getClose()) / previous.getClose() >= 0.05));
+                    } else {
+                        return false;
+                    }
+                }).
+                count();
+        int limitDownNum = (int) today.parallelStream().
+                filter(stock -> {
+                    int i = 1;
+                    if (marketList.indexOf(stock) + i < marketList.size()) {
+                        Stock previous = marketList.get(marketList.indexOf(stock) + i);
+                        while (marketList.indexOf(stock) + i < marketList.size() &&
+                                previous.getVolume() == 0 && stock.getCode() == previous.getCode()) {
+                            previous = marketList.get(marketList.indexOf(stock) + i);
+                            i++;
+                        }
+                        return !(marketList.indexOf(stock) + i >= marketList.size() ||
+                                stock.getCode() != previous.getCode()) &&
+                                ((stock.getClose() - previous.getClose()) / previous.getClose() <= 0.1||
+                                        (stock.getName().startsWith("ST")&&
+                                                (stock.getClose() - previous.getClose()) / previous.getClose() <=- 0.05))
+                                ;
+                    } else {
+                        return false;
+                    }
+                }).
+                count();
 
         //计算涨幅超过5%的股票数和跌幅超过5%的股票数
         int overFivePerNum = countNumOfIncreasing(today, 0.05);
@@ -116,7 +155,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
                         }
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
-                                (stock.getClose() - previous.getClose()) / previous.getClose() >= percentage;
+                                ((stock.getClose() - previous.getClose()) / previous.getClose() >= percentage);
                     } else {
                         return false;
                     }
@@ -138,7 +177,7 @@ public class Overall_Search_data_Impl implements Overall_Search_data{
                         }
                         return !(marketList.indexOf(stock) + i >= marketList.size() ||
                                 stock.getCode() != previous.getCode()) &&
-                                (stock.getClose() - previous.getClose()) / previous.getClose() <= percentage;
+                                ((stock.getClose() - previous.getClose()) / previous.getClose() <= percentage);
                     } else {
                         return false;
                     }
