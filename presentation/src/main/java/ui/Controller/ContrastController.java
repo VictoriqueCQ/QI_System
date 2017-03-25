@@ -35,10 +35,10 @@ public class ContrastController extends Application {
 
 
     @FXML
-    private TextField nameTextField1;
+    private TextField nameTextField1;//////
 
     @FXML
-    private TextField nameTextField2;
+    private TextField nameTextField2;/////
 
     @FXML
     private DatePicker startTimeDatePicker;
@@ -111,6 +111,11 @@ public class ContrastController extends Application {
 
     @FXML
     private ChoiceBox<String> searchWayChoice;
+
+    @FXML
+    private TextField stockField;
+
+    private int number;//最多可设置五只股票同时比较
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -440,6 +445,7 @@ public class ContrastController extends Application {
 
     @FXML
     private void removeCompare() {
+        number = 0;
         stockTable.getItems().removeAll(models);
 //        XYChart.Series<String, Double> removeSeries = seriesMap.get(stock1.getName());
 
@@ -474,6 +480,7 @@ public class ContrastController extends Application {
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
         searchWayChoice.getSelectionModel().select(0);
+        number = 0;
 
     }
 }
