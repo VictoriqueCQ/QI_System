@@ -63,6 +63,7 @@ public class ReturnsController implements Initializable {
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
+
     private void setTableView() {
         period.setCellValueFactory(celldata -> celldata.getValue().periodProperty());
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
@@ -191,9 +192,9 @@ public class ReturnsController implements Initializable {
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
 
         series1.getData().add(new XYChart.Data<>("2.00%",52));
-        series1.getData().add(new XYChart.Data<>("2.00%",-48));
+        series1.getData().add(new XYChart.Data<>("4.00%",-48));
 
-        series2.getData().add(new XYChart.Data<>("4.00%",44));
+        series2.getData().add(new XYChart.Data<>("2.00%",44));
         series2.getData().add(new XYChart.Data<>("4.00%",-40));
 
         barChart.getData().clear();

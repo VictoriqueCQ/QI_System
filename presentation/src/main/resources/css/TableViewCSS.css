@@ -63,3 +63,11 @@
     -fx-background-radius: 1;
     -fx-table-cell-border-color: #323437;
 }
+
+.table-view > .virtual-flow > .scroll-bar > .track-background {
+    -fx-background-color: rgb(0, 0, 0);
+}
+
+.table-view > .virtual-flow > .scroll-bar > .track {
+    -fx-background-color: rgb(0, 0, 0);
+}

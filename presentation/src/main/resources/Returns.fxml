@@ -7,11 +7,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="640.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ReturnsController">
+<AnchorPane prefHeight="640.0" prefWidth="1200.0" stylesheets="@css/ReturnsCSS.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.ReturnsController">
     <children>
         <AnchorPane layoutX="452.0" layoutY="220.0" prefHeight="640.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <TabPane layoutY="82.0" prefHeight="558.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
+                <TabPane layoutY="82.0" prefHeight="558.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                     <tabs>
                         <Tab text="累计收益率">
                             <content>
@@ -40,7 +40,7 @@
                                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     </rowConstraints>
                                                     <children>
-                                                        <AreaChart fx:id="areaChart_1" title="超额vs全样本-不同计算周期">
+                                                        <AreaChart fx:id="areaChart_1" prefHeight="226.0" prefWidth="589.0" title="超额vs全样本-不同计算周期">
                                                             <xAxis>
                                                                 <NumberAxis fx:id="PeriodNumber_1" side="BOTTOM" />
                                                             </xAxis>
@@ -58,11 +58,11 @@
                                                         </AreaChart>
                                                     </children>
                                                 </GridPane>
-                                                <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
+                                                <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" stylesheets="@css/TableViewCSS.css">
                                                     <columns>
                                                         <TableColumn fx:id="period" prefWidth="200.0" text="相对强弱计算周期" />
-                                                        <TableColumn fx:id="returns" prefWidth="200.0" text="超额收益" />
-                                                        <TableColumn fx:id="percent" prefWidth="200.0" text="1年内胜率%" />
+                                                        <TableColumn fx:id="returns" prefWidth="190.0" text="超额收益" />
+                                                        <TableColumn fx:id="percent" prefWidth="185.0" text="1年内胜率%" />
                                                     </columns>
                                                 </TableView>
                                             </children>
