@@ -6,10 +6,12 @@ package ui.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -121,6 +123,9 @@ public class ContrastController extends Application {
 
     private String[] allStockName;//存储所有股票的名字用于模糊搜索
 
+
+    @FXML
+    private ListView<String> fuzzyCheck;//模糊搜索
 
 
     static String customerName;
@@ -488,7 +493,30 @@ public class ContrastController extends Application {
         this.main = main;
         this.net = net;
         this.setDatePicker();
+        //输入股票名进行模糊查找的监听
+
+        stockField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(searchWayChoice.getValue().equals("股票名称搜索")){
+                    if(stockField.getText()!=""){
+                        String name = stockField.getText();
+                        String[] fuzzy = FuzzyCheck(name);
+
+                    }
+
+
+                }
+            }
+        });
     }
+
+    public String[] FuzzyCheck(String s){
+
+        return null;
+
+    }
+
 
     @FXML
     private void initialize() {

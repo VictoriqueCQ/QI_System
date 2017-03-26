@@ -99,5 +99,6 @@
          </font>
       </Label>
       <ChoiceBox fx:id="searchWayChoice" layoutX="500.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" />
+      <ListView fx:id="fuzzyCheck" layoutX="736.0" layoutY="101.0" prefHeight="100.0" prefWidth="100.0" />
     </children>
 </AnchorPane>
