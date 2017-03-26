@@ -233,7 +233,7 @@ public class ContrastController extends Application {
     @FXML
     public void addCompare() {
         if(number<5){
-
+        number++;
         StockSearchConditionVO searchConditionVO1;
 //        StockSearchConditionVO searchConditionVO2;
 
@@ -319,11 +319,11 @@ public class ContrastController extends Application {
         maxPrice.setCellValueFactory(celldata -> celldata.getValue().maxPriceProperty());
         riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
         stockModel1 = stockVOtoStockModle(stock1);
-        stockModel2 = stockVOtoStockModle(stock2);
+//        stockModel2 = stockVOtoStockModle(stock2);
         System.out.print(stockModel1.getName());
-        models = FXCollections.observableArrayList();
+//        models = FXCollections.observableArrayList();
         models.add(stockModel1);
-        models.add(stockModel2);
+//        models.add(stockModel2);
         stockTable.setItems(models);
     }
 
@@ -416,9 +416,9 @@ public class ContrastController extends Application {
     public void setVariance() {
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
         variance.setCellValueFactory(celldata -> celldata.getValue().varianceProperty());
-        models2 = FXCollections.observableArrayList();
+//        models2 = FXCollections.observableArrayList();
         models2.add(stockModel1);
-        models2.add(stockModel2);
+//        models2.add(stockModel2);
         varianceTable.setItems(models2);
     }
 
@@ -486,6 +486,8 @@ public class ContrastController extends Application {
                 "股票名称搜索", "股票编号搜索"));
         searchWayChoice.getSelectionModel().select(0);
         number = 0;
+        models = FXCollections.observableArrayList();
+        models2 = FXCollections.observableArrayList();
 
     }
 }
