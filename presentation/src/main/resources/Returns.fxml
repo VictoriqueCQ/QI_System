@@ -26,17 +26,17 @@
                                   <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="471.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TableView prefHeight="67.0" prefWidth="1178.0">
+                                    <TableView fx:id="cumulativeTableView" prefHeight="67.0" prefWidth="1178.0">
                                        <columns>
-                                          <TableColumn prefWidth="100.0" text="年化收益率" />
-                                          <TableColumn prefWidth="100.0" text="基准年化收益率" />
-                                          <TableColumn prefWidth="100.0" text="阿尔法" />
-                                          <TableColumn prefWidth="100.0" text="贝塔" />
-                                          <TableColumn prefWidth="100.0" text="夏普比率" />
-                                          <TableColumn prefWidth="100.0" text="收益波动率" />
-                                          <TableColumn prefWidth="100.0" text="信息比率" />
-                                          <TableColumn prefWidth="100.0" text="最大回撤" />
-                                          <TableColumn prefWidth="100.0" text="换手率" />
+                                          <TableColumn fx:id="yearReturns" prefWidth="100.0" text="年化收益率" />
+                                          <TableColumn fx:id="standardYearReturns" prefWidth="100.0" text="基准年化收益率" />
+                                          <TableColumn fx:id="alpha" prefWidth="100.0" text="阿尔法" />
+                                          <TableColumn fx:id="beta" prefWidth="100.0" text="贝塔" />
+                                          <TableColumn fx:id="sharp" prefWidth="100.0" text="夏普比率" />
+                                          <TableColumn fx:id="wave" prefWidth="100.0" text="收益波动率" />
+                                          <TableColumn fx:id="information" prefWidth="100.0" text="信息比率" />
+                                          <TableColumn fx:id="retreats" prefWidth="100.0" text="最大回撤" />
+                                          <TableColumn fx:id="changeHands" prefWidth="100.0" text="换手率" />
                                        </columns>
                                     </TableView>
                                     <LineChart fx:id="lineChart" GridPane.rowIndex="1">
