@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import ui.CumulativeReturnsModel;
 import ui.Main;
 import ui.Net;
 import ui.ReturnsModel;
@@ -28,43 +29,43 @@ public class ReturnsController implements Initializable {
      */
     //累计收益率图表
     @FXML
-    private TableView cumulativeTableView;
+    private TableView<CumulativeReturnsModel> cumulativeTableView;
 
     //年化收益率
     @FXML
-    private TableColumn yearReturns;
+    private TableColumn<CumulativeReturnsModel, String> yearReturns;
 
     //基准年化收益率
     @FXML
-    private TableColumn standardYearReturns;
+    private TableColumn<CumulativeReturnsModel, String> standardYearReturns;
 
     //阿尔法
     @FXML
-    private TableColumn alpha;
+    private TableColumn<CumulativeReturnsModel, String> alpha;
 
     //贝塔
     @FXML
-    private TableColumn beta;
+    private TableColumn<CumulativeReturnsModel, String> beta;
 
     //夏普比率
     @FXML
-    private TableColumn sharp;
+    private TableColumn<CumulativeReturnsModel, String> sharp;
 
     //收益波动率
     @FXML
-    private TableColumn wave;
+    private TableColumn<CumulativeReturnsModel, String> wave;
 
     //信息比率
     @FXML
-    private TableColumn information;
+    private TableColumn<CumulativeReturnsModel, String> information;
 
     //最大回撤
     @FXML
-    private TableColumn retreats;
+    private TableColumn<CumulativeReturnsModel, String> retreats;
 
     //换手率
     @FXML
-    private TableColumn changeHands;
+    private TableColumn<CumulativeReturnsModel, String> changeHands;
 
     @FXML
     private NumberAxis returnsPercent = new NumberAxis();
@@ -132,7 +133,15 @@ public class ReturnsController implements Initializable {
 
 
     private void setCumulativeTableView(){
-
+        yearReturns.setCellValueFactory(celldata -> celldata.getValue().yearReturnsProperty());
+        standardYearReturns.setCellValueFactory(celldata -> celldata.getValue().standardYearReturnsProperty());
+        alpha.setCellValueFactory(celldata -> celldata.getValue().alphaProperty());
+        beta.setCellValueFactory(celldata -> celldata.getValue().betaProperty());
+        sharp.setCellValueFactory(celldata -> celldata.getValue().sharpProperty());
+        wave.setCellValueFactory(celldata -> celldata.getValue().waveProperty());
+        information.setCellValueFactory(celldata -> celldata.getValue().informationProperty());
+        retreats.setCellValueFactory(celldata -> celldata.getValue().retreatsProperty());
+        changeHands.setCellValueFactory(celldata -> celldata.getValue().changeHandsProperty());
     }
 
     private void setLineChart(){

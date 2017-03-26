@@ -54,7 +54,7 @@ public class CumulativeReturnsModel {
 
     public void setYearReturns(String yearReturns){ this.yearReturns.set(yearReturns);}
 
-    public SimpleStringProperty getStandardYearReturnsProperty(){ return standardYearReturns; }
+    public SimpleStringProperty standardYearReturnsProperty(){ return standardYearReturns; }
 
     public String getStandardReturns(){ return standardYearReturns.get(); }
 
