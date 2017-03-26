@@ -15,7 +15,41 @@
                     <tabs>
                         <Tab text="累计收益率">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane layoutX="450.0" layoutY="219.0" prefHeight="527.0" prefWidth="1178.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="471.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <TableView prefHeight="67.0" prefWidth="1178.0">
+                                       <columns>
+                                          <TableColumn prefWidth="100.0" text="年化收益率" />
+                                          <TableColumn prefWidth="100.0" text="基准年化收益率" />
+                                          <TableColumn prefWidth="100.0" text="阿尔法" />
+                                          <TableColumn prefWidth="100.0" text="贝塔" />
+                                          <TableColumn prefWidth="100.0" text="夏普比率" />
+                                          <TableColumn prefWidth="100.0" text="收益波动率" />
+                                          <TableColumn prefWidth="100.0" text="信息比率" />
+                                          <TableColumn prefWidth="100.0" text="最大回撤" />
+                                          <TableColumn prefWidth="100.0" text="换手率" />
+                                       </columns>
+                                    </TableView>
+                                    <LineChart fx:id="lineChart" GridPane.rowIndex="1">
+                                      <xAxis>
+                                        <CategoryAxis fx:id="date" side="BOTTOM" />
+                                      </xAxis>
+                                      <yAxis>
+                                        <NumberAxis fx:id="returnsPercent" side="LEFT" />
+                                      </yAxis>
+                                    </LineChart>
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
                             </content>
                         </Tab>
                         <Tab text="超额收益率">

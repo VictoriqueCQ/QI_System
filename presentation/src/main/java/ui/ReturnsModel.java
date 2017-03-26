@@ -3,14 +3,22 @@ package ui;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- * Created by Administrator on 2017/3/24.
+ * Created by Administrator on 2017/final SimpleStringProperty3/24.
  */
 public class ReturnsModel {
+    /*
+    以下是超额收益率图表中的变量
+     */
+    //相对强弱计算周期
     private final SimpleStringProperty period;
 
+    //超额收益
     private final SimpleStringProperty returns;
 
+    //1年内收益
     private final SimpleStringProperty percent;
+
+
 
     public ReturnsModel(String period, String returns, String percent) {
         this.period = new SimpleStringProperty(period);
@@ -18,39 +26,41 @@ public class ReturnsModel {
         this.percent = new SimpleStringProperty(percent);
     }
 
-    public SimpleStringProperty periodProperty(){
+
+
+    public SimpleStringProperty periodProperty() {
         return period;
     }
 
-    private String getPeriod() {
+    public String getPeriod() {
         return period.get();
     }
 
-    private void setPeriod(String period) {
+    public void setPeriod(String period) {
         this.period.set(period);
     }
 
-    public SimpleStringProperty returnsProperty(){
+    public SimpleStringProperty returnsProperty() {
         return returns;
     }
 
-    private String getReturns(){
+    public String getReturns() {
         return returns.get();
     }
 
-    private void setReturns(String returns){
+    public void setReturns(String returns) {
         this.returns.set(returns);
     }
 
-    public SimpleStringProperty percentProperty(){
+    public SimpleStringProperty percentProperty() {
         return percent;
     }
 
-    private String getPercent(){
+    public String getPercent() {
         return percent.get();
     }
 
-    private void setPercent(String percent){
+    public void setPercent(String percent) {
         this.percent.set(percent);
     }
 

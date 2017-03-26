@@ -23,7 +23,7 @@ public class ReturnsController implements Initializable {
     private Net net;
 
     /*
-    *以下是累计收益率中的变量
+    *以下是累计收益率中的变量（累计收益率有两个方法，分别是setCumulative（）和setLineChart（））
     *
      */
     //累计收益率图表
@@ -130,7 +130,7 @@ public class ReturnsController implements Initializable {
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
-    
+
     private void setCumulativeTableView(){
 
     }
@@ -145,6 +145,7 @@ public class ReturnsController implements Initializable {
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
         percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
+        //测试数据，数据层完成后将修改
         data = FXCollections.observableArrayList(
                 new ReturnsModel("2", "0.8%", "58%"),
                 new ReturnsModel("4", "2.9%", "65%"),
