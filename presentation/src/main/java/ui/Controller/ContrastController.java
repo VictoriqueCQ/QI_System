@@ -24,6 +24,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContrastController extends Application {
     private Main main;
@@ -116,6 +118,14 @@ public class ContrastController extends Application {
     private TextField stockField;
 
     private int number;//最多可设置五只股票同时比较
+
+    private String[] allStockName;//存储所有股票的名字用于模糊搜索
+
+
+
+    static String customerName;
+    static String reCustomerName;
+
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -489,5 +499,25 @@ public class ContrastController extends Application {
         models = FXCollections.observableArrayList();
         models2 = FXCollections.observableArrayList();
 
+        reCustomerName = ".*";
+        customerName = "c";
+        if(customerName!=null){
+            for(int i = 0 ; i < customerName.length(); i++){
+                reCustomerName= reCustomerName + customerName.charAt(i)  +".*";
+            }
+        }
+        System.out.println("姓名正则:   "+reCustomerName);
+
+        String s = "abc";
+
+        Pattern pattern = Pattern.compile(reCustomerName);
+        Matcher matcher = pattern.matcher(s);
+       System.out.print(matcher.matches());
+
+
     }
+
+
+
+
 }
