@@ -26,6 +26,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ContrastController extends Application {
     private Main main;
@@ -499,8 +501,10 @@ public class ContrastController extends Application {
                 if(searchWayChoice.getValue().equals("股票名称搜索")){
                     if(stockField.getText()!=""){
                         stockNameImport = stockField.getText();
-
-                        String[] fuzzy = FuzzyCheck(stockNameImport);
+                        for(int i = 0 ; i < stockNameImport.length(); i++){
+                            reStockName = reStockName + stockNameImport.charAt(i)  +".*";
+                        }
+                        ArrayList<String> fuzzy = FuzzyCheck();
 
                     }
 
@@ -508,16 +512,19 @@ public class ContrastController extends Application {
                 }
             }
         });
-    }
-
-    public String[] FuzzyCheck(String s){
-
-
-        return null;
+        
 
     }
-    public boolean Check(String s){
-        return false;
+
+    public ArrayList<String> FuzzyCheck(){
+        ArrayList<String> result = null;
+        Pattern pattern = Pattern.compile(reStockName);
+        for(int i=0;i<allStockName.length;i++){
+            Matcher matcher = pattern.matcher(allStockName[i]);
+            if(matcher.matches()){result.add(allStockName[i]);}
+
+        }
+        return result;
 
     }
 
@@ -531,8 +538,8 @@ public class ContrastController extends Application {
         models2 = FXCollections.observableArrayList();
 
         fuzzyCheck.setVisible(false);
-      /*  reCustomerName = ".*";
-        customerName = "c";
+        reStockName = ".*";
+      /*  customerName = "c";
         if(customerName!=null){
             for(int i = 0 ; i < customerName.length(); i++){
                 reCustomerName= reCustomerName + customerName.charAt(i)  +".*";
