@@ -6,10 +6,12 @@ package ui.Controller;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -116,6 +118,17 @@ public class ContrastController extends Application {
     private TextField stockField;
 
     private int number;//最多可设置五只股票同时比较
+
+    private String[] allStockName;//存储所有股票的名字用于模糊搜索
+
+
+    @FXML
+    private ListView<String> fuzzyCheck;//模糊搜索
+
+
+    static String stockNameImport;//输入的股票名
+    static String reStockName;
+
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -478,6 +491,34 @@ public class ContrastController extends Application {
         this.main = main;
         this.net = net;
         this.setDatePicker();
+        //输入股票名进行模糊查找的监听
+
+        stockField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if(searchWayChoice.getValue().equals("股票名称搜索")){
+                    if(stockField.getText()!=""){
+                        stockNameImport = stockField.getText();
+
+                        String[] fuzzy = FuzzyCheck(stockNameImport);
+
+                    }
+
+
+                }
+            }
+        });
+    }
+
+    public String[] FuzzyCheck(String s){
+
+
+        return null;
+
+    }
+    public boolean Check(String s){
+        return false;
+
     }
 
     @FXML
@@ -489,5 +530,26 @@ public class ContrastController extends Application {
         models = FXCollections.observableArrayList();
         models2 = FXCollections.observableArrayList();
 
+        fuzzyCheck.setVisible(false);
+      /*  reCustomerName = ".*";
+        customerName = "c";
+        if(customerName!=null){
+            for(int i = 0 ; i < customerName.length(); i++){
+                reCustomerName= reCustomerName + customerName.charAt(i)  +".*";
+            }
+        }
+        System.out.println("姓名正则:   "+reCustomerName);
+
+        String s = "abc";
+
+        Pattern pattern = Pattern.compile(reCustomerName);
+        Matcher matcher = pattern.matcher(s);
+       System.out.print(matcher.matches());*/
+
+
     }
+
+
+
+
 }

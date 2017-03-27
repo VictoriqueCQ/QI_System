@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import ui.CumulativeReturnsModel;
 import ui.Main;
 import ui.Net;
 import ui.ReturnsModel;
@@ -23,48 +24,50 @@ public class ReturnsController implements Initializable {
     private Net net;
 
     /*
-    *以下是累计收益率中的变量
+    *以下是累计收益率中的变量（累计收益率有两个方法，分别是setCumulative（）和setLineChart（））
     *
      */
     //累计收益率图表
     @FXML
-    private TableView cumulativeTableView;
+    private TableView<CumulativeReturnsModel> cumulativeTableView;
 
     //年化收益率
     @FXML
-    private TableColumn yearReturns;
+    private TableColumn<CumulativeReturnsModel, String> yearReturns;
 
     //基准年化收益率
     @FXML
-    private TableColumn standardYearReturns;
+    private TableColumn<CumulativeReturnsModel, String> standardYearReturns;
 
     //阿尔法
     @FXML
-    private TableColumn alpha;
+    private TableColumn<CumulativeReturnsModel, String> alpha;
 
     //贝塔
     @FXML
-    private TableColumn beta;
+    private TableColumn<CumulativeReturnsModel, String> beta;
 
     //夏普比率
     @FXML
-    private TableColumn sharp;
+    private TableColumn<CumulativeReturnsModel, String> sharp;
 
     //收益波动率
     @FXML
-    private TableColumn wave;
+    private TableColumn<CumulativeReturnsModel, String> wave;
 
     //信息比率
     @FXML
-    private TableColumn information;
+    private TableColumn<CumulativeReturnsModel, String> information;
 
     //最大回撤
     @FXML
-    private TableColumn retreats;
+    private TableColumn<CumulativeReturnsModel, String> retreats;
 
     //换手率
     @FXML
-    private TableColumn changeHands;
+    private TableColumn<CumulativeReturnsModel, String> changeHands;
+
+    private ObservableList<CumulativeReturnsModel> cumulativeData;
 
     @FXML
     private NumberAxis returnsPercent = new NumberAxis();
@@ -130,9 +133,26 @@ public class ReturnsController implements Initializable {
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
-    
-    private void setCumulativeTableView(){
 
+    private void setCumulativeTableView(){
+        yearReturns.setCellValueFactory(celldata -> celldata.getValue().yearReturnsProperty());
+        standardYearReturns.setCellValueFactory(celldata -> celldata.getValue().standardYearReturnsProperty());
+        alpha.setCellValueFactory(celldata -> celldata.getValue().alphaProperty());
+        beta.setCellValueFactory(celldata -> celldata.getValue().betaProperty());
+        sharp.setCellValueFactory(celldata -> celldata.getValue().sharpProperty());
+        wave.setCellValueFactory(celldata -> celldata.getValue().waveProperty());
+        information.setCellValueFactory(celldata -> celldata.getValue().informationProperty());
+        retreats.setCellValueFactory(celldata -> celldata.getValue().retreatsProperty());
+        changeHands.setCellValueFactory(celldata -> celldata.getValue().changeHandsProperty());
+
+        //测试数据，数据层完成后将修改
+        cumulativeData = FXCollections.observableArrayList(
+                new CumulativeReturnsModel("35.7%","12.4%","14.6%", "0.97", "1.29", "24.9%", "1.03", "23.8%", "--")
+        );
+
+        cumulativeTableView.getStyleClass().add("edge-to-edge");
+        cumulativeTableView.getStyleClass().add("noborder");
+        cumulativeTableView.setItems(cumulativeData);
     }
 
     private void setLineChart(){
@@ -145,6 +165,7 @@ public class ReturnsController implements Initializable {
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
         percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
+        //测试数据，数据层完成后将修改
         data = FXCollections.observableArrayList(
                 new ReturnsModel("2", "0.8%", "58%"),
                 new ReturnsModel("4", "2.9%", "65%"),
@@ -293,6 +314,7 @@ public class ReturnsController implements Initializable {
         setAreaChart_1();
         setAreaChart_2();
         setBarChart();
+        setCumulativeTableView();
         this.main = main;
         this.net = net;
 
