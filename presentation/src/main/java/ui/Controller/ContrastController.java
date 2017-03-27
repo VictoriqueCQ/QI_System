@@ -26,8 +26,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ContrastController extends Application {
     private Main main;
@@ -128,8 +126,8 @@ public class ContrastController extends Application {
     private ListView<String> fuzzyCheck;//模糊搜索
 
 
-    static String customerName;
-    static String reCustomerName;
+    static String stockNameImport;//输入的股票名
+    static String reStockName;
 
 
     /**
@@ -500,8 +498,9 @@ public class ContrastController extends Application {
             public void handle(KeyEvent event) {
                 if(searchWayChoice.getValue().equals("股票名称搜索")){
                     if(stockField.getText()!=""){
-                        String name = stockField.getText();
-                        String[] fuzzy = FuzzyCheck(name);
+                        stockNameImport = stockField.getText();
+
+                        String[] fuzzy = FuzzyCheck(stockNameImport);
 
                     }
 
@@ -513,10 +512,14 @@ public class ContrastController extends Application {
 
     public String[] FuzzyCheck(String s){
 
+
         return null;
 
     }
+    public boolean Check(String s){
+        return false;
 
+    }
 
     @FXML
     private void initialize() {
@@ -527,7 +530,8 @@ public class ContrastController extends Application {
         models = FXCollections.observableArrayList();
         models2 = FXCollections.observableArrayList();
 
-        reCustomerName = ".*";
+        fuzzyCheck.setVisible(false);
+      /*  reCustomerName = ".*";
         customerName = "c";
         if(customerName!=null){
             for(int i = 0 ; i < customerName.length(); i++){
@@ -540,7 +544,7 @@ public class ContrastController extends Application {
 
         Pattern pattern = Pattern.compile(reCustomerName);
         Matcher matcher = pattern.matcher(s);
-       System.out.print(matcher.matches());
+       System.out.print(matcher.matches());*/
 
 
     }
