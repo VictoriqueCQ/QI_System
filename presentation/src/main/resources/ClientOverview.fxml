@@ -47,19 +47,21 @@
                                             <rowConstraints>
                                                 <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
                                                 <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <Label fx:id="telLabel" prefHeight="151.0" prefWidth="457.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="telLabel" prefHeight="151.0" prefWidth="457.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label prefHeight="68.0" prefWidth="132.0" />
-                                                <Label prefHeight="69.0" prefWidth="143.0" GridPane.rowIndex="2" />
-                                                <Label fx:id="nameLabel" prefHeight="26.0" prefWidth="244.0" text="游客" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                                <Label prefHeight="69.0" prefWidth="143.0" GridPane.rowIndex="3" />
+                                                <Label fx:id="nameLabel" prefHeight="26.0" prefWidth="244.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="36.0" />
                                                     </font>
                                                 </Label>
-                                                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#gotoLogin" prefHeight="25.0" prefWidth="100.0" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#gotoRegist" prefHeight="25.0" prefWidth="100.0" text="注册" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                                <Button fx:id="loginButton" mnemonicParsing="false" onAction="#gotoLogin" prefHeight="25.0" prefWidth="100.0" text="登录" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <Button fx:id="registerButton" mnemonicParsing="false" onAction="#gotoRegist" prefHeight="25.0" prefWidth="100.0" text="注册" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                    <Button fx:id="exitLoginButton" mnemonicParsing="false" onAction="#exitLogin" prefHeight="77.0" prefWidth="100.0" text="退出" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                             </children>
                                         </GridPane>
                                         <Label prefHeight="100.0" prefWidth="90.0" styleClass="label_client_picture" GridPane.halignment="RIGHT" GridPane.valignment="TOP" />
@@ -80,14 +82,15 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="imagekButton" mnemonicParsing="false" onAction="#gotoCandlestickChar" prefHeight="30.0" prefWidth="400.0" text="个股情况" GridPane.columnIndex="1" />
-                                <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="30.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="2" />
-                                <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="30.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="3" />
-                        <Button fx:id="marketConditionButton" mnemonicParsing="false" onAction="#gotoMarketCondition" prefHeight="30.0" prefWidth="366.0" text="市场情况" />
-                        <Button fx:id="returnsButton" mnemonicParsing="false" onAction="#gotoReturns" prefHeight="40.0" prefWidth="240.0" text="收益率" GridPane.columnIndex="4" />
+                                <Button fx:id="imagekButton" mnemonicParsing="false" onAction="#gotoCandlestickChar" prefHeight="30.0" prefWidth="400.0" text="个股情况" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="30.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="30.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="marketConditionButton" mnemonicParsing="false" onAction="#gotoMarketCondition" prefHeight="30.0" prefWidth="366.0" text="市场情况" GridPane.rowIndex="1" />
+                        <Button fx:id="returnsButton" mnemonicParsing="false" onAction="#gotoReturns" prefHeight="40.0" prefWidth="240.0" text="收益率" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                     </children>

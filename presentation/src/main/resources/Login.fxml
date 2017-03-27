@@ -16,21 +16,26 @@
             <Font size="29.0" />
          </font>
       </Label>
-      <Label fx:id="usernameLabel" layoutX="108.0" layoutY="126.0" prefHeight="31.0" prefWidth="69.0" text="账号:" AnchorPane.leftAnchor="108.0">
+      <Label fx:id="usernameLabel" layoutX="108.0" layoutY="103.0" prefHeight="31.0" prefWidth="69.0" text="ID" AnchorPane.leftAnchor="108.0">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameTextField" layoutX="196.0" layoutY="126.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
-      <Label fx:id="passwordLabel" layoutX="108.0" layoutY="209.0" prefHeight="31.0" prefWidth="69.0" text="密码:" AnchorPane.leftAnchor="108.0">
+      <TextField fx:id="usernameTextField" layoutX="196.0" layoutY="102.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
+      <Label fx:id="passwordLabel" layoutX="108.0" layoutY="177.0" prefHeight="31.0" prefWidth="69.0" text="密码:" AnchorPane.leftAnchor="108.0">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
       <Button layoutX="329.0" layoutY="315.0" mnemonicParsing="false" onAction="#gotoRegist" prefHeight="40.0" prefWidth="92.0" text="注册" />
-      <PasswordField fx:id="passwordTextField" layoutX="196.0" layoutY="209.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
+      <PasswordField fx:id="passwordTextField" layoutX="196.0" layoutY="177.0" prefHeight="30.0" prefWidth="200.0" styleClass="TextFieldText" />
       <Button layoutX="204.0" layoutY="315.0" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="92.0" text="登录" />
       <Button layoutX="78.0" layoutY="315.0" mnemonicParsing="false" onAction="#gotoChangePassword" prefHeight="40.0" prefWidth="92.0" text="修改密码" />
       <Button alignment="CENTER" layoutX="430.0" mnemonicParsing="false" onAction="#exitLogin" prefHeight="28.0" prefWidth="70.0" text="退出" />
+      <RadioButton fx:id="rememberPasswordRadioButton" layoutX="196.0" layoutY="248.0" mnemonicParsing="false" text="记住密码" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
    </children>
 </AnchorPane>

@@ -43,7 +43,7 @@ public class ChangePasswordController {
             if(true){
                 AlertUtil.showConfirmingAlert("更改密码成功");
                 this.exitChangePassword();
-                main.gotoClientOverview(true);
+//                main.gotoClientOverview(true);
             }
             else{
                 AlertUtil.showErrorAlert("对不起,更新密码失败");

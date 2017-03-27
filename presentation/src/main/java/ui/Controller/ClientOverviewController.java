@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
+import quantour.vo.UserVO;
 import ui.Main;
 
 import java.net.URL;
@@ -41,6 +42,9 @@ public class ClientOverviewController implements Initializable {
 
     @FXML
     private Button registerButton;
+
+    @FXML
+    private Button exitLoginButton;
 
     @FXML
     private Label nameLabel;
@@ -88,6 +92,14 @@ public class ClientOverviewController implements Initializable {
         main.gotoRegist();
     }
 
+    @FXML
+    private void exitLogin(){
+        loginButton.setVisible(true);
+        registerButton.setVisible(true);
+        exitLoginButton.setVisible(false);
+        nameLabel.setText("          游客");
+    }
+
     /**
      * 设置按钮样式
      */
@@ -111,13 +123,21 @@ public class ClientOverviewController implements Initializable {
     public ClientOverviewController() {
     }
 
-    public void setMain(Main main,boolean t) {
+    public void setMain(Main main, boolean t, UserVO userVO) {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
         if(t){
+            nameLabel.setText("          姓名: "+userVO.getName());
             loginButton.setVisible(false);
             registerButton.setVisible(false);
+            exitLoginButton.setVisible(true);
+        }
+        else{
+            nameLabel.setText("             游客");
+            loginButton.setVisible(true);
+            registerButton.setVisible(true);
+            exitLoginButton.setVisible(false);
         }
     }
 
