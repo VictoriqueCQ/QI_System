@@ -39,7 +39,7 @@ class ResultSender {
             case "MARKET":
                 logic = dataFactory.getOverallSearch();
                 break;
-            case "User":
+            case "USER":
                 logic = dataFactory.getUser();
                 break;
             case "GET":
