@@ -27,8 +27,7 @@ public class Single_Search_data_Impl implements Single_Search_data{
     @Override
     public DataClass get(String[] quest) {
         try {
-            DataClass stockList=getStockList(quest);
-            return stockList;
+            return getStockList(quest);
         }catch (ParseException pe){
             pe.printStackTrace();
             return null;
@@ -37,11 +36,10 @@ public class Single_Search_data_Impl implements Single_Search_data{
 
     @Override
     public StockPO getStockList(String[] quest) throws ParseException {
-
-        if (quest[2].toUpperCase().equals("NULL")) {
-            return getStockListByName(quest[3], sdf.parse(quest[4]), sdf.parse(quest[5]));
-        } else {
+        if (!quest[2].toUpperCase().equals("NULL")) {
             return getStockListByID(Integer.parseInt(quest[2]), sdf.parse(quest[4]), sdf.parse(quest[5]));
+        } else{
+            return getStockListByName(quest[3], sdf.parse(quest[4]), sdf.parse(quest[5]));
         }
     }
 

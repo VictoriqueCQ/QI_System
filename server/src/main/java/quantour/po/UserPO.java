@@ -5,7 +5,7 @@ import quantour.data.DataClass;
 /**
  * Created by dell on 2017/3/23.
  */
-public class UserPO extends DataClass{
+public class UserPO extends DataClass {
     private String id;
     private String name;
     private String password;

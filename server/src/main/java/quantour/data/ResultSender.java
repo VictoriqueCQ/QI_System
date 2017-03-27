@@ -35,13 +35,15 @@ class ResultSender {
         switch (questContent[1]) {
             case "STOCK":
                 logic = dataFactory.getSingleSearch();
-
                 break;
             case "MARKET":
                 logic = dataFactory.getOverallSearch();
                 break;
             case "User":
                 logic = dataFactory.getUser();
+                break;
+            case "GET":
+                logic = dataFactory.getGetter();
                 break;
             default:
                 System.out.println("wrong");//此处应改为exception
@@ -53,7 +55,7 @@ class ResultSender {
         JSONArray jsonArray = JSONArray.fromObject(result);
         String resultstr = jsonArray.toString();
         System.out.println(resultstr);
-        int j = (int) (resultstr.length() / 100) + 1;
+        int j = resultstr.length() / 100 + 1;
         dataOutputStream.writeInt(j);
         for (int i = 0; i < j; i++) {
             if (i == j - 1) {

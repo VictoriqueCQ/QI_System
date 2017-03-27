@@ -1,9 +1,6 @@
 package quantour.data;
 
-import quantour.dataservice.DataFactory;
-import quantour.dataservice.Overall_Search_data;
-import quantour.dataservice.Single_Search_data;
-import quantour.dataservice.User_data;
+import quantour.dataservice.*;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -18,6 +15,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
     private Overall_Search_data overallSearchData;
     private Single_Search_data singleSearchData;
     private User_data userData;
+    private Getter_data getterData;
 
     private List<Stock> stockList;
 
@@ -27,6 +25,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         overallSearchData = new Overall_Search_data_Impl(stockList);
         singleSearchData = new Single_Search_data_Impl(stockList);
         userData=new User_data_Impl();
+        getterData=new Getter_Impl(stockList);
     }
 
     static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
@@ -35,7 +34,6 @@ public class DataFactory_CSV_Impl implements DataFactory {
         }
         return dataFactoryCvs;
     }
-
 
     @Override
     public Overall_Search_data getOverallSearch() {
@@ -51,4 +49,10 @@ public class DataFactory_CSV_Impl implements DataFactory {
     public User_data getUser() {
         return userData;
     }
+
+    @Override
+    public Getter_data getGetter() {
+        return getterData;
+    }
+
 }

@@ -5,7 +5,7 @@ import quantour.data.DataClass;
 /**
  * Created by dell on 2017/3/4.
  */
-public class MarketPO extends DataClass{
+public class MarketPO extends DataClass {
     private double totalDeal;
     private int limitUpNum;
     private int limitDownNum;
