@@ -20,9 +20,10 @@ public class Getter_Impl implements Getter_data{
         return getAll();
     }
 
-    private NamePO getAll(){
-        List<String> names = list.parallelStream().map(Stock::getName).collect(Collectors.toList());
-        List<Integer> codes = list.parallelStream().map(Stock::getCode).collect(Collectors.toList());
+    @Override
+    public NamePO getAll(){
+        List<String> names = list.parallelStream().map(Stock::getName).distinct().collect(Collectors.toList());
+        List<Integer> codes = list.parallelStream().map(Stock::getCode).distinct().collect(Collectors.toList());
         return new NamePO(names, codes);
     }
 }
