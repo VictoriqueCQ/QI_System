@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleStringProperty;
  * Created by Administrator on 2017/3/26.
  */
 public class CumulativeReturnsModel {
-      /*
-    以下是累计收益率图表中的变量
-     */
+    /*
+  以下是累计收益率图表中的变量
+   */
     //年化收益率
     private final SimpleStringProperty yearReturns;
 
@@ -36,7 +36,7 @@ public class CumulativeReturnsModel {
     //换手率
     private final SimpleStringProperty changeHands;
 
-        public CumulativeReturnsModel(String yearReturns, String standardYearReturns, String alpha, String beta, String sharp, String wave, String information, String retreats, String changeHands, SimpleStringProperty period) {
+    public CumulativeReturnsModel(String yearReturns, String standardYearReturns, String alpha, String beta, String sharp, String wave, String information, String retreats, String changeHands) {
         this.yearReturns = new SimpleStringProperty(yearReturns);
         this.standardYearReturns = new SimpleStringProperty(standardYearReturns);
         this.alpha = new SimpleStringProperty(alpha);
@@ -48,58 +48,112 @@ public class CumulativeReturnsModel {
         this.changeHands = new SimpleStringProperty(changeHands);
     }
 
-    public SimpleStringProperty yearReturnsProperty(){ return yearReturns; }
+    public SimpleStringProperty yearReturnsProperty() {
+        return yearReturns;
+    }
 
-    public String getYearReturns(){ return yearReturns.get(); }
+    public String getYearReturns() {
+        return yearReturns.get();
+    }
 
-    public void setYearReturns(String yearReturns){ this.yearReturns.set(yearReturns);}
+    public void setYearReturns(String yearReturns) {
+        this.yearReturns.set(yearReturns);
+    }
 
-    public SimpleStringProperty standardYearReturnsProperty(){ return standardYearReturns; }
+    public SimpleStringProperty standardYearReturnsProperty() {
+        return standardYearReturns;
+    }
 
-    public String getStandardReturns(){ return standardYearReturns.get(); }
+    public String getStandardReturns() {
+        return standardYearReturns.get();
+    }
 
-    public void setStandardYearReturns(String standardYearReturns){ this.standardYearReturns.set(standardYearReturns);}
+    public void setStandardYearReturns(String standardYearReturns) {
+        this.standardYearReturns.set(standardYearReturns);
+    }
 
-    public SimpleStringProperty alphaProperty(){ return alpha; }
+    public SimpleStringProperty alphaProperty() {
+        return alpha;
+    }
 
-    public String getAlpha(){ return alpha.get(); }
+    public String getAlpha() {
+        return alpha.get();
+    }
 
-    public void setAlpha(String alpha){ this.alpha.set(alpha);}
+    public void setAlpha(String alpha) {
+        this.alpha.set(alpha);
+    }
 
-    public SimpleStringProperty betaProperty(){ return beta; }
+    public SimpleStringProperty betaProperty() {
+        return beta;
+    }
 
-    public String getBeta(){ return beta.get(); }
+    public String getBeta() {
+        return beta.get();
+    }
 
-    public void setBeta(String beta){ this.beta.set(beta);}
+    public void setBeta(String beta) {
+        this.beta.set(beta);
+    }
 
-    public SimpleStringProperty sharpProperty(){ return sharp; }
+    public SimpleStringProperty sharpProperty() {
+        return sharp;
+    }
 
-    public String getSharp(){ return sharp.get(); }
+    public String getSharp() {
+        return sharp.get();
+    }
 
-    public void setSharp(String sharp){ this.sharp.set(sharp);}
+    public void setSharp(String sharp) {
+        this.sharp.set(sharp);
+    }
 
-    public SimpleStringProperty waveProperty(){ return wave;}
+    public SimpleStringProperty waveProperty() {
+        return wave;
+    }
 
-    public String getWave(){ return wave.get();}
+    public String getWave() {
+        return wave.get();
+    }
 
-    public void setWave(String wave){ this.wave.set(wave);}
+    public void setWave(String wave) {
+        this.wave.set(wave);
+    }
 
-    public SimpleStringProperty informationProperty(){ return information;}
+    public SimpleStringProperty informationProperty() {
+        return information;
+    }
 
-    public String getInformation(){ return information.get();}
+    public String getInformation() {
+        return information.get();
+    }
 
-    public void setInformation(String information){ this.information.set(information);}
+    public void setInformation(String information) {
+        this.information.set(information);
+    }
 
-    public SimpleStringProperty retreatsProperty(){ return retreats;}
+    public SimpleStringProperty retreatsProperty() {
+        return retreats;
+    }
 
-    public String getRetreats(){ return retreats.get();}
+    public String getRetreats() {
+        return retreats.get();
+    }
 
-    public void setRetreats(String retreats){ this.retreats.set(retreats);}
+    public void setRetreats(String retreats) {
+        this.retreats.set(retreats);
+    }
 
-    public SimpleStringProperty changeHandsProperty(){ return changeHands;}
+    public SimpleStringProperty changeHandsProperty() {
+        return changeHands;
+    }
 
-    public String getChangeHands(){ return changeHands.get();}
+    public String getChangeHands() {
+        return changeHands.get();
+    }
 
-    public void setChangeHands(String changeHands){ this.changeHands.set(changeHands);}
+    public void setChangeHands(String changeHands) {
+        this.changeHands.set(changeHands);
+    }
 
 }

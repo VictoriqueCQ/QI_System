@@ -67,6 +67,8 @@ public class ReturnsController implements Initializable {
     @FXML
     private TableColumn<CumulativeReturnsModel, String> changeHands;
 
+    private ObservableList<CumulativeReturnsModel> cumulativeData;
+
     @FXML
     private NumberAxis returnsPercent = new NumberAxis();
 
@@ -142,6 +144,15 @@ public class ReturnsController implements Initializable {
         information.setCellValueFactory(celldata -> celldata.getValue().informationProperty());
         retreats.setCellValueFactory(celldata -> celldata.getValue().retreatsProperty());
         changeHands.setCellValueFactory(celldata -> celldata.getValue().changeHandsProperty());
+
+        //测试数据，数据层完成后将修改
+        cumulativeData = FXCollections.observableArrayList(
+                new CumulativeReturnsModel("35.7%","12.4%","14.6%", "0.97", "1.29", "24.9%", "1.03", "23.8%", "--")
+        );
+
+        cumulativeTableView.getStyleClass().add("edge-to-edge");
+        cumulativeTableView.getStyleClass().add("noborder");
+        cumulativeTableView.setItems(cumulativeData);
     }
 
     private void setLineChart(){
@@ -303,6 +314,7 @@ public class ReturnsController implements Initializable {
         setAreaChart_1();
         setAreaChart_2();
         setBarChart();
+        setCumulativeTableView();
         this.main = main;
         this.net = net;
 
