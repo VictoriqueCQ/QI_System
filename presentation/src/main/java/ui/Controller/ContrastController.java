@@ -4,14 +4,14 @@ package ui.Controller;
  */
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -121,7 +121,7 @@ public class ContrastController extends Application {
 
     private int number;//最多可设置五只股票同时比较
 
-    private String[] allStockName;//存储所有股票的名字用于模糊搜索
+
 
 
     @FXML
@@ -131,6 +131,7 @@ public class ContrastController extends Application {
     static String stockNameImport;//输入的股票名
     static String reStockName;
 
+    private String[] allStockName;//存储所有股票的名字用于模糊搜索
 
     /**
      * 在开始时间选取后更新结束时间可选日期
@@ -451,7 +452,7 @@ public class ContrastController extends Application {
         String input;
         if (stockID == null && stockName != null) {
             input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
-            System.out.print("successs!!!!!");
+         //   System.out.print("successs!!!!!");
         } else {
             input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
         }
@@ -495,36 +496,83 @@ public class ContrastController extends Application {
         this.setDatePicker();
         //输入股票名进行模糊查找的监听
 
-        stockField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        stockField.textProperty().addListener(new ChangeListener<String>() {
             @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(searchWayChoice.getValue().equals("股票名称搜索")){
+                    reStockName = ".*";
+                    if(stockField.getText()!=""){
+                        stockNameImport = stockField.getText();
+                        for(int i = 0 ; i < stockNameImport.length(); i++){
+                            reStockName = reStockName + stockNameImport.charAt(i)  +".*";
+                            System.out.print("正则表达式为："+reStockName);
+                        }
+                        ArrayList<String> fuzzy = FuzzyCheck();
+
+                        for(int i = 0;i<fuzzy.size();i++){
+
+                            ObservableList<String> items =FXCollections.observableArrayList (
+                                    fuzzy.get(i));
+                            fuzzyCheck.setItems(items);
+                        }
+                        if(fuzzyCheck.getItems()!=null){
+//                            System.out.print(fuzzyCheck.getItems());
+                            fuzzyCheck.setVisible(true);
+                        }
+
+                    }
+
+
+                }
+
+            }
+        });
+           /* @Override
             public void handle(KeyEvent event) {
                 if(searchWayChoice.getValue().equals("股票名称搜索")){
                     if(stockField.getText()!=""){
                         stockNameImport = stockField.getText();
                         for(int i = 0 ; i < stockNameImport.length(); i++){
                             reStockName = reStockName + stockNameImport.charAt(i)  +".*";
+                            System.out.print("正则表达式为："+reStockName);
                         }
                         ArrayList<String> fuzzy = FuzzyCheck();
+
+                        for(int i = 0;i<fuzzy.size();i++){
+
+                            ObservableList<String> items =FXCollections.observableArrayList (
+                                    fuzzy.get(i));
+                            fuzzyCheck.setItems(items);
+                        }
+                        fuzzyCheck.setVisible(true);
 
                     }
 
 
                 }
-            }
-        });
-        
+            }*/
+
+
+
 
     }
 
     public ArrayList<String> FuzzyCheck(){
-        ArrayList<String> result = null;
+        ArrayList<String> result = new ArrayList<>();
+
         Pattern pattern = Pattern.compile(reStockName);
         for(int i=0;i<allStockName.length;i++){
             Matcher matcher = pattern.matcher(allStockName[i]);
-            if(matcher.matches()){result.add(allStockName[i]);}
+            if(matcher.matches()){
+                result.add(allStockName[i]);
+
+            }
 
         }
+
+//        System.out.print("模糊查找结果"+result.get(0));
         return result;
+
 
     }
 
@@ -539,6 +587,9 @@ public class ContrastController extends Application {
 
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
+        allStockName = new String[2];
+        allStockName[0] = "深圳a股";
+        allStockName[1] = "b股";
       /*  customerName = "c";
         if(customerName!=null){
             for(int i = 0 ; i < customerName.length(); i++){
