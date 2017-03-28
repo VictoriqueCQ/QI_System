@@ -25,7 +25,10 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -267,7 +270,7 @@ public class ContrastController extends Application {
 
         stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
-            AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
+            AlertUtil.showErrorAlert("对不起，您输入的股票不存在");
         }
 
         setTableContrast();
@@ -506,6 +509,22 @@ public class ContrastController extends Application {
             }
         });
 
+        fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
+
+                new ChangeListener<String>() {
+
+                    public void changed(ObservableValue<? extends String> ov,
+
+                                        String old_val, String new_val) {
+
+
+                        stockField.setText(new_val);
+
+
+
+                    }
+
+                });
 
 
 
@@ -542,7 +561,7 @@ public class ContrastController extends Application {
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
         allStockName = new String[2];
-        allStockName[0] = "深圳a股";
+        allStockName[0] = "深发展A";
         allStockName[1] = "b股";
        /* String  customerName = "深";
         String reCustomerName = ".*";
