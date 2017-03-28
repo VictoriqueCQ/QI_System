@@ -95,7 +95,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/ChangePassword.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             ChangePasswordController registController = (ChangePasswordController) fxmlLoader.getController();
-            registController.setMain(this);
+            registController.setMain(this,net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
