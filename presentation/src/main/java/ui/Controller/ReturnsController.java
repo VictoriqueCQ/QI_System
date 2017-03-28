@@ -156,7 +156,47 @@ public class ReturnsController implements Initializable {
     }
 
     private void setLineChart(){
+        XYChart.Series series1 = new XYChart.Series();
+        series1.getData().add(new XYChart.Data<>("2005-07",10));
+        series1.getData().add(new XYChart.Data<>("2006-01",30));
+        series1.getData().add(new XYChart.Data<>("2006-07",40));
+        series1.getData().add(new XYChart.Data<>("2007-01",50));
+        series1.getData().add(new XYChart.Data<>("2007-07",70));
+        series1.getData().add(new XYChart.Data<>("2008-01",80));
+        series1.getData().add(new XYChart.Data<>("2008-07",100));
+        series1.getData().add(new XYChart.Data<>("2009-01",110));
+        series1.getData().add(new XYChart.Data<>("2009-07",130));
+        series1.getData().add(new XYChart.Data<>("2010-01",120));
+        series1.getData().add(new XYChart.Data<>("2010-07",100));
+        series1.getData().add(new XYChart.Data<>("2011-01",90));
+        series1.getData().add(new XYChart.Data<>("2011-07",70));
+        series1.getData().add(new XYChart.Data<>("2012-01",80));
+        series1.getData().add(new XYChart.Data<>("2012-07",100));
+        series1.getData().add(new XYChart.Data<>("2013-01",120));
+        series1.getData().add(new XYChart.Data<>("2013-07",150));
+        series1.getData().add(new XYChart.Data<>("2014-01",190));
 
+        XYChart.Series series2 = new XYChart.Series();
+        series2.getData().add(new XYChart.Data<>("2005-07",10));
+        series2.getData().add(new XYChart.Data<>("2006-01",15));
+        series2.getData().add(new XYChart.Data<>("2006-07",20));
+        series2.getData().add(new XYChart.Data<>("2007-01",25));
+        series2.getData().add(new XYChart.Data<>("2007-07",35));
+        series2.getData().add(new XYChart.Data<>("2008-01",40));
+        series2.getData().add(new XYChart.Data<>("2008-07",50));
+        series2.getData().add(new XYChart.Data<>("2009-01",55));
+        series2.getData().add(new XYChart.Data<>("2009-07",65));
+        series2.getData().add(new XYChart.Data<>("2010-01",60));
+        series2.getData().add(new XYChart.Data<>("2010-07",50));
+        series2.getData().add(new XYChart.Data<>("2011-01",45));
+        series2.getData().add(new XYChart.Data<>("2011-07",35));
+        series2.getData().add(new XYChart.Data<>("2012-01",40));
+        series2.getData().add(new XYChart.Data<>("2012-07",50));
+        series2.getData().add(new XYChart.Data<>("2013-01",60));
+        series2.getData().add(new XYChart.Data<>("2013-07",75));
+        series2.getData().add(new XYChart.Data<>("2014-01",95));
+
+        lineChart.getData().addAll(series1,series2);
     }
 
 
@@ -288,11 +328,28 @@ public class ReturnsController implements Initializable {
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
 
-        series1.getData().add(new XYChart.Data<>("2.00%",52));
-        series1.getData().add(new XYChart.Data<>("2.00%",44));
+        series1.getData().add(new XYChart.Data<>("2.00%",100));
+        series1.getData().add(new XYChart.Data<>("4.00%",90));
+        series1.getData().add(new XYChart.Data<>("6.00%",80));
+        series1.getData().add(new XYChart.Data<>("8.00%",70));
+        series1.getData().add(new XYChart.Data<>("10.00%",60));
+        series1.getData().add(new XYChart.Data<>("12.00%",50));
+        series1.getData().add(new XYChart.Data<>("14.00%",40));
+        series1.getData().add(new XYChart.Data<>("16.00%",30));
+        series1.getData().add(new XYChart.Data<>("18.00%",20));
+        series1.getData().add(new XYChart.Data<>("20.00%",10));
 
-        series2.getData().add(new XYChart.Data<>("4.00%",-48));
-        series2.getData().add(new XYChart.Data<>("4.00%",-40));
+
+        series2.getData().add(new XYChart.Data<>("2.00%",-100));
+        series2.getData().add(new XYChart.Data<>("4.00%",-90));
+        series2.getData().add(new XYChart.Data<>("6.00%",-80));
+        series2.getData().add(new XYChart.Data<>("8.00%",-70));
+        series2.getData().add(new XYChart.Data<>("10.00%",-60));
+        series2.getData().add(new XYChart.Data<>("12.00%",-50));
+        series2.getData().add(new XYChart.Data<>("14.00%",-40));
+        series2.getData().add(new XYChart.Data<>("16.00%",-30));
+        series2.getData().add(new XYChart.Data<>("18.00%",-20));
+        series2.getData().add(new XYChart.Data<>("20.00%",-10));
 
         barChart.getData().clear();
         barChart.layout();
@@ -315,6 +372,7 @@ public class ReturnsController implements Initializable {
         setAreaChart_2();
         setBarChart();
         setCumulativeTableView();
+        setLineChart();
         this.main = main;
         this.net = net;
 

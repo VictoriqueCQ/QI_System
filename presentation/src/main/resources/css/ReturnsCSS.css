@@ -58,13 +58,7 @@
 
 
 
-.data0.chart-bar {
-    -fx-bar-fill: rgb(240, 0, 0);
-}
 
-.data1.chart-bar {
-    -fx-bar-fill: rgb(0, 240, 0);
-}
 
 .default-color0.chart-area-symbol {
     -fx-background-color: #000000,#000000;
