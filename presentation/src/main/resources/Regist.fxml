@@ -47,6 +47,6 @@
             <Image url="/picture/不可用.png" />
          </image>
       </ImageView>
-      <Button fx:id="registButton" layoutX="150.0" layoutY="332.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="150.0" text="注册" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+      <Button fx:id="registerButton" layoutX="150.0" layoutY="332.0" mnemonicParsing="false" onAction="#register" prefHeight="50.0" prefWidth="150.0" text="注册" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
    </children>
 </AnchorPane>

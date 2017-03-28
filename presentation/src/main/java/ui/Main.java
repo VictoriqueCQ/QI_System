@@ -7,6 +7,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import quantour.vo.UserVO;
 import ui.Controller.*;
 
 import java.util.logging.Level;
@@ -42,7 +43,8 @@ public class Main extends Application {
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
         net.setUpNet();
-        this.gotoClientOverview(false);
+        UserVO userVO=new UserVO();
+        this.gotoClientOverview(false,userVO);
 
     }
 
@@ -55,7 +57,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Login.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             LoginController controller = (LoginController) fxmlLoader.getController();
-            controller.setMain(this);
+            controller.setMain(this,net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -74,7 +76,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Regist.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             RegistController registController = (RegistController) fxmlLoader.getController();
-            registController.setMain(this);
+            registController.setMain(this,net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -93,7 +95,7 @@ public class Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/ChangePassword.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             ChangePasswordController registController = (ChangePasswordController) fxmlLoader.getController();
-            registController.setMain(this);
+            registController.setMain(this,net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -108,7 +110,7 @@ public class Main extends Application {
     /**
      * 跳转到客户界面
      */
-    public void gotoClientOverview(boolean t) {
+    public void gotoClientOverview(boolean t, UserVO userVO) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/ClientOverview.fxml"));
@@ -116,7 +118,7 @@ public class Main extends Application {
             rootLayout.setPrefSize(1200, 800);
             rootLayout.setDividerPositions(0.15f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
-            controller.setMain(this,t );
+            controller.setMain(this,t,userVO);
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();

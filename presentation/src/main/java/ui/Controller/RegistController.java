@@ -5,8 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import quantour.vo.UserVO;
 import ui.AlertUtil;
+import ui.JsonUtil;
 import ui.Main;
+import ui.Net;
 
 import java.rmi.RemoteException;
 
@@ -17,6 +20,8 @@ import java.rmi.RemoteException;
  */
 public class RegistController {
     private Main main;
+
+    private Net net;
 
     @FXML
     private TextField usernameTextField;
@@ -37,51 +42,15 @@ public class RegistController {
     private Label noLabel;
 
     @FXML
-    private Button registButton;
+    private Button registerButton;
 
 
-    public void setMain(Main main) {
+    public void setMain(Main main,Net net) {
         this.main = main;
-        yesImage.setVisible(false);
-        noImage.setVisible(false);
-        noLabel.setVisible(false);
-        registButton.setDisable(true);
-        //输入用户名时的监听
-//        usernameTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
-//
-//            @Override
-//            public void handle(KeyEvent event) {
-//                try {
-//                    if (usernameTextField.getText().isEmpty()) {
-//                        yesImage.setVisible(false);
-//                        noImage.setVisible(false);
-//                        noLabel.setVisible(false);
-//                        registButton.setDisable(true);
-//                    }
-//                    ClientVO vo = helper.getClientBLService().client_getclientvo(usernameTextField.getText());
-//                    if (vo.getclientid()==0) {
-//                        yesImage.setVisible(true);
-//                        noImage.setVisible(false);
-//                        noLabel.setVisible(false);
-//                        registButton.setDisable(false);
-//                    }
-//                    else{
-//                        yesImage.setVisible(false);
-//                        noImage.setVisible(true);
-//                        noLabel.setVisible(true);
-//                        registButton.setDisable(true);
-//                    }
-//                    if (usernameTextField.getText().isEmpty()) {
-//                        yesImage.setVisible(false);
-//                        noImage.setVisible(false);
-//                        noLabel.setVisible(false);
-//                        registButton.setDisable(true);
-//                    }
-//                } catch (RemoteException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        this.net=net;
+//        yesImage.setVisible(false);
+//        noImage.setVisible(false);
+//        noLabel.setVisible(false);
     }
 
     @FXML
@@ -92,22 +61,30 @@ public class RegistController {
     @FXML
     private void register() throws RemoteException {
         if (usernameTextField.getText().isEmpty()) {
+            this.exitRegist();
             AlertUtil.showWarningAlert("账号不可以为空！");
         }
         else if (passwordTextField1.getText().isEmpty()) {
+            this.exitRegist();
             AlertUtil.showWarningAlert("密码不可以为空！");
         }
-//        else if (passwordTextField1.getText().equals(passwordTextField2.getText())) {
-//            ResultMessage result = helper.getClientBLService().client_register(usernameTextField.getText(),
-//                    passwordTextField1.getText());
-//            if (result == ResultMessage.Success) {
-//                AlertUtil.showInformationAlert("注册成功！");
-//                this.exitRegist();
-//                main.gotoLogin("client");
-//            } else {
-//                AlertUtil.showErrorAlert("对不起，注册失败，可能是用户名冲突或者网络问题。");
-//            }
-//        }
+        else if (passwordTextField1.getText().equals(passwordTextField2.getText())) {
+            String input="USER\tSIGNUP\tNULL\t"+usernameTextField.getText()+"\t"+passwordTextField1.getText();
+            net.actionPerformed(input);
+            String json = net.run();
+            JsonUtil jsonUtil = new JsonUtil();
+            UserVO userVO1=new UserVO();
+            UserVO userVO= (UserVO) jsonUtil.JSONToObj(json, userVO1.getClass());
+            if(userVO!=null){
+                this.exitRegist();
+                AlertUtil.showConfirmingAlert("注册成功,您的id是"+userVO.getId());
+                main.gotoClientOverview(true,userVO);
+            }
+            else{
+                this.exitRegist();
+                AlertUtil.showErrorAlert("对不起，注册失败");
+            }
+        }
         else {
             AlertUtil.showWarningAlert("对不起，您两次输入的密码不一致。");
         }

@@ -68,7 +68,7 @@ public class User_data_Impl implements User_data {
                     String[] s=br.readLine().split("\t");
                     if(s[1].equals(userInfo.getPassword())){
                         br.close();
-                        return userInfo;
+                        return new UserPO(userInfo.getId(),s[0],s[1]);
                     }
                     else{
                         br.close();
