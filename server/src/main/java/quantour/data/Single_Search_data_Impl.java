@@ -67,6 +67,10 @@ public class Single_Search_data_Impl implements Single_Search_data{
                 filter(stock -> stock.getDate().compareTo(startTime) >= 0).
                 sorted(Comparator.comparing(Stock::getSerial)).
                 collect(Collectors.toList());//得到某日期间的股票信息
+
+        if(resultList.size()==0){
+            return null;
+        }
         int startSerial = resultList.get(0).getSerial();
         int size = resultList.size();
         Stock stock = singleStockList.get(size - 1);
