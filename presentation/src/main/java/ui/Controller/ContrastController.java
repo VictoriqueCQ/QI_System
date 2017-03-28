@@ -251,10 +251,7 @@ public class ContrastController extends Application {
         if(number<5){
         number++;
         StockSearchConditionVO searchConditionVO1;
-//        StockSearchConditionVO searchConditionVO2;
-
         String stockName1 = stockField.getText();
-//        String stockName2 = nameTextField2.getText();
         LocalDate startLocalDate = startTimeDatePicker.getValue();
         LocalDate endLocalDate = endTimeDatePicker.getValue();
         Date startDate = this.changeDateStyle(startLocalDate);
@@ -262,27 +259,20 @@ public class ContrastController extends Application {
 
         if (searchWayChoice.getValue().equals("股票名称搜索")) {
             searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
-//            searchConditionVO2 = new StockSearchConditionVO(null, stockName2, startDate, endDate);
 
         } else {
             searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-//            searchConditionVO2 = new StockSearchConditionVO(stockName2, null, startDate, endDate);
+
         }
 
         stock1 = getStockVoByCondition(searchConditionVO1);
         if (stock1 == null) {
             AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
         }
-//        stock2 = getStockVoByCondition(searchConditionVO2);
-//        if (stock2 == null) {
-//            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
-//        }
 
         setTableContrast();
         setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
-//        setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
         setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
-//        setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
         setVariance();
         } else{
             AlertUtil.showConfirmingAlert("对不起，您选择比较股票数过多");
@@ -314,6 +304,7 @@ public class ContrastController extends Application {
      * cyy
      * 判断是否存在
      */
+    /*
     public boolean Judge(String name) {
         boolean b = false;
         Iterator<StockVO> iter = allStock.iterator();
@@ -326,7 +317,7 @@ public class ContrastController extends Application {
         }
         return b;
 
-    }
+    }*/
 
     public void setTableContrast() {
         stockName1.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
@@ -370,10 +361,7 @@ public class ContrastController extends Application {
         double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
         riseAndDown = riseAndDown * 100;
         DecimalFormat df = new DecimalFormat("#.00");
-//        df.format(riseAndDown);
         model.setRiseAndDown(df.format(riseAndDown) + "%");
-//        DecimalFormat d = new DecimalFormat("#.00");
-//        System.out.print(stockVO.getVariance());
         double d = stockVO.getVariance();
         BigDecimal bd = new BigDecimal(d);
         DecimalFormat df2 = new DecimalFormat("0.0000");
@@ -432,9 +420,7 @@ public class ContrastController extends Application {
     public void setVariance() {
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
         variance.setCellValueFactory(celldata -> celldata.getValue().varianceProperty());
-//        models2 = FXCollections.observableArrayList();
         models2.add(stockModel1);
-//        models2.add(stockModel2);
         varianceTable.setItems(models2);
     }
 
@@ -448,11 +434,9 @@ public class ContrastController extends Application {
         String endtime = format.format(searchConditionVO.getEndTime());
         String stockID = searchConditionVO.getStockID();
         String stockName = searchConditionVO.getStockName();
-//        System.out.print("dajsdja"+stockName);
         String input;
         if (stockID == null && stockName != null) {
             input = "STOCK\t" + "NULL" + "\t" + stockName + "\t" + starttime + "\t" + endtime + "\n";
-         //   System.out.print("successs!!!!!");
         } else {
             input = "STOCK\t" + stockID + "\t" + "NULL" + "\t" + starttime + "\t" + endtime + "\n";
         }
@@ -468,15 +452,7 @@ public class ContrastController extends Application {
     private void removeCompare() {
         number = 0;
         stockTable.getItems().removeAll(models);
-//        XYChart.Series<String, Double> removeSeries = seriesMap.get(stock1.getName());
-
-//         closePriceLine.getData().removeAll(removeSeries);
-
-
         IncomeLine.getData().removeAll();
-
-//        removeSeries = seriesMap.get(stock2.getName());
-//        closePriceLine.getData().removeAll(removeSeries);
         varianceTable.getItems().removeAll(models2);
         closePriceLine.getData().clear();
         IncomeLine.getData().clear();
@@ -494,63 +470,41 @@ public class ContrastController extends Application {
         this.main = main;
         this.net = net;
         this.setDatePicker();
-        //输入股票名进行模糊查找的监听
 
+        //输入股票名进行模糊查找的监听
         stockField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                fuzzyCheck.getItems().removeAll();
+//                System.out.println("Remove!");
                 if(searchWayChoice.getValue().equals("股票名称搜索")){
+
                     reStockName = ".*";
+
                     if(stockField.getText()!=""){
                         stockNameImport = stockField.getText();
-                        for(int i = 0 ; i < stockNameImport.length(); i++){
-                            reStockName = reStockName + stockNameImport.charAt(i)  +".*";
-                            System.out.print("正则表达式为："+reStockName);
-                        }
-                        ArrayList<String> fuzzy = FuzzyCheck();
+                        if(stockNameImport!=null) {
+                            for (int i = 0; i < stockNameImport.length(); i++) {
+                                reStockName = reStockName + stockNameImport.charAt(i) + ".*";
+//                                System.out.println("正则表达式为：" + reStockName);
+                            }
 
-                        for(int i = 0;i<fuzzy.size();i++){
+                            ArrayList<String> fuzzy = FuzzyCheck();
 
-                            ObservableList<String> items =FXCollections.observableArrayList (
-                                    fuzzy.get(i));
-                            fuzzyCheck.setItems(items);
-                        }
-                        if(fuzzyCheck.getItems()!=null){
-//                            System.out.print(fuzzyCheck.getItems());
-                            fuzzyCheck.setVisible(true);
-                        }
+                            if(fuzzy!=null) {
+                                ObservableList<String> items = FXCollections.observableArrayList(
+                                        fuzzy);
+                                fuzzyCheck.setItems(items);
 
+                                fuzzyCheck.setVisible(true);
+                            }else{
+                                fuzzyCheck.setVisible(false);
+                            }
+                        }
                     }
-
-
                 }
-
             }
         });
-           /* @Override
-            public void handle(KeyEvent event) {
-                if(searchWayChoice.getValue().equals("股票名称搜索")){
-                    if(stockField.getText()!=""){
-                        stockNameImport = stockField.getText();
-                        for(int i = 0 ; i < stockNameImport.length(); i++){
-                            reStockName = reStockName + stockNameImport.charAt(i)  +".*";
-                            System.out.print("正则表达式为："+reStockName);
-                        }
-                        ArrayList<String> fuzzy = FuzzyCheck();
-
-                        for(int i = 0;i<fuzzy.size();i++){
-
-                            ObservableList<String> items =FXCollections.observableArrayList (
-                                    fuzzy.get(i));
-                            fuzzyCheck.setItems(items);
-                        }
-                        fuzzyCheck.setVisible(true);
-
-                    }
-
-
-                }
-            }*/
 
 
 
@@ -559,21 +513,21 @@ public class ContrastController extends Application {
 
     public ArrayList<String> FuzzyCheck(){
         ArrayList<String> result = new ArrayList<>();
-
+        if(reStockName!=".*"){
         Pattern pattern = Pattern.compile(reStockName);
         for(int i=0;i<allStockName.length;i++){
             Matcher matcher = pattern.matcher(allStockName[i]);
             if(matcher.matches()){
+                System.out.println("匹配："+allStockName[i]);
                 result.add(allStockName[i]);
 
+                }
+
             }
-
+            return result;
+        }else{
+            return  null;
         }
-
-//        System.out.print("模糊查找结果"+result.get(0));
-        return result;
-
-
     }
 
     @FXML
@@ -590,7 +544,8 @@ public class ContrastController extends Application {
         allStockName = new String[2];
         allStockName[0] = "深圳a股";
         allStockName[1] = "b股";
-      /*  customerName = "c";
+       /* String  customerName = "深";
+        String reCustomerName = ".*";
         if(customerName!=null){
             for(int i = 0 ; i < customerName.length(); i++){
                 reCustomerName= reCustomerName + customerName.charAt(i)  +".*";
@@ -598,16 +553,10 @@ public class ContrastController extends Application {
         }
         System.out.println("姓名正则:   "+reCustomerName);
 
-        String s = "abc";
+        String s = "aaaaaabcc";
 
         Pattern pattern = Pattern.compile(reCustomerName);
         Matcher matcher = pattern.matcher(s);
        System.out.print(matcher.matches());*/
-
-
     }
-
-
-
-
 }
