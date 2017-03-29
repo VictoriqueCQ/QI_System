@@ -23,10 +23,10 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="471.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="442.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <TableView fx:id="cumulativeTableView" prefHeight="67.0" prefWidth="1178.0">
+                                    <TableView fx:id="cumulativeTableView" prefHeight="118.0" prefWidth="1178.0" stylesheets="@css/TableViewCSS.css">
                                        <columns>
                                           <TableColumn fx:id="yearReturns" prefWidth="100.0" text="年化收益率" />
                                           <TableColumn fx:id="standardYearReturns" prefWidth="100.0" text="基准年化收益率" />
@@ -39,7 +39,7 @@
                                           <TableColumn fx:id="changeHands" prefWidth="100.0" text="换手率" />
                                        </columns>
                                     </TableView>
-                                    <LineChart fx:id="lineChart" GridPane.rowIndex="1">
+                                    <LineChart fx:id="lineChart" prefHeight="360.0" prefWidth="1178.0" GridPane.rowIndex="1">
                                       <xAxis>
                                         <CategoryAxis fx:id="date" side="BOTTOM" />
                                       </xAxis>

@@ -21,6 +21,7 @@
 }
 
 .table-view.column-header,.label{
+    -fx-font-size:1em;
     -fx-background-color: #1C1F22;
 }
 
