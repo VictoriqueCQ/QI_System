@@ -16,6 +16,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
     private Single_Search_data singleSearchData;
     private User_data userData;
     private Getter_data getterData;
+    private Strategy_Calculator_data strategyCalculatorData;
 
     private List<Stock> stockList;
 
@@ -26,6 +27,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         singleSearchData = new Single_Search_data_Impl(stockList);
         userData=new User_data_Impl();
         getterData=new Getter_Impl(stockList);
+        strategyCalculatorData=new Strategy_Calculator_Impl(stockList);
     }
 
     static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
@@ -53,6 +55,11 @@ public class DataFactory_CSV_Impl implements DataFactory {
     @Override
     public Getter_data getGetter() {
         return getterData;
+    }
+
+    @Override
+    public Strategy_Calculator_data getStrategy() {
+        return strategyCalculatorData;
     }
 
 }

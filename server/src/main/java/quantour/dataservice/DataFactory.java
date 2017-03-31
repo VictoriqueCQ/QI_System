@@ -8,4 +8,5 @@ public interface DataFactory {
     Single_Search_data getSingleSearch();
     User_data getUser();
     Getter_data getGetter();
+    Strategy_Calculator_data getStrategy();
 }

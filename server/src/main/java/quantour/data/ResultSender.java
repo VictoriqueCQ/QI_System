@@ -45,6 +45,9 @@ class ResultSender {
             case "GET":
                 logic = dataFactory.getGetter();
                 break;
+            case "STRATEGY":
+                logic = dataFactory.getStrategy();
+                break;
             default:
                 System.out.println("wrong");//此处应改为exception
 
