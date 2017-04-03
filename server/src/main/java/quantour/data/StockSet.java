@@ -4,6 +4,7 @@ package quantour.data;
  * Created by dell on 2017/3/31.
  */
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,4 +13,21 @@ import java.util.Map;
  */
 public class StockSet {
     private Map<Integer,List<Stock>> stockSets;
+
+    public StockSet(Map<Integer, List<Stock>> stockSets) {
+        this.stockSets = stockSets;
+    }
+
+    public Map<Integer, List<Stock>> getStockSets() {
+        return stockSets;
+    }
+
+    public double countProfit(){
+        List<Double> eachProift=new ArrayList<Double>();
+        for(List<Stock> temp:stockSets.values()){
+            double profit=(temp.get(1).getAdjClose()-temp.get(0).getAdjClose())/temp.get(0).getAdjClose();//小日期在前
+            eachProift.add(profit);
+        }
+        return eachProift.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+    }
 }
