@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quantour.vo.UserVO;
@@ -45,7 +46,28 @@ public class Main extends Application {
         net.setUpNet();
         UserVO userVO=new UserVO();
         this.gotoClientOverview(false,userVO);
+        this.lodaing();
 
+
+    }
+
+    public void lodaing(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Loading.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(800,600);
+            LoadingController controller = (LoadingController) fxmlLoader.getController();
+            controller.setMain(this);
+            Stage stage2=new Stage(StageStyle.TRANSPARENT);
+            stage2.setScene(new Scene(insidePane));
+            stage2.setAlwaysOnTop(true);
+            stage2.centerOnScreen();
+            stage2.initModality(Modality.APPLICATION_MODAL);
+            stage2.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
