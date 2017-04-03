@@ -156,13 +156,13 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="109.0" layoutY="9.0" />
+                                                <TextField fx:id="HoldingPeriod_MomentumStrategy" layoutX="109.0" layoutY="9.0" />
                                                 <Label layoutX="316.0" layoutY="9.0" text="形成期">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="402.0" layoutY="9.0" />
+                                                <TextField fx:id="FormativePeriod_MomentumStrategy" layoutX="402.0" layoutY="9.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -172,7 +172,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="119.0" layoutY="9.0" />
+                                                <TextField fx:id="StockPool_MomentumStrategy" layoutX="119.0" layoutY="9.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -194,13 +194,13 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="109.0" layoutY="9.0" />
+                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="109.0" layoutY="9.0" />
                                                 <Label layoutX="316.0" layoutY="9.0" text="形成期">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="402.0" layoutY="9.0" />
+                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="402.0" layoutY="9.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -210,7 +210,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField layoutX="119.0" layoutY="9.0" />
+                                                <TextField fx:id="StockPool_MeanReversio" layoutX="119.0" layoutY="9.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>

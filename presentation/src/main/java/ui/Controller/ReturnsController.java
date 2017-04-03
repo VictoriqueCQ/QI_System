@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import ui.CumulativeReturnsModel;
 import ui.Main;
 import ui.Net;
@@ -132,6 +133,32 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
+
+    @FXML
+    private TextField HoldingPeriod_MomentumStrategy;
+
+    @FXML
+    private TextField FormativePeriod_MomentumStrategy;
+
+    @FXML
+    private TextField StockPool_MomentumStrategy;
+
+    @FXML
+    private TextField HoldingPeriod_MeanReversio;
+
+    @FXML
+    private TextField FormativePeriod_MeanReversio;
+
+    @FXML
+    private TextField StockPool_MeanReversio;
+
+    private void setMomentumStrategyInput(){
+
+    }
+
+    private void setMeanReversioInput(){
+
+    }
 
 
     private void setCumulativeTableView(){
