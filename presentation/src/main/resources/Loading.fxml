@@ -7,8 +7,8 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="518.0" prefWidth="746.0" stylesheets="@css/loading.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" styleClass="anchorPane" stylesheets="@css/loading.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.Controller.LoadingController">
    <children>
-      <Label layoutX="317.0" layoutY="209.0" prefHeight="101.0" prefWidth="113.0" stylesheets="/css/loading.css" />
+      <Label layoutX="317.0" layoutY="209.0" prefHeight="120.0" prefWidth="120.0" stylesheets="/css/loading.css" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="240.0" />
    </children>
 </AnchorPane>
