@@ -76,6 +76,22 @@
 .default-color1.chart-line-symbol {
     -fx-background-color: #000000,#000000;
 }
+
 .chart-legend {
     -fx-background-color: transparent;
+}
+
+.TextFieldText {
+    -fx-background-color: rgb(100, 100, 100);
+    -fx-text-fill: #AAACAF;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.combo-box{
+    -fx-background-color:rgb(100,100,100);
+}
+
+.combo-box .label{
+    -fx-text-fill: #AAACAF;
 }

@@ -36,5 +36,5 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         return null;
     }
 
-    private
+//    private
 }

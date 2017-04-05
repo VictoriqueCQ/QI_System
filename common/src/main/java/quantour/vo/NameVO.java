@@ -14,6 +14,10 @@ public class NameVO {
         this.codes = codes;
     }
 
+    public NameVO(){
+
+    }
+
     public List<String> getNames() {
         return names;
     }

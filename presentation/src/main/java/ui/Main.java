@@ -46,10 +46,35 @@ public class  Main extends Application {
         net.setUpNet();
         UserVO userVO=new UserVO();
         this.gotoClientOverview(false,userVO);
-        this.lodaing();
+//        this.lodaing();
+//        net.actionPerformed("GET");
+//        String json = net.run();
+//        JsonUtil jsonUtil = new JsonUtil();
+//        NameVO nameVO1 = new NameVO();
+//        NameVO nameVO= (NameVO) jsonUtil.JSONToObj(json, nameVO1.getClass());
+//        File file=new File("C:\\Users\\xjwhh\\Desktop\\stock.txt");
+//        if(!file.exists())
+//            file.createNewFile();
+//        FileWriter fw = new FileWriter(file, true);
+//        BufferedWriter bw = new BufferedWriter(fw);
+//
+//
+//        for(int i=0;i<nameVO.getCodes().size();i++){
+//            int code=nameVO.getCodes().get(i);
+//            String code1=String.valueOf(code);
+//            char[] code2=code1.toCharArray();
+//            int j=code2.length;
+//            for(int m=0;m<6-j;m++){
+//                bw.write("0");
+//            }
+//            bw.write(nameVO.getCodes().get(i)+System.getProperty("line.separator"));
+//            bw.flush();
+//        }
+//
+//        bw.close();
+//        System.out.print("success");
 
-
-    }
+}
 
     public void lodaing(){
         try {

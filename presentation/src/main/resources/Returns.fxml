@@ -32,8 +32,8 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="442.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="393.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
                                           <TableView fx:id="cumulativeTableView" prefHeight="118.0" prefWidth="1178.0" stylesheets="@css/TableViewCSS.css">
@@ -67,7 +67,7 @@
                                   <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <BarChart fx:id="barChart" layoutX="336.0" layoutY="50.0" prefHeight="529.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <BarChart fx:id="barChart" layoutX="336.0" layoutY="50.0" prefHeight="529.0" prefWidth="1200.0" styleClass="chart-bar-symbol" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <xAxis>
                                         <CategoryAxis fx:id="ReturnsNumber" side="BOTTOM" />
                                       </xAxis>
@@ -159,7 +159,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StartDate_MomentumStrategy" layoutX="110.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="StartDate_MomentumStrategy" layoutX="124.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="120.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
@@ -169,7 +169,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="FormativePeriod_MomentumStrategy" layoutX="115.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="FormativePeriod_MomentumStrategy" layoutX="98.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="90.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -179,7 +179,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="EndDate_MomentumStrategy" layoutX="104.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="EndDate_MomentumStrategy" layoutX="121.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="120.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
@@ -189,7 +189,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="HoldingPeriod_MomentumStrategy" layoutX="115.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="HoldingPeriod_MomentumStrategy" layoutX="96.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="105.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -199,7 +199,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="160.0" layoutY="10.0" prefHeight="30.0" prefWidth="120.0" />
+                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="203.0" layoutY="13.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="190.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -209,7 +209,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="Plate_MomentumStrategy" layoutX="102.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <ComboBox fx:id="Plate_MomentumStrategy" layoutX="102.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" AnchorPane.topAnchor="12.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -233,7 +233,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StartDate_MeanReversio" layoutX="110.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="StartDate_MeanReversio" layoutX="131.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="120.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
@@ -243,7 +243,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="115.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="94.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="90.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -253,7 +253,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="EndDate_MeanReversio" layoutX="104.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="EndDate_MeanReversio" layoutX="113.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="120.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
@@ -263,7 +263,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="115.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="95.0" layoutY="13.0" prefHeight="30.0" prefWidth="140.0" styleClass="TextFieldText" AnchorPane.leftAnchor="105.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -273,7 +273,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="160.0" layoutY="10.0" prefHeight="30.0" prefWidth="120.0" />
+                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="177.0" layoutY="13.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="190.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -283,7 +283,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <ComboBox fx:id="Plate_MeanReversio" layoutX="102.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" />
+                                                <ComboBox fx:id="Plate_MeanReversio" layoutX="102.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" AnchorPane.topAnchor="12.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
