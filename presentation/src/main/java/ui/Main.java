@@ -14,7 +14,7 @@ import ui.Controller.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Main extends Application {
+public class  Main extends Application {
 
     Net net;
 

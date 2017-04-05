@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,6 +15,8 @@ import ui.Net;
 import ui.ReturnsModel;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -135,13 +138,28 @@ public class ReturnsController implements Initializable {
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
     @FXML
+    private TextField StartDate_MomentumStrategy;
+
+    @FXML
+    private TextField EndDate_MomentumStrategy;
+
+    @FXML
     private TextField HoldingPeriod_MomentumStrategy;
 
     @FXML
     private TextField FormativePeriod_MomentumStrategy;
 
     @FXML
-    private TextField StockPool_MomentumStrategy;
+    private TextField StockheldInHouse_MomentumStrategy;
+
+    @FXML
+    private ComboBox<String> Plate_MomentumStrategy;
+
+    @FXML
+    private TextField StartDate_MeanReversio;
+
+    @FXML
+    private TextField EndDate_MeanReversio;
 
     @FXML
     private TextField HoldingPeriod_MeanReversio;
@@ -150,7 +168,26 @@ public class ReturnsController implements Initializable {
     private TextField FormativePeriod_MeanReversio;
 
     @FXML
-    private TextField StockPool_MeanReversio;
+    private TextField StockHeldInHouse_MeanReversio;
+
+    @FXML
+    private ComboBox<String> Plate_MeanReversio;
+
+    private void setComboBox(){
+        ObservableList<String> plate_MS = FXCollections.observableArrayList();
+        List<String> plateName_MS = new ArrayList<String>();
+        plateName_MS.add("板块1");
+        plateName_MS.add("板块2");
+        plate_MS.addAll(plateName_MS);
+        Plate_MomentumStrategy.setItems(plate_MS);
+
+        ObservableList<String> plate_MR = FXCollections.observableArrayList();
+        List<String> plateName_MR = new ArrayList<String>();
+        plateName_MR.add("板块1");
+        plateName_MR.add("板块2");
+        plate_MR.addAll(plateName_MR);
+        Plate_MeanReversio.setItems(plate_MR);
+    }
 
     private void setMomentumStrategyInput(){
 
@@ -159,7 +196,6 @@ public class ReturnsController implements Initializable {
     private void setMeanReversioInput(){
 
     }
-
 
     private void setCumulativeTableView(){
         yearReturns.setCellValueFactory(celldata -> celldata.getValue().yearReturnsProperty());
@@ -394,6 +430,7 @@ public class ReturnsController implements Initializable {
     }
 
     public void setMain(Main main, Net net) {
+        setComboBox();
         setTableView();
         setAreaChart_1();
         setAreaChart_2();
