@@ -47,7 +47,7 @@ public class  Main extends Application {
         UserVO userVO=new UserVO();
         this.gotoClientOverview(false,userVO);
 //        this.lodaing();
-//        net.actionPerformed("GET");
+//         net.actionPerformed("GET");
 //        String json = net.run();
 //        JsonUtil jsonUtil = new JsonUtil();
 //        NameVO nameVO1 = new NameVO();

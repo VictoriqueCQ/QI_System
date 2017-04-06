@@ -90,7 +90,7 @@
                                 <Button fx:id="comparsionButton" mnemonicParsing="false" onAction="#gotoComparsion" prefHeight="30.0" prefWidth="399.0" text="股票比较" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                 <Button fx:id="thermometerButton" mnemonicParsing="false" onAction="#gotoThermometer" prefHeight="30.0" prefWidth="399.0" text="市场温度计" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <Button fx:id="marketConditionButton" mnemonicParsing="false" onAction="#gotoMarketCondition" prefHeight="30.0" prefWidth="366.0" text="市场情况" GridPane.rowIndex="1" />
-                        <Button fx:id="returnsButton" mnemonicParsing="false" onAction="#gotoReturns" prefHeight="40.0" prefWidth="240.0" text="收益率" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Button fx:id="returnsButton" mnemonicParsing="false" onAction="#gotoReturns" prefHeight="30.0" prefWidth="239.0" text="收益率" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                     </children>

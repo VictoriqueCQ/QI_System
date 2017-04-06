@@ -10,7 +10,7 @@
 .button {
     -fx-base: rgb(0, 0, 0);
     -fx-font-color: rgb(255, 255, 255);
-    -fx-font-size: 2em;
+    -fx-font-size: 1.5em;
 }
 
 .button1 {
