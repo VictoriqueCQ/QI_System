@@ -561,9 +561,9 @@ public class ContrastController extends Application {
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
 
-        net.actionPerformed("GET");
+/*        net.actionPerformed("GET");
         String json = net.run();
-        JsonUtil jsonUtil = new JsonUtil();
+        JsonUtil jsonUtil = new JsonUtil();*/
 
 //        StockVO stockVO1 = new StockVO();
 //        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
