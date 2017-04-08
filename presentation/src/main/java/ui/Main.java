@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import quantour.vo.UserVO;
@@ -21,6 +20,7 @@ public class  Main extends Application {
     // 主窗口
     private Stage stage;
     private Stage stage1=new Stage(StageStyle.UNDECORATED);
+    private Stage stage2=new Stage(StageStyle.TRANSPARENT);
 
 
     // 内部窗口
@@ -38,6 +38,7 @@ public class  Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         net = new Net();
+        net.setMain(this);
         stage = primaryStage;
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
@@ -84,11 +85,12 @@ public class  Main extends Application {
             insidePane.setPrefSize(800,600);
             LoadingController controller = (LoadingController) fxmlLoader.getController();
             controller.setMain(this);
-            Stage stage2=new Stage(StageStyle.TRANSPARENT);
-            stage2.setScene(new Scene(insidePane));
+
+            Scene scene=new Scene(insidePane);
+            scene.setFill(null);
+            stage2.setScene(scene);
             stage2.setAlwaysOnTop(true);
             stage2.centerOnScreen();
-            stage2.initModality(Modality.APPLICATION_MODAL);
             stage2.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
@@ -266,11 +268,23 @@ public class  Main extends Application {
     }
 
     /**
+     * 缩小至任务栏
+     */
+    public void zoomoutButton(){
+        stage.setIconified(true);
+    }
+
+
+
+    /**
      *  关闭弹窗
      */
     public void closeExtraStage() {
         if (stage1!=null&&stage1.isShowing()) {
             stage1.hide();
+        }
+        if (stage2!=null&&stage2.isShowing()) {
+            stage2.hide();
         }
     }
 //

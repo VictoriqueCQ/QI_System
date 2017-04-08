@@ -17,6 +17,10 @@
     -fx-background-image: url("/picture/exitbutton.png");
 }
 
+.button2 {
+    -fx-background-image: url("/picture/zoomout.png");
+}
+
 .chart {
     -fx-background-color: #000000;
 }

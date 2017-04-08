@@ -25,10 +25,11 @@ public class StockSet {
         return stockSets;
     }
 
-    public double countProfit(){
-        List<Double> eachProift=new ArrayList<Double>();
+    double countProfit(){
+        List<Double> eachProift=new ArrayList<>();
         for(List<Stock> temp:stockSets.values()){
-            double profit=(temp.get(1).getAdjClose()-temp.get(0).getAdjClose())/temp.get(0).getAdjClose();//小日期在前
+            double profit=(temp.get(0).getAdjClose()-temp.get(0).getAdjClose())/temp.get(1).getAdjClose();
+            //小日期在前
             eachProift.add(profit);
         }
         return eachProift.stream().mapToDouble(Double::doubleValue).average().getAsDouble();

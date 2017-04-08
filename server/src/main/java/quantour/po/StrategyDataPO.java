@@ -12,15 +12,17 @@ public class StrategyDataPO extends DataClass{
     private double beta;
     private double sharpeRatio;
     private double maxDrawDown;//最大回撤
+    private CombinationPO combinationPO;
 
     public StrategyDataPO(double annualReturn, double basicAnnualReturn, double alpha, double beta, double sharpeRatio,
-                          double maxDrawDown) {
+                          double maxDrawDown, CombinationPO combinationPO) {
         this.annualReturn = annualReturn;
         this.basicAnnualReturn = basicAnnualReturn;
         this.alpha = alpha;
         this.beta = beta;
         this.sharpeRatio = sharpeRatio;
         this.maxDrawDown = maxDrawDown;
+        this.combinationPO = combinationPO;
     }
 
     public double getAnnualReturn() {
@@ -45,5 +47,9 @@ public class StrategyDataPO extends DataClass{
 
     public double getMaxDrawDown() {
         return maxDrawDown;
+    }
+
+    public CombinationPO getCombinationPO() {
+        return combinationPO;
     }
 }

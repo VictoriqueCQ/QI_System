@@ -23,6 +23,9 @@ public class ClientOverviewController implements Initializable {
     private Button exitButton;
 
     @FXML
+    private Button zoomoutButton;
+
+    @FXML
     private Button imagekButton;
 
     @FXML
@@ -55,6 +58,11 @@ public class ClientOverviewController implements Initializable {
     @FXML
     private void exit() {
         main.exitSystem();
+    }
+
+    @FXML
+    private void zoomout(){
+        main.zoomoutButton();
     }
 
     @FXML
