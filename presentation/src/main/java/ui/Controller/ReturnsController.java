@@ -190,7 +190,7 @@ public class ReturnsController implements Initializable {
     }
 
     private void setMomentumStrategyInput(){
-
+        
     }
 
     private void setMeanReversioInput(){

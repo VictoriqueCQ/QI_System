@@ -21,7 +21,7 @@
 
 .label {
     -fx-text-fill: rgb(240, 150, 96);
-
+    -fx-font-size: 1.2em;
 }
 
 .noborder {
