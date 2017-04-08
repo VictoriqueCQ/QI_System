@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import ui.CumulativeReturnsModel;
 import ui.Main;
 import ui.Net;
@@ -172,6 +169,9 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private ComboBox<String> Plate_MeanReversio;
+
+    @FXML
+    private Button search;
 
     private void setComboBox(){
         ObservableList<String> plate_MS = FXCollections.observableArrayList();

@@ -199,7 +199,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="203.0" layoutY="13.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="190.0" />
+                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="161.0" layoutY="10.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="161.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -213,7 +213,14 @@
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <children>
+                                                <Button fx:id="search" layoutX="99.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="105.0" text="查询">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Button>
+                                             </children></AnchorPane>
                                        </children>
                                     </GridPane>
                                  </children>
