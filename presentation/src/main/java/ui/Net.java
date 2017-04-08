@@ -7,6 +7,7 @@ import java.net.Socket;
  * Created by xjwhhh on 2017/3/12.
  */
 public class Net {
+    private Main main;
 
     private Socket sock;
     private DataInputStream inputStream;
@@ -42,6 +43,7 @@ public class Net {
      */
     public String run() {
         StringBuilder sb = new StringBuilder();
+        main.lodaing();
         try {
             int length = inputStream.readInt();
             for (int i = 0; i < length; i++) {
@@ -50,6 +52,7 @@ public class Net {
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        main.closeExtraStage();
         return sb.toString();
     }
 
@@ -64,5 +67,9 @@ public class Net {
         } catch (Exception ep) {
             ep.printStackTrace();
         }
+    }
+
+    public void setMain(Main main){
+        this.main=main;
     }
 }
