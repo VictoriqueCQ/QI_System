@@ -3,6 +3,7 @@ package quantour.data;
 import java.util.List;
 
 /**
+ * 别忘了把所有停过牌的股票删掉
  * Created by dell on 2017/4/8.
  */
 public class StockFilter {
