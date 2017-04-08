@@ -5,6 +5,10 @@ import quantour.data.strategy.Momentum_Impl;
 import quantour.dataservice.Strategy_Calculator_data;
 import quantour.dataservice.Strategy_data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,8 +37,48 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
                 strategyData=new Average_Impl(stocks);
                 break;
         }
+
+        List<StockSet> stockSets=strategyData.getSets(quest);
+        List<Double> profitList=new ArrayList<>();
+        for(StockSet stockSet:stockSets){
+            profitList.add(stockSet.countProfit());
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+        Date startTime;
+        Date endTime;
+        try{
+            startTime=sdf.parse(quest[3]);
+            endTime=sdf.parse(quest[4]);
+        }catch (ParseException pe){
+            pe.printStackTrace();
+            return null;
+        }
+        long l = endTime.getTime()-startTime.getTime();
+        double interval=l/(1000*60*60*24);
+
+        double annualProfit=(profitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble()/interval)
+                *365;//年化收益率
+
+        switch (quest[6]){
+            case "T":
+
+                break;
+            case "F":
+                //根据板块指数计算
+                break;
+        }
         return null;
     }
 
-//    private
+    //计算自选股票池
+    private double arbStock(String[] quest){
+        int num;
+        return 0.0;
+    }
+
+    //计算固定股票池
+    private double staStock(String[] quest){
+        return 0.0;
+    }
 }
