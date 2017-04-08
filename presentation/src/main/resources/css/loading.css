@@ -1,8 +1,10 @@
 .label{
     -fx-background-image: url("/picture/loading.gif");
     -fx-background-size: cover;
+    -fx-background-color:transparent;
 }
 
 .anchorPane{
     -fx-background-color:transparent;
 }
+
