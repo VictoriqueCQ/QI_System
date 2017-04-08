@@ -68,7 +68,7 @@ public class  Main extends Application {
 //            for(int m=0;m<6-j;m++){
 //                bw.write("0");
 //            }
-//            bw.write(nameVO.getCodes().get(i)+System.getProperty("line.separator"));
+//            bw.write(nameVO.getCodes().get (i)+System.getProperty("line.separator"));
 //            bw.flush();
 //        }
 //

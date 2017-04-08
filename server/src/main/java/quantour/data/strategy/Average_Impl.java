@@ -33,7 +33,7 @@ public class Average_Impl implements Strategy_data{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int shapeTime =Integer.parseInt(quest[5]) ;//形成期,比价基准
+        int shapeTime =Integer.parseInt(quest[5]) ;//形成期,比价基准，均线
         int holdTime = Integer.parseInt(quest[6]);//持有期
         int numOfStocks = Integer.parseInt(quest[7]);//仓内持股数
         ArrayList<String> stockPoolChoose = null;//板块选择
@@ -48,7 +48,7 @@ public class Average_Impl implements Strategy_data{
         calendar.setTime(date);
         calendar.add(calendar.DATE,holdTime);//把日期往后增加一天.整数往后推,负数往前移动
         date=calendar.getTime();   //这个时间就是日期往后推一天的结果
-
+        List<Stock> stockList;
 
 
         return null;
@@ -56,13 +56,21 @@ public class Average_Impl implements Strategy_data{
     /**
      * 计算均线值
      */
-    public double calAverage(List<Stock> stockList) {
+    private double calAverage(List<Stock> stockList) {
         int size = stockList.size();
         double sum = 0;
         for (int i = 0; i < size; i++) {
             sum = sum + stockList.get(i).getAdjClose();
         }
         return sum/size;
+    }
+
+    /**
+     * 计算偏离度
+     */
+    private double calDeviate(double average,double adjClose){
+        return (average-adjClose)/average;
+
     }
 
 }

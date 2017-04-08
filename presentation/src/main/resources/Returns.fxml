@@ -32,15 +32,15 @@
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="393.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="257.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="473.0" minHeight="10.0" prefHeight="375.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
                                           <TableView fx:id="cumulativeTableView" prefHeight="118.0" prefWidth="1178.0" stylesheets="@css/TableViewCSS.css">
                                              <columns>
                                                 <TableColumn fx:id="yearReturns" prefWidth="100.0" text="年化收益率" />
-                                                <TableColumn fx:id="standardYearReturns" prefWidth="100.0" text="基准年化收益率" />
-                                                <TableColumn fx:id="alpha" prefWidth="100.0" text="阿尔法" />
+                                                <TableColumn fx:id="standardYearReturns" prefWidth="112.0" text="基准年化收益率" />
+                                                <TableColumn fx:id="alpha" prefWidth="88.0" text="阿尔法" />
                                                 <TableColumn fx:id="beta" prefWidth="100.0" text="贝塔" />
                                                 <TableColumn fx:id="sharp" prefWidth="100.0" text="夏普比率" />
                                                 <TableColumn fx:id="wave" prefWidth="100.0" text="收益波动率" />
@@ -199,7 +199,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="203.0" layoutY="13.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="190.0" />
+                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="159.0" layoutY="10.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="159.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -213,7 +213,14 @@
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <children>
+                                                <Button fx:id="search" layoutX="97.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="105.0" text="查询">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Button>
+                                             </children></AnchorPane>
                                        </children>
                                     </GridPane>
                                  </children>
@@ -273,7 +280,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Label>
-                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="177.0" layoutY="13.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="190.0" />
+                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="159.0" layoutY="10.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" AnchorPane.leftAnchor="159.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -287,7 +294,14 @@
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <children>
+                                                <Button fx:id="search1" layoutX="97.0" layoutY="7.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="105.0" text="查询">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Button>
+                                             </children></AnchorPane>
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
