@@ -4,6 +4,8 @@ import quantour.data.strategy.Average_Impl;
 import quantour.data.strategy.Momentum_Impl;
 import quantour.dataservice.Strategy_Calculator_data;
 import quantour.dataservice.Strategy_data;
+import quantour.po.StockSetPO;
+import quantour.po.StrategyDataPO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +30,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
     }
 
     @Override
-    public DataClass get(String[] quest) {
+    public StrategyDataPO get(String[] quest) {
         //这里先筛选股票池和日期
         switch (quest[2]){
             case "M":
@@ -40,7 +42,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         }
 
         List<StockSet> stockSets=strategyData.getSets(quest);
-        List<Double> profitList=new ArrayList<>();
+        List<Double> profitList=new ArrayList<>();//策略收益率list
         for(StockSet stockSet:stockSets){
             profitList.add(stockSet.countProfit());
         }
@@ -58,8 +60,9 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         long l = endTime.getTime()-startTime.getTime();
         double interval=l/(1000*60*60*24);
 
-        double annualProfit=(profitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble()/interval)
-                *365;//年化收益率
+        double e1=profitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+        double d1=profitList.stream().mapToDouble(num -> num * num).average().getAsDouble();
+        double annualProfit=(e1/interval) *365;//年化收益率
 
         Count count=null;
         switch (quest[6]){
@@ -70,11 +73,33 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
                 //根据板块指数计算
                 break;
         }
-        double basicAnnualProfit=(count.e/l)*365;//基准年化收益率
+        double e2=count.getE();
+        double basicAnnualProfit=(e2/interval)*365;//基准年化收益率
 
-        double beta=0.0/count.d;
+        double sum=0.0;
+        for (int i=0;i<profitList.size();i++){
+            sum=sum+profitList.get(i)*count.getProfits(i);
+        }
+        double beta=(sum/profitList.size()-e1*e2)/count.getD(e2);//β
 
-        return null;
+        double rf=0.0;//待读，无风险收益率
+        double alpha=(annualProfit-rf)-beta*(basicAnnualProfit-rf);//α
+
+        double sharpe=(e1-rf)/Math.sqrt(d1);//夏普比率
+
+        List<Double> maxDrawBacks=new ArrayList<>();
+        for(int i=profitList.size()-1;i>=0;i++){
+            double today=profitList.get(i);
+            double min=profitList.subList(0,i).stream().mapToDouble(Double::doubleValue).min().getAsDouble();
+            maxDrawBacks.add(today-min);
+        }
+        double maxDrawDown=maxDrawBacks.stream().mapToDouble(Double::doubleValue).max().getAsDouble();//最大回撤
+
+        List<StockSetPO> stockSetPOS=new ArrayList<>();
+        for (StockSet stockSet : stockSets) {
+            stockSetPOS.add(new StockSetPO(stockSet));
+        }
+        return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,profitList);
     }
 
     //计算自选股票池
@@ -90,7 +115,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
             Stock start;
             Stock end;
             if(singleStock.size()>=2){
-                start=singleStock.get(singleStock.size()-1);
+                start=singleStock.get(singleStock.size()-1);//大日期在前
                 end=singleStock.get(0);//这里需要检查是否为开始日期和结束日期
                 double profit=(end.getAdjClose()-start.getAdjClose())/start.getAdjClose();
                 profits.add(profit);
@@ -99,11 +124,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
             //System.out.println(start.getDate());
             //System.out.println(start.getDate());
         }
-
-        double e=profits.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
-        double d=profitsSquare.stream().mapToDouble(Double::doubleValue).average().getAsDouble()-e*e;
-
-        return new Count(e,d);
+        return new Count(profits,profitsSquare);
     }
 
     //计算固定股票池
@@ -112,13 +133,26 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
     }
 
     class Count{
-        double e;//数学期望
-        double d;//方差
+        List<Double> profits;
+        List<Double> profitsSquare;
 
-        public Count(double e, double d) {
-            this.e = e;
-            this.d = d;
+        Count(List<Double> profits, List<Double> profitsSquare) {
+            this.profits = profits;
+            this.profitsSquare = profitsSquare;
         }
+
+        double getE(){
+            return profits.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+        }
+
+        double getD(double e){
+            return profitsSquare.stream().mapToDouble(Double::doubleValue).average().getAsDouble()-e*e;
+        }
+
+        double getProfits(int i){
+            return profits.get(i);
+        }
+
     }
 
 }

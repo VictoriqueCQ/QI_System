@@ -25,7 +25,7 @@ public class Single_Search_data_Impl implements Single_Search_data{
     }
 
     @Override
-    public DataClass get(String[] quest) {
+    public quantour.data.DataClass get(String[] quest) {
         try {
             return getStockList(quest);
         }catch (ParseException pe){

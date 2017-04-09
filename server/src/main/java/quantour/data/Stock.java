@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by dell on 2017/3/9.
  */
-public class Stock extends DataClass {
+public class Stock extends quantour.data.DataClass {
     private int serial;
     private Date date;
     private double open;
@@ -33,7 +33,7 @@ public class Stock extends DataClass {
         this.market = market;
     }
 
-    public int getSerial() {
+    int getSerial() {
         return serial;
     }
 
@@ -41,19 +41,19 @@ public class Stock extends DataClass {
         return date;
     }
 
-    public double getOpen() {
+    double getOpen() {
         return open;
     }
 
-    public double getHigh() {
+    double getHigh() {
         return high;
     }
 
-    public double getLow() {
+    double getLow() {
         return low;
     }
 
-    public double getClose() {
+    double getClose() {
         return close;
     }
 
@@ -65,11 +65,11 @@ public class Stock extends DataClass {
         return adjClose;
     }
 
-    int getCode() {
+    public int getCode() {
         return code;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 

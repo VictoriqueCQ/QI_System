@@ -2,6 +2,8 @@ package quantour.po;
 
 import quantour.data.DataClass;
 
+import java.util.List;
+
 /**
  * Created by dell on 2017/3/31.
  */
@@ -12,17 +14,19 @@ public class StrategyDataPO extends DataClass{
     private double beta;
     private double sharpeRatio;
     private double maxDrawDown;//最大回撤
-    private CombinationPO combinationPO;
+    private List<StockSetPO> stockSetPOS;
+    private List<Double> profits;
 
     public StrategyDataPO(double annualReturn, double basicAnnualReturn, double alpha, double beta, double sharpeRatio,
-                          double maxDrawDown, CombinationPO combinationPO) {
+                          double maxDrawDown, List<StockSetPO> stockSetPOS, List<Double> profits) {
         this.annualReturn = annualReturn;
         this.basicAnnualReturn = basicAnnualReturn;
         this.alpha = alpha;
         this.beta = beta;
         this.sharpeRatio = sharpeRatio;
         this.maxDrawDown = maxDrawDown;
-        this.combinationPO = combinationPO;
+        this.stockSetPOS = stockSetPOS;
+        this.profits = profits;
     }
 
     public double getAnnualReturn() {
@@ -49,7 +53,11 @@ public class StrategyDataPO extends DataClass{
         return maxDrawDown;
     }
 
-    public CombinationPO getCombinationPO() {
-        return combinationPO;
+    public List<StockSetPO> getStockSetPOS() {
+        return stockSetPOS;
+    }
+
+    public List<Double> getProfits() {
+        return profits;
     }
 }

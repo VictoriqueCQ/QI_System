@@ -25,7 +25,7 @@ public class User_data_Impl implements User_data {
     }
 
     @Override
-    public DataClass get(String[] quest) {
+    public quantour.data.DataClass get(String[] quest) {
         UserPO userPO = new UserPO(quest[3], quest[4], quest[5]);
         switch (quest[2]) {
             case "SIGNUP":

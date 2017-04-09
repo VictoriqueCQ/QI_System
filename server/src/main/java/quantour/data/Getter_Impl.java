@@ -16,7 +16,7 @@ public class Getter_Impl implements Getter_data{
     }
 
     @Override
-    public DataClass get(String[] quest) {
+    public quantour.data.DataClass get(String[] quest) {
         return getAll();
     }
 
