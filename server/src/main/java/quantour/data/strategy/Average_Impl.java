@@ -7,9 +7,10 @@ import quantour.dataservice.Strategy_data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
- * Created by dell on 2017/3/31.
+ * Created by cyy on 2017/3/31.
  */
 public class Average_Impl implements Strategy_data{
     private List<Stock> stocks;
@@ -21,8 +22,8 @@ public class Average_Impl implements Strategy_data{
 
     @Override
     public List<StockSet> getSets(String[] quest) {
-        Date startDate;
-        Date endDate;
+        Date startDate = null;
+        Date endDate = null;
         try {
             startDate = sdf.parse(quest[3]);
         } catch (ParseException e) {
@@ -42,13 +43,25 @@ public class Average_Impl implements Strategy_data{
             stockPoolChoose.add(quest[8+i]);
         }
 
+        List<Stock> stockList = stocks;// 根据股票池或者自选股票啥的得到的股票
+        stockList = FiltExceptST(stockList);
 
-        Date date=new Date();//取时间
+
+        List<Date> changeDate = null;//调仓时间
+        changeDate.add(startDate);
+
+
+        Date date=startDate;//取时间
         Calendar calendar   =   new GregorianCalendar();
         calendar.setTime(date);
-        calendar.add(calendar.DATE,holdTime);//把日期往后增加一天.整数往后推,负数往前移动
-        date=calendar.getTime();   //这个时间就是日期往后推一天的结果
-        List<Stock> stockList;
+
+        calendar.add(calendar.DATE,holdTime);
+
+
+        while(calendar.getTime().compareTo(endDate)<=0){
+            changeDate.add(calendar.getTime());
+            calendar.add(calendar.DATE,holdTime);
+        }
 
 
         return null;
@@ -72,5 +85,12 @@ public class Average_Impl implements Strategy_data{
         return (average-adjClose)/average;
 
     }
-
+    /**
+     * 删除st股
+     */
+    private List<Stock> FiltExceptST(List<Stock> stockList){
+        List<Stock> result = stockList.stream().
+                filter(stock -> !(stock.getName().startsWith("ST"))).collect(Collectors.toList());
+        return result;
+    }
 }
