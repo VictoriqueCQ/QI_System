@@ -7,12 +7,11 @@ import quantour.dataservice.Strategy_data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by cyy on 2017/3/31.
  */
-public class Average_Impl implements Strategy_data{
+public class Average_Impl implements Strategy_data {
     private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
     private List<String> stockNames;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
@@ -76,13 +75,13 @@ public class Average_Impl implements Strategy_data{
             stocks = storeStocks;
             Map<Integer,List<Stock>> stockList = null;
             List<String> hasBeChosen;
-            for(int j=0;j<numOfStocks;j++){
+            /*for(int j=0;j<numOfStocks;j++){
                 stockList.put(j,getBestChoice(changeDate.get(i),changeDate.get(i+1),stocks));
                 String name = stockList.get(j).get(0).getName();
                 stocks = stocks.stream().
                         filter(stock -> !(stock.getName().equals(name))).collect(Collectors.toList());
 
-            }
+            }*/
 
         }
 
@@ -92,7 +91,7 @@ public class Average_Impl implements Strategy_data{
     /**
      * 计算均线值
      */
-    private double calAverage(List<Stock> stockList) {
+   private double calAverage(List<Stock> stockList) {
         int size = stockList.size();
         double sum = 0;
         for (int i = 0; i < size; i++) {
@@ -112,9 +111,10 @@ public class Average_Impl implements Strategy_data{
      * 删除st股
      */
     private List<Stock> FiltExceptST(List<Stock> stockList){
-        List<Stock> result = stockList.stream().
+        /*List<Stock> result = stockList.stream().
                 filter(stock -> !(stock.getName().startsWith("ST"))).collect(Collectors.toList());
-        return result;
+        return result;*/
+        return null;
     }
 
     /**
@@ -127,11 +127,12 @@ public class Average_Impl implements Strategy_data{
     }
 
     private List<Stock> getStockListByName(String stockName,List<Stock> stockList) {
-        List<Stock> singleStockList = stockList.stream().
+        /*List<Stock> singleStockList = stockList.stream().
                 filter(stock -> stock.getName().equals(stockName)).
                 collect(Collectors.toList());//得到该name的股票信息，完全匹配
 
-        return singleStockList;
+        return singleStockList;*/
+        return null;
     }
 
 

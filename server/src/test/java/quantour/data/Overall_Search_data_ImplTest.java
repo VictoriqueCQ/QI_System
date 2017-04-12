@@ -15,7 +15,7 @@ public class Overall_Search_data_ImplTest {
     @Before
     public void setUp() throws Exception {
         DataReader_CSV dataReader_csv = new DataReader_CSV();
-        overallSearchData = new Overall_Search_data_Impl(dataReader_csv.read());
+        overallSearchData = new Overall_Search_data_Impl(dataReader_csv.readStockList());
     }
 
     @Test

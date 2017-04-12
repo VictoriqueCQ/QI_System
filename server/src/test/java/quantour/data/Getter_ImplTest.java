@@ -14,7 +14,7 @@ public class Getter_ImplTest {
     @Before
     public void setUp() throws Exception {
         DataReader_CSV dataReader_csv = new DataReader_CSV();
-        getterData=new Getter_Impl(dataReader_csv.read());
+        getterData=new Getter_Impl(dataReader_csv.readStockList());
     }
 
     @Test

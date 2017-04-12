@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by dell on 2017/3/31.
@@ -67,7 +66,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         Count count=null;
         switch (quest[6]){
             case "T":
-                count=arbStock(quest);
+                //count=arbStock(quest);
                 break;
             case "F":
                 //根据板块指数计算
@@ -103,9 +102,9 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
     }
 
     //计算自选股票池
-    private Count arbStock(String[] quest){
-        StockFilter stockFilter=new StockFilter(stocks);
-        List<Stock> filted=stockFilter.filterArbStock(quest);
+    /*private Count arbStock(String[] quest){
+        Stock_Filter_data_Impl stockFilterDataImpl =new Stock_Filter_data_Impl(stocks);
+        List<Stock> filted= stockFilterDataImpl.filterArbStock(quest);
         List<Double> profits=new ArrayList<>();
         List<Double> profitsSquare=new ArrayList<>();
         for (int i=9;i<quest.length;i++){
@@ -125,7 +124,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
             //System.out.println(start.getDate());
         }
         return new Count(profits,profitsSquare);
-    }
+    }*/
 
     //计算固定股票池
     private Count staStock(String[] quest){
