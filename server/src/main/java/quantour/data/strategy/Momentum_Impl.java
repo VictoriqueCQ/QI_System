@@ -18,6 +18,7 @@ public class Momentum_Impl implements Strategy_data{
 
     @Override
     public List<StockSet> getSets(String[] quest) {
+
         return null;
     }
 }

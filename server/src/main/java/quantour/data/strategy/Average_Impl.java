@@ -80,7 +80,7 @@ public class Average_Impl implements Strategy_data{
                 stockList.put(j,getBestChoice(changeDate.get(i),changeDate.get(i+1),stocks));
                 String name = stockList.get(j).get(0).getName();
                 stocks = stocks.stream().
-                        filter(stock -> !(stock.getName()==name)).collect(Collectors.toList());
+                        filter(stock -> !(stock.getName().equals(name))).collect(Collectors.toList());
 
             }
 
