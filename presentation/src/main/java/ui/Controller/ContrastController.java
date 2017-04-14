@@ -19,6 +19,9 @@ import quantour.vo.StockSearchConditionVO;
 import quantour.vo.StockVO;
 import ui.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -549,6 +552,62 @@ public class ContrastController extends Application {
         }
     }
 
+    /**
+     * get a list in the filepath
+     * @param filePath
+     * @return
+     */
+    public String[] getNameList(String filePath){
+        List<String> content=new ArrayList<String>();
+
+        content = this.readFile(filePath);
+
+        int nums = content.size();
+        String[] nameList = new String[nums];
+
+        for(int i = 0;i<nums;i++){
+
+            String tempName = content.get(i).split("\t")[1];
+            nameList[i] = tempName;
+
+        }
+
+        return nameList;
+    }
+
+    private  List<String> readFile(String path){
+        List<String> content=new ArrayList<String>();
+
+        BufferedReader br=null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+//                System.out.println(line);
+            }
+        }catch (Exception e) {
+        }finally{
+            if(br!=null){
+                try {
+                    br.close();
+                    br=null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+//
+//        for (String temp:content
+//                ) {
+//            System.out.println(temp);
+//        }
+        return content;
+
+    }
+
+
     @FXML
     private void initialize() {
         searchWayChoice.setItems(FXCollections.observableArrayList(
@@ -567,9 +626,16 @@ public class ContrastController extends Application {
 
 //        StockVO stockVO1 = new StockVO();
 //        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
-        allStockName = new String[2];
-        allStockName[0] = "深发展A";
-        allStockName[1] = "b股";
+        allStockName = this.getNameList("//Users//chenyuyan//IdeaProjects//QI_System//server//name_code.csv");
+
+
+
+
+
+
+
+//        allStockName[0] = "深发展A";
+//        allStockName[1] = "b股";
        /* String  customerName = "深";
         String reCustomerName = ".*";
         if(customerName!=null){
