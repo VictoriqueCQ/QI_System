@@ -57,7 +57,7 @@ public class Stock extends quantour.data.DataClass {
         return close;
     }
 
-    int getVolume() {
+    public int getVolume() {
         return volume;
     }
 
@@ -69,7 +69,7 @@ public class Stock extends quantour.data.DataClass {
         return code;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
