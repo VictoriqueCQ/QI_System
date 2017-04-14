@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 用于计算每一组的收益率等数据
+ * 用于计算每一组的收益率等数据,要求存放所有排名
  */
 public class StockSet {
     private Map<Integer,List<Stock>> stockSets;

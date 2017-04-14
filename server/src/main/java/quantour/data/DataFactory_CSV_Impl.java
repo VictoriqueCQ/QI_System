@@ -17,6 +17,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
     private User_data userData;
     private Getter_data getterData;
     private Strategy_Calculator_data strategyCalculatorData;
+    private Stock_Filter_data stockFilterData;
 
     private List<Stock> stockList;
 
@@ -28,9 +29,10 @@ public class DataFactory_CSV_Impl implements DataFactory {
         userData=new User_data_Impl();
         getterData=new Getter_Impl(stockList);
         strategyCalculatorData=new Strategy_Calculator_Impl(stockList);
+        stockFilterData=new Stock_Filter_data_Impl(dataReader_CSV);
     }
 
-    static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
+    public static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
         if (dataFactoryCvs == null) {
             dataFactoryCvs = new DataFactory_CSV_Impl();
         }
@@ -62,4 +64,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         return strategyCalculatorData;
     }
 
+    public Stock_Filter_data getStockFilterData() {
+        return stockFilterData;
+    }
 }

@@ -33,11 +33,11 @@ public class Stock extends quantour.data.DataClass {
         this.market = market;
     }
 
-    int getSerial() {
+    public int getSerial() {
         return serial;
     }
 
-    Date getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -57,7 +57,7 @@ public class Stock extends quantour.data.DataClass {
         return close;
     }
 
-    int getVolume() {
+    public int getVolume() {
         return volume;
     }
 

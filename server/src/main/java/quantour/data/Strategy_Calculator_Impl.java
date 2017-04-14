@@ -33,7 +33,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         //这里先筛选股票池和日期
         switch (quest[2]){
             case "M":
-                strategyData=new Momentum_Impl(stocks);
+                strategyData=new Momentum_Impl();
                 break;
             case "A":
                 strategyData=new Average_Impl(stocks);
