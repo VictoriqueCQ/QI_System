@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import org.jfree.chart.demo.TimeSeriesChartDemo1;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
@@ -378,15 +379,19 @@ public class ReturnsController implements Initializable {
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
-        String StartDateString_MS = simpleDateFormat.format(this.changeDateStyle(StartDate_MS));
-        String EndDateString_MS = simpleDateFormat.format(this.changeDateStyle(EndDate_MS));
+        SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
+        String StartDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MS));
+        String EndDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MS));
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
                 && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
             net.actionPerformed("Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
                     + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
         }
+
+
+
+
         String ReturnsMessage;
         ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
@@ -412,6 +417,23 @@ public class ReturnsController implements Initializable {
 
             setCumulativeTableView();
 
+            List<Double> profits = StrategyDataVO.getProfits();
+
+            int number = profits.size();//形成期+持有期的个数
+
+            long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime())/number;
+
+            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
+
+            XYChart.Series series1 = new XYChart.Series();
+            XYChart.Series series2 = new XYChart.Series();
+
+            for(int i = 0;i<number;i++){
+                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime()+i*period);
+                series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
+            }
+
+            lineChart.getData().addAll(series1, series2);
 
         }
     }
@@ -454,7 +476,7 @@ public class ReturnsController implements Initializable {
 
             setCumulativeTableView();
 
-
+            XYChart.Series series1 = new XYChart.Series();
         }
     }
 
@@ -477,49 +499,49 @@ public class ReturnsController implements Initializable {
         cumulativeTableView.setItems(cumulativeData);
     }
 
-    private void setLineChart() {
-        XYChart.Series series1 = new XYChart.Series();
-        series1.getData().add(new XYChart.Data<>("2005-07", 10));
-        series1.getData().add(new XYChart.Data<>("2006-01", 30));
-        series1.getData().add(new XYChart.Data<>("2006-07", 40));
-        series1.getData().add(new XYChart.Data<>("2007-01", 50));
-        series1.getData().add(new XYChart.Data<>("2007-07", 70));
-        series1.getData().add(new XYChart.Data<>("2008-01", 80));
-        series1.getData().add(new XYChart.Data<>("2008-07", 100));
-        series1.getData().add(new XYChart.Data<>("2009-01", 110));
-        series1.getData().add(new XYChart.Data<>("2009-07", 130));
-        series1.getData().add(new XYChart.Data<>("2010-01", 120));
-        series1.getData().add(new XYChart.Data<>("2010-07", 100));
-        series1.getData().add(new XYChart.Data<>("2011-01", 90));
-        series1.getData().add(new XYChart.Data<>("2011-07", 70));
-        series1.getData().add(new XYChart.Data<>("2012-01", 80));
-        series1.getData().add(new XYChart.Data<>("2012-07", 100));
-        series1.getData().add(new XYChart.Data<>("2013-01", 120));
-        series1.getData().add(new XYChart.Data<>("2013-07", 150));
-        series1.getData().add(new XYChart.Data<>("2014-01", 190));
-
-        XYChart.Series series2 = new XYChart.Series();
-        series2.getData().add(new XYChart.Data<>("2005-07", 10));
-        series2.getData().add(new XYChart.Data<>("2006-01", 15));
-        series2.getData().add(new XYChart.Data<>("2006-07", 20));
-        series2.getData().add(new XYChart.Data<>("2007-01", 25));
-        series2.getData().add(new XYChart.Data<>("2007-07", 35));
-        series2.getData().add(new XYChart.Data<>("2008-01", 40));
-        series2.getData().add(new XYChart.Data<>("2008-07", 50));
-        series2.getData().add(new XYChart.Data<>("2009-01", 55));
-        series2.getData().add(new XYChart.Data<>("2009-07", 65));
-        series2.getData().add(new XYChart.Data<>("2010-01", 60));
-        series2.getData().add(new XYChart.Data<>("2010-07", 50));
-        series2.getData().add(new XYChart.Data<>("2011-01", 45));
-        series2.getData().add(new XYChart.Data<>("2011-07", 35));
-        series2.getData().add(new XYChart.Data<>("2012-01", 40));
-        series2.getData().add(new XYChart.Data<>("2012-07", 50));
-        series2.getData().add(new XYChart.Data<>("2013-01", 60));
-        series2.getData().add(new XYChart.Data<>("2013-07", 75));
-        series2.getData().add(new XYChart.Data<>("2014-01", 95));
-
-        lineChart.getData().addAll(series1, series2);
-    }
+//    private void setLineChart() {
+//        XYChart.Series series1 = new XYChart.Series();
+//        series1.getData().add(new XYChart.Data<>("2005-07", 10));
+//        series1.getData().add(new XYChart.Data<>("2006-01", 30));
+//        series1.getData().add(new XYChart.Data<>("2006-07", 40));
+//        series1.getData().add(new XYChart.Data<>("2007-01", 50));
+//        series1.getData().add(new XYChart.Data<>("2007-07", 70));
+//        series1.getData().add(new XYChart.Data<>("2008-01", 80));
+//        series1.getData().add(new XYChart.Data<>("2008-07", 100));
+//        series1.getData().add(new XYChart.Data<>("2009-01", 110));
+//        series1.getData().add(new XYChart.Data<>("2009-07", 130));
+//        series1.getData().add(new XYChart.Data<>("2010-01", 120));
+//        series1.getData().add(new XYChart.Data<>("2010-07", 100));
+//        series1.getData().add(new XYChart.Data<>("2011-01", 90));
+//        series1.getData().add(new XYChart.Data<>("2011-07", 70));
+//        series1.getData().add(new XYChart.Data<>("2012-01", 80));
+//        series1.getData().add(new XYChart.Data<>("2012-07", 100));
+//        series1.getData().add(new XYChart.Data<>("2013-01", 120));
+//        series1.getData().add(new XYChart.Data<>("2013-07", 150));
+//        series1.getData().add(new XYChart.Data<>("2014-01", 190));
+//
+//        XYChart.Series series2 = new XYChart.Series();
+//        series2.getData().add(new XYChart.Data<>("2005-07", 10));
+//        series2.getData().add(new XYChart.Data<>("2006-01", 15));
+//        series2.getData().add(new XYChart.Data<>("2006-07", 20));
+//        series2.getData().add(new XYChart.Data<>("2007-01", 25));
+//        series2.getData().add(new XYChart.Data<>("2007-07", 35));
+//        series2.getData().add(new XYChart.Data<>("2008-01", 40));
+//        series2.getData().add(new XYChart.Data<>("2008-07", 50));
+//        series2.getData().add(new XYChart.Data<>("2009-01", 55));
+//        series2.getData().add(new XYChart.Data<>("2009-07", 65));
+//        series2.getData().add(new XYChart.Data<>("2010-01", 60));
+//        series2.getData().add(new XYChart.Data<>("2010-07", 50));
+//        series2.getData().add(new XYChart.Data<>("2011-01", 45));
+//        series2.getData().add(new XYChart.Data<>("2011-07", 35));
+//        series2.getData().add(new XYChart.Data<>("2012-01", 40));
+//        series2.getData().add(new XYChart.Data<>("2012-07", 50));
+//        series2.getData().add(new XYChart.Data<>("2013-01", 60));
+//        series2.getData().add(new XYChart.Data<>("2013-07", 75));
+//        series2.getData().add(new XYChart.Data<>("2014-01", 95));
+//
+//        lineChart.getData().addAll(series1, series2);
+//    }
 
 
     private void setTableView() {
@@ -696,7 +718,7 @@ public class ReturnsController implements Initializable {
         setAreaChart_2();
         setBarChart();
         setCumulativeTableView();
-        setLineChart();
+//        setLineChart();
         this.main = main;
         this.net = net;
 
