@@ -149,7 +149,7 @@ public class CandlestickChartController {
     private void search() {
         this.createEMA();
         SwingNode swingNode = this.createCandlestickChart();
-//        main.closeExtraStage();
+        main.closeExtraStage();
         if (swingNode != null) {
             insidePane.getChildren().add(swingNode);
         } else {

@@ -140,12 +140,16 @@ public class ClientOverviewController implements Initializable {
             loginButton.setVisible(false);
             registerButton.setVisible(false);
             exitLoginButton.setVisible(true);
+
         }
         else{
             nameLabel.setText("             游客");
             loginButton.setVisible(true);
             registerButton.setVisible(true);
             exitLoginButton.setVisible(false);
+
+//            comparsionButton.setDisable(true);
+//            returnsButton.setDisable(true);
         }
     }
 

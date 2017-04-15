@@ -48,9 +48,9 @@ public class RegistController {
     public void setMain(Main main,Net net) {
         this.main = main;
         this.net=net;
-//        yesImage.setVisible(false);
-//        noImage.setVisible(false);
-//        noLabel.setVisible(false);
+        yesImage.setVisible(false);
+        noImage.setVisible(false);
+        noLabel.setVisible(false);
     }
 
     @FXML

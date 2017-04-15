@@ -195,6 +195,11 @@ public class ReturnsController implements Initializable {
     private Button search_MeanReversio;
 
 
+    @FXML
+    private void gotoSelectStock(){
+        main.gotoSelectStock();
+    }
+
     /*
     这里是自选股票板块情况（表格）
 
@@ -602,6 +607,8 @@ public class ReturnsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
+
 
     public void setMain(Main main, Net net) {
 //        setComboBox();
