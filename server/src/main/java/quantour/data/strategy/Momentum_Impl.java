@@ -57,7 +57,7 @@ public class Momentum_Impl implements Strategy_data{
                 stockPool.put(code, stockFilterData.filterSingleStock(code));
             }
         }else{
-            //实现已有股票池的筛选
+            stockPool=stockFilterData.filterStaStock(quest);
         }
 
         Calendar calendar=Calendar.getInstance();
@@ -136,6 +136,11 @@ public class Momentum_Impl implements Strategy_data{
 
 
         return stockSets;
+    }
+
+    @Override
+    public Map<Integer, List<Stock>> getStockPool() {
+        return stockPool;
     }
 
     class Candidate{

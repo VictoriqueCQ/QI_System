@@ -64,6 +64,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         return strategyCalculatorData;
     }
 
+    @Override
     public Stock_Filter_data getStockFilterData() {
         return stockFilterData;
     }

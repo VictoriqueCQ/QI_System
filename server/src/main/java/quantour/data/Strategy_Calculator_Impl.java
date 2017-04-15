@@ -36,7 +36,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
                 strategyData=new Momentum_Impl();
                 break;
             case "A":
-                strategyData=new Average_Impl(stocks);
+                strategyData=new Average_Impl();
                 break;
         }
 
@@ -69,7 +69,7 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
                 //count=arbStock(quest);
                 break;
             case "F":
-                //根据板块指数计算
+
                 break;
         }
         double e2=count.getE();

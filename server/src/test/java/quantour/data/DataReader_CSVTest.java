@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import quantour.data.datastructure.Index;
+import quantour.data.datastructure.StockNameNCode;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
  * Created by dell on 2017/3/5.
  */
 public class DataReader_CSVTest {
+
     private DataReader_CSV dataReader_CSV;
 
     @Before
@@ -27,6 +29,12 @@ public class DataReader_CSVTest {
             Stock stock=(Stock)itr.next();
 
         }*/
+    }
+
+    @Test
+    public void readPlate() throws Exception {
+        Map<String,List<StockNameNCode>> list=dataReader_CSV.readPlate();
+        Assert.assertEquals(2,list.size());
     }
 
     @Test

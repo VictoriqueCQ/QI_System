@@ -9,15 +9,19 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
+ * Average用Stock_Filter_Data_Impl进行筛选，得到的初步筛选结果需要以成员变量的方式保存在类中
+ * tock_Filter_Data_Impl怎么用可以参照注释
+ * 可以参照Momentum
  * Created by cyy on 2017/3/31.
  */
 public class Average_Impl implements Strategy_data {
-    private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
+    //private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
+    private Map<Integer,List<Stock>> stockPool;//用于保存所选择的股票池里所有股票的信息，integer为code
     private List<String> stockNames;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
-    public Average_Impl(List<Stock> stocks){
-        this.stocks=stocks;
+    public Average_Impl(){
+        stockPool=new HashMap<>();
     }
 
     @Override
@@ -135,5 +139,8 @@ public class Average_Impl implements Strategy_data {
         return null;
     }
 
-
+    @Override
+    public Map<Integer, List<Stock>> getStockPool() {
+        return stockPool;
+    }
 }

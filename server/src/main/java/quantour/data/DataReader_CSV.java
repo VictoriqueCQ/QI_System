@@ -74,8 +74,32 @@ public class DataReader_CSV implements DataReader_data{
 
     @Override
     public Map<String, List<StockNameNCode>> readPlate() {
+        File f=new File(platePath);
+        try{
+            File[] files=f.listFiles();
+            Map<String,List<StockNameNCode>> plateList=new HashMap<>();
 
-        return null;
+            for(File temp:files){
+                BufferedReader br=new BufferedReader(new FileReader(temp));
+                String s=temp.getName();
+                String name=s.substring(0,s.lastIndexOf("."));
+                System.out.println(name);
+                List<StockNameNCode> stockNameNCodes=new ArrayList<>();
+                String line=null;
+                while((line=br.readLine())!=null){
+                    String[] strs=line.split("\t");
+                    int code=Integer.parseInt(strs[1]);
+                    StockNameNCode stockNameNCode=new StockNameNCode(code,strs[0]);
+                    stockNameNCodes.add(stockNameNCode);
+                }
+                plateList.put(name,stockNameNCodes);
+            }
+            return plateList;
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+            return null;
+        }
+
     }
 
     @Override
@@ -90,7 +114,7 @@ public class DataReader_CSV implements DataReader_data{
                 BufferedReader br=new BufferedReader(new FileReader(temp));
                 String s=temp.getName();
                 String name=s.substring(0,s.lastIndexOf("."));
-                System.out.println(name);
+                //System.out.println(name);
                 List<Index> indices=new ArrayList<>();
                 String line;
                 while((line=br.readLine())!=null){
