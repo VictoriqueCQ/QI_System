@@ -16,7 +16,7 @@ public class StrategyDataVO {
     private List<Double> profits;
 
     public StrategyDataVO(double annualReturn, double basicAnnualReturn, double alpha, double beta, double sharpeRatio,
-                          double maxDrawDown, /*List<StockSetPO> stockSetPOS,*/ List<Double> profits) {
+                          double maxDrawDown, List<StockSetVO> stockSetVOS, List<Double> profits) {
         this.annualReturn = annualReturn;
         this.basicAnnualReturn = basicAnnualReturn;
         this.alpha = alpha;
@@ -26,6 +26,8 @@ public class StrategyDataVO {
         this.stockSetVOS = stockSetVOS;
         this.profits = profits;
     }
+
+    public StrategyDataVO(){}
 
     public double getAnnualReturn() {
         return annualReturn;
