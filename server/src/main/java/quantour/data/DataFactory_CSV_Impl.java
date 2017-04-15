@@ -23,7 +23,6 @@ public class DataFactory_CSV_Impl implements DataFactory {
 
     private DataFactory_CSV_Impl() throws ParseException, IOException {
         DataReader_CSV dataReader_CSV = new DataReader_CSV();
-        stockList = dataReader_CSV.readStockList();
         overallSearchData = new Overall_Search_data_Impl(stockList);
         singleSearchData = new Single_Search_data_Impl(stockList);
         userData=new User_data_Impl();

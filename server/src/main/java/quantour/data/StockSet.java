@@ -13,7 +13,6 @@ import java.util.Map;
  */
 public class StockSet {
     private Map<Integer,List<Stock>> stockSets;
-
     /**
      *Integer为排名，stocksets里只要开始和结束的信息
      */

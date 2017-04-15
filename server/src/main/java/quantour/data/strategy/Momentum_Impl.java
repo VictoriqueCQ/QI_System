@@ -48,8 +48,6 @@ public class Momentum_Impl implements Strategy_data{
         int formativePeriod=Integer.parseInt(quest[5]);
         int holdingPeriod=Integer.parseInt(quest[7]);
 
-        int groupSize=(int)((quest.length-9)*0.2);
-
         Stock_Filter_data stockFilterData=dataFactoryCsv.getStockFilterData();
         if(quest[6].equals("T")) {
             for (int i = 9; i < quest.length; i++) {
@@ -107,10 +105,9 @@ public class Momentum_Impl implements Strategy_data{
                             profit);
                     candidates.add(candidate);
                 }
-                candidates=candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
-                        collect(Collectors.toList());//从小到大排序
             }
-
+            candidates=candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
+                    collect(Collectors.toList()).subList(0,(int)(candidates.size()*0.2));//从小到大排序
             Map<Integer,List<Stock>> map=new HashMap<>();
             for(int i=candidates.size()-1;i>=0;i--){
                 List<Stock> temp=new ArrayList<>();

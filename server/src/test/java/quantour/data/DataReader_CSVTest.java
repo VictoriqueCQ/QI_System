@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import quantour.data.datastructure.Index;
+import quantour.data.datastructure.Rate;
 import quantour.data.datastructure.StockNameNCode;
 
 import java.util.List;
@@ -42,5 +43,12 @@ public class DataReader_CSVTest {
         Map<String,List<Index>> list=dataReader_CSV.readIndex();
         Assert.assertEquals(3,list.size());
     }
+
+    @Test
+    public void readRate() throws Exception {
+        List<Rate> list=dataReader_CSV.readRate();
+        Assert.assertEquals(28,list.size());
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package quantour.data;
 
 import quantour.data.datastructure.Index;
+import quantour.data.datastructure.Rate;
 import quantour.data.datastructure.StockNameNCode;
 import quantour.dataservice.DataReader_data;
 
@@ -20,11 +21,13 @@ public class DataReader_CSV implements DataReader_data{
     private String stockPath;
     private String platePath;
     private String indexPath;
+    private String ratePath;
 
     DataReader_CSV() throws IOException {
         stockPath = "stock_data\\stock_data.csv";
         platePath="stock_data\\plate";//directory
         indexPath="stock_data\\index";//directory
+        ratePath="stock_data\\rate.csv";
     }
 
     public DataReader_CSV(String path) {
@@ -137,6 +140,31 @@ public class DataReader_CSV implements DataReader_data{
             }
 
             return indexList;
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+            return null;
+        }catch (ParseException pe){
+            pe.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Rate> readRate() {
+        List<Rate> rates=new ArrayList<>();
+        File f=new File(ratePath);
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+
+        try{
+            BufferedReader br=new BufferedReader(new FileReader(f));
+            String line=null;
+            while((line=br.readLine())!=null){
+                 String[] strs=line.split("\t");
+                 Date date=sdf.parse(strs[0]);
+                 double rate=Double.parseDouble(strs[1]);
+                 rates.add(new Rate(date,rate));
+            }
+            return rates;
         }catch (IOException ioe){
             ioe.printStackTrace();
             return null;

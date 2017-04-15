@@ -50,7 +50,7 @@ public class Average_Impl implements Strategy_data {
 //        List<Stock> stockList = stocks;// 根据股票池或者自选股票啥的得到的股票
 
 
-        stocks = FiltExceptST(stocks);
+        //stocks = FiltExceptST(stocks);
 
 
 
@@ -64,7 +64,7 @@ public class Average_Impl implements Strategy_data {
             changeDate.add(calendar.getTime());
             calendar.add(calendar.DATE,holdTime);
         }
-        List<Stock> storeStocks = stocks;
+        //List<Stock> storeStocks = stocks;
 
         /*
          *Integer为排名，stocksets里只要开始和结束的信息
@@ -76,7 +76,7 @@ public class Average_Impl implements Strategy_data {
         List<StockSet> result = new ArrayList<StockSet>();
         for(int i=0;i<changeDate.size();i++){
             Date changeStocks = changeDate.get(i);
-            stocks = storeStocks;
+            //stocks = storeStocks;
             Map<Integer,List<Stock>> stockList = null;
             List<String> hasBeChosen;
             /*for(int j=0;j<numOfStocks;j++){

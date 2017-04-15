@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by dell on 2017/3/31.
@@ -63,15 +65,8 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         double d1=profitList.stream().mapToDouble(num -> num * num).average().getAsDouble();
         double annualProfit=(e1/interval) *365;//年化收益率
 
-        Count count=null;
-        switch (quest[6]){
-            case "T":
-                //count=arbStock(quest);
-                break;
-            case "F":
+        Count count=startCount(startTime,endTime);
 
-                break;
-        }
         double e2=count.getE();
         double basicAnnualProfit=(e2/interval)*365;//基准年化收益率
 
@@ -101,34 +96,23 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,profitList);
     }
 
-    //计算自选股票池
-    /*private Count arbStock(String[] quest){
-        Stock_Filter_data_Impl stockFilterDataImpl =new Stock_Filter_data_Impl(stocks);
-        List<Stock> filted= stockFilterDataImpl.filterArbStock(quest);
+    private Count startCount(Date startTime,Date endTime){
+        Map<Integer,List<Stock>> stockList=strategyData.getStockPool();
         List<Double> profits=new ArrayList<>();
         List<Double> profitsSquare=new ArrayList<>();
-        for (int i=9;i<quest.length;i++){
-            String base = quest[i];
-            List<Stock> singleStock=filted.stream().filter(stock -> stock.getName().equals(base)).
+        List<Integer> keys=stockList.keySet().stream().sorted().collect(Collectors.toList());
+        for(int key:keys){
+            List<Stock> singleStock=stockList.get(key).stream().
+                    filter(stock -> stock.getDate().compareTo(startTime)>=0&&stock.getDate().compareTo(endTime)<=0).
                     collect(Collectors.toList());
-            Stock start;
-            Stock end;
-            if(singleStock.size()>=2){
-                start=singleStock.get(singleStock.size()-1);//大日期在前
-                end=singleStock.get(0);//这里需要检查是否为开始日期和结束日期
-                double profit=(end.getAdjClose()-start.getAdjClose())/start.getAdjClose();
-                profits.add(profit);
-                profitsSquare.add(profit*profit);
-            }
-            //System.out.println(start.getDate());
-            //System.out.println(start.getDate());
+            Stock start=singleStock.get(singleStock.size()-1);//大日期在前
+            Stock end=singleStock.get(0);
+
+            double profit=(end.getAdjClose()-start.getAdjClose())/start.getAdjClose();
+            profits.add(profit);
+            profitsSquare.add(profit*profit);
         }
         return new Count(profits,profitsSquare);
-    }*/
-
-    //计算固定股票池
-    private Count staStock(String[] quest){
-        return null;
     }
 
     class Count{

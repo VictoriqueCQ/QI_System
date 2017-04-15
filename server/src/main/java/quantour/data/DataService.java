@@ -3,6 +3,7 @@ package quantour.data;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 
 /**
  * Created by dell on 2017/3/12.
@@ -12,12 +13,14 @@ public class DataService {
     private DataInputStream dataInputStream;
     private DataOutputStream dataOutputStream;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
         DataService dataService = new DataService();
         dataService.start();
     }
 
-    private void start() {
+    private void start() throws IOException, ParseException {
+        DataFactory_CSV_Impl.getInstance();
+
         setUpNet();
 
         run();
