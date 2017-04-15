@@ -135,10 +135,10 @@ public class ReturnsController implements Initializable {
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
     @FXML
-    private TextField StartDate_MomentumStrategy;
+    private DatePicker StartDate_MomentumStrategy;
 
     @FXML
-    private TextField EndDate_MomentumStrategy;
+    private DatePicker EndDate_MomentumStrategy;
 
     @FXML
     private TextField HoldingPeriod_MomentumStrategy;
@@ -153,10 +153,10 @@ public class ReturnsController implements Initializable {
     private ComboBox<String> Plate_MomentumStrategy;
 
     @FXML
-    private TextField StartDate_MeanReversio;
+    private DatePicker StartDate_MeanReversio;
 
     @FXML
-    private TextField EndDate_MeanReversio;
+    private DatePicker EndDate_MeanReversio;
 
     @FXML
     private TextField HoldingPeriod_MeanReversio;
@@ -190,7 +190,7 @@ public class ReturnsController implements Initializable {
     }
 
     private void setMomentumStrategyInput(){
-        
+
     }
 
     private void setMeanReversioInput(){
