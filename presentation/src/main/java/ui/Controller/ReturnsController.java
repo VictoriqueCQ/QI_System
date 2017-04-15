@@ -28,6 +28,26 @@ public class ReturnsController implements Initializable {
 
     private Net net;
 
+    //股票表格
+    @FXML
+    private TableView<String> StockTableView;
+
+    //第几个持有期
+    @FXML
+    private ComboBox<String> HoldPeriod;
+
+    //股票排名
+    @FXML
+    private TableColumn<String,String> StockRank;
+
+    //股票名
+    @FXML
+    private TableColumn<String,String> StockName;
+
+    //股票代码
+    @FXML
+    private TableColumn<String,String> StockCode;
+
     /*
     *以下是累计收益率中的变量（累计收益率有两个方法，分别是setCumulative（）和setLineChart（））
     *
@@ -35,12 +55,6 @@ public class ReturnsController implements Initializable {
     //累计收益率图表
     @FXML
     private TableView<CumulativeReturnsModel> cumulativeTableView;
-
-
-
-
-
-
 
 
     //年化收益率
@@ -195,7 +209,7 @@ public class ReturnsController implements Initializable {
 
 
     @FXML
-    private void gotoSelectStock(){
+    private void gotoSelectStock() {
         main.gotoSelectStock();
     }
 
@@ -355,6 +369,11 @@ public class ReturnsController implements Initializable {
         return date;
     }
 
+    //这里是股票表格，包括股票排名，股票名和股票代码
+    private void setStockTableView(){
+
+    }
+
     private void setMomentumStrategyInputSearch() {
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
@@ -366,18 +385,18 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
                 && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
             net.actionPerformed("Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                    + FormativePeriod_MomentumStrategy.getText()+"\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText()+"\t" + StockheldInHouse_MomentumStrategy.getText()+"\t");
+                    + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
         }
         String ReturnsMessage;
         ReturnsMessage = net.run();
-        if(ReturnsMessage == null){
+        if (ReturnsMessage == null) {
             System.out.println("No data on that day!");
         } else {
-            System.out.println(ReturnsMessage+"getted");
+            System.out.println(ReturnsMessage + "getted");
             //json字符串转成MarketVO类型
             JsonUtil jsonUtil = new JsonUtil();
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
-            StrategyDataVO StrategyDataVO = (StrategyDataVO)jsonUtil.JSONToObj(ReturnsMessage,StrategyDataVO_middleState.getClass());
+            StrategyDataVO StrategyDataVO = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             annualReturn = StrategyDataVO.getAnnualReturn();
 
@@ -394,26 +413,6 @@ public class ReturnsController implements Initializable {
             setCumulativeTableView();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         }
     }
 
@@ -424,7 +423,39 @@ public class ReturnsController implements Initializable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MR = simpleDateFormat.format(this.changeDateStyle(StartDate_MR));
         String EndDateString_MR = simpleDateFormat.format(this.changeDateStyle(EndDate_MR));
-        net.actionPerformed("Strategy\t" + "M\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t" + "");
+        if (FormativePeriod_MeanReversio.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()
+                && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
+                && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
+            net.actionPerformed("Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                    + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
+        }
+        String ReturnsMessage;
+        ReturnsMessage = net.run();
+        if (ReturnsMessage == null) {
+            System.out.println("No data on that day!");
+        } else {
+            System.out.println(ReturnsMessage + "getted");
+            //json字符串转成MarketVO类型
+            JsonUtil jsonUtil = new JsonUtil();
+            StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
+            StrategyDataVO StrategyDataVO = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
+
+            annualReturn = StrategyDataVO.getAnnualReturn();
+
+            basicAnnualReturn = StrategyDataVO.getBasicAnnualReturn();
+
+            alphaNum = StrategyDataVO.getAlpha();
+
+            betaNum = StrategyDataVO.getBeta();
+
+            sharpeRatio = StrategyDataVO.getSharpeRatio();
+
+            maxDrawDown = StrategyDataVO.getMaxDrawDown();
+
+            setCumulativeTableView();
+
+
+        }
     }
 
     private void setCumulativeTableView() {
@@ -437,7 +468,8 @@ public class ReturnsController implements Initializable {
 
         //测试数据，数据层完成后将修改
         cumulativeData = FXCollections.observableArrayList(
-                new CumulativeReturnsModel("35.7%", "12.4%", "14.6%", "0.97", "1.29", "23.8%")
+                new CumulativeReturnsModel(String.valueOf(annualReturn), String.valueOf(basicAnnualReturn),
+                        String.valueOf(alphaNum), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown))
         );
 
         cumulativeTableView.getStyleClass().add("edge-to-edge");
@@ -655,7 +687,6 @@ public class ReturnsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
 
 
     public void setMain(Main main, Net net) {
