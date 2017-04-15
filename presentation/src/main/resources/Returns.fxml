@@ -46,9 +46,9 @@
                                  <children>
                                     <TableView layoutX="79.0" layoutY="86.0" prefHeight="383.0" prefWidth="1050.0">
                                       <columns>
-                                        <TableColumn prefWidth="350.0" text="C1" />
-                                        <TableColumn minWidth="0.0" prefWidth="350.0" text="C2" />
-                                          <TableColumn minWidth="0.0" prefWidth="350.0" text="Column X" />
+                                        <TableColumn prefWidth="350.0" text="排名" />
+                                        <TableColumn minWidth="0.0" prefWidth="350.0" text="股票名" />
+                                          <TableColumn minWidth="0.0" prefWidth="350.0" text="股票代码" />
                                       </columns>
                                     </TableView>
                                     <ComboBox layoutX="979.0" layoutY="30.0" prefWidth="150.0" promptText="第1个持有期" />
@@ -189,36 +189,36 @@
                                              <children>
                                                 <Label layoutX="21.0" layoutY="20.0" />
                                                 <Label layoutX="21.0" layoutY="20.0" text="开始日期" />
-                                                <DatePicker layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="StartDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="21.0" layoutY="18.0" text="仓内持有股票数" />
-                                                <TextField layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" />
+                                                <TextField fx:id="StockheldInHouse_MomentumStrategy" layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="20.0" text="结束日期" />
-                                                <DatePicker layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="EndDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="18.0" text="股票" />
-                                                <ComboBox layoutX="100.0" layoutY="16.0" prefHeight="23.0" prefWidth="187.0" />
+                                                <ComboBox fx:id="Plate_MomentumStrategy" layoutX="100.0" layoutY="16.0" prefHeight="23.0" prefWidth="187.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
                                                 <Label layoutX="22.0" layoutY="18.0" text="形成期" />
-                                                <TextField layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="HoldingPeriod_MomentumStrategy" layoutX="124.0" layoutY="16.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
+                                                <Button fx:id="ChooseStock_MomentumStrategy" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -228,12 +228,12 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                              <children>
                                                 <Label layoutX="25.0" layoutY="18.0" text="持有期" />
-                                                <TextField layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="FormativePeriod_MomentumStrategy" layoutX="124.0" layoutY="16.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <children>
-                                                <Button layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
+                                                <Button fx:id="search_MomentumStrategy" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -256,36 +256,36 @@
                                              <children>
                                                 <Label layoutX="21.0" layoutY="20.0" />
                                                 <Label layoutX="21.0" layoutY="20.0" text="开始日期" />
-                                                <DatePicker layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="StartDate_MeanReversio" layoutX="100.0" layoutY="18.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="21.0" layoutY="18.0" text="仓内持有股票数" />
-                                                <TextField layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" />
+                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="20.0" text="结束日期" />
-                                                <DatePicker layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="EndDate_MeanReversio" layoutX="100.0" layoutY="18.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="18.0" text="股票" />
-                                                <ComboBox layoutX="100.0" layoutY="16.0" prefHeight="23.0" prefWidth="187.0" />
+                                                <ComboBox fx:id="Plate_MeanReversio" layoutX="100.0" layoutY="16.0" prefHeight="23.0" prefWidth="187.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
                                                 <Label layoutX="22.0" layoutY="18.0" text="形成期" />
-                                                <TextField layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="124.0" layoutY="16.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
+                                                <Button fx:id="ChooseStock_MeanReversio" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -295,12 +295,12 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                              <children>
                                                 <Label layoutX="25.0" layoutY="18.0" text="持有期" />
-                                                <TextField layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="124.0" layoutY="16.0" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <children>
-                                                <Button layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
+                                                <Button fx:id="search_MeanReversio" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
