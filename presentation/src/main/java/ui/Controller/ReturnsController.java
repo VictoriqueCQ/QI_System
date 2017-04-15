@@ -134,6 +134,12 @@ public class ReturnsController implements Initializable {
     @FXML
     private BarChart<String, Number> barChart = new BarChart<String, Number>(ReturnsNumber, FrequencyNumber);
 
+
+
+    /*
+    这里是动量策略和均值回归的变量
+     */
+
     @FXML
     private DatePicker StartDate_MomentumStrategy;
 
@@ -171,9 +177,18 @@ public class ReturnsController implements Initializable {
     private ComboBox<String> Plate_MeanReversio;
 
     @FXML
+    private Button ChooseStock;
+
+    @FXML
     private Button search;
 
-    private void setComboBox(){
+
+    /*
+    这里是自选股票板块情况（表格）
+
+     */
+
+    private void setStockComboBox(){
         ObservableList<String> plate_MS = FXCollections.observableArrayList();
         List<String> plateName_MS = new ArrayList<String>();
         plateName_MS.add("板块1");
@@ -187,6 +202,11 @@ public class ReturnsController implements Initializable {
         plateName_MR.add("板块2");
         plate_MR.addAll(plateName_MR);
         Plate_MeanReversio.setItems(plate_MR);
+    }
+
+    private void setHeldComboBox(){
+        ObservableList<String> HeldPeriod = FXCollections.observableArrayList();
+        List<String> HeldPeriodName = new ArrayList<>();
     }
 
     private void setMomentumStrategyInput(){
@@ -430,7 +450,7 @@ public class ReturnsController implements Initializable {
     }
 
     public void setMain(Main main, Net net) {
-        setComboBox();
+//        setComboBox();
         setTableView();
         setAreaChart_1();
         setAreaChart_2();
