@@ -6,13 +6,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.util.Callback;
 import ui.CumulativeReturnsModel;
 import ui.Main;
 import ui.Net;
 import ui.ReturnsModel;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -159,6 +165,12 @@ public class ReturnsController implements Initializable {
     private ComboBox<String> Plate_MomentumStrategy;
 
     @FXML
+    private Button ChooseStock_MomentumStrategy;
+
+    @FXML
+    private Button search_MomentumStrategy;
+
+    @FXML
     private DatePicker StartDate_MeanReversio;
 
     @FXML
@@ -177,10 +189,10 @@ public class ReturnsController implements Initializable {
     private ComboBox<String> Plate_MeanReversio;
 
     @FXML
-    private Button ChooseStock;
+    private Button ChooseStock_MeanReversio;
 
     @FXML
-    private Button search;
+    private Button search_MeanReversio;
 
 
     /*
@@ -209,12 +221,154 @@ public class ReturnsController implements Initializable {
         List<String> HeldPeriodName = new ArrayList<>();
     }
 
-    private void setMomentumStrategyInput(){
+    public void setStartDatePicker_MomentumStrategy(){
+        StartDate_MomentumStrategy.setValue(LocalDate.of(2005, 2, 1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
 
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        StartDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+    }
+
+    public void setEndDatePicker_MomentumStrategy(){
+        EndDate_MomentumStrategy.setValue(LocalDate.of(2005, 2, 1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+    }
+
+    public void setStartDatePicker_MeanReversio(){
+        StartDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        StartDate_MeanReversio.setDayCellFactory(dayCellFactory1);
+    }
+
+    public void setEndDatePicker_MeanReversio(){
+        EndDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        EndDate_MeanReversio.setDayCellFactory(dayCellFactory1);
+    }
+
+    //将datepicker获取的时间转为date类
+    public Date changeDateStyle(LocalDate localDate) {
+
+        ZoneId zone = ZoneId.systemDefault();
+        Instant instant = localDate.atStartOfDay().atZone(zone).toInstant();
+        Date date = Date.from(instant);
+
+        return date;
+    }
+
+    private void setMomentumStrategyInput(){
+        LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
+        LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        String StartDateString_MS = simpleDateFormat.format(this.changeDateStyle(StartDate_MS));
+        String EndDateString_MS = simpleDateFormat.format(this.changeDateStyle(EndDate_MS));
+        net.actionPerformed("Strategy\t"+"M\t"+StartDateString_MS+"\t"+EndDateString_MS+"\t"+"");
     }
 
     private void setMeanReversioInput(){
+        LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
+        LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yy");
+        String StartDateString_MR = simpleDateFormat.format(this.changeDateStyle(StartDate_MR));
+        String EndDateString_MR = simpleDateFormat.format(this.changeDateStyle(EndDate_MR));
+        net.actionPerformed("Strategy\t"+"M\t"+StartDateString_MR+"\t"+EndDateString_MR+"\t"+"");
     }
 
     private void setCumulativeTableView(){

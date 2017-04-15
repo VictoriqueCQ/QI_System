@@ -46,9 +46,9 @@
                                  <children>
                                     <TableView layoutX="79.0" layoutY="86.0" prefHeight="383.0" prefWidth="1050.0">
                                       <columns>
-                                        <TableColumn prefWidth="350.0" text="C1" />
-                                        <TableColumn minWidth="0.0" prefWidth="350.0" text="C2" />
-                                          <TableColumn minWidth="0.0" prefWidth="350.0" text="Column X" />
+                                        <TableColumn prefWidth="350.0" text="排名" />
+                                        <TableColumn minWidth="0.0" prefWidth="350.0" text="股票名" />
+                                          <TableColumn minWidth="0.0" prefWidth="350.0" text="股票代码" />
                                       </columns>
                                     </TableView>
                                     <ComboBox layoutX="979.0" layoutY="30.0" prefWidth="150.0" promptText="第1个持有期" />
@@ -218,7 +218,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="ChooseStock" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
+                                                <Button fx:id="ChooseStock_MomentumStrategy" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -233,7 +233,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="search" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
+                                                <Button fx:id="search_MomentumStrategy" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -285,7 +285,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="ChooseStock" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
+                                                <Button fx:id="ChooseStock_MeanReversio" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
@@ -300,7 +300,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="search" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
+                                                <Button fx:id="search_MeanReversio" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" text="查询">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>
