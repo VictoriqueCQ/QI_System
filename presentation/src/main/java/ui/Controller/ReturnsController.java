@@ -45,23 +45,25 @@ public class ReturnsController implements Initializable {
 
     //股票表格
     @FXML
-    private TableView<String> StockTableView;
+    private TableView<StockModel> StockTableView;
 
     //第几个持有期
     @FXML
-    private ComboBox<String> HoldPeriod;
+    private ComboBox<String> HoldPeriodRank;
 
     //股票排名
     @FXML
-    private TableColumn<String,String> StockRank;
+    private TableColumn<StockModel,String> StockRank;
 
     //股票名
     @FXML
-    private TableColumn<String,String> StockName;
+    private TableColumn<StockModel,String> StockName;
 
     //股票代码
     @FXML
-    private TableColumn<String,String> StockCode;
+    private TableColumn<StockModel,String> StockCode;
+
+    private ObservableList<StockModel> stockTableData;
 
     /*
     *以下是累计收益率中的变量（累计收益率有两个方法，分别是setCumulative（）和setLineChart（））
@@ -232,44 +234,31 @@ public class ReturnsController implements Initializable {
      * 从股票选择页面返回后显示所选股票
      * @param stockNameList
      */
-    public void setSelectStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
-        this.stockNameList=stockNameList;
-        this.stockCodeList=stockCodeList;
+    public void setStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
         if(!isyourchoice){
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
         Plate_MomentumStrategy.getItems().addAll(stockNameList);
-        if(stockNameList.size()>0) {
-            Plate_MomentumStrategy.setValue(stockNameList.get(0));
-        }
+        Plate_MomentumStrategy.setValue(stockNameList.get(0));
         Plate_MeanReversio.getItems().addAll(stockNameList);
-        if(stockCodeList.size()>0) {
-            Plate_MeanReversio.setValue(stockNameList.get(0));
-        }
+        Plate_MeanReversio.setValue(stockNameList.get(0));
         isyourchoice=true;
-
+        this.stockNameList=stockNameList;
+        this.stockCodeList=stockCodeList;
     }
 
-    /**
-     * 从股票选择页面返回后显示所选板块
-     * @param sectionNameList
-     */
     public void setSectionComboBox(ArrayList<String> sectionNameList){
-        this.sectionNameList=sectionNameList;
         if(isyourchoice){
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
         Plate_MomentumStrategy.getItems().addAll(sectionNameList);
-        if(sectionNameList.size()>0) {
-            Plate_MomentumStrategy.setValue(sectionNameList.get(0));
-        }
+        Plate_MomentumStrategy.setValue(sectionNameList.get(0));
         Plate_MeanReversio.getItems().addAll(sectionNameList);
-        if(sectionNameList.size()>0) {
-            Plate_MeanReversio.setValue(sectionNameList.get(0));
-        }
+        Plate_MeanReversio.setValue(sectionNameList.get(0));
         isyourchoice=false;
+        this.sectionNameList=sectionNameList;
     }
 
     /*
@@ -358,66 +347,6 @@ public class ReturnsController implements Initializable {
         EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
     }
 
-    public void setStartDatePicker_MeanReversio() {
-        StartDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
-        final Callback<DatePicker, DateCell> dayCellFactory1 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
-                                if (item.isBefore(
-                                        LocalDate.of(2005, 2, 1))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                                if (item.isAfter(
-                                        LocalDate.of(2014, 4, 30))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                            }
-                        };
-                    }
-                };
-        StartDate_MeanReversio.setDayCellFactory(dayCellFactory1);
-    }
-
-    public void setEndDatePicker_MeanReversio() {
-        EndDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
-        final Callback<DatePicker, DateCell> dayCellFactory1 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
-                                if (item.isBefore(
-                                        LocalDate.of(2005, 2, 1))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                                if (item.isAfter(
-                                        LocalDate.of(2014, 4, 30))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                            }
-                        };
-                    }
-                };
-        EndDate_MeanReversio.setDayCellFactory(dayCellFactory1);
-    }
-
     //将datepicker获取的时间转为date类
     public Date changeDateStyle(LocalDate localDate) {
 
@@ -430,8 +359,22 @@ public class ReturnsController implements Initializable {
 
     //这里是股票表格，包括股票排名，股票名和股票代码
     private void setStockTableView(){
+        //填充第几个持有期的combobox
+        ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
+        List<String> HoldPeriodString = new ArrayList<>();
+        for(int i = 0;i<number;i++){
+            HoldPeriodString.add("第"+i+"个持有期");
+        }
+        HoldPeriod.addAll(HoldPeriodString);
+        HoldPeriodRank.setItems(HoldPeriod);
 
+        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
+        StockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        StockCode.setCellValueFactory(celldata -> celldata.getValue().idProperty());
 
+        stockTableData = FXCollections.observableArrayList(
+//                new StockModel()(StockCode,StockName,StockCode);
+        );
     }
 
     private void setMomentumStrategyInputSearch() {
