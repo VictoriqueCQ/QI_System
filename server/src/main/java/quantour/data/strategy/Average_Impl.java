@@ -50,7 +50,7 @@ public class Average_Impl implements Strategy_data {
 
         List<Index> indices=null;
 
-
+        int winnerSize = 0;
         //自选股票
         Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
         if (quest[6].equals("T")) {

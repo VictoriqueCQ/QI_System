@@ -254,6 +254,7 @@ public class ContrastController extends Application {
      */
     @FXML
     public void addCompare() {
+        fuzzyCheck.setVisible(false);
         if(number<5){
         number++;
         StockSearchConditionVO searchConditionVO1;
@@ -333,7 +334,7 @@ public class ContrastController extends Application {
         riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
         stockModel1 = stockVOtoStockModle(stock1);
 //        stockModel2 = stockVOtoStockModle(stock2);
-        System.out.print(stockModel1.getName());
+//        System.out.print(stockModel1.getName());
 //        models = FXCollections.observableArrayList();
         models.add(stockModel1);
 //        models.add(stockModel2);
@@ -540,7 +541,7 @@ public class ContrastController extends Application {
         for(int i=0;i<allStockName.length;i++){
             Matcher matcher = pattern.matcher(allStockName[i]);
             if(matcher.matches()){
-                System.out.println("匹配："+allStockName[i]);
+//                System.out.println("匹配："+allStockName[i]);
                 result.add(allStockName[i]);
 
                 }
@@ -599,10 +600,10 @@ public class ContrastController extends Application {
         }
 
 //
-        for (String temp:content
+        /*for (String temp:content
                 ) {
             System.out.println(temp);
-        }
+        }*/
         return content;
 
     }
