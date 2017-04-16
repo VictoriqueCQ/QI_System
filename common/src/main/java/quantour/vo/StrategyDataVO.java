@@ -14,9 +14,10 @@ public class StrategyDataVO {
     private double maxDrawDown;//最大回撤
     private List<StockSetVO> stockSetVOS;
     private List<Double> profits;
+    private List<Double> basicProfits;//基准收益
 
     public StrategyDataVO(double annualReturn, double basicAnnualReturn, double alpha, double beta, double sharpeRatio,
-                          double maxDrawDown, List<StockSetVO> stockSetVOS, List<Double> profits) {
+                          double maxDrawDown, List<StockSetVO> stockSetVOS, List<Double> profits, List<Double> basicProfits) {
         this.annualReturn = annualReturn;
         this.basicAnnualReturn = basicAnnualReturn;
         this.alpha = alpha;
@@ -25,55 +26,81 @@ public class StrategyDataVO {
         this.maxDrawDown = maxDrawDown;
         this.stockSetVOS = stockSetVOS;
         this.profits = profits;
+        this.basicProfits = basicProfits;
     }
 
-    public StrategyDataVO(){}
+    public StrategyDataVO() {
+    }
 
     public double getAnnualReturn() {
         return annualReturn;
     }
 
-    public void setAnnualReturn(double annualReturn){this.annualReturn = annualReturn;}
+    public void setAnnualReturn(double annualReturn) {
+        this.annualReturn = annualReturn;
+    }
 
     public double getBasicAnnualReturn() {
         return basicAnnualReturn;
     }
 
-    public void setBasicAnnualReturn(double basicAnnualReturn){this.basicAnnualReturn = basicAnnualReturn;}
+    public void setBasicAnnualReturn(double basicAnnualReturn) {
+        this.basicAnnualReturn = basicAnnualReturn;
+    }
 
     public double getAlpha() {
         return alpha;
     }
 
-    public void setAlpha(double alpha){this.alpha = alpha;}
+    public void setAlpha(double alpha) {
+        this.alpha = alpha;
+    }
 
     public double getBeta() {
         return beta;
     }
 
-    public void setBeta(double beta){this.beta = beta;}
+    public void setBeta(double beta) {
+        this.beta = beta;
+    }
 
     public double getSharpeRatio() {
         return sharpeRatio;
     }
 
-    public void setSharpeRatio(double sharpeRatio){this.sharpeRatio = sharpeRatio;}
+    public void setSharpeRatio(double sharpeRatio) {
+        this.sharpeRatio = sharpeRatio;
+    }
 
     public double getMaxDrawDown() {
         return maxDrawDown;
     }
 
-    public void setMaxDrawDown(double maxDrawDown){this.maxDrawDown = maxDrawDown;}
+    public void setMaxDrawDown(double maxDrawDown) {
+        this.maxDrawDown = maxDrawDown;
+    }
 
     public List<StockSetVO> getStockSetVOS() {
         return stockSetVOS;
     }
 
-    public void setStockSetPOS(List<StockSetVO> stockSetVOS){this.stockSetVOS = stockSetVOS;}
+    public void setStockSetPOS(List<StockSetVO> stockSetVOS) {
+        this.stockSetVOS = stockSetVOS;
+    }
 
     public List<Double> getProfits() {
         return profits;
     }
 
-    public void setProfits(List<Double> profits){this.profits = profits;}
+    public void setProfits(List<Double> profits) {
+        this.profits = profits;
+    }
+
+    public List<Double> getBasicProfits() {
+        return basicProfits;
+    }
+
+    public void setBasicProfits(List<Double> basicProfits) {
+        this.basicProfits = basicProfits;
+    }
 }
