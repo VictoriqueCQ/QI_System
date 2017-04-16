@@ -232,31 +232,44 @@ public class ReturnsController implements Initializable {
      * 从股票选择页面返回后显示所选股票
      * @param stockNameList
      */
-    public void setStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
+    public void setSelectStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
+        this.stockNameList=stockNameList;
+        this.stockCodeList=stockCodeList;
         if(!isyourchoice){
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
         Plate_MomentumStrategy.getItems().addAll(stockNameList);
-        Plate_MomentumStrategy.setValue(stockNameList.get(0));
+        if(stockNameList.size()>0) {
+            Plate_MomentumStrategy.setValue(stockNameList.get(0));
+        }
         Plate_MeanReversio.getItems().addAll(stockNameList);
-        Plate_MeanReversio.setValue(stockNameList.get(0));
+        if(stockCodeList.size()>0) {
+            Plate_MeanReversio.setValue(stockNameList.get(0));
+        }
         isyourchoice=true;
-        this.stockNameList=stockNameList;
-        this.stockCodeList=stockCodeList;
+
     }
 
+    /**
+     * 从股票选择页面返回后显示所选板块
+     * @param sectionNameList
+     */
     public void setSectionComboBox(ArrayList<String> sectionNameList){
+        this.sectionNameList=sectionNameList;
         if(isyourchoice){
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
         Plate_MomentumStrategy.getItems().addAll(sectionNameList);
-        Plate_MomentumStrategy.setValue(sectionNameList.get(0));
+        if(sectionNameList.size()>0) {
+            Plate_MomentumStrategy.setValue(sectionNameList.get(0));
+        }
         Plate_MeanReversio.getItems().addAll(sectionNameList);
-        Plate_MeanReversio.setValue(sectionNameList.get(0));
+        if(sectionNameList.size()>0) {
+            Plate_MeanReversio.setValue(sectionNameList.get(0));
+        }
         isyourchoice=false;
-        this.sectionNameList=sectionNameList;
     }
 
     /*
@@ -417,6 +430,7 @@ public class ReturnsController implements Initializable {
 
     //这里是股票表格，包括股票排名，股票名和股票代码
     private void setStockTableView(){
+
 
     }
 

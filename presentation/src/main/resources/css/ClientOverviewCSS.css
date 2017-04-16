@@ -34,5 +34,7 @@
 }
 
 .label_client_picture {
-    -fx-background-image: url("/picture/头像.png")
+     -fx-background-image: url("/picture/背景1.gif");
+        -fx-background-size: cover;
+        -fx-background-color:transparent;
 }

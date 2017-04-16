@@ -256,19 +256,19 @@
                                              <children>
                                                 <Label layoutX="21.0" layoutY="20.0" />
                                                 <Label layoutX="21.0" layoutY="20.0" text="开始日期" />
-                                                <DatePicker fx:id="StartDate_MeanReversio" layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="StartDate_MeanReversio" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="21.0" layoutY="18.0" text="仓内持有股票数" />
-                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" />
+                                                <TextField fx:id="StockHeldInHouse_MeanReversio" layoutX="139.0" layoutY="16.0" prefHeight="23.0" prefWidth="147.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="20.0" text="结束日期" />
-                                                <DatePicker fx:id="EndDate_MeanReversio" layoutX="100.0" layoutY="18.0" />
+                                                <DatePicker fx:id="EndDate_MeanReversio" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -280,7 +280,7 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
                                                 <Label layoutX="22.0" layoutY="18.0" text="形成期" />
-                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -295,7 +295,7 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                              <children>
                                                 <Label layoutX="25.0" layoutY="18.0" text="持有期" />
-                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="124.0" layoutY="16.0" />
+                                                <TextField fx:id="FormativePeriod_MeanReversio" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">

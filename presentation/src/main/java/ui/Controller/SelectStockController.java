@@ -119,7 +119,7 @@ public class SelectStockController {
         isyourchoice=true;
         AlertUtil.showInformationAlert("您此次选中"+stockNameList.size()+"只股票");
         main.closeExtraStage();
-        returnsController.setStockComboBox(stockNameList,stockCodeList);
+        returnsController.setSelectStockComboBox(stockNameList,stockCodeList);
     }
 
     /**
