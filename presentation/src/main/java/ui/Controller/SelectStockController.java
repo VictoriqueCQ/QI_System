@@ -109,17 +109,22 @@ public class SelectStockController {
      */
     @FXML
     private void finishStockSelect(){
-        for(int i=0;i<stockNameList.size();i++){
-            System.out.print(stockNameList.get(i));
+//        for(int i=0;i<stockNameList.size();i++){
+//            System.out.print(stockNameList.get(i));
+//        }
+        if(stockNameList.size()>0) {
+            HashSet<String> hashset_temp = new HashSet<String>(stockNameList);
+            stockNameList = new ArrayList<String>(hashset_temp);
+            HashSet<String> hashset_temp1 = new HashSet<String>(stockCodeList);
+            stockCodeList = new ArrayList<String>(hashset_temp1);
+            isyourchoice = true;
+            AlertUtil.showInformationAlert("您此次选中" + stockNameList.size() + "只股票");
+            main.closeExtraStage();
+            returnsController.setSelectStockComboBox(stockNameList, stockCodeList);
         }
-        HashSet<String> hashset_temp=new HashSet<String>(stockNameList);
-        stockNameList=new ArrayList<String>(hashset_temp);
-        HashSet<String> hashset_temp1=new HashSet<String>(stockCodeList);
-        stockCodeList=new ArrayList<String>(hashset_temp1);
-        isyourchoice=true;
-        AlertUtil.showInformationAlert("您此次选中"+stockNameList.size()+"只股票");
-        main.closeExtraStage();
-        returnsController.setSelectStockComboBox(stockNameList,stockCodeList);
+        else{
+            AlertUtil.showWarningAlert("对不起，您未选择股票");
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 .label {
     -fx-base: rgb(0, 0, 0);
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill:  rgb(240, 150, 96);
     -fx-font-size: 1em;
 }
 
@@ -9,7 +9,7 @@
 }
 
 .button {
-    -fx-text-fill: rgb(240, 150, 96);
+    -fx-text-fill:  rgb(240, 150, 96);
 }
 
 .choice-box {
@@ -20,6 +20,20 @@
 .choice-box .label{
     -fx-text-fill: #AAACAF;
 }
+
+.context-menu {
+    -fx-background-color: rgb(100,100,100);
+}
+
+.choice-box .arrow {
+    -fx-background-color: #000000;
+}
+
+#choice-box-menu-item:hover {
+  -fx-background-color: #000000;
+  -fx-text-fill:#ffffff;
+}
+
 
 .TextFieldText {
     -fx-background-color: rgb(100, 100, 100);
