@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import quantour.vo.StockVO;
 import ui.*;
 
@@ -14,6 +17,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -22,8 +26,17 @@ import java.util.List;
 public class SelectStockController {
     private Main main;
     private Net net;
+    private ReturnsController returnsController;
 
     private String[] allStockName;
+
+    boolean isyourchoice;
+
+    private ArrayList<String> stockNameList=new ArrayList<String>();
+
+    private ArrayList<String> stockCodeList=new ArrayList<String>();
+
+    private ArrayList<String> sectionNameList=new ArrayList<String>();
 
     @FXML
     private TableView<StockModel> stockTable;
@@ -33,9 +46,6 @@ public class SelectStockController {
 
     @FXML
     private TableColumn<StockModel, String> stockID;
-
-//    private ObservableList<StockModel> models;
-
 
     @FXML
     private ComboBox<String> selectComboBox;
@@ -69,8 +79,9 @@ public class SelectStockController {
     }
 
 
-
-
+    /**
+     * 自选股票板块
+     */
     @FXML
     private void stockSearch() {
         if (!searchTextField.getText().equals("")) {
@@ -92,12 +103,68 @@ public class SelectStockController {
         }
     }
 
+    /**
+     * 自选股票选择结束
+     */
+    @FXML
+    private void finishStockSelect(){
+        for(int i=0;i<stockNameList.size();i++){
+            System.out.print(stockNameList.get(i));
+        }
+        HashSet<String> hashset_temp=new HashSet<String>(stockNameList);
+        stockNameList=new ArrayList<String>(hashset_temp);
+        HashSet<String> hashset_temp1=new HashSet<String>(stockCodeList);
+        stockCodeList=new ArrayList<String>(hashset_temp1);
+        isyourchoice=true;
+        AlertUtil.showInformationAlert("您已选中"+stockNameList.size()+"只股票");
+        main.closeExtraStage();
+        returnsController.setStockComboBox(stockNameList,stockCodeList);
+    }
+
+    /**
+     * 板块选择结束
+     */
+    @FXML
+    private void finishSectionSelect(){
+        sectionNameList.clear();
+        if(shangzhengRadioButton.isSelected()){
+            sectionNameList.add("上证指数");
+        }
+        if(hushenRadioButton.isSelected()){
+            sectionNameList.add("沪深300");
+        }
+        if(shenzhenRadioButton.isSelected()){
+            sectionNameList.add("深圳成指");
+        }
+        if(sectionNameList.size()>=1) {
+            String text = "您已选中";
+            for (int i = 0; i < sectionNameList.size() - 1; i++) {
+                text += sectionNameList.get(i) + ",";
+            }
+            text += sectionNameList.get(sectionNameList.size() - 1);
+            text += "板块中的股票";
+            AlertUtil.showInformationAlert(text);
+            isyourchoice = false;
+            main.closeExtraStage();
+            returnsController.setSectionComboBox(sectionNameList);
+        }
+        else{
+            AlertUtil.showWarningAlert("对不起，您未选择板块");
+        }
+
+    }
+
+    /**
+     * 选择股票板块：上证指数，沪深300，深圳成指
+     */
     @FXML
     private void sectionSearch(){
             String section =selectComboBox.getValue();
-            ArrayList<StockVO> stockVOList=readStockList("stock-section\\"+section+".csv");
+            ArrayList<StockVO> stockVOList=readStockList("stock-section1\\"+section+".txt");
+//            ArrayList<StockVO> stockVOList=readStockList("C:\\Users\\xjwhh\\Desktop\\通信及相关设备制造业.csv");
             setTableView(stockVOList);
     }
+
 
     public ArrayList<StockVO> readStockList(String stockPath) {
         ArrayList<StockVO> stockList = new ArrayList<StockVO>();
@@ -109,8 +176,11 @@ public class SelectStockController {
             String row = br.readLine();
             while (row != null) {
                 List<String> stockInfo = Arrays.asList(row.split("\t"));
-                int code = Integer.parseInt(stockInfo.get(1));
+//                int code = Integer.parseInt(stockInfo.get(1).substring(0,stockInfo.get(1).toCharArray().length-1));
                 String name = stockInfo.get(0);
+//                String newname=new String(name.getBytes("gb2312"),"utf-8");
+//                System.out.print(newname);
+                int code=Integer.parseInt(stockInfo.get(1));
                 StockVO stockVO = new StockVO();
                 stockVO.setName(name);
                 stockVO.setCode(code);
@@ -165,10 +235,77 @@ public class SelectStockController {
         return content;
     }
 
+    /**
+     * 显示对应板块的股票并设置监听
+     * @param stockVOList
+     */
     private void setTableView(ArrayList<StockVO> stockVOList) {
         ObservableList<StockModel> models = FXCollections.observableArrayList();
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        stockName.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                        }
+                    }
+                    else if(t.getClickCount() == 1){
+                        try {
+                            if(cell.getIndex()<=models.size()){
+                                //
+                                System.out.print("1");
+                                String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                                stockNameList.add(name);
+                                String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                                stockCodeList.add(code);
+
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
         stockID.setCellValueFactory(celldata -> celldata.getValue().idProperty());
+        stockID.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                        }
+                    }
+                    else if(t.getClickCount() == 1){
+                        try {
+                            if(cell.getIndex()<=models.size()){
+                                //
+                                System.out.print("1");
+                                String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                                stockNameList.add(name);
+                                String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                                stockCodeList.add(code);
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
         for (int i = 0; i < stockVOList.size(); i++) {
             StockVO stockVO = stockVOList.get(i);
             StockModel stockModel = stockVOtoStockModle(stockVO);
@@ -221,33 +358,92 @@ public class SelectStockController {
         return model;
     }
 
+    /**
+     * 初始化股票板块ComboBox
+     */
     private void setComboBox(){
         ArrayList<String> sectionList=new ArrayList<String>();
+        sectionList.add("暂无板块分类");
         sectionList.add("采掘服务业");
+        sectionList.add("餐饮业");
+        sectionList.add("仓储业");
+        sectionList.add("畜牧业");
+        sectionList.add("电力、蒸汽、热水的生产和供应业");
+        sectionList.add("电器机械及器材制造业");
+        sectionList.add("电子元器件制造业");
+        sectionList.add("房地产开发与经营业");
+        sectionList.add("房地产中介服务业");
+        sectionList.add("纺织业");
+        sectionList.add("非金属矿物制品业");
+        sectionList.add("港口业");
+        sectionList.add("公路运输业");
+        sectionList.add("广播电视设备制造业");
+        sectionList.add("广播电影电视业");
+        sectionList.add("化学原料及化学制品制造业");
+        sectionList.add("计算机及相关设备制造业");
+        sectionList.add("计算机应用服务业");
+        sectionList.add("交通运输辅助业");
+        sectionList.add("交通运输设备制造业");
+        sectionList.add("金属制品业");
+        sectionList.add("林业");
+        sectionList.add("零售业");
+        sectionList.add("旅馆业");
+        sectionList.add("旅游业");
+        sectionList.add("煤气生产和供应业");
+        sectionList.add("煤炭采选业");
+        sectionList.add("能源、材料和机械电子设备批发业");
+        sectionList.add("农业");
+        sectionList.add("普通机械制造业");
+        sectionList.add("其他电子设备制造业");
+        sectionList.add("其他批发业");
+        sectionList.add("其他社会服务业");
+        sectionList.add("其他通用零部件制造业");
+        sectionList.add("商业经纪与代理业");
+        sectionList.add("食品、饮料、烟草和家庭用品批发业");
+        sectionList.add("食品加工业");
+        sectionList.add("输配电及控制设备制造业");
+        sectionList.add("水泥制造业");
+        sectionList.add("水上运输业");
+        sectionList.add("陶瓷制品业");
+        sectionList.add("通信服务业");
+        sectionList.add("通信及相关设备制造业");
+        sectionList.add("通信设备制造业");
+        sectionList.add("土木工程建筑业");
+        sectionList.add("卫生、保健、护理服务业");
+        sectionList.add("文教体育用品制造业");
+        sectionList.add("信息传播服务业");
+        sectionList.add("医药制造业");
+        sectionList.add("银行业");
+        sectionList.add("饮料制造业");
+        sectionList.add("印刷业");
+        sectionList.add("有色金属矿采选业");
+        sectionList.add("有色金属冶炼及压延加工业");
+        sectionList.add("渔业");
+        sectionList.add("渔业服务业");
+        sectionList.add("证券、期货业");
+        sectionList.add("制造业");
+        sectionList.add("中药材及中成药加工业");
+        sectionList.add("专业、科研服务业");
+        sectionList.add("专用设备制造业");
+        sectionList.add("装修装饰业");
+        sectionList.add("租赁服务业");
         selectComboBox.getItems().addAll(sectionList);
         selectComboBox.setValue(sectionList.get(0));
-
     }
 
-    public void setMain(Main main, Net net) {
+    public void setMain(Main main, Net net,ReturnsController returnsController) {
         this.main = main;
         this.net = net;
-
-        //单选框组合
-        ToggleGroup group = new ToggleGroup();
-        shangzhengRadioButton.setToggleGroup(group);
-        shenzhenRadioButton.setToggleGroup(group);
-        hushenRadioButton.setToggleGroup(group);
-
-
-        //表格
+        this.returnsController=returnsController;
 
 //        allStockName = this.getNameList("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\name_code.csv");
 
         //设置ComboBox
         setComboBox();
 
-        searchTextField.setText("股票名称");
+        searchTextField.setText("请输入股票名称");
+
+
 
     }
 

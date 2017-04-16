@@ -266,13 +266,13 @@ public class  Main extends Application {
     /**
      * 跳转到股票选择界面
      */
-    public void gotoSelectStock(){
+    public void gotoSelectStock(ReturnsController returnsController){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/SelectStock.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             SelectStockController controller = (SelectStockController) fxmlLoader.getController();
-            controller.setMain(this, net);
+            controller.setMain(this, net,returnsController);
             stage3.setScene(new Scene(insidePane));
             stage3.centerOnScreen();
             stage3.show();
@@ -318,6 +318,9 @@ public class  Main extends Application {
         }
         if (stage2!=null&&stage2.isShowing()) {
             stage2.hide();
+        }
+        if (stage3!=null&&stage3.isShowing()) {
+            stage3.hide();
         }
     }
 //

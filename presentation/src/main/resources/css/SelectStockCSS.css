@@ -3,7 +3,9 @@
 }
 
 .TextFieldText {
+    -fx-background-radius: 20px;
     -fx-background-color: rgb(100, 100, 100);
+    -fx-border-radius: 20px;
     -fx-text-fill: #AAACAF;
 }
 
@@ -22,15 +24,14 @@
 
 .combo-box{
     -fx-background-color:rgb(100,100,100);
+    -fx-text-fill: #AAACAF;
 }
 
 .combo-box .label{
     -fx-text-fill: #AAACAF;
 }
 
-.radio-button .label{
-    -fx-text-fill:#ffffff;
-}
+
 
 .button1 {
     -fx-background-image: url("/picture/exitbutton.png");

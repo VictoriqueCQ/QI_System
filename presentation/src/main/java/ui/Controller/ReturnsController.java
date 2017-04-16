@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.util.Callback;
-import org.jfree.chart.demo.TimeSeriesChartDemo1;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
@@ -28,6 +27,18 @@ public class ReturnsController implements Initializable {
     private Main main;
 
     private Net net;
+
+    //是否自选
+    private boolean isyourchoice;
+
+    //自选股票名
+    private ArrayList<String> stockNameList=new ArrayList<String>();
+
+    //自选股票代码，两者不对应
+    private ArrayList<String> stockCodeList=new ArrayList<String>();
+
+    //板块名
+    private ArrayList<String> sectionNameList=new ArrayList<String>();
 
     //股票表格
     @FXML
@@ -211,7 +222,38 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void gotoSelectStock() {
-        main.gotoSelectStock();
+        main.gotoSelectStock(this);
+    }
+
+    /**
+     * 从股票选择页面返回后显示所选股票
+     * @param stockNameList
+     */
+    public void setStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
+        if(!isyourchoice){
+            Plate_MeanReversio.getItems().clear();
+            Plate_MomentumStrategy.getItems().clear();
+        }
+        Plate_MomentumStrategy.getItems().addAll(stockNameList);
+        Plate_MomentumStrategy.setValue(stockNameList.get(0));
+        Plate_MeanReversio.getItems().addAll(stockNameList);
+        Plate_MeanReversio.setValue(stockNameList.get(0));
+        isyourchoice=true;
+        this.stockNameList=stockNameList;
+        this.stockCodeList=stockCodeList;
+    }
+
+    public void setSectionComboBox(ArrayList<String> sectionNameList){
+        if(isyourchoice){
+            Plate_MeanReversio.getItems().clear();
+            Plate_MomentumStrategy.getItems().clear();
+        }
+        Plate_MomentumStrategy.getItems().addAll(sectionNameList);
+        Plate_MomentumStrategy.setValue(sectionNameList.get(0));
+        Plate_MeanReversio.getItems().addAll(sectionNameList);
+        Plate_MeanReversio.setValue(sectionNameList.get(0));
+        isyourchoice=false;
+        this.sectionNameList=sectionNameList;
     }
 
     /*
