@@ -160,7 +160,7 @@ public class Momentum_Impl implements Strategy_data{
         return stockSets;
     }
 
-    @Override
+
     public Map<Integer, List<Stock>> getStockPool() {
         return stockPool;
     }
