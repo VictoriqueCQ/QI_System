@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 import quantour.vo.UserVO;
 import ui.Controller.*;
 
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -208,6 +209,23 @@ public class  Main extends Application {
             rootLayout.getItems().set(1, insidePane);
             CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
             controller.setMain(this, net);
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    /**
+     * 跳转到K线图界面
+     */
+    public void gotoCandlestickChart(String name, String code, LocalDate startdate,LocalDate enddate) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/CandlestickChart.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(1200, 680);
+            rootLayout.getItems().set(1, insidePane);
+            CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
+            controller.setMain(this, net,name,code,startdate,enddate);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }

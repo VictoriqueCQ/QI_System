@@ -240,7 +240,6 @@ public class SelectStockController {
     private void setTableView(ArrayList<StockVO> stockVOList) {
         ObservableList<StockModel> models = FXCollections.observableArrayList();
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
-
         stockName.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
 
             @Override

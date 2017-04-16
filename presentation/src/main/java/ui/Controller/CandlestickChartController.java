@@ -508,4 +508,14 @@ public class CandlestickChartController {
         this.net = net;
         this.setDatePicker();
     }
+
+    public void setMain(Main main,Net net,String name, String code, LocalDate startdate,LocalDate enddate){
+        this.main=main;
+        this.net=net;
+        startTimeDatePicker.setValue(startdate);
+        endTimeDatePicker.setValue(enddate);
+        stockNameTextField.setText(name);
+        stockNumberTextField.setText(code);
+        this.search();
+    }
 }

@@ -169,7 +169,7 @@
                       </TabPane>
                   <TabPane prefHeight="200.0" prefWidth="200.0" stylesheets="@css/TabPaneCSS.css" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                      <Tab text="动量策略">
+                      <Tab fx:id="MomentumStrategyTab" text="动量策略">
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
@@ -246,7 +246,7 @@
                               </AnchorPane>
                            </content>
                       </Tab>
-                      <Tab text="均值回归">
+                      <Tab fx:id="MeanReversioTab" text="均值回归">
                            <content>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
