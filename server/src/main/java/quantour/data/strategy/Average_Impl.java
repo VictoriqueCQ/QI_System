@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
  */
 public class Average_Impl implements Strategy_data {
     //private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
-    private Map<Integer,List<Stock>> stockPool;//用于保存所选择的股票池里所有股票的信息，integer为code
+    private Map<Integer, List<Stock>> stockPool;//用于保存所选择的股票池里所有股票的信息，integer为code
     private List<String> stockNames;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
-    public Average_Impl(){
-        stockPool=new HashMap<>();
+    public Average_Impl() {
+        stockPool = new HashMap<>();
     }
 
     @Override
     public List<StockSet> getSets(String[] quest) {
-        DataFactory_CSV_Impl dataFactoryCsv=null;
+        DataFactory_CSV_Impl dataFactoryCsv = null;
         Date startDate = null;
         Date endDate = null;
         try {
@@ -42,41 +42,36 @@ public class Average_Impl implements Strategy_data {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int shapeTime =Integer.parseInt(quest[5]) ;//形成期,比价基准，均线
+        int shapeTime = Integer.parseInt(quest[5]);//形成期,比价基准，均线
         int holdTime = Integer.parseInt(quest[7]);//持有期
-//        int numOfStocks = Integer.parseInt(quest[7]);//仓内持股数
-   /*     ArrayList<String> stockPoolChoose = null;//板块选择
-        int length = quest.length - 8;
-        for(int i = 0;i<length;i++){
-            stockPoolChoose.add(quest[8+i]);
-        }*/
 
-    //自选股票
-        Stock_Filter_data stockFilterData=dataFactoryCsv.getStockFilterData();
-        if(quest[6].equals("T")) {
+
+        //自选股票
+        Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
+        if (quest[6].equals("T")) {
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
                 stockPool.put(code, stockFilterData.filterSingleStock(code));
             }
-        }else{
-            stockPool=stockFilterData.filterStaStock(quest);
+        } else {
+            stockPool = stockFilterData.filterStaStock(quest);
         }
 
 
-        Calendar calendar=Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
-        calendar.add(Calendar.DAY_OF_YEAR,-shapeTime);
-        Date initialDate=calendar.getTime();//形成期的开始
-        Date overDate=startDate;
+        calendar.add(Calendar.DAY_OF_YEAR, -shapeTime);
+        Date initialDate = calendar.getTime();//形成期的开始
+        Date overDate = startDate;
         calendar.setTime(overDate);//算形成期的时候的结束日期
-        calendar.add(Calendar.DAY_OF_YEAR,holdTime);
-        Date changeDate=calendar.getTime();//调仓
+        calendar.add(Calendar.DAY_OF_YEAR, holdTime);
+        Date changeDate = calendar.getTime();//调仓
 
-        List<StockSet> stockSets=new ArrayList<>();
+        List<StockSet> stockSets = new ArrayList<>();
 
-        Set<Integer> codes= stockPool.keySet();//股票编码
+        Set<Integer> codes = stockPool.keySet();//股票编码
 
-        while(overDate.compareTo(endDate)<0) {
+        while (overDate.compareTo(endDate) < 0) {
             List<Candidate1> candidates = new ArrayList<>();
             for (int c : codes) {
                 Date change = changeDate;
@@ -108,7 +103,8 @@ public class Average_Impl implements Strategy_data {
                     List<Stock> holdingList = currentCalculate.stream().
                             filter(stock -> stock.getDate().compareTo(over) >= 0).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
-                    double deviate = (average - (holdingList.get(0).getAdjClose())) / average;
+                    double currentPrice = holdingList.get(holdingList.size()-1).getAdjClose();
+                    double deviate = (average - currentPrice) / average;
                     Candidate1 candidate1 = new Candidate1(c, holdingList.get(0), holdingList.get(holdingList.size() - 1),
                             deviate);
 
@@ -119,7 +115,7 @@ public class Average_Impl implements Strategy_data {
             }
             candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
                     collect(Collectors.toList());//从小到大排序
-            Map<Integer, List<Stock>> map = new HashMap<>();
+            Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
             for (int i = candidates.size() - 1; i >= candidates.size() * 0.8; i--) {
                 List<Stock> temp = new ArrayList<>();
                 temp.add(candidates.get(i).getS1());
@@ -141,12 +137,14 @@ public class Average_Impl implements Strategy_data {
             calendar.add(Calendar.DAY_OF_YEAR, holdTime);
             changeDate = calendar.getTime();
 
-            return stockSets;
+
         }
+        return stockSets;
+    }
 //        List<Stock> stockList = stocks;// 根据股票池或者自选股票啥的得到的股票
 
 
-            //stocks = FiltExceptST(stocks);
+        //stocks = FiltExceptST(stocks);
 
 
 
@@ -184,46 +182,43 @@ public class Average_Impl implements Strategy_data {
             }*/
 
 
+       /* @Override
+        public Map<Integer, List<Stock>> getStockPool () {
+            return (List<StockSet>) stockPool;
+        }*/
 
 
+        class Candidate1 {
+            int code;
+            Stock s1;
+            Stock s2;
+            double deviate;
+
+            public Candidate1(int code, Stock s1, Stock s2, double deviate) {
+                this.code = code;
+                this.s1 = s1;
+                this.s2 = s2;
+                this.deviate = deviate;
+            }
+
+            public int getCode() {
+                return code;
+            }
+
+            public Stock getS1() {
+                return s1;
+            }
+
+            public Stock getS2() {
+                return s2;
+            }
+
+            public double getDeviate() {
+                return deviate;
+            }
 
 
-    @Override
-    public Map<Integer, List<Stock>> getStockPool() {
-        return stockPool;
-    }
+        }
 
-}
-
-
-class Candidate1{
-    int code;
-    Stock s1;
-    Stock s2;
-    double deviate;
-
-    public Candidate1(int code, Stock s1, Stock s2, double deviate) {
-        this.code = code;
-        this.s1 = s1;
-        this.s2 = s2;
-        this.deviate = deviate;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public Stock getS1() {
-        return s1;
-    }
-
-    public Stock getS2() {
-        return s2;
-    }
-
-    public double getDeviate(){return  deviate;}
-
-
-}
 
 }

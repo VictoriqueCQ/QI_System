@@ -599,14 +599,18 @@ public class ContrastController extends Application {
         }
 
 //
-//        for (String temp:content
-//                ) {
-//            System.out.println(temp);
-//        }
+        for (String temp:content
+                ) {
+            System.out.println(temp);
+        }
         return content;
 
     }
 
+//    public static void main(String[] args) {
+//        ContrastController test = new ContrastController();
+//        test.readFile("presentation/name_code.csv");
+//    }
 
     @FXML
     private void initialize() {
@@ -627,7 +631,7 @@ public class ContrastController extends Application {
 
 //        StockVO stockVO1 = new StockVO();
 //        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
-        allStockName = this.getNameList("//Users//chenyuyan//IdeaProjects//QI_System//server//name_code.csv");
+        allStockName = this.getNameList("presentation/name_code.csv");
 
 
 
