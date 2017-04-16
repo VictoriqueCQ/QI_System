@@ -1,5 +1,6 @@
 package quantour.data;
 
+import quantour.data.strategy.FormativeNHolding_data_Impl;
 import quantour.dataservice.*;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
     private Getter_data getterData;
     private Strategy_Calculator_data strategyCalculatorData;
     private Stock_Filter_data stockFilterData;
+    private FormativeNHolding_data formativeNHoldingdata;
 
     private List<Stock> stockList;
 
@@ -29,6 +31,7 @@ public class DataFactory_CSV_Impl implements DataFactory {
         getterData=new Getter_Impl(stockList);
         strategyCalculatorData=new Strategy_Calculator_Impl(stockList);
         stockFilterData=new Stock_Filter_data_Impl(dataReader_CSV);
+        formativeNHoldingdata =new FormativeNHolding_data_Impl();
     }
 
     public static DataFactory_CSV_Impl getInstance() throws ParseException, IOException {
@@ -66,5 +69,10 @@ public class DataFactory_CSV_Impl implements DataFactory {
     @Override
     public Stock_Filter_data getStockFilterData() {
         return stockFilterData;
+    }
+
+    @Override
+    public FormativeNHolding_data getFormativeNHoldingData() {
+        return formativeNHoldingdata;
     }
 }

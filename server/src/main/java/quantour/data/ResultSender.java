@@ -48,6 +48,8 @@ class ResultSender {
             case "STRATEGY":
                 logic = dataFactory.getStrategy();
                 break;
+            case "FNH":
+                logic=dataFactory.getFormativeNHoldingData();
             default:
                 System.out.println("wrong");//此处应改为exception
 

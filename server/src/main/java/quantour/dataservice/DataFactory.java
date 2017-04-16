@@ -10,4 +10,5 @@ public interface DataFactory {
     Getter_data getGetter();
     Strategy_Calculator_data getStrategy();
     Stock_Filter_data getStockFilterData();
+    FormativeNHolding_data getFormativeNHoldingData();
 }
