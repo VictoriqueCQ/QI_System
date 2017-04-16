@@ -79,7 +79,8 @@
                            </children>
                         </GridPane>
                         <Button layoutX="723.0" layoutY="421.0" mnemonicParsing="false" onAction="#finishSectionSelect" prefHeight="63.0" prefWidth="128.0" text="确定" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="10.0" />
-                        <Label layoutX="616.0" layoutY="173.0" prefHeight="416.0" prefWidth="527.0" styleClass="backgroundlabel" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label layoutX="616.0" layoutY="173.0" prefHeight="416.0" prefWidth="300.0" styleClass="backgroundlabel" AnchorPane.bottomAnchor="67.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Label layoutX="517.0" layoutY="131.0" prefHeight="423.0" prefWidth="271.0" styleClass="backgroundlabel" AnchorPane.bottomAnchor="67.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
             </content>

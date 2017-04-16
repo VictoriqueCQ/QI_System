@@ -10,6 +10,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import quantour.vo.StockVO;
+import quantour.vo.StockSetVO;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
@@ -35,13 +36,13 @@ public class ReturnsController implements Initializable {
     private boolean isyourchoice;
 
     //自选股票名
-    private ArrayList<String> stockNameList=new ArrayList<String>();
+    private ArrayList<String> stockNameList = new ArrayList<String>();
 
     //自选股票代码，两者不对应
-    private ArrayList<String> stockCodeList=new ArrayList<String>();
+    private ArrayList<String> stockCodeList = new ArrayList<String>();
 
     //板块名
-    private ArrayList<String> sectionNameList=new ArrayList<String>();
+    private ArrayList<String> sectionNameList = new ArrayList<String>();
 
     //股票表格
     @FXML
@@ -53,15 +54,15 @@ public class ReturnsController implements Initializable {
 
     //股票排名
     @FXML
-    private TableColumn<StockModel,String> StockRank;
+    private TableColumn<StockModel, String> StockRank;
 
     //股票名
     @FXML
-    private TableColumn<StockModel,String> StockName;
+    private TableColumn<StockModel, String> StockName;
 
     //股票代码
     @FXML
-    private TableColumn<StockModel,String> StockCode;
+    private TableColumn<StockModel, String> StockCode;
 
     @FXML
     private TableView<StockModel> stockTable;
@@ -240,10 +241,11 @@ public class ReturnsController implements Initializable {
 
     /**
      * 从股票选择页面返回后显示所选股票
+     *
      * @param stockNameList
      */
-    public void setSelectStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
-        if(!isyourchoice){
+    public void setSelectStockComboBox(ArrayList<String> stockNameList, ArrayList<String> stockCodeList) {
+        if (!isyourchoice) {
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
@@ -251,13 +253,13 @@ public class ReturnsController implements Initializable {
         Plate_MomentumStrategy.setValue(stockNameList.get(0));
         Plate_MeanReversio.getItems().addAll(stockNameList);
         Plate_MeanReversio.setValue(stockNameList.get(0));
-        isyourchoice=true;
-        this.stockNameList=stockNameList;
-        this.stockCodeList=stockCodeList;
+        isyourchoice = true;
+        this.stockNameList = stockNameList;
+        this.stockCodeList = stockCodeList;
     }
 
-    public void setSectionComboBox(ArrayList<String> sectionNameList){
-        if(isyourchoice){
+    public void setSectionComboBox(ArrayList<String> sectionNameList) {
+        if (isyourchoice) {
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
         }
@@ -265,8 +267,8 @@ public class ReturnsController implements Initializable {
         Plate_MomentumStrategy.setValue(sectionNameList.get(0));
         Plate_MeanReversio.getItems().addAll(sectionNameList);
         Plate_MeanReversio.setValue(sectionNameList.get(0));
-        isyourchoice=false;
-        this.sectionNameList=sectionNameList;
+        isyourchoice = false;
+        this.sectionNameList = sectionNameList;
     }
 
     /*
@@ -366,13 +368,13 @@ public class ReturnsController implements Initializable {
     }
 
     //这里是股票表格，包括股票排名，股票名和股票代码
-    private void setStockTableView(ArrayList<StockVO> stockVOList){
+    private void setStockTableView(ArrayList<StockVO> stockVOList) {
         ObservableList<StockModel> models = FXCollections.observableArrayList();
         //填充第几个持有期的combobox
         ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
         List<String> HoldPeriodString = new ArrayList<>();
-        for(int i = 0;i<number;i++){
-            HoldPeriodString.add("第"+i+"个持有期");
+        for (int i = 0; i < number; i++) {
+            HoldPeriodString.add("第" + i + "个持有期");
         }
         HoldPeriod.addAll(HoldPeriodString);
         HoldPeriodRank.setItems(HoldPeriod);
@@ -385,17 +387,16 @@ public class ReturnsController implements Initializable {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
+                        if (cell.getIndex() <= models.size()) {
                             //
                             System.out.print("2");
-                            if(MomentumStrategyTab.isSelected()) {
+                            if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
-                            }
-                            else{
-                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            } else {
+                                main.gotoCandlestickChart(name, code, StartDate_MeanReversio.getValue(), EndDate_MeanReversio.getValue());
                             }
                         }
                     }
@@ -412,17 +413,16 @@ public class ReturnsController implements Initializable {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
+                        if (cell.getIndex() <= models.size()) {
                             //
                             System.out.print("2");
-                            if(MomentumStrategyTab.isSelected()) {
+                            if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
-                            }
-                            else{
-                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            } else {
+                                main.gotoCandlestickChart(name, code, StartDate_MeanReversio.getValue(), EndDate_MeanReversio.getValue());
                             }
                         }
                     }
@@ -439,17 +439,16 @@ public class ReturnsController implements Initializable {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
+                        if (cell.getIndex() <= models.size()) {
                             //
                             System.out.print("2");
-                            if(MomentumStrategyTab.isSelected()) {
+                            if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
-                            }
-                            else{
-                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            } else {
+                                main.gotoCandlestickChart(name, code, StartDate_MeanReversio.getValue(), EndDate_MeanReversio.getValue());
                             }
                         }
                     }
@@ -469,14 +468,14 @@ public class ReturnsController implements Initializable {
     public StockModel stockVOtoStockModle(StockVO stockVO) {
         StockModel model = new StockModel();
         model.setName(stockVO.getName());
-        int code=stockVO.getCode();
-        String code1=String.valueOf(code);
-        char[] code2=code1.toCharArray();
-        int t=6-code2.length;
-        for(int i=0;i<t;i++){
-            code1="0"+code1;
+        int code = stockVO.getCode();
+        String code1 = String.valueOf(code);
+        char[] code2 = code1.toCharArray();
+        int t = 6 - code2.length;
+        for (int i = 0; i < t; i++) {
+            code1 = "0" + code1;
         }
-        model.setID(code1);
+        model.setID(Integer.parseInt(code1));
 //        model.setRank(String.valueOf());
 //
 //        double[] low = stockVO.getLow();
@@ -525,9 +524,6 @@ public class ReturnsController implements Initializable {
                     + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
         }
 
-
-
-
         String ReturnsMessage;
         ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
@@ -559,21 +555,76 @@ public class ReturnsController implements Initializable {
 
             number = profits.size();//形成期+持有期的个数
 
-            long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime())/number;
+            long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime()) / number;
 
             SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
 
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
 
-            for(int i = 0;i<number;i++){
-                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime()+i*period);
-                series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
-                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
+            for (int i = 0; i < number; i++) {
+                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime() + i * period);
+                series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
             }
 
             lineChart.getData().addAll(series1, series2);
 
+            List<Double> relativeProfits = new ArrayList<>();
+
+            int[] frequentNumber = new int[10];
+            for (int i = 0;i<10;i++){
+                frequentNumber[i] = 0;
+            }
+            for (int i = 0; i < number; i++) {
+                relativeProfits.add(profits.get(i)-basicProfits.get(i));
+            }
+            for (int i = 0;i<number;i++){
+                if(relativeProfits.get(i)<=0.015&&relativeProfits.get(i)>=0){
+                    frequentNumber[0]++;
+                }else if(relativeProfits.get(i)>0.015&&relativeProfits.get(i)<+0.025){
+                    frequentNumber[1]++;
+                }else if(relativeProfits.get(i)>0.025&&relativeProfits.get(i)<+0.035){
+                    frequentNumber[2]++;
+                }else if(relativeProfits.get(i)>0.035&&relativeProfits.get(i)<+0.045){
+                    frequentNumber[3]++;
+                }else if(relativeProfits.get(i)>0.045){
+                    frequentNumber[4]++;
+                }else if(relativeProfits.get(i)>-0.015&&relativeProfits.get(i)<0){
+                    frequentNumber[5]++;
+                }else if(relativeProfits.get(i)>-0.025&&relativeProfits.get(i)<-0.015){
+                    frequentNumber[6]++;
+                }else if(relativeProfits.get(i)>-0.035&&relativeProfits.get(i)<-0.025){
+                    frequentNumber[7]++;
+                }else if(relativeProfits.get(i)>-0.045&&relativeProfits.get(i)<-0.035){
+                    frequentNumber[8]++;
+                }else if(relativeProfits.get(i)<-0.045){
+                    frequentNumber[9]++;
+                }
+            }
+
+            //以下是相对收益指数图表的数据
+            barChart.setBarGap(3);
+            barChart.setCategoryGap(20);
+            XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+            XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+
+            series3.getData().add(new XYChart.Data<>("1.00%",frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("2.00%",frequentNumber[1]));
+            series3.getData().add(new XYChart.Data<>("3.00%",frequentNumber[2]));
+            series3.getData().add(new XYChart.Data<>("4.00%",frequentNumber[3]));
+            series3.getData().add(new XYChart.Data<>("5.00%",frequentNumber[4]));
+
+            series4.getData().add(new XYChart.Data<>("1.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("2.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("3.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("4.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("5.00%",-frequentNumber[0]));
+
+            barChart.getData().clear();
+            barChart.layout();
+            barChart.getData().addAll(series3, series4);
+            barChart.setAnimated(false);
         }
     }
 
@@ -621,21 +672,76 @@ public class ReturnsController implements Initializable {
 
             int number = profits.size();//形成期+持有期的个数
 
-            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime())/number;
+            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime()) / number;
 
             SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
 
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
 
-            for(int i = 0;i<number;i++){
-                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MR).getTime()+i*period);
-                series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
-                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
+            for (int i = 0; i < number; i++) {
+                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MR).getTime() + i * period);
+                series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
             }
 
             lineChart.getData().addAll(series1, series2);
 
+            List<Double> relativeProfits = new ArrayList<>();
+
+            int[] frequentNumber = new int[10];
+            for (int i = 0;i<10;i++){
+                frequentNumber[i] = 0;
+            }
+            for (int i = 0; i < number; i++) {
+                relativeProfits.add(profits.get(i)-basicProfits.get(i));
+            }
+            for (int i = 0;i<number;i++){
+                if(relativeProfits.get(i)<=0.015&&relativeProfits.get(i)>=0){
+                    frequentNumber[0]++;
+                }else if(relativeProfits.get(i)>0.015&&relativeProfits.get(i)<+0.025){
+                    frequentNumber[1]++;
+                }else if(relativeProfits.get(i)>0.025&&relativeProfits.get(i)<+0.035){
+                    frequentNumber[2]++;
+                }else if(relativeProfits.get(i)>0.035&&relativeProfits.get(i)<+0.045){
+                    frequentNumber[3]++;
+                }else if(relativeProfits.get(i)>0.045){
+                    frequentNumber[4]++;
+                }else if(relativeProfits.get(i)>-0.015&&relativeProfits.get(i)<0){
+                    frequentNumber[5]++;
+                }else if(relativeProfits.get(i)>-0.025&&relativeProfits.get(i)<-0.015){
+                    frequentNumber[6]++;
+                }else if(relativeProfits.get(i)>-0.035&&relativeProfits.get(i)<-0.025){
+                    frequentNumber[7]++;
+                }else if(relativeProfits.get(i)>-0.045&&relativeProfits.get(i)<-0.035){
+                    frequentNumber[8]++;
+                }else if(relativeProfits.get(i)<-0.045){
+                    frequentNumber[9]++;
+                }
+            }
+
+            //以下是相对收益指数图表的数据
+            barChart.setBarGap(3);
+            barChart.setCategoryGap(20);
+            XYChart.Series<String, Number> series3 = new XYChart.Series<>();
+            XYChart.Series<String, Number> series4 = new XYChart.Series<>();
+
+            series3.getData().add(new XYChart.Data<>("1.00%",frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("2.00%",frequentNumber[1]));
+            series3.getData().add(new XYChart.Data<>("3.00%",frequentNumber[2]));
+            series3.getData().add(new XYChart.Data<>("4.00%",frequentNumber[3]));
+            series3.getData().add(new XYChart.Data<>("5.00%",frequentNumber[4]));
+
+            series4.getData().add(new XYChart.Data<>("1.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("2.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("3.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("4.00%",-frequentNumber[0]));
+            series3.getData().add(new XYChart.Data<>("5.00%",-frequentNumber[0]));
+
+            barChart.getData().clear();
+            barChart.layout();
+            barChart.getData().addAll(series3, series4);
+            barChart.setAnimated(false);
         }
     }
 
@@ -825,40 +931,40 @@ public class ReturnsController implements Initializable {
         areaChart_2.getData().addAll(series);
     }
 
-    private void setBarChart() {
-        barChart.setBarGap(3);
-        barChart.setCategoryGap(20);
-        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
-        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
-
-        series1.getData().add(new XYChart.Data<>("2.00%", 100));
-        series1.getData().add(new XYChart.Data<>("4.00%", 90));
-        series1.getData().add(new XYChart.Data<>("6.00%", 80));
-        series1.getData().add(new XYChart.Data<>("8.00%", 70));
-        series1.getData().add(new XYChart.Data<>("10.00%", 60));
-        series1.getData().add(new XYChart.Data<>("12.00%", 50));
-        series1.getData().add(new XYChart.Data<>("14.00%", 40));
-        series1.getData().add(new XYChart.Data<>("16.00%", 30));
-        series1.getData().add(new XYChart.Data<>("18.00%", 20));
-        series1.getData().add(new XYChart.Data<>("20.00%", 10));
-
-
-        series2.getData().add(new XYChart.Data<>("2.00%", -100));
-        series2.getData().add(new XYChart.Data<>("4.00%", -90));
-        series2.getData().add(new XYChart.Data<>("6.00%", -80));
-        series2.getData().add(new XYChart.Data<>("8.00%", -70));
-        series2.getData().add(new XYChart.Data<>("10.00%", -60));
-        series2.getData().add(new XYChart.Data<>("12.00%", -50));
-        series2.getData().add(new XYChart.Data<>("14.00%", -40));
-        series2.getData().add(new XYChart.Data<>("16.00%", -30));
-        series2.getData().add(new XYChart.Data<>("18.00%", -20));
-        series2.getData().add(new XYChart.Data<>("20.00%", -10));
-
-        barChart.getData().clear();
-        barChart.layout();
-        barChart.getData().addAll(series1, series2);
-        barChart.setAnimated(false);
-    }
+//    private void setBarChart() {
+//        barChart.setBarGap(3);
+//        barChart.setCategoryGap(20);
+//        XYChart.Series<String, Number> series1 = new XYChart.Series<>();
+//        XYChart.Series<String, Number> series2 = new XYChart.Series<>();
+//
+//        series1.getData().add(new XYChart.Data<>("2.00%", 100));
+//        series1.getData().add(new XYChart.Data<>("4.00%", 90));
+//        series1.getData().add(new XYChart.Data<>("6.00%", 80));
+//        series1.getData().add(new XYChart.Data<>("8.00%", 70));
+//        series1.getData().add(new XYChart.Data<>("10.00%", 60));
+//        series1.getData().add(new XYChart.Data<>("12.00%", 50));
+//        series1.getData().add(new XYChart.Data<>("14.00%", 40));
+//        series1.getData().add(new XYChart.Data<>("16.00%", 30));
+//        series1.getData().add(new XYChart.Data<>("18.00%", 20));
+//        series1.getData().add(new XYChart.Data<>("20.00%", 10));
+//
+//
+//        series2.getData().add(new XYChart.Data<>("2.00%", -100));
+//        series2.getData().add(new XYChart.Data<>("4.00%", -90));
+//        series2.getData().add(new XYChart.Data<>("6.00%", -80));
+//        series2.getData().add(new XYChart.Data<>("8.00%", -70));
+//        series2.getData().add(new XYChart.Data<>("10.00%", -60));
+//        series2.getData().add(new XYChart.Data<>("12.00%", -50));
+//        series2.getData().add(new XYChart.Data<>("14.00%", -40));
+//        series2.getData().add(new XYChart.Data<>("16.00%", -30));
+//        series2.getData().add(new XYChart.Data<>("18.00%", -20));
+//        series2.getData().add(new XYChart.Data<>("20.00%", -10));
+//
+//        barChart.getData().clear();
+//        barChart.layout();
+//        barChart.getData().addAll(series1, series2);
+//        barChart.setAnimated(false);
+//    }
 
     public void ReturnsController() {
 
@@ -875,7 +981,7 @@ public class ReturnsController implements Initializable {
         setTableView();
         setAreaChart_1();
         setAreaChart_2();
-        setBarChart();
+//        setBarChart();
         setCumulativeTableView();
 //        setLineChart();
         this.main = main;
