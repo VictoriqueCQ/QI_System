@@ -48,6 +48,7 @@ public class  Main extends Application {
         stage.setResizable(false);
         net.setUpNet();
         UserVO userVO=new UserVO();
+        this.gotoStart();
         this.gotoClientOverview(false,userVO);
 //        System.out.print(Main.class.getResource(""));
 //        this.lodaing();
@@ -79,6 +80,25 @@ public class  Main extends Application {
 //        System.out.print("success");
 
 }
+
+    public void gotoStart(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/Start.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            insidePane.setPrefSize(600,400);
+            StartController controller = (StartController) fxmlLoader.getController();
+            controller.setMain(this,net,stage);
+            Scene scene=new Scene(insidePane);
+            scene.setFill(null);
+            stage1.setScene(scene);
+            stage1.setAlwaysOnTop(true);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
     public void lodaing(){
         try {
@@ -174,7 +194,7 @@ public class  Main extends Application {
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
-            stage.show();
+//            stage.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
