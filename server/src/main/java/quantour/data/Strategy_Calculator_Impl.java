@@ -1,5 +1,6 @@
 package quantour.data;
 
+import quantour.data.datastructure.Index;
 import quantour.data.strategy.Average_Impl;
 import quantour.data.strategy.Momentum_Impl;
 import quantour.dataservice.Strategy_Calculator_data;
@@ -7,6 +8,7 @@ import quantour.dataservice.Strategy_data;
 import quantour.po.StockSetPO;
 import quantour.po.StrategyDataPO;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,7 +69,31 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
 
         Count count=startCount(startTime,endTime);
 
-        double e2=count.getE();
+        double e2=0.0;
+        if(quest[6].equals("T")){
+            e2=count.getE();
+        }
+        else{
+            DataFactory_CSV_Impl dataFactory;
+            try {
+                dataFactory=DataFactory_CSV_Impl.getInstance();
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+
+            List<Index> indices=dataFactory.getStockFilterData().getIndexList().get(quest[9]);
+            List<Index> indicesRequired=indices.stream().
+                    filter(index -> index.getDate().compareTo(startTime)>=0&&index.getDate().compareTo(endTime)<=0).
+                    collect(Collectors.toList());
+            Index start=indicesRequired.get(0);
+            Index end=indicesRequired.get(indicesRequired.size()-1);
+            e2=(end.getClose()-start.getClose())/start.getClose();
+        }
+
         double basicAnnualProfit=(e2/interval)*365;//基准年化收益率
 
         double sum=0.0;

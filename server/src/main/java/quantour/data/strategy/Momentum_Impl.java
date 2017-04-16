@@ -67,6 +67,8 @@ public class Momentum_Impl implements Strategy_data{
         calendar.add(Calendar.DAY_OF_YEAR,holdingPeriod);
         Date changeDate=calendar.getTime();
 
+        int winnerSize=(int)((quest.length-9)*0.2);
+
         List<StockSet> stockSets=new ArrayList<>();
         Set<Integer> codes= stockPool.keySet();
         while(overDate.compareTo(endTime)<0){
@@ -107,7 +109,8 @@ public class Momentum_Impl implements Strategy_data{
                 }
             }
             candidates=candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
-                    collect(Collectors.toList()).subList(0,(int)(candidates.size()*0.2));//从小到大排序
+                    collect(Collectors.toList()).subList(0,winnerSize);//从小到大排序
+
             Map<Integer,List<Stock>> map=new HashMap<>();
             for(int i=candidates.size()-1;i>=0;i--){
                 List<Stock> temp=new ArrayList<>();

@@ -16,6 +16,7 @@ public class StrategyDataPO extends DataClass{
     private double maxDrawDown;//最大回撤
     private List<StockSetPO> stockSetPOS;
     private List<Double> profits;
+    private List<Double> basicProfits;//基准收益
 
     public StrategyDataPO(double annualReturn, double basicAnnualReturn, double alpha, double beta, double sharpeRatio,
                           double maxDrawDown, List<StockSetPO> stockSetPOS, List<Double> profits) {

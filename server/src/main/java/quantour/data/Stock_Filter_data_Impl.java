@@ -1,6 +1,7 @@
 package quantour.data;
 
 import quantour.data.datastructure.Index;
+import quantour.data.datastructure.Rate;
 import quantour.data.datastructure.StockNameNCode;
 import quantour.dataservice.DataReader_data;
 import quantour.dataservice.Stock_Filter_data;
@@ -17,6 +18,7 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
     private List<Stock> stockList;
     private Map<String, List<StockNameNCode>> plateList;
     private Map<String, List<Index>> indexList;
+    private List<Rate> rateList;
 
     /*public Stock_Filter_data_Impl(List<Stock> stockList) {
         this.stockList = stockList;
@@ -26,6 +28,7 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
         this.stockList=dataReaderData.readStockList();
         this.plateList=dataReaderData.readPlate();
         this.indexList=dataReaderData.readIndex();
+        this.rateList=dataReaderData.readRate();
     }
 
     //输入单支股票代码，得到该股票所有信息
@@ -51,15 +54,23 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
         return result;
     }
 
+    @Override
     public List<Stock> getStockList() {
         return stockList;
     }
 
+    @Override
     public Map<String, List<StockNameNCode>> getPlateList() {
         return plateList;
     }
 
+    @Override
     public Map<String, List<Index>> getIndexList() {
         return indexList;
+    }
+
+    @Override
+    public List<Rate> getRateList() {
+        return rateList;
     }
 }
