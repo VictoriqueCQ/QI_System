@@ -53,7 +53,9 @@ public class Momentum_Impl implements Strategy_data{
 
         Stock_Filter_data stockFilterData=dataFactoryCsv.getStockFilterData();
         List<Index> indices=null;
+        int winnerSize=0;
         if(quest[6].equals("T")) {
+            winnerSize=(int)((quest.length-9)*0.2);
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
                 stockPool.put(code, stockFilterData.filterSingleStock(code));
@@ -61,6 +63,7 @@ public class Momentum_Impl implements Strategy_data{
         }else{
             stockPool=stockFilterData.filterStaStock(quest);
             indices=stockFilterData.getIndexList().get(quest[6]);
+            winnerSize=(int)(stockPool.size()*0.2);
         }
 
         Calendar calendar=Calendar.getInstance();
@@ -71,8 +74,6 @@ public class Momentum_Impl implements Strategy_data{
         calendar.setTime(overDate);
         calendar.add(Calendar.DAY_OF_YEAR,holdingPeriod);
         Date changeDate=calendar.getTime();
-
-        int winnerSize=(int)((quest.length-9)*0.2);
 
         List<StockSet> stockSets=new ArrayList<>();
         Set<Integer> codes= stockPool.keySet();
@@ -131,7 +132,7 @@ public class Momentum_Impl implements Strategy_data{
                 basicProfits.add((end.getClose()-start.getClose())/start.getClose());
             }
 
-            candidates=candidates.subList(0,winnerSize);
+            candidates=candidates.subList(candidates.size()-winnerSize,candidates.size());
 
             Map<Integer,List<Stock>> map=new HashMap<>();
             for(int i=candidates.size()-1;i>=0;i--){
