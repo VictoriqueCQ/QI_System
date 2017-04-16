@@ -20,11 +20,13 @@ import java.util.stream.Collectors;
 public class Average_Impl implements Strategy_data {
     //private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
     private Map<Integer, List<Stock>> stockPool;//用于保存所选择的股票池里所有股票的信息，integer为code
-    private List<String> stockNames;
+//    private List<String> stockNames;
+    private List<Double> basicProfits;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
     public Average_Impl() {
         stockPool = new HashMap<>();
+        basicProfits=new ArrayList<>();
     }
 
     @Override
@@ -182,11 +184,14 @@ public class Average_Impl implements Strategy_data {
             }*/
 
 
-       /* @Override
-        public Map<Integer, List<Stock>> getStockPool () {
-            return (List<StockSet>) stockPool;
-        }*/
 
+    public Map<Integer, List<Stock>> getStockPool () {
+            return stockPool;
+        }
+
+    public List<Double> getBasicProfits() {
+        return basicProfits;
+    }
 
         class Candidate1 {
             int code;
