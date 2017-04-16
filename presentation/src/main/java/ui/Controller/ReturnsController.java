@@ -28,6 +28,9 @@ public class ReturnsController implements Initializable {
 
     private Net net;
 
+    //持有期个数
+    private int number;
+
     //是否自选
     private boolean isyourchoice;
 
@@ -461,7 +464,9 @@ public class ReturnsController implements Initializable {
 
             List<Double> profits = StrategyDataVO.getProfits();
 
-            int number = profits.size();//形成期+持有期的个数
+            List<Double> basicProfits = StrategyDataVO.getBasicProfits();
+
+            number = profits.size();//形成期+持有期的个数
 
             long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime())/number;
 
@@ -473,6 +478,7 @@ public class ReturnsController implements Initializable {
             for(int i = 0;i<number;i++){
                 String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime()+i*period);
                 series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
             }
 
             lineChart.getData().addAll(series1, series2);
@@ -518,7 +524,27 @@ public class ReturnsController implements Initializable {
 
             setCumulativeTableView();
 
+            List<Double> profits = StrategyDataVO.getProfits();
+
+            List<Double> basicProfits = StrategyDataVO.getBasicProfits();
+
+            int number = profits.size();//形成期+持有期的个数
+
+            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime())/number;
+
+            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
+
             XYChart.Series series1 = new XYChart.Series();
+            XYChart.Series series2 = new XYChart.Series();
+
+            for(int i = 0;i<number;i++){
+                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MR).getTime()+i*period);
+                series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
+            }
+
+            lineChart.getData().addAll(series1, series2);
+
         }
     }
 
