@@ -119,7 +119,8 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         for (StockSet stockSet : stockSets) {
             stockSetPOS.add(new StockSetPO(stockSet));
         }
-        return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,profitList);
+        return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,profitList
+        ,strategyData.getBasicProfits());
     }
 
     private Count startCount(Date startTime,Date endTime){

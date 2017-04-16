@@ -3,6 +3,7 @@ package quantour.data.strategy;
 import quantour.data.DataFactory_CSV_Impl;
 import quantour.data.Stock;
 import quantour.data.StockSet;
+import quantour.data.datastructure.Index;
 import quantour.dataservice.Stock_Filter_data;
 import quantour.dataservice.Strategy_data;
 
@@ -18,9 +19,11 @@ import static quantour.data.DataFactory_CSV_Impl.getInstance;
  */
 public class Momentum_Impl implements Strategy_data{
     private Map<Integer,List<Stock>> stockPool;
+    private List<Double> basicProfits;
 
     public Momentum_Impl(){
         stockPool=new HashMap<>();
+        basicProfits=new ArrayList<>();
     }
 
 
@@ -49,6 +52,7 @@ public class Momentum_Impl implements Strategy_data{
         int holdingPeriod=Integer.parseInt(quest[7]);
 
         Stock_Filter_data stockFilterData=dataFactoryCsv.getStockFilterData();
+        List<Index> indices=null;
         if(quest[6].equals("T")) {
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
@@ -56,6 +60,7 @@ public class Momentum_Impl implements Strategy_data{
             }
         }else{
             stockPool=stockFilterData.filterStaStock(quest);
+            indices=stockFilterData.getIndexList().get(quest[6]);
         }
 
         Calendar calendar=Calendar.getInstance();
@@ -108,8 +113,25 @@ public class Momentum_Impl implements Strategy_data{
                     candidates.add(candidate);
                 }
             }
+
             candidates=candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
-                    collect(Collectors.toList()).subList(0,winnerSize);//从小到大排序
+                    collect(Collectors.toList());//从小到大排序
+
+            if(quest[6].equals("T")) {
+                basicProfits.add(candidates.stream().mapToDouble(Candidate::getProfit).average().getAsDouble());
+            }
+            else{
+                Date over=overDate;
+                Date change=changeDate;
+                List<Index> indexList=indices.stream().
+                        filter(index -> index.getDate().compareTo(over)>=0&&index.getDate().compareTo(change)<0).
+                        collect(Collectors.toList());
+                Index start=indexList.get(0);
+                Index end=indexList.get(indexList.size()-1);
+                basicProfits.add((end.getClose()-start.getClose())/start.getClose());
+            }
+
+            candidates=candidates.subList(0,winnerSize);
 
             Map<Integer,List<Stock>> map=new HashMap<>();
             for(int i=candidates.size()-1;i>=0;i--){
@@ -141,6 +163,11 @@ public class Momentum_Impl implements Strategy_data{
     @Override
     public Map<Integer, List<Stock>> getStockPool() {
         return stockPool;
+    }
+
+    @Override
+    public List<Double> getBasicProfits() {
+        return basicProfits;
     }
 
     class Candidate{
