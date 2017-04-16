@@ -6,6 +6,7 @@ import quantour.data.datastructure.StockNameNCode;
 import quantour.dataservice.DataReader_data;
 import quantour.dataservice.Stock_Filter_data;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
         this.stockList = stockList;
     }*/
 
-    public Stock_Filter_data_Impl(DataReader_data dataReaderData){
+    Stock_Filter_data_Impl(DataReader_data dataReaderData){
         this.stockList=dataReaderData.readStockList();
         this.plateList=dataReaderData.readPlate();
         this.indexList=dataReaderData.readIndex();
@@ -55,6 +56,14 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
     }
 
     @Override
+    public List<Stock> filterPeriodStock(Date startTime, Date endTime) {
+        return stockList.stream().
+                filter(stock -> stock.getDate().compareTo(startTime)>=0&&stock.getDate().compareTo(endTime)<0).
+                collect(Collectors.toList());
+    }
+
+
+    @Override
     public List<Stock> getStockList() {
         return stockList;
     }
@@ -74,3 +83,4 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
         return rateList;
     }
 }
+

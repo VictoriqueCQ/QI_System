@@ -5,6 +5,7 @@ import quantour.data.datastructure.Index;
 import quantour.data.datastructure.Rate;
 import quantour.data.datastructure.StockNameNCode;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 public interface Stock_Filter_data {
     List<Stock> filterSingleStock(int code);
     Map<Integer,List<Stock>> filterStaStock(String[] quest);
+    List<Stock> filterPeriodStock(Date startTime,Date endTime);
     List<Stock> getStockList();
     Map<String, List<StockNameNCode>> getPlateList();
     Map<String, List<Index>> getIndexList();

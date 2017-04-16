@@ -24,7 +24,7 @@ public class StockSet {
         return stockSets;
     }
 
-    double countProfit(){
+    public double countProfit(){
         List<Double> eachProift=new ArrayList<>();
         for(List<Stock> temp:stockSets.values()){
             double profit=(temp.get(0).getAdjClose()-temp.get(0).getAdjClose())/temp.get(1).getAdjClose();

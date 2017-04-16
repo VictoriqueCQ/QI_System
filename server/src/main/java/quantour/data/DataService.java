@@ -19,8 +19,6 @@ public class DataService {
     }
 
     private void start() throws IOException, ParseException {
-        DataFactory_CSV_Impl.getInstance();
-
         setUpNet();
 
         run();
