@@ -18,6 +18,8 @@ public class StockModel {
 
     private final SimpleStringProperty variance;
 
+    private final SimpleStringProperty isChoosen;
+
     public StockModel() {
         name = new SimpleStringProperty();
         id = new SimpleStringProperty();
@@ -25,6 +27,7 @@ public class StockModel {
         maxPrice = new SimpleStringProperty();
         riseAndDown = new SimpleStringProperty();
         variance = new SimpleStringProperty();
+        isChoosen=new SimpleStringProperty();
     }
 
     public String getName() {
@@ -101,5 +104,17 @@ public class StockModel {
 
     public SimpleStringProperty varianceProperty() {
         return variance;
+    }
+
+    public String getisChoosen() {
+        return isChoosen.get();
+    }
+
+    public void setIsChoosen(String isChoosen) {
+        this.isChoosen.set(isChoosen);
+    }
+
+    public SimpleStringProperty isChoosenProperty() {
+        return isChoosen;
     }
 }

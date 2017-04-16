@@ -48,6 +48,7 @@ public class  Main extends Application {
         net.setUpNet();
         UserVO userVO=new UserVO();
         this.gotoClientOverview(false,userVO);
+//        System.out.print(Main.class.getResource(""));
 //        this.lodaing();
 //         net.actionPerformed("GET");
 //        String json = net.run();

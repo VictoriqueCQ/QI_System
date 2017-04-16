@@ -15,10 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xjwhhh on 2017/4/15.
@@ -28,6 +25,7 @@ public class SelectStockController {
     private Net net;
     private ReturnsController returnsController;
 
+    private String path1="";
     private String[] allStockName;
 
     boolean isyourchoice;
@@ -46,6 +44,9 @@ public class SelectStockController {
 
     @FXML
     private TableColumn<StockModel, String> stockID;
+
+    @FXML
+    private TableColumn<StockModel, String> isChoosen;
 
     @FXML
     private ComboBox<String> selectComboBox;
@@ -116,7 +117,7 @@ public class SelectStockController {
         HashSet<String> hashset_temp1=new HashSet<String>(stockCodeList);
         stockCodeList=new ArrayList<String>(hashset_temp1);
         isyourchoice=true;
-        AlertUtil.showInformationAlert("您已选中"+stockNameList.size()+"只股票");
+        AlertUtil.showInformationAlert("您此次选中"+stockNameList.size()+"只股票");
         main.closeExtraStage();
         returnsController.setStockComboBox(stockNameList,stockCodeList);
     }
@@ -137,7 +138,7 @@ public class SelectStockController {
             sectionNameList.add("深圳成指");
         }
         if(sectionNameList.size()>=1) {
-            String text = "您已选中";
+            String text = "您此次选中";
             for (int i = 0; i < sectionNameList.size() - 1; i++) {
                 text += sectionNameList.get(i) + ",";
             }
@@ -160,7 +161,7 @@ public class SelectStockController {
     @FXML
     private void sectionSearch(){
             String section =selectComboBox.getValue();
-            ArrayList<StockVO> stockVOList=readStockList("stock-section1\\"+section+".txt");
+            ArrayList<StockVO> stockVOList=readStockList(path1+"documentation\\stock-section\\"+section+".txt");
 //            ArrayList<StockVO> stockVOList=readStockList("C:\\Users\\xjwhh\\Desktop\\通信及相关设备制造业.csv");
             setTableView(stockVOList);
     }
@@ -176,10 +177,7 @@ public class SelectStockController {
             String row = br.readLine();
             while (row != null) {
                 List<String> stockInfo = Arrays.asList(row.split("\t"));
-//                int code = Integer.parseInt(stockInfo.get(1).substring(0,stockInfo.get(1).toCharArray().length-1));
                 String name = stockInfo.get(0);
-//                String newname=new String(name.getBytes("gb2312"),"utf-8");
-//                System.out.print(newname);
                 int code=Integer.parseInt(stockInfo.get(1));
                 StockVO stockVO = new StockVO();
                 stockVO.setName(name);
@@ -242,28 +240,42 @@ public class SelectStockController {
     private void setTableView(ArrayList<StockVO> stockVOList) {
         ObservableList<StockModel> models = FXCollections.observableArrayList();
         stockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+
         stockName.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
 
             @Override
             public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
                 cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
                             //
                             System.out.print("2");
+                            Iterator<String> iterable1=stockNameList.iterator();
+                            while(iterable1.hasNext()){
+                                if(iterable1.next().equals(name)){
+                                    iterable1.remove();
+                                }
+                            }
+                            Iterator<String> iterable2=stockCodeList.iterator();
+                            while(iterable2.hasNext()){
+                                if(iterable2.next().equals(name)){
+                                    iterable2.remove();
+                                }
+                            }
+                            stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
                         }
                     }
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
-                                //
                                 System.out.print("1");
-                                String name=(stockTable.getItems().get(cell.getIndex()).getName());
                                 stockNameList.add(name);
-                                String code=(stockTable.getItems().get(cell.getIndex()).getID());
                                 stockCodeList.add(code);
-
+                                stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -280,22 +292,36 @@ public class SelectStockController {
             @Override
             public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
                 cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
                             //
                             System.out.print("2");
+                            Iterator<String> iterable1=stockNameList.iterator();
+                            while(iterable1.hasNext()){
+                                if(iterable1.next().equals(name)){
+                                    iterable1.remove();
+                                }
+                            }
+                            Iterator<String> iterable2=stockCodeList.iterator();
+                            while(iterable2.hasNext()){
+                                if(iterable2.next().equals(name)){
+                                    iterable2.remove();
+                                }
+                            }
+                            stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
                         }
                     }
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
-                                //
                                 System.out.print("1");
-                                String name=(stockTable.getItems().get(cell.getIndex()).getName());
                                 stockNameList.add(name);
-                                String code=(stockTable.getItems().get(cell.getIndex()).getID());
                                 stockCodeList.add(code);
+                                stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -305,6 +331,53 @@ public class SelectStockController {
                 return cell;
             }
         });
+
+        isChoosen.setCellValueFactory(celldata -> celldata.getValue().isChoosenProperty());
+        isChoosen.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                            Iterator<String> iterable1=stockNameList.iterator();
+                            while(iterable1.hasNext()){
+                                if(iterable1.next().equals(name)){
+                                    iterable1.remove();
+                                }
+                            }
+                            Iterator<String> iterable2=stockCodeList.iterator();
+                            while(iterable2.hasNext()){
+                                if(iterable2.next().equals(name)){
+                                    iterable2.remove();
+                                }
+                            }
+                            stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
+                        }
+                    }
+                    else if(t.getClickCount() == 1){
+                        try {
+                            if(cell.getIndex()<=models.size()){
+                                System.out.print("1");
+                                stockNameList.add(name);
+                                stockCodeList.add(code);
+                                stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
 
         for (int i = 0; i < stockVOList.size(); i++) {
             StockVO stockVO = stockVOList.get(i);
@@ -436,6 +509,11 @@ public class SelectStockController {
         this.net = net;
         this.returnsController=returnsController;
 
+        String path=String.valueOf(Main.class.getResource(""));
+        String[] pathlist=path.split("/");
+        for(int i=1;i<pathlist.length-1;i++){
+            path1+=(pathlist[i]+"\\");
+        }
 //        allStockName = this.getNameList("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\name_code.csv");
 
         //设置ComboBox

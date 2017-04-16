@@ -195,6 +195,7 @@ public class Average_Impl implements Strategy_data {
 
 }
 
+
 class Candidate1{
     int code;
     Stock s1;

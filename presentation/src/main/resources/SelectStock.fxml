@@ -40,8 +40,9 @@
                         </GridPane>
                         <TableView fx:id="stockTable" layoutX="198.0" layoutY="116.0" stylesheets="@css/TableViewCSS.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
                           <columns>
-                            <TableColumn fx:id="stockName" prefWidth="75.0" text="股票名称" />
-                            <TableColumn fx:id="stockID" prefWidth="75.0" text="代码" />
+                            <TableColumn fx:id="stockName" prefWidth="150.0" text="股票名称" />
+                            <TableColumn fx:id="stockID" prefWidth="150.0" text="代码" />
+                              <TableColumn fx:id="isChoosen" prefWidth="150.0" text="是否已选" />
                           </columns>
                         </TableView>
                      </children>

@@ -25,6 +25,7 @@ public class DataReader_CSV implements DataReader_data{
 
     DataReader_CSV() throws IOException {
         stockPath = "stock_data\\stock_data.csv";
+//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
         platePath="stock_data\\plate";//directory
         indexPath="stock_data\\index";//directory
         ratePath="stock_data\\rate.csv";

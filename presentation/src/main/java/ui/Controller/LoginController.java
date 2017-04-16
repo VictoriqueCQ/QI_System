@@ -9,12 +9,19 @@ import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by xjwhhh on 2017/3/13.
  */
 public class LoginController {
     private Main main;
     private Net net;
+
+    String path1="";
+
 
     @FXML
     private TextField usernameTextField;
@@ -69,6 +76,17 @@ public class LoginController {
                 main.gotoClientOverview(true,userVO);
                 if(rememberPasswordRadioButton.isSelected()){
                     //TODO
+                    File f=new File(path1+"documentation\\remembereduserinfo.txt");
+                    try {
+                        BufferedWriter brwriter = new BufferedWriter(new FileWriter(f,false));
+                        brwriter.write(username);
+                        brwriter.write("\t");
+                        brwriter.write(password);
+                        brwriter.close();
+                    }
+                    catch(IOException e){
+                        e.printStackTrace();
+                    }
                 }
             } else {
                 this.exitLogin();
@@ -85,7 +103,32 @@ public class LoginController {
 
     public void setMain(Main main,Net net) {
 
+
         this.main = main;
         this.net=net;
+
+        rememberPasswordRadioButton.setSelected(true);
+
+        String path=String.valueOf(Main.class.getResource(""));
+        String[] pathlist=path.split("/");
+        for(int i=1;i<pathlist.length-1;i++){
+            path1+=(pathlist[i]+"\\");
+        }
+        //自动写入上次记住的用户名密码
+
+        File f=new File(path1+"documentation\\remembereduserinfo.txt");
+        try {
+            BufferedReader brreader = new BufferedReader(new FileReader(f));
+            String info=brreader.readLine();
+            if(info!=null) {
+                List<String> userInfo = Arrays.asList(info.split("\t"));
+                usernameTextField.setText(userInfo.get(0));
+                passwordTextField.setText(userInfo.get(1));
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
     }
 }
