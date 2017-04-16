@@ -521,7 +521,8 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
                 && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
             net.actionPerformed("Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                    + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
+                    + FormativePeriod_MomentumStrategy.getText() + "\t" + isyourchoice+"\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                    + StockheldInHouse_MomentumStrategy.getText() + "\t");
         }
 
         String ReturnsMessage;
@@ -639,7 +640,8 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             net.actionPerformed("Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                    + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t");
+                    + FormativePeriod_MomentumStrategy.getText() + "\t" + isyourchoice+"\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                    + StockheldInHouse_MomentumStrategy.getText() + "\t");
         }
         String ReturnsMessage;
         ReturnsMessage = net.run();
