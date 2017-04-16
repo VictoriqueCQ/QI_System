@@ -3,6 +3,7 @@ package quantour.data.strategy;
 import quantour.data.DataFactory_CSV_Impl;
 import quantour.data.Stock;
 import quantour.data.StockSet;
+import quantour.data.datastructure.Index;
 import quantour.dataservice.Stock_Filter_data;
 import quantour.dataservice.Strategy_data;
 
@@ -47,6 +48,8 @@ public class Average_Impl implements Strategy_data {
         int shapeTime = Integer.parseInt(quest[5]);//形成期,比价基准，均线
         int holdTime = Integer.parseInt(quest[7]);//持有期
 
+        List<Index> indices=null;
+
 
         //自选股票
         Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
@@ -57,6 +60,7 @@ public class Average_Impl implements Strategy_data {
             }
         } else {
             stockPool = stockFilterData.filterStaStock(quest);
+            indices=stockFilterData.getIndexList().get(quest[6]);
         }
 
 
@@ -97,6 +101,11 @@ public class Average_Impl implements Strategy_data {
                     List<Stock> formativeList = currentCalculate.stream().
                             filter(stock -> stock.getDate().compareTo(over) < 0).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
+
+                    double endPrice=formativeList.get(0).getAdjClose();
+                    double startPrice=formativeList.get(formativeList.size()-1).getAdjClose();
+                    double profit=(endPrice-startPrice)/startPrice;
+
                     double sum = 0;
                     for (int i = 0; i < formativeList.size(); i++) {
                         sum = sum + formativeList.get(i).getAdjClose();
@@ -108,7 +117,7 @@ public class Average_Impl implements Strategy_data {
                     double currentPrice = holdingList.get(holdingList.size()-1).getAdjClose();
                     double deviate = (average - currentPrice) / average;
                     Candidate1 candidate1 = new Candidate1(c, holdingList.get(0), holdingList.get(holdingList.size() - 1),
-                            deviate);
+                            deviate,profit);
 
                     candidates.add(candidate1);
 
@@ -117,6 +126,28 @@ public class Average_Impl implements Strategy_data {
             }
             candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
                     collect(Collectors.toList());//从小到大排序
+
+
+            //基准收益率
+            if(quest[6].equals("T")) {
+                basicProfits.add(candidates.stream().mapToDouble(Candidate1::getProfit).average().getAsDouble());
+            }
+            else{
+                Date over=overDate;
+                Date change=changeDate;
+                List<Index> indexList=indices.stream().
+                        filter(index -> index.getDate().compareTo(over)>=0&&index.getDate().compareTo(change)<0).
+                        collect(Collectors.toList());
+                Index start=indexList.get(0);
+                Index end=indexList.get(indexList.size()-1);
+                basicProfits.add((end.getClose()-start.getClose())/start.getClose());
+            }
+
+
+
+
+
+
             Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
             for (int i = candidates.size() - 1; i >= candidates.size() * 0.8; i--) {
                 List<Stock> temp = new ArrayList<>();
@@ -143,46 +174,6 @@ public class Average_Impl implements Strategy_data {
         }
         return stockSets;
     }
-//        List<Stock> stockList = stocks;// 根据股票池或者自选股票啥的得到的股票
-
-
-        //stocks = FiltExceptST(stocks);
-
-
-
-    /*   List<Date> changeDate = null;// 计算若干个调仓时间
-        changeDate.add(startDate);
-        Date date=startDate;//取时间
-        Calendar calendar   =   new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.add(calendar.DATE,holdTime);
-        while(calendar.getTime().compareTo(endDate)<=0){
-            changeDate.add(calendar.getTime());
-            calendar.add(calendar.DATE,holdTime);
-        }
-        //List<Stock> storeStocks = stocks;*/
-
-        /*
-         *Integer为排名，stocksets里只要开始和结束的信息
-
-    public StockSet(Map<Integer, List<Stock>> stockSets) {
-            this.stockSets = stockSets;
-        }*/
-
-     /*   List<StockSet> result = new ArrayList<StockSet>();
-        for(int i=0;i<changeDate.size();i++){
-            Date changeStocks = changeDate.get(i);
-            //stocks = storeStocks;
-            Map<Integer,List<Stock>> stockList = null;
-            List<String> hasBeChosen;
-            /*for(int j=0;j<numOfStocks;j++){
-                stockList.put(j,getBestChoice(changeDate.get(i),changeDate.get(i+1),stocks));
-                String name = stockList.get(j).get(0).getName();
-                stocks = stocks.stream().
-                        filter(stock -> !(stock.getName().equals(name))).collect(Collectors.toList());
-
-            }*/
-
 
 
     public Map<Integer, List<Stock>> getStockPool () {
@@ -198,13 +189,17 @@ public class Average_Impl implements Strategy_data {
             Stock s1;
             Stock s2;
             double deviate;
+            double profit;
 
-            public Candidate1(int code, Stock s1, Stock s2, double deviate) {
+            public Candidate1(int code, Stock s1, Stock s2, double deviate,double profit) {
                 this.code = code;
                 this.s1 = s1;
                 this.s2 = s2;
                 this.deviate = deviate;
+                this.profit = profit;
             }
+
+
 
             public int getCode() {
                 return code;
@@ -218,9 +213,9 @@ public class Average_Impl implements Strategy_data {
                 return s2;
             }
 
-            public double getDeviate() {
-                return deviate;
-            }
+            public double getDeviate() {return deviate;}
+
+            public double getProfit(){return profit;}
 
 
         }
