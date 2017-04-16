@@ -1,0 +1,47 @@
+.root{
+    -fx-background-color:#000000
+}
+
+.TextFieldText {
+    -fx-background-radius: 20px;
+    -fx-background-color: rgb(100, 100, 100);
+    -fx-border-radius: 20px;
+    -fx-text-fill: #AAACAF;
+}
+
+.button {
+    -fx-base: rgb(0, 0, 0);
+    -fx-font-color: rgb(255, 255, 255);
+    -fx-font-size: 1.5em;
+}
+
+.search_button{
+    -fx-base: rgb(0, 0, 0);
+    -fx-font-color: rgb(255, 255, 255);
+    -fx-font-size: 1.5em;
+    -fx-background-image: url("/picture/searchbutton.png");
+}
+
+.combo-box{
+    -fx-background-color:rgb(100,100,100);
+    -fx-text-fill: #AAACAF;
+}
+
+.combo-box .label{
+    -fx-text-fill: #AAACAF;
+}
+
+
+
+.button1 {
+    -fx-background-image: url("/picture/exitbutton.png");
+}
+
+.button2 {
+    -fx-background-image: url("/picture/zoomout.png");
+}
+
+
+.button3 {
+    -fx-background-image: url("/picture/购物车.png");
+}

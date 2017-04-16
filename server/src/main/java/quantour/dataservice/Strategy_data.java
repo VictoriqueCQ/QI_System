@@ -12,4 +12,5 @@ import java.util.Map;
 public interface Strategy_data {
     List<StockSet> getSets(String[] quest);//quest代表指令split后的数组
     Map<Integer,List<Stock>> getStockPool();
+
 }

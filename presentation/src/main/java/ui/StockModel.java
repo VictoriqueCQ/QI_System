@@ -47,6 +47,10 @@ public class StockModel {
         this.id.set(String.valueOf(id));
     }
 
+    public void setID(String id){
+        this.id.set(id);
+    }
+
     public SimpleStringProperty idProperty() {
         return id;
     }

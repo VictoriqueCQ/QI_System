@@ -32,7 +32,7 @@
         </Label>
         <DatePicker fx:id="endTimeDatePicker" layoutX="274.0" layoutY="71.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" stylesheets="@css/DatePickerCSS.css" />
         <Button fx:id="delete" layoutX="1055.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
-        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
+        <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" stylesheets="@css/TabPaneCSS.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
             <tabs>
                 <Tab text="总况">
                     <content>

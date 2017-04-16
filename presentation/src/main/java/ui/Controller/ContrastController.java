@@ -610,6 +610,7 @@ public class ContrastController extends Application {
 
     @FXML
     private void initialize() {
+//        main.lodaing();
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
         searchWayChoice.getSelectionModel().select(0);
@@ -650,5 +651,6 @@ public class ContrastController extends Application {
         Pattern pattern = Pattern.compile(reCustomerName);
         Matcher matcher = pattern.matcher(s);
        System.out.print(matcher.matches());*/
+//       main.closeExtraStage();
     }
 }

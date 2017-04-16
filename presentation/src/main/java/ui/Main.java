@@ -21,6 +21,7 @@ public class  Main extends Application {
     private Stage stage;
     private Stage stage1=new Stage(StageStyle.UNDECORATED);
     private Stage stage2=new Stage(StageStyle.TRANSPARENT);
+    private Stage stage3=new Stage(StageStyle.UNDECORATED);
 
 
     // 内部窗口
@@ -245,6 +246,9 @@ public class  Main extends Application {
         }
     }
 
+    /**
+     * 跳转到策略界面
+     */
     public void gotoReturns(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -259,6 +263,23 @@ public class  Main extends Application {
         }
     }
 
+    /**
+     * 跳转到股票选择界面
+     */
+    public void gotoSelectStock(ReturnsController returnsController){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(Main.class.getResource("/SelectStock.fxml"));
+            AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
+            SelectStockController controller = (SelectStockController) fxmlLoader.getController();
+            controller.setMain(this, net,returnsController);
+            stage3.setScene(new Scene(insidePane));
+            stage3.centerOnScreen();
+            stage3.show();
+        } catch (Exception e) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
 
     /**
      * 退出系统
@@ -268,13 +289,25 @@ public class  Main extends Application {
     }
 
     /**
-     * 缩小至任务栏
+     * 退出弹窗
+     */
+    public void exitSystem1() {
+        stage3.close();
+    }
+
+    /**
+     * 系统缩小至任务栏
      */
     public void zoomoutButton(){
         stage.setIconified(true);
     }
 
-
+    /**
+     * 弹窗缩小至任务栏
+     */
+    public void zoomoutButton1(){
+        stage3.setIconified(true);
+    }
 
     /**
      *  关闭弹窗
@@ -285,6 +318,9 @@ public class  Main extends Application {
         }
         if (stage2!=null&&stage2.isShowing()) {
             stage2.hide();
+        }
+        if (stage3!=null&&stage3.isShowing()) {
+            stage3.hide();
         }
     }
 //
