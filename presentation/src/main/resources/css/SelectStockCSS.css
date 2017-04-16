@@ -45,3 +45,9 @@
 .button3 {
     -fx-background-image: url("/picture/购物车.png");
 }
+
+.backgroundlabel{
+    -fx-background-image: url("/picture/背景2.gif");
+    -fx-background-size: cover;
+    -fx-background-color:transparent;
+}

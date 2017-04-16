@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import quantour.vo.StockVO;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
@@ -15,10 +18,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/3/24.
@@ -27,6 +27,9 @@ public class ReturnsController implements Initializable {
     private Main main;
 
     private Net net;
+
+    //持有期个数
+    private int number;
 
     //是否自选
     private boolean isyourchoice;
@@ -42,23 +45,27 @@ public class ReturnsController implements Initializable {
 
     //股票表格
     @FXML
-    private TableView<String> StockTableView;
+    private TableView<StockModel> StockTableView;
 
     //第几个持有期
     @FXML
-    private ComboBox<String> HoldPeriod;
+    private ComboBox<String> HoldPeriodRank;
 
     //股票排名
     @FXML
-    private TableColumn<String,String> StockRank;
+    private TableColumn<StockModel,String> StockRank;
 
     //股票名
     @FXML
-    private TableColumn<String,String> StockName;
+    private TableColumn<StockModel,String> StockName;
 
     //股票代码
     @FXML
-    private TableColumn<String,String> StockCode;
+    private TableColumn<StockModel,String> StockCode;
+
+    @FXML
+    private TableView<StockModel> stockTable;
+
 
     /*
     *以下是累计收益率中的变量（累计收益率有两个方法，分别是setCumulative（）和setLineChart（））
@@ -109,6 +116,12 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private LineChart<String, Number> lineChart = new LineChart<String, Number>(date, returnsPercent);
+
+    @FXML
+    private Tab MomentumStrategyTab;
+
+    @FXML
+    private Tab MeanReversioTab;
 
 
     /*
@@ -229,7 +242,7 @@ public class ReturnsController implements Initializable {
      * 从股票选择页面返回后显示所选股票
      * @param stockNameList
      */
-    public void setStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
+    public void setSelectStockComboBox(ArrayList<String> stockNameList,ArrayList<String> stockCodeList){
         if(!isyourchoice){
             Plate_MeanReversio.getItems().clear();
             Plate_MomentumStrategy.getItems().clear();
@@ -342,66 +355,6 @@ public class ReturnsController implements Initializable {
         EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
     }
 
-    public void setStartDatePicker_MeanReversio() {
-        StartDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
-        final Callback<DatePicker, DateCell> dayCellFactory1 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
-                                if (item.isBefore(
-                                        LocalDate.of(2005, 2, 1))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                                if (item.isAfter(
-                                        LocalDate.of(2014, 4, 30))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                            }
-                        };
-                    }
-                };
-        StartDate_MeanReversio.setDayCellFactory(dayCellFactory1);
-    }
-
-    public void setEndDatePicker_MeanReversio() {
-        EndDate_MeanReversio.setValue(LocalDate.of(2005, 2, 1));
-        final Callback<DatePicker, DateCell> dayCellFactory1 =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-
-                                if (item.isBefore(
-                                        LocalDate.of(2005, 2, 1))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                                if (item.isAfter(
-                                        LocalDate.of(2014, 4, 30))
-                                        ) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #000000;");
-                                }
-                            }
-                        };
-                    }
-                };
-        EndDate_MeanReversio.setDayCellFactory(dayCellFactory1);
-    }
-
     //将datepicker获取的时间转为date类
     public Date changeDateStyle(LocalDate localDate) {
 
@@ -413,8 +366,149 @@ public class ReturnsController implements Initializable {
     }
 
     //这里是股票表格，包括股票排名，股票名和股票代码
-    private void setStockTableView(){
+    private void setStockTableView(ArrayList<StockVO> stockVOList){
+        ObservableList<StockModel> models = FXCollections.observableArrayList();
+        //填充第几个持有期的combobox
+        ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
+        List<String> HoldPeriodString = new ArrayList<>();
+        for(int i = 0;i<number;i++){
+            HoldPeriodString.add("第"+i+"个持有期");
+        }
+        HoldPeriod.addAll(HoldPeriodString);
+        HoldPeriodRank.setItems(HoldPeriod);
 
+        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
+        StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                            if(MomentumStrategyTab.isSelected()) {
+                                main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
+                            }
+                            else{
+                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            }
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
+        StockName.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
+        StockName.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                            if(MomentumStrategyTab.isSelected()) {
+                                main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
+                            }
+                            else{
+                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            }
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
+        StockCode.setCellValueFactory(celldata -> celldata.getValue().idProperty());
+        StockCode.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+
+            @Override
+            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
+                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+
+                cell.setOnMouseClicked((MouseEvent t) -> {
+                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
+                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    if (t.getClickCount() == 2) {
+                        if(cell.getIndex()<=models.size()){
+                            //
+                            System.out.print("2");
+                            if(MomentumStrategyTab.isSelected()) {
+                                main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
+                            }
+                            else{
+                                main.gotoCandlestickChart(name,code,StartDate_MeanReversio.getValue(),EndDate_MeanReversio.getValue());
+                            }
+                        }
+                    }
+                });
+                return cell;
+            }
+        });
+
+        for (int i = 0; i < stockVOList.size(); i++) {
+            StockVO stockVO = stockVOList.get(i);
+            StockModel stockModel = stockVOtoStockModle(stockVO);
+            models.add(stockModel);
+        }
+        stockTable.setItems(models);
+    }
+
+    public StockModel stockVOtoStockModle(StockVO stockVO) {
+        StockModel model = new StockModel();
+        model.setName(stockVO.getName());
+        int code=stockVO.getCode();
+        String code1=String.valueOf(code);
+        char[] code2=code1.toCharArray();
+        int t=6-code2.length;
+        for(int i=0;i<t;i++){
+            code1="0"+code1;
+        }
+        model.setID(code1);
+//        model.setRank(String.valueOf());
+//
+//        double[] low = stockVO.getLow();
+//        double minTemp = low[0];
+////        System.out.print("dhaudgaygduyagd"+minTemp);
+//        for (int i = 0; i < low.length; i++) {
+//            if (low[i] < minTemp) {
+//                minTemp = low[i];
+//            }
+//        }
+//
+//        model.setMinPrice(minTemp);
+//
+//        double[] high = stockVO.getHigh();
+//        double maxTemp = high[0];
+//        for (int i = 0; i < high.length; i++) {
+//            if (low[i] > maxTemp) {
+//                maxTemp = high[i];
+//            }
+//        }
+//        model.setMaxPrice(maxTemp);
+//        double dd = 2.00;
+//        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
+//        riseAndDown = riseAndDown * 100;
+//        DecimalFormat df = new DecimalFormat("#.00");
+//        model.setRiseAndDown(df.format(riseAndDown) + "%");
+//        double d = stockVO.getVariance();
+//        BigDecimal bd = new BigDecimal(d);
+//        DecimalFormat df2 = new DecimalFormat("0.0000");
+//        model.setVariance(df2.format(d));
+
+        return model;
     }
 
     private void setMomentumStrategyInputSearch() {
@@ -461,7 +555,9 @@ public class ReturnsController implements Initializable {
 
             List<Double> profits = StrategyDataVO.getProfits();
 
-            int number = profits.size();//形成期+持有期的个数
+            List<Double> basicProfits = StrategyDataVO.getBasicProfits();
+
+            number = profits.size();//形成期+持有期的个数
 
             long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime())/number;
 
@@ -473,6 +569,7 @@ public class ReturnsController implements Initializable {
             for(int i = 0;i<number;i++){
                 String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime()+i*period);
                 series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
             }
 
             lineChart.getData().addAll(series1, series2);
@@ -518,7 +615,27 @@ public class ReturnsController implements Initializable {
 
             setCumulativeTableView();
 
+            List<Double> profits = StrategyDataVO.getProfits();
+
+            List<Double> basicProfits = StrategyDataVO.getBasicProfits();
+
+            int number = profits.size();//形成期+持有期的个数
+
+            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime())/number;
+
+            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
+
             XYChart.Series series1 = new XYChart.Series();
+            XYChart.Series series2 = new XYChart.Series();
+
+            for(int i = 0;i<number;i++){
+                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MR).getTime()+i*period);
+                series1.getData().add(new XYChart.Data<>(time,profits.get(i)));
+                series2.getData().add(new XYChart.Data<>(time,basicProfits.get(i)));
+            }
+
+            lineChart.getData().addAll(series1, series2);
+
         }
     }
 
