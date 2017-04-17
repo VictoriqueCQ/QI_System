@@ -38,8 +38,8 @@ public class Momentum_Impl implements Strategy_data{
         }
 
         SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
-        Date startTime=null;
-        Date endTime=null;
+        final Date startTime;
+        final Date endTime;
         try{
             startTime=sdf.parse(quest[3]);
             endTime=sdf.parse(quest[4]);
@@ -66,26 +66,33 @@ public class Momentum_Impl implements Strategy_data{
             winnerSize=(int)(stockPool.size()*0.2);
         }
 
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTime(startTime);
-        calendar.add(Calendar.DAY_OF_YEAR,-formativePeriod);
-        Date initialDate=calendar.getTime();
-        Date overDate=startTime;
-        calendar.setTime(overDate);
-        calendar.add(Calendar.DAY_OF_YEAR,holdingPeriod);
-        Date changeDate=calendar.getTime();
+        int startSerial=0;
+        int endSerial=0;
+        Set<Integer> codes=stockPool.keySet();
+        for(int i:codes){
+            List<Stock> temp=stockPool.get(i);
+            List<Stock> filted=temp.stream().
+                    filter(stock -> stock.getDate().compareTo(endTime)<=0&&stock.getDate().compareTo(startTime)>=0).
+                    collect(Collectors.toList());
+            startSerial=filted.stream().mapToInt(Stock::getSerial).max().getAsInt();
+            endSerial=filted.stream().mapToInt(Stock::getSerial).min().getAsInt();
+            break;
+        }
+
+        int initialDate=startSerial+formativePeriod;
+        int overDate=startSerial;
+        int changeDate=startSerial-holdingPeriod;
 
         List<StockSet> stockSets=new ArrayList<>();
-        Set<Integer> codes= stockPool.keySet();
-        while(overDate.compareTo(endTime)<0){
+        while(overDate>=endSerial){
             List<Candidate> candidates=new ArrayList<>();
             for(int c:codes){
-                Date change=changeDate;
-                Date initial=initialDate;
+                int change=changeDate;
+                int initial=initialDate;
                 List<Stock> currentStock=stockPool.get(c);
                 List<Stock> currentCalculate=currentStock.stream().
-                        filter(stock -> stock.getDate().compareTo(change)<=0).
-                        filter(stock -> stock.getDate().compareTo(initial)>=0)
+                        filter(stock -> stock.getSerial()>change).
+                        filter(stock -> stock.getSerial()<=initial)
                         .collect(Collectors.toList());
                 boolean toDelete=false;
                 for(Stock temp:currentCalculate){
@@ -99,62 +106,62 @@ public class Momentum_Impl implements Strategy_data{
                 }
 
                 else{
-                    Date over=overDate;
+                    int over=overDate;
                     List<Stock> formativeList=currentCalculate.stream().
-                            filter(stock -> stock.getDate().compareTo(over)<0).
+                            filter(stock -> stock.getSerial()>over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
                     double endPrice=formativeList.get(0).getAdjClose();
                     double startPrice=formativeList.get(formativeList.size()-1).getAdjClose();
                     double profit=(endPrice-startPrice)/startPrice;
                     List<Stock> holdingList=currentCalculate.stream().
-                            filter(stock -> stock.getDate().compareTo(over)>=0).
+                            filter(stock -> stock.getSerial()<=over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
-                    Candidate candidate=new Candidate(c,holdingList.get(0),holdingList.get(holdingList.size()-1),
-                            profit);
-                    candidates.add(candidate);
+                    Candidate candidate;
+                    if(holdingList.size()>1) {
+                        candidate = new Candidate(c, holdingList.get(0), holdingList.get(holdingList.size() - 1),
+                                profit);
+                        candidates.add(candidate);
+                    }
                 }
             }
 
-            candidates=candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
-                    collect(Collectors.toList());//从小到大排序
+            if(candidates.size()>0) {
+                candidates = candidates.stream().sorted(Comparator.comparing(Candidate::getProfit)).
+                        collect(Collectors.toList());//从小到大排序
 
-            if(quest[6].equals("T")) {
-                basicProfits.add(candidates.stream().mapToDouble(Candidate::getProfit).average().getAsDouble());
+                if (quest[6].equals("T")) {
+                    basicProfits.add(candidates.stream().mapToDouble(Candidate::getBasicProfit).average().getAsDouble());
+                } else {
+                    Date change = candidates.get(0).getS1().getDate();
+                    Date over = candidates.get(0).getS2().getDate();
+                    List<Index> indexList = indices.stream().
+                            filter(index -> index.getDate().compareTo(over) >= 0 && index.getDate().compareTo(change) < 0).
+                            collect(Collectors.toList());
+                    Index start = indexList.get(0);
+                    Index end = indexList.get(indexList.size() - 1);
+                    basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
+                }
+
+                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
+
+                Map<Integer, List<Stock>> map = new HashMap<>();
+                for (int i = winnerSize - 1; i >= 0; i--) {
+                    List<Stock> temp = new ArrayList<>();
+                    temp.add(candidates.get(i).getS1());
+                    temp.add(candidates.get(i).getS2());
+                    map.put(candidates.size() - i, temp);
+                }
+                StockSet stockSet = new StockSet(map);
+                stockSets.add(stockSet);
             }
-            else{
-                Date over=overDate;
-                Date change=changeDate;
-                List<Index> indexList=indices.stream().
-                        filter(index -> index.getDate().compareTo(over)>=0&&index.getDate().compareTo(change)<0).
-                        collect(Collectors.toList());
-                Index start=indexList.get(0);
-                Index end=indexList.get(indexList.size()-1);
-                basicProfits.add((end.getClose()-start.getClose())/start.getClose());
-            }
 
-            candidates=candidates.subList(candidates.size()-winnerSize,candidates.size());
+            overDate=changeDate;
 
-            Map<Integer,List<Stock>> map=new HashMap<>();
-            for(int i=candidates.size()-1;i>=0;i--){
-                List<Stock> temp=new ArrayList<>();
-                temp.add(candidates.get(i).getS1());
-                temp.add(candidates.get(i).getS2());
-                map.put(candidates.size()-i,temp);
-            }
-            StockSet stockSet=new StockSet(map);
-            stockSets.add(stockSet);
+            initialDate=overDate+formativePeriod;
 
-            calendar.setTime(changeDate);
-            calendar.add(Calendar.DAY_OF_YEAR,1);
-            initialDate=calendar.getTime();
+            startSerial=overDate;
 
-            calendar.setTime(initialDate);
-            calendar.add(Calendar.DAY_OF_YEAR,formativePeriod);
-            overDate=calendar.getTime();
-
-            calendar.setTime(overDate);
-            calendar.add(Calendar.DAY_OF_YEAR,holdingPeriod);
-            changeDate=calendar.getTime();
+            changeDate=startSerial-holdingPeriod;
         }
 
 
@@ -199,6 +206,11 @@ public class Momentum_Impl implements Strategy_data{
         public double getProfit() {
             return profit;
         }
+
+        public double getBasicProfit(){
+            return (s1.getAdjClose()-s2.getAdjClose())/s2.getAdjClose();
+        }
+
     }
 
 }

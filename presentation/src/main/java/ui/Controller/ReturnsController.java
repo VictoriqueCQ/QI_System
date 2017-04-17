@@ -10,11 +10,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import quantour.vo.FormativeNHoldingVO;
-import quantour.vo.StockVO;
 import quantour.vo.StockSetVO;
+import quantour.vo.StockVO;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -374,22 +377,24 @@ public class ReturnsController implements Initializable {
 
     //这里是股票表格，包括股票排名，股票名和股票代码
     private void setStockTableView(ArrayList<StockVO> stockVOList) {
-        ObservableList<StockModel> models = FXCollections.observableArrayList();
-        //填充第几个持有期的combobox
+
+        //这个strategydatavo本来应该是json获得
+        StrategyDataVO strategyDataVO = new StrategyDataVO();
+        List<StockSetVO> stockSetVOS=strategyDataVO.getStockSetVOS();
+
+        ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
+
+
+        //填充第几个持有期的combobox,根据stocksetvos的长度
         ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
         List<String> HoldPeriodString = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
+        for (int i = 1; i <=stockSetVOS.size(); i++) {
             HoldPeriodString.add("第" + i + "个持有期");
         }
         HoldPeriod.addAll(HoldPeriodString);
         HoldPeriodRank.setItems(HoldPeriod);
-
-        StrategyDataVO strategyDataVO = new StrategyDataVO();
-        strategyDataVO.getStockSetVOS().get(0).getStockSets();
-
-
-
-
+        //默认值
+        HoldPeriodRank.setValue("第一个持有期");
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
         StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
@@ -402,7 +407,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <= stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -428,7 +433,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <=stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -454,7 +459,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <= stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -469,59 +474,112 @@ public class ReturnsController implements Initializable {
             }
         });
 
-        for (int i = 0; i < stockVOList.size(); i++) {
-            StockVO stockVO = stockVOList.get(i);
-            StockModel stockModel = stockVOtoStockModel(stockVO);
-            models.add(stockModel);
+        //默认展示第一个持有期
+        ArrayList<StockModel> stockModelArrayList=this.getbeststock(stockSetVOS,0);
+        for(int i=0;i<stockModelArrayList.size();i++){
+            stockModels.add(stockModelArrayList.get(i));
         }
-        stockTable.setItems(models);
+        stockTable.setItems(stockModels);
+
+    }
+
+//    @FXML
+//    private void showTabelByHoldPeriod(){
+//        String holdPeriod=HoldPeriodRank.getValue();
+//        char[] h=holdPeriod.toCharArray();
+//        int time=h[1];
+//
+//    }
+
+    /**
+     * 根据第几个持有期画图
+     * @param stockSetVOS
+     * @param i
+     */
+    private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS,int i){
+        StockSetVO stockSetVO=stockSetVOS.get(i);
+        Map<Integer,Integer> stockSets=stockSetVO.getStockSets();
+        ArrayList<StockModel> stockModelArrayList=stockSetstoStockModel(stockSets);
+        return stockModelArrayList;
     }
 
 
-
-    public StockModel stockVOtoStockModel(StockVO stockVO) {
-        StockModel model = new StockModel();
-        model.setName(stockVO.getName());
-        int code = stockVO.getCode();
-        String code1 = String.valueOf(code);
-        char[] code2 = code1.toCharArray();
-        int t = 6 - code2.length;
-        for (int i = 0; i < t; i++) {
-            code1 = "0" + code1;
+    /**
+     * stockSets转ArrayList<StockModel>
+     * @param stockSets
+     * @return
+     */
+    private ArrayList<StockModel> stockSetstoStockModel(Map<Integer, Integer> stockSets) {
+        ArrayList<StockModel> stockModelArrayList=new ArrayList<StockModel>();
+        HashMap<String,String> name_code= this.getNameList("presentation/name_code.csv");
+        for(int i=1;i<=stockSets.size();i++) {
+            StockModel model = new StockModel();
+            model.setRank(String.valueOf(i));
+            int code = stockSets.get(i);
+            String code1 = String.valueOf(code);
+            char[] code2 = code1.toCharArray();
+            int t = 6 - code2.length;
+            for (int j = 0; j < t; j++) {
+                code1 = "0" + code1;
+            }
+            model.setID(code1);
+            model.setName(name_code.get(code1));
+            stockModelArrayList.add(model);
         }
-        model.setID(Integer.parseInt(code1));
-//        model.setRank(String.valueOf());
-//
-//        double[] low = stockVO.getLow();
-//        double minTemp = low[0];
-////        System.out.print("dhaudgaygduyagd"+minTemp);
-//        for (int i = 0; i < low.length; i++) {
-//            if (low[i] < minTemp) {
-//                minTemp = low[i];
-//            }
-//        }
-//
-//        model.setMinPrice(minTemp);
-//
-//        double[] high = stockVO.getHigh();
-//        double maxTemp = high[0];
-//        for (int i = 0; i < high.length; i++) {
-//            if (low[i] > maxTemp) {
-//                maxTemp = high[i];
-//            }
-//        }
-//        model.setMaxPrice(maxTemp);
-//        double dd = 2.00;
-//        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-//        riseAndDown = riseAndDown * 100;
-//        DecimalFormat df = new DecimalFormat("#.00");
-//        model.setRiseAndDown(df.format(riseAndDown) + "%");
-//        double d = stockVO.getVariance();
-//        BigDecimal bd = new BigDecimal(d);
-//        DecimalFormat df2 = new DecimalFormat("0.0000");
-//        model.setVariance(df2.format(d));
 
-        return model;
+        return stockModelArrayList;
+    }
+
+    /**
+     * get a list in the filepath
+     * @param filePath
+     * @return
+     */
+    private HashMap<String,String> getNameList(String filePath){
+        List<String> content=new ArrayList<String>();
+
+        content = this.readFile(filePath);
+
+        int nums = content.size();
+        HashMap<String,String> name_code=new HashMap<String, String>(nums);
+
+        for(int i = 0;i<nums;i++){
+
+            String tempName = content.get(i).split("\t")[1];
+            String tempCode = content.get(i).split("\t")[0];
+            name_code.put(tempCode,tempName);
+        }
+
+        return name_code;
+    }
+
+    private  List<String> readFile(String path){
+        List<String> content=new ArrayList<String>();
+
+        BufferedReader br=null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+            }
+        }catch (Exception e) {
+        }finally{
+            if(br!=null){
+                try {
+                    br.close();
+                    br=null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for (String temp:content
+                ) {
+            System.out.println(temp);
+        }
+        return content;
+
     }
 
     private void setMomentumStrategyInputSearch() {
@@ -553,6 +611,7 @@ public class ReturnsController implements Initializable {
             net.actionPerformed(instruction);
         }
 
+
         String ReturnsMessage;
         ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
@@ -564,6 +623,9 @@ public class ReturnsController implements Initializable {
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
             StrategyDataVO StrategyDataVO = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
+
+
+            //以下是累计收益率
             annualReturn = StrategyDataVO.getAnnualReturn();
 
             basicAnnualReturn = StrategyDataVO.getBasicAnnualReturn();
@@ -599,6 +661,8 @@ public class ReturnsController implements Initializable {
 
             lineChart.getData().addAll(series1, series2);
 
+
+            //以下是相对收益指数
             List<Double> relativeProfits = new ArrayList<>();
 
             int[] frequentNumber = new int[10];
@@ -853,22 +917,27 @@ public class ReturnsController implements Initializable {
 //        lineChart.getData().addAll(series1, series2);
 //    }
 
-    private ReturnsModel FormativeNHoldingVOtoReturnsModel(FormativeNHoldingVO formativeNHoldingVO){
-        ReturnsModel model = new ReturnsModel();
-        model.setReturns(formativeNHoldingVO.getOverProfit().toString());
-        model.setPercent(formativeNHoldingVO.getWinChance().toString());
-        return model;
-    }
-
-    private void setTableView() {
+    private void setOverProfitsUI() {
         period.setCellValueFactory(celldata -> celldata.getValue().periodProperty());
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
         percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
-        FormativeNHoldingVO formativeNHoldingVO = new FormativeNHoldingVO();
-        int ListLength = formativeNHoldingVO.getOverProfit().size();
+        FormativeNHoldingVO fhVO = new FormativeNHoldingVO();
+        int ListLength = fhVO.getOverProfit().size();
 
+        List<ReturnsModel> models = new ArrayList<>();
+        ReturnsModel model;
+        int cycle = 2;
 
+        for (int i = 0;i<ListLength;i++){
+            String cycleString = String.valueOf(cycle+i*2);
+            String overProfit = (double)(((int)(fhVO.getOverProfit().get(i)*1000))/10)+"%";
+            String winChance = (double)(((int)(fhVO.getWinChance().get(i)*1000))/10)+"%";
+            model = new ReturnsModel(cycleString,overProfit,winChance);
+            models.add(model);
+        }
+
+        data = FXCollections.observableArrayList(models);
 
         //测试数据，数据层完成后将修改
 //        data = FXCollections.observableArrayList(
@@ -907,85 +976,100 @@ public class ReturnsController implements Initializable {
         tableView.getStyleClass().add("edge-to-edge");
         tableView.getStyleClass().add("noborder");
         tableView.setItems(data);
-    }
 
-    private void setAreaChart_1() {
+
         PeriodNumber_1.setForceZeroInRange(false);
-        XYChart.Series series = new XYChart.Series();
-
-        series.getData().add(new XYChart.Data<>(2, 0.8));
-        series.getData().add(new XYChart.Data<>(4, 2.9));
-        series.getData().add(new XYChart.Data<>(6, 3.0));
-        series.getData().add(new XYChart.Data<>(8, 2.7));
-        series.getData().add(new XYChart.Data<>(10, 2.5));
-        series.getData().add(new XYChart.Data<>(12, 1.2));
-        series.getData().add(new XYChart.Data<>(14, 0.8));
-        series.getData().add(new XYChart.Data<>(16, 0.2));
-        series.getData().add(new XYChart.Data<>(18, -0.1));
-        series.getData().add(new XYChart.Data<>(20, -0.1));
-        series.getData().add(new XYChart.Data<>(22, -0.1));
-        series.getData().add(new XYChart.Data<>(24, -0.7));
-        series.getData().add(new XYChart.Data<>(26, -0.8));
-        series.getData().add(new XYChart.Data<>(28, -1.1));
-        series.getData().add(new XYChart.Data<>(30, -1.0));
-        series.getData().add(new XYChart.Data<>(32, -1.0));
-        series.getData().add(new XYChart.Data<>(34, -1.5));
-        series.getData().add(new XYChart.Data<>(36, -1.5));
-        series.getData().add(new XYChart.Data<>(38, -1.1));
-        series.getData().add(new XYChart.Data<>(40, -1.7));
-        series.getData().add(new XYChart.Data<>(42, -1.4));
-        series.getData().add(new XYChart.Data<>(44, -1.6));
-        series.getData().add(new XYChart.Data<>(46, -1.4));
-        series.getData().add(new XYChart.Data<>(48, -1.0));
-        series.getData().add(new XYChart.Data<>(50, -0.9));
-        series.getData().add(new XYChart.Data<>(52, -0.5));
-        series.getData().add(new XYChart.Data<>(54, -0.5));
-        series.getData().add(new XYChart.Data<>(56, -0.1));
-        series.getData().add(new XYChart.Data<>(58, -0.1));
-        series.getData().add(new XYChart.Data<>(60, -0.2));
-
-        areaChart_1.setHorizontalZeroLineVisible(true);
-        areaChart_1.getData().addAll(series);
-    }
-
-    private void setAreaChart_2() {
         PeriodNumber_2.setForceZeroInRange(false);
-        XYChart.Series series = new XYChart.Series();
-
-        series.getData().add(new XYChart.Data<>(2, 58));
-        series.getData().add(new XYChart.Data<>(4, 65));
-        series.getData().add(new XYChart.Data<>(6, 65));
-        series.getData().add(new XYChart.Data<>(8, 58));
-        series.getData().add(new XYChart.Data<>(10, 60));
-        series.getData().add(new XYChart.Data<>(12, 53));
-        series.getData().add(new XYChart.Data<>(14, 53));
-        series.getData().add(new XYChart.Data<>(16, 48));
-        series.getData().add(new XYChart.Data<>(18, 48));
-        series.getData().add(new XYChart.Data<>(20, 48));
-        series.getData().add(new XYChart.Data<>(22, 52));
-        series.getData().add(new XYChart.Data<>(24, 47));
-        series.getData().add(new XYChart.Data<>(26, 52));
-        series.getData().add(new XYChart.Data<>(28, 44));
-        series.getData().add(new XYChart.Data<>(30, 43));
-        series.getData().add(new XYChart.Data<>(32, 44));
-        series.getData().add(new XYChart.Data<>(34, 43));
-        series.getData().add(new XYChart.Data<>(36, 38));
-        series.getData().add(new XYChart.Data<>(38, 45));
-        series.getData().add(new XYChart.Data<>(40, 43));
-        series.getData().add(new XYChart.Data<>(42, 45));
-        series.getData().add(new XYChart.Data<>(44, 47));
-        series.getData().add(new XYChart.Data<>(46, 48));
-        series.getData().add(new XYChart.Data<>(48, 45));
-        series.getData().add(new XYChart.Data<>(50, 47));
-        series.getData().add(new XYChart.Data<>(52, 45));
-        series.getData().add(new XYChart.Data<>(54, 48));
-        series.getData().add(new XYChart.Data<>(56, 49));
-        series.getData().add(new XYChart.Data<>(58, 51));
-        series.getData().add(new XYChart.Data<>(60, 51));
-
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        cycle = 2;
+        for (int i = 0;i<ListLength;i++){
+            series1.getData().add(new XYChart.Data<>(cycle+i*2,(double)(((int)(fhVO.getOverProfit().get(i)*1000))/10)));
+            series2.getData().add(new XYChart.Data<>(cycle+i*2,(double)(((int)(fhVO.getWinChance().get(i)*1000))/10)));
+        }
+        areaChart_1.setHorizontalZeroLineVisible(true);
         areaChart_2.setHorizontalZeroLineVisible(true);
-        areaChart_2.getData().addAll(series);
+        areaChart_1.getData().addAll(series1);
+        areaChart_2.getData().addAll(series2);
     }
+
+//    private void setAreaChart_1() {
+//
+//        PeriodNumber_1.setForceZeroInRange(false);
+//        XYChart.Series series = new XYChart.Series();
+//        series.getData().add(new XYChart.Data<>(2, 0.8));
+//        series.getData().add(new XYChart.Data<>(4, 2.9));
+//        series.getData().add(new XYChart.Data<>(6, 3.0));
+//        series.getData().add(new XYChart.Data<>(8, 2.7));
+//        series.getData().add(new XYChart.Data<>(10, 2.5));
+//        series.getData().add(new XYChart.Data<>(12, 1.2));
+//        series.getData().add(new XYChart.Data<>(14, 0.8));
+//        series.getData().add(new XYChart.Data<>(16, 0.2));
+//        series.getData().add(new XYChart.Data<>(18, -0.1));
+//        series.getData().add(new XYChart.Data<>(20, -0.1));
+//        series.getData().add(new XYChart.Data<>(22, -0.1));
+//        series.getData().add(new XYChart.Data<>(24, -0.7));
+//        series.getData().add(new XYChart.Data<>(26, -0.8));
+//        series.getData().add(new XYChart.Data<>(28, -1.1));
+//        series.getData().add(new XYChart.Data<>(30, -1.0));
+//        series.getData().add(new XYChart.Data<>(32, -1.0));
+//        series.getData().add(new XYChart.Data<>(34, -1.5));
+//        series.getData().add(new XYChart.Data<>(36, -1.5));
+//        series.getData().add(new XYChart.Data<>(38, -1.1));
+//        series.getData().add(new XYChart.Data<>(40, -1.7));
+//        series.getData().add(new XYChart.Data<>(42, -1.4));
+//        series.getData().add(new XYChart.Data<>(44, -1.6));
+//        series.getData().add(new XYChart.Data<>(46, -1.4));
+//        series.getData().add(new XYChart.Data<>(48, -1.0));
+//        series.getData().add(new XYChart.Data<>(50, -0.9));
+//        series.getData().add(new XYChart.Data<>(52, -0.5));
+//        series.getData().add(new XYChart.Data<>(54, -0.5));
+//        series.getData().add(new XYChart.Data<>(56, -0.1));
+//        series.getData().add(new XYChart.Data<>(58, -0.1));
+//        series.getData().add(new XYChart.Data<>(60, -0.2));
+//
+//        areaChart_1.setHorizontalZeroLineVisible(true);
+//        areaChart_1.getData().addAll(series);
+//    }
+
+//    private void setAreaChart_2() {
+//        PeriodNumber_2.setForceZeroInRange(false);
+//        XYChart.Series series = new XYChart.Series();
+//
+//        series.getData().add(new XYChart.Data<>(2, 58));
+//        series.getData().add(new XYChart.Data<>(4, 65));
+//        series.getData().add(new XYChart.Data<>(6, 65));
+//        series.getData().add(new XYChart.Data<>(8, 58));
+//        series.getData().add(new XYChart.Data<>(10, 60));
+//        series.getData().add(new XYChart.Data<>(12, 53));
+//        series.getData().add(new XYChart.Data<>(14, 53));
+//        series.getData().add(new XYChart.Data<>(16, 48));
+//        series.getData().add(new XYChart.Data<>(18, 48));
+//        series.getData().add(new XYChart.Data<>(20, 48));
+//        series.getData().add(new XYChart.Data<>(22, 52));
+//        series.getData().add(new XYChart.Data<>(24, 47));
+//        series.getData().add(new XYChart.Data<>(26, 52));
+//        series.getData().add(new XYChart.Data<>(28, 44));
+//        series.getData().add(new XYChart.Data<>(30, 43));
+//        series.getData().add(new XYChart.Data<>(32, 44));
+//        series.getData().add(new XYChart.Data<>(34, 43));
+//        series.getData().add(new XYChart.Data<>(36, 38));
+//        series.getData().add(new XYChart.Data<>(38, 45));
+//        series.getData().add(new XYChart.Data<>(40, 43));
+//        series.getData().add(new XYChart.Data<>(42, 45));
+//        series.getData().add(new XYChart.Data<>(44, 47));
+//        series.getData().add(new XYChart.Data<>(46, 48));
+//        series.getData().add(new XYChart.Data<>(48, 45));
+//        series.getData().add(new XYChart.Data<>(50, 47));
+//        series.getData().add(new XYChart.Data<>(52, 45));
+//        series.getData().add(new XYChart.Data<>(54, 48));
+//        series.getData().add(new XYChart.Data<>(56, 49));
+//        series.getData().add(new XYChart.Data<>(58, 51));
+//        series.getData().add(new XYChart.Data<>(60, 51));
+//
+//        areaChart_2.setHorizontalZeroLineVisible(true);
+//        areaChart_2.getData().addAll(series);
+//    }
 
 //    private void setBarChart() {
 //        barChart.setBarGap(3);
@@ -1034,11 +1118,11 @@ public class ReturnsController implements Initializable {
 
     public void setMain(Main main, Net net) {
 //        setComboBox();
-        setTableView();
-        setAreaChart_1();
-        setAreaChart_2();
+//        setTableView();
+//        setAreaChart_1();
+//        setAreaChart_2();
 //        setBarChart();
-        setCumulativeTableView();
+//        setCumulativeTableView();
 //        setLineChart();
         this.main = main;
         this.net = net;
