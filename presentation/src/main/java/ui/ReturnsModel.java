@@ -20,10 +20,10 @@ public class ReturnsModel {
 
 
 
-    public ReturnsModel() {
-        this.period = new SimpleStringProperty();
-        this.returns = new SimpleStringProperty();
-        this.percent = new SimpleStringProperty();
+    public ReturnsModel(String period, String returns, String percent) {
+        this.period = new SimpleStringProperty(period);
+        this.returns = new SimpleStringProperty(returns);
+        this.percent = new SimpleStringProperty(percent);
     }
 
 

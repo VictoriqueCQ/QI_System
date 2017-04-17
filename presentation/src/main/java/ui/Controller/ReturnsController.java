@@ -553,6 +553,7 @@ public class ReturnsController implements Initializable {
             net.actionPerformed(instruction);
         }
 
+
         String ReturnsMessage;
         ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
@@ -564,6 +565,9 @@ public class ReturnsController implements Initializable {
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
             StrategyDataVO StrategyDataVO = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
+
+
+            //以下是累计收益率
             annualReturn = StrategyDataVO.getAnnualReturn();
 
             basicAnnualReturn = StrategyDataVO.getBasicAnnualReturn();
@@ -599,6 +603,8 @@ public class ReturnsController implements Initializable {
 
             lineChart.getData().addAll(series1, series2);
 
+
+            //以下是相对收益指数
             List<Double> relativeProfits = new ArrayList<>();
 
             int[] frequentNumber = new int[10];
@@ -853,22 +859,27 @@ public class ReturnsController implements Initializable {
 //        lineChart.getData().addAll(series1, series2);
 //    }
 
-    private ReturnsModel FormativeNHoldingVOtoReturnsModel(FormativeNHoldingVO formativeNHoldingVO){
-        ReturnsModel model = new ReturnsModel();
-        model.setReturns(formativeNHoldingVO.getOverProfit().toString());
-        model.setPercent(formativeNHoldingVO.getWinChance().toString());
-        return model;
-    }
-
-    private void setTableView() {
+    private void setOverProfitsUI() {
         period.setCellValueFactory(celldata -> celldata.getValue().periodProperty());
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
         percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
-        FormativeNHoldingVO formativeNHoldingVO = new FormativeNHoldingVO();
-        int ListLength = formativeNHoldingVO.getOverProfit().size();
+        FormativeNHoldingVO fhVO = new FormativeNHoldingVO();
+        int ListLength = fhVO.getOverProfit().size();
 
+        List<ReturnsModel> models = new ArrayList<>();
+        ReturnsModel model;
+        int cycle = 2;
 
+        for (int i = 0;i<ListLength;i++){
+            String cycleString = String.valueOf(cycle+i*2);
+            String overProfit = (double)(((int)(fhVO.getOverProfit().get(i)*1000))/10)+"%";
+            String winChance = (double)(((int)(fhVO.getWinChance().get(i)*1000))/10)+"%";
+            model = new ReturnsModel(cycleString,overProfit,winChance);
+            models.add(model);
+        }
+
+        data = FXCollections.observableArrayList(models);
 
         //测试数据，数据层完成后将修改
 //        data = FXCollections.observableArrayList(
@@ -907,85 +918,100 @@ public class ReturnsController implements Initializable {
         tableView.getStyleClass().add("edge-to-edge");
         tableView.getStyleClass().add("noborder");
         tableView.setItems(data);
-    }
 
-    private void setAreaChart_1() {
+
         PeriodNumber_1.setForceZeroInRange(false);
-        XYChart.Series series = new XYChart.Series();
-
-        series.getData().add(new XYChart.Data<>(2, 0.8));
-        series.getData().add(new XYChart.Data<>(4, 2.9));
-        series.getData().add(new XYChart.Data<>(6, 3.0));
-        series.getData().add(new XYChart.Data<>(8, 2.7));
-        series.getData().add(new XYChart.Data<>(10, 2.5));
-        series.getData().add(new XYChart.Data<>(12, 1.2));
-        series.getData().add(new XYChart.Data<>(14, 0.8));
-        series.getData().add(new XYChart.Data<>(16, 0.2));
-        series.getData().add(new XYChart.Data<>(18, -0.1));
-        series.getData().add(new XYChart.Data<>(20, -0.1));
-        series.getData().add(new XYChart.Data<>(22, -0.1));
-        series.getData().add(new XYChart.Data<>(24, -0.7));
-        series.getData().add(new XYChart.Data<>(26, -0.8));
-        series.getData().add(new XYChart.Data<>(28, -1.1));
-        series.getData().add(new XYChart.Data<>(30, -1.0));
-        series.getData().add(new XYChart.Data<>(32, -1.0));
-        series.getData().add(new XYChart.Data<>(34, -1.5));
-        series.getData().add(new XYChart.Data<>(36, -1.5));
-        series.getData().add(new XYChart.Data<>(38, -1.1));
-        series.getData().add(new XYChart.Data<>(40, -1.7));
-        series.getData().add(new XYChart.Data<>(42, -1.4));
-        series.getData().add(new XYChart.Data<>(44, -1.6));
-        series.getData().add(new XYChart.Data<>(46, -1.4));
-        series.getData().add(new XYChart.Data<>(48, -1.0));
-        series.getData().add(new XYChart.Data<>(50, -0.9));
-        series.getData().add(new XYChart.Data<>(52, -0.5));
-        series.getData().add(new XYChart.Data<>(54, -0.5));
-        series.getData().add(new XYChart.Data<>(56, -0.1));
-        series.getData().add(new XYChart.Data<>(58, -0.1));
-        series.getData().add(new XYChart.Data<>(60, -0.2));
-
-        areaChart_1.setHorizontalZeroLineVisible(true);
-        areaChart_1.getData().addAll(series);
-    }
-
-    private void setAreaChart_2() {
         PeriodNumber_2.setForceZeroInRange(false);
-        XYChart.Series series = new XYChart.Series();
-
-        series.getData().add(new XYChart.Data<>(2, 58));
-        series.getData().add(new XYChart.Data<>(4, 65));
-        series.getData().add(new XYChart.Data<>(6, 65));
-        series.getData().add(new XYChart.Data<>(8, 58));
-        series.getData().add(new XYChart.Data<>(10, 60));
-        series.getData().add(new XYChart.Data<>(12, 53));
-        series.getData().add(new XYChart.Data<>(14, 53));
-        series.getData().add(new XYChart.Data<>(16, 48));
-        series.getData().add(new XYChart.Data<>(18, 48));
-        series.getData().add(new XYChart.Data<>(20, 48));
-        series.getData().add(new XYChart.Data<>(22, 52));
-        series.getData().add(new XYChart.Data<>(24, 47));
-        series.getData().add(new XYChart.Data<>(26, 52));
-        series.getData().add(new XYChart.Data<>(28, 44));
-        series.getData().add(new XYChart.Data<>(30, 43));
-        series.getData().add(new XYChart.Data<>(32, 44));
-        series.getData().add(new XYChart.Data<>(34, 43));
-        series.getData().add(new XYChart.Data<>(36, 38));
-        series.getData().add(new XYChart.Data<>(38, 45));
-        series.getData().add(new XYChart.Data<>(40, 43));
-        series.getData().add(new XYChart.Data<>(42, 45));
-        series.getData().add(new XYChart.Data<>(44, 47));
-        series.getData().add(new XYChart.Data<>(46, 48));
-        series.getData().add(new XYChart.Data<>(48, 45));
-        series.getData().add(new XYChart.Data<>(50, 47));
-        series.getData().add(new XYChart.Data<>(52, 45));
-        series.getData().add(new XYChart.Data<>(54, 48));
-        series.getData().add(new XYChart.Data<>(56, 49));
-        series.getData().add(new XYChart.Data<>(58, 51));
-        series.getData().add(new XYChart.Data<>(60, 51));
-
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
+        cycle = 2;
+        for (int i = 0;i<ListLength;i++){
+            series1.getData().add(new XYChart.Data<>(cycle+i*2,(double)(((int)(fhVO.getOverProfit().get(i)*1000))/10)));
+            series2.getData().add(new XYChart.Data<>(cycle+i*2,(double)(((int)(fhVO.getWinChance().get(i)*1000))/10)));
+        }
+        areaChart_1.setHorizontalZeroLineVisible(true);
         areaChart_2.setHorizontalZeroLineVisible(true);
-        areaChart_2.getData().addAll(series);
+        areaChart_1.getData().addAll(series1);
+        areaChart_2.getData().addAll(series2);
     }
+
+//    private void setAreaChart_1() {
+//
+//        PeriodNumber_1.setForceZeroInRange(false);
+//        XYChart.Series series = new XYChart.Series();
+//        series.getData().add(new XYChart.Data<>(2, 0.8));
+//        series.getData().add(new XYChart.Data<>(4, 2.9));
+//        series.getData().add(new XYChart.Data<>(6, 3.0));
+//        series.getData().add(new XYChart.Data<>(8, 2.7));
+//        series.getData().add(new XYChart.Data<>(10, 2.5));
+//        series.getData().add(new XYChart.Data<>(12, 1.2));
+//        series.getData().add(new XYChart.Data<>(14, 0.8));
+//        series.getData().add(new XYChart.Data<>(16, 0.2));
+//        series.getData().add(new XYChart.Data<>(18, -0.1));
+//        series.getData().add(new XYChart.Data<>(20, -0.1));
+//        series.getData().add(new XYChart.Data<>(22, -0.1));
+//        series.getData().add(new XYChart.Data<>(24, -0.7));
+//        series.getData().add(new XYChart.Data<>(26, -0.8));
+//        series.getData().add(new XYChart.Data<>(28, -1.1));
+//        series.getData().add(new XYChart.Data<>(30, -1.0));
+//        series.getData().add(new XYChart.Data<>(32, -1.0));
+//        series.getData().add(new XYChart.Data<>(34, -1.5));
+//        series.getData().add(new XYChart.Data<>(36, -1.5));
+//        series.getData().add(new XYChart.Data<>(38, -1.1));
+//        series.getData().add(new XYChart.Data<>(40, -1.7));
+//        series.getData().add(new XYChart.Data<>(42, -1.4));
+//        series.getData().add(new XYChart.Data<>(44, -1.6));
+//        series.getData().add(new XYChart.Data<>(46, -1.4));
+//        series.getData().add(new XYChart.Data<>(48, -1.0));
+//        series.getData().add(new XYChart.Data<>(50, -0.9));
+//        series.getData().add(new XYChart.Data<>(52, -0.5));
+//        series.getData().add(new XYChart.Data<>(54, -0.5));
+//        series.getData().add(new XYChart.Data<>(56, -0.1));
+//        series.getData().add(new XYChart.Data<>(58, -0.1));
+//        series.getData().add(new XYChart.Data<>(60, -0.2));
+//
+//        areaChart_1.setHorizontalZeroLineVisible(true);
+//        areaChart_1.getData().addAll(series);
+//    }
+
+//    private void setAreaChart_2() {
+//        PeriodNumber_2.setForceZeroInRange(false);
+//        XYChart.Series series = new XYChart.Series();
+//
+//        series.getData().add(new XYChart.Data<>(2, 58));
+//        series.getData().add(new XYChart.Data<>(4, 65));
+//        series.getData().add(new XYChart.Data<>(6, 65));
+//        series.getData().add(new XYChart.Data<>(8, 58));
+//        series.getData().add(new XYChart.Data<>(10, 60));
+//        series.getData().add(new XYChart.Data<>(12, 53));
+//        series.getData().add(new XYChart.Data<>(14, 53));
+//        series.getData().add(new XYChart.Data<>(16, 48));
+//        series.getData().add(new XYChart.Data<>(18, 48));
+//        series.getData().add(new XYChart.Data<>(20, 48));
+//        series.getData().add(new XYChart.Data<>(22, 52));
+//        series.getData().add(new XYChart.Data<>(24, 47));
+//        series.getData().add(new XYChart.Data<>(26, 52));
+//        series.getData().add(new XYChart.Data<>(28, 44));
+//        series.getData().add(new XYChart.Data<>(30, 43));
+//        series.getData().add(new XYChart.Data<>(32, 44));
+//        series.getData().add(new XYChart.Data<>(34, 43));
+//        series.getData().add(new XYChart.Data<>(36, 38));
+//        series.getData().add(new XYChart.Data<>(38, 45));
+//        series.getData().add(new XYChart.Data<>(40, 43));
+//        series.getData().add(new XYChart.Data<>(42, 45));
+//        series.getData().add(new XYChart.Data<>(44, 47));
+//        series.getData().add(new XYChart.Data<>(46, 48));
+//        series.getData().add(new XYChart.Data<>(48, 45));
+//        series.getData().add(new XYChart.Data<>(50, 47));
+//        series.getData().add(new XYChart.Data<>(52, 45));
+//        series.getData().add(new XYChart.Data<>(54, 48));
+//        series.getData().add(new XYChart.Data<>(56, 49));
+//        series.getData().add(new XYChart.Data<>(58, 51));
+//        series.getData().add(new XYChart.Data<>(60, 51));
+//
+//        areaChart_2.setHorizontalZeroLineVisible(true);
+//        areaChart_2.getData().addAll(series);
+//    }
 
 //    private void setBarChart() {
 //        barChart.setBarGap(3);
@@ -1034,11 +1060,11 @@ public class ReturnsController implements Initializable {
 
     public void setMain(Main main, Net net) {
 //        setComboBox();
-        setTableView();
-        setAreaChart_1();
-        setAreaChart_2();
+//        setTableView();
+//        setAreaChart_1();
+//        setAreaChart_2();
 //        setBarChart();
-        setCumulativeTableView();
+//        setCumulativeTableView();
 //        setLineChart();
         this.main = main;
         this.net = net;
