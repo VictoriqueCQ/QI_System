@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import quantour.vo.FormativeNHoldingVO;
 import quantour.vo.StockVO;
 import quantour.vo.StockSetVO;
 import quantour.vo.StrategyDataVO;
@@ -20,6 +21,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+
+/*
+在股票表格部分和超额收益率部分仍未完成
+ */
 
 /**
  * Created by Administrator on 2017/3/24.
@@ -379,6 +384,13 @@ public class ReturnsController implements Initializable {
         HoldPeriod.addAll(HoldPeriodString);
         HoldPeriodRank.setItems(HoldPeriod);
 
+        StrategyDataVO strategyDataVO = new StrategyDataVO();
+        strategyDataVO.getStockSetVOS().get(0).getStockSets();
+
+
+
+
+
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
         StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
 
@@ -459,13 +471,15 @@ public class ReturnsController implements Initializable {
 
         for (int i = 0; i < stockVOList.size(); i++) {
             StockVO stockVO = stockVOList.get(i);
-            StockModel stockModel = stockVOtoStockModle(stockVO);
+            StockModel stockModel = stockVOtoStockModel(stockVO);
             models.add(stockModel);
         }
         stockTable.setItems(models);
     }
 
-    public StockModel stockVOtoStockModle(StockVO stockVO) {
+
+
+    public StockModel stockVOtoStockModel(StockVO stockVO) {
         StockModel model = new StockModel();
         model.setName(stockVO.getName());
         int code = stockVO.getCode();
@@ -520,9 +534,23 @@ public class ReturnsController implements Initializable {
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
                 && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
-            net.actionPerformed("Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                    + FormativePeriod_MomentumStrategy.getText() + "\t" + isyourchoice+"\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                    + StockheldInHouse_MomentumStrategy.getText() + "\t");
+            String instruction;
+            if(isyourchoice == true){
+                instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                for(int i = 0;i<stockCodeList.size();i++){
+                    instruction += stockCodeList.get(i);
+                }
+            }else{
+                instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                for (int i = 0;i<sectionNameList.size();i++){
+                    instruction += sectionNameList.get(i);
+                }
+            }
+            net.actionPerformed(instruction);
         }
 
         String ReturnsMessage;
@@ -639,10 +667,25 @@ public class ReturnsController implements Initializable {
         if (FormativePeriod_MeanReversio.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
-            net.actionPerformed("Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                    + FormativePeriod_MomentumStrategy.getText() + "\t" + isyourchoice+"\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                    + StockheldInHouse_MomentumStrategy.getText() + "\t");
+            String instruction;
+            if(isyourchoice == true){
+                instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                for(int i = 0;i<stockCodeList.size();i++){
+                    instruction += stockCodeList.get(i);
+                }
+            }else{
+                instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                for (int i = 0;i<sectionNameList.size();i++){
+                    instruction += sectionNameList.get(i);
+                }
+            }
+            net.actionPerformed(instruction);
         }
+
         String ReturnsMessage;
         ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
@@ -810,45 +853,56 @@ public class ReturnsController implements Initializable {
 //        lineChart.getData().addAll(series1, series2);
 //    }
 
+    private ReturnsModel FormativeNHoldingVOtoReturnsModel(FormativeNHoldingVO formativeNHoldingVO){
+        ReturnsModel model = new ReturnsModel();
+        model.setReturns(formativeNHoldingVO.getOverProfit().toString());
+        model.setPercent(formativeNHoldingVO.getWinChance().toString());
+        return model;
+    }
 
     private void setTableView() {
         period.setCellValueFactory(celldata -> celldata.getValue().periodProperty());
         returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
         percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
+        FormativeNHoldingVO formativeNHoldingVO = new FormativeNHoldingVO();
+        int ListLength = formativeNHoldingVO.getOverProfit().size();
+
+
+
         //测试数据，数据层完成后将修改
-        data = FXCollections.observableArrayList(
-                new ReturnsModel("2", "0.8%", "58%"),
-                new ReturnsModel("4", "2.9%", "65%"),
-                new ReturnsModel("6", "3.0%", "65%"),
-                new ReturnsModel("8", "2.7%", "58%"),
-                new ReturnsModel("10", "2.5%", "60%"),
-                new ReturnsModel("12", "1.2%", "53%"),
-                new ReturnsModel("14", "0.8%", "53%"),
-                new ReturnsModel("16", "0.2%", "48%"),
-                new ReturnsModel("18", "-0.1%", "48%"),
-                new ReturnsModel("20", "-0.1%", "48%"),
-                new ReturnsModel("22", "-0.1%", "52%"),
-                new ReturnsModel("24", "-0.7%", "47%"),
-                new ReturnsModel("26", "-0.8%", "52%"),
-                new ReturnsModel("28", "-1.1%", "44%"),
-                new ReturnsModel("30", "-1.0%", "43%"),
-                new ReturnsModel("32", "-1.0%", "44%"),
-                new ReturnsModel("34", "-1.5%", "43%"),
-                new ReturnsModel("36", "-1.5%", "38%"),
-                new ReturnsModel("38", "-1.1%", "45%"),
-                new ReturnsModel("40", "-1.7%", "43%"),
-                new ReturnsModel("42", "-1.4%", "45%"),
-                new ReturnsModel("44", "-1.6%", "47%"),
-                new ReturnsModel("46", "-1.4%", "48%"),
-                new ReturnsModel("48", "-1.0%", "45%"),
-                new ReturnsModel("50", "-0.9%", "47%"),
-                new ReturnsModel("52", "-0.5%", "45%"),
-                new ReturnsModel("54", "-0.5%", "48%"),
-                new ReturnsModel("56", "-0.1%", "49%"),
-                new ReturnsModel("58", "-0.1%", "51%"),
-                new ReturnsModel("60", "-0.2%", "51%")
-        );
+//        data = FXCollections.observableArrayList(
+//                new ReturnsModel("2", "0.8%", "58%"),
+//                new ReturnsModel("4", "2.9%", "65%"),
+//                new ReturnsModel("6", "3.0%", "65%"),
+//                new ReturnsModel("8", "2.7%", "58%"),
+//                new ReturnsModel("10", "2.5%", "60%"),
+//                new ReturnsModel("12", "1.2%", "53%"),
+//                new ReturnsModel("14", "0.8%", "53%"),
+//                new ReturnsModel("16", "0.2%", "48%"),
+//                new ReturnsModel("18", "-0.1%", "48%"),
+//                new ReturnsModel("20", "-0.1%", "48%"),
+//                new ReturnsModel("22", "-0.1%", "52%"),
+//                new ReturnsModel("24", "-0.7%", "47%"),
+//                new ReturnsModel("26", "-0.8%", "52%"),
+//                new ReturnsModel("28", "-1.1%", "44%"),
+//                new ReturnsModel("30", "-1.0%", "43%"),
+//                new ReturnsModel("32", "-1.0%", "44%"),
+//                new ReturnsModel("34", "-1.5%", "43%"),
+//                new ReturnsModel("36", "-1.5%", "38%"),
+//                new ReturnsModel("38", "-1.1%", "45%"),
+//                new ReturnsModel("40", "-1.7%", "43%"),
+//                new ReturnsModel("42", "-1.4%", "45%"),
+//                new ReturnsModel("44", "-1.6%", "47%"),
+//                new ReturnsModel("46", "-1.4%", "48%"),
+//                new ReturnsModel("48", "-1.0%", "45%"),
+//                new ReturnsModel("50", "-0.9%", "47%"),
+//                new ReturnsModel("52", "-0.5%", "45%"),
+//                new ReturnsModel("54", "-0.5%", "48%"),
+//                new ReturnsModel("56", "-0.1%", "49%"),
+//                new ReturnsModel("58", "-0.1%", "51%"),
+//                new ReturnsModel("60", "-0.2%", "51%")
+//        );
 
         tableView.getStyleClass().add("edge-to-edge");
         tableView.getStyleClass().add("noborder");
