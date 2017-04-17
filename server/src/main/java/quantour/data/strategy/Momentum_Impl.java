@@ -178,6 +178,9 @@ public class Momentum_Impl implements Strategy_data{
         return basicProfits;
     }
 
+
+
+
     class Candidate{
         int code;
         Stock s1;

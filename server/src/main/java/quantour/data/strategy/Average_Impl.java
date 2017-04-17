@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static quantour.data.DataFactory_CSV_Impl.getInstance;
+
 /**
  * Average用Stock_Filter_Data_Impl进行筛选，得到的初步筛选结果需要以成员变量的方式保存在类中
  * tock_Filter_Data_Impl怎么用可以参照注释
@@ -19,9 +21,9 @@ import java.util.stream.Collectors;
  * Created by cyy on 2017/3/31.
  */
 public class Average_Impl implements Strategy_data {
-    //private List<Stock> stocks;//stocks为根据股票池等筛选信息得到的股票信息
+
     private Map<Integer, List<Stock>> stockPool;//用于保存所选择的股票池里所有股票的信息，integer为code
-//    private List<String> stockNames;
+//
     private List<Double> basicProfits;
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
@@ -33,6 +35,14 @@ public class Average_Impl implements Strategy_data {
     @Override
     public List<StockSet> getSets(String[] quest) {
         DataFactory_CSV_Impl dataFactoryCsv = null;
+        try{
+            dataFactoryCsv=getInstance();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+
         Date startDate = null;
         Date endDate = null;
         try {
@@ -54,6 +64,7 @@ public class Average_Impl implements Strategy_data {
         //自选股票
         Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
         if (quest[6].equals("T")) {
+            winnerSize=(int)((quest.length-9)*0.2);
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
                 stockPool.put(code, stockFilterData.filterSingleStock(code));
@@ -61,6 +72,7 @@ public class Average_Impl implements Strategy_data {
         } else {
             stockPool = stockFilterData.filterStaStock(quest);
             indices=stockFilterData.getIndexList().get(quest[6]);
+            winnerSize=(int)(stockPool.size()*0.2);
         }
 
 
@@ -146,10 +158,11 @@ public class Average_Impl implements Strategy_data {
 
 
 
-
-
+            candidates=candidates.subList(candidates.size()-winnerSize,candidates.size());
             Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
-            for (int i = candidates.size() - 1; i >= candidates.size() * 0.8; i--) {
+
+
+            for (int i = candidates.size() - 1; i >= 0; i--) {
                 List<Stock> temp = new ArrayList<>();
                 temp.add(candidates.get(i).getS1());
                 temp.add(candidates.get(i).getS2());
