@@ -35,7 +35,7 @@ public class DataReader_CSVTest {
     @Test
     public void readPlate() throws Exception {
         Map<String,List<StockNameNCode>> list=dataReader_CSV.readPlate();
-        Assert.assertEquals(2,list.size());
+        Assert.assertEquals(3,list.size());
     }
 
     @Test
