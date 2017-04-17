@@ -43,18 +43,16 @@ public class Average_Impl implements Strategy_data {
         }
 
 
-        Date startDate = null;
-        Date endDate = null;
-        try {
-            startDate = sdf.parse(quest[3]);
-        } catch (ParseException e) {
-            e.printStackTrace();
+       final Date startDate;
+        final Date endDate ;
+        try{
+            startDate=sdf.parse(quest[3]);
+            endDate=sdf.parse(quest[4]);
+        }catch (ParseException pe){
+            pe.printStackTrace();
+            return null;
         }
-        try {
-            endDate = sdf.parse(quest[4]);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         int shapeTime = Integer.parseInt(quest[5]);//形成期,比价基准，均线
         int holdTime = Integer.parseInt(quest[7]);//持有期
 
@@ -75,29 +73,46 @@ public class Average_Impl implements Strategy_data {
             winnerSize=(int)(stockPool.size()*0.2);
         }
 
+        int startSerial=0;
+        int endSerial=0;
+        Set<Integer> codes=stockPool.keySet();
+        for(int i:codes){
+            List<Stock> temp=stockPool.get(i);
+            List<Stock> filted=temp.stream().
+                    filter(stock -> stock.getDate().compareTo(endDate)<=0&&stock.getDate().compareTo(startDate)>=0).
+                    collect(Collectors.toList());
+            startSerial=filted.stream().mapToInt(Stock::getSerial).max().getAsInt();
+            endSerial=filted.stream().mapToInt(Stock::getSerial).min().getAsInt();
+            break;
+        }
 
-        Calendar calendar = Calendar.getInstance();
+        int initialDate=startSerial+shapeTime;
+        int overDate=startSerial;
+        int changeDate=startSerial-holdTime;
+
+
+      /*  Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
         calendar.add(Calendar.DAY_OF_YEAR, -shapeTime);
         Date initialDate = calendar.getTime();//形成期的开始
         Date overDate = startDate;
         calendar.setTime(overDate);//算形成期的时候的结束日期
         calendar.add(Calendar.DAY_OF_YEAR, holdTime);
-        Date changeDate = calendar.getTime();//调仓
+        Date changeDate = calendar.getTime();//调仓*/
 
         List<StockSet> stockSets = new ArrayList<>();
 
-        Set<Integer> codes = stockPool.keySet();//股票编码
+//        Set<Integer> codes = stockPool.keySet();//股票编码
 
-        while (overDate.compareTo(endDate) < 0) {
+        while (overDate>=endSerial) {
             List<Candidate1> candidates = new ArrayList<>();
             for (int c : codes) {
-                Date change = changeDate;
-                Date initial = initialDate;
+                int change=changeDate;
+                int initial=initialDate;
                 List<Stock> currentStock = stockPool.get(c);
                 List<Stock> currentCalculate = currentStock.stream().
-                        filter(stock -> stock.getDate().compareTo(change) <= 0).
-                        filter(stock -> stock.getDate().compareTo(initial) >= 0)
+                        filter(stock -> stock.getSerial()>change).
+                        filter(stock -> stock.getSerial()<=initial)
                         .collect(Collectors.toList());
                 boolean toDelete = false;
                 for (Stock temp : currentCalculate) {
@@ -109,9 +124,9 @@ public class Average_Impl implements Strategy_data {
                 if (toDelete) {
                     continue;
                 } else {
-                    Date over = overDate;
+                    int over = overDate;
                     List<Stock> formativeList = currentCalculate.stream().
-                            filter(stock -> stock.getDate().compareTo(over) < 0).
+                            filter(stock -> stock.getSerial()>over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
 
                     double endPrice=formativeList.get(0).getAdjClose();
@@ -124,7 +139,7 @@ public class Average_Impl implements Strategy_data {
                     }
                     double average = sum / shapeTime;
                     List<Stock> holdingList = currentCalculate.stream().
-                            filter(stock -> stock.getDate().compareTo(over) >= 0).
+                            filter(stock -> stock.getSerial()<=over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
                     double currentPrice = holdingList.get(holdingList.size()-1).getAdjClose();
                     double deviate = (average - currentPrice) / average;
@@ -145,14 +160,14 @@ public class Average_Impl implements Strategy_data {
                 basicProfits.add(candidates.stream().mapToDouble(Candidate1::getProfit).average().getAsDouble());
             }
             else{
-                Date over=overDate;
-                Date change=changeDate;
-                List<Index> indexList=indices.stream().
-                        filter(index -> index.getDate().compareTo(over)>=0&&index.getDate().compareTo(change)<0).
+                Date change = candidates.get(0).getS1().getDate();
+                Date over = candidates.get(0).getS2().getDate();
+                List<Index> indexList = indices.stream().
+                        filter(index -> index.getDate().compareTo(over) >= 0 && index.getDate().compareTo(change) < 0).
                         collect(Collectors.toList());
-                Index start=indexList.get(0);
-                Index end=indexList.get(indexList.size()-1);
-                basicProfits.add((end.getClose()-start.getClose())/start.getClose());
+                Index start = indexList.get(0);
+                Index end = indexList.get(indexList.size() - 1);
+                basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
             }
 
 
@@ -162,7 +177,7 @@ public class Average_Impl implements Strategy_data {
             Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
 
 
-            for (int i = candidates.size() - 1; i >= 0; i--) {
+            for (int i = winnerSize - 1; i >= 0; i--) {
                 List<Stock> temp = new ArrayList<>();
                 temp.add(candidates.get(i).getS1());
                 temp.add(candidates.get(i).getS2());
@@ -171,17 +186,13 @@ public class Average_Impl implements Strategy_data {
             StockSet stockSet = new StockSet(map);
             stockSets.add(stockSet);
 
-            calendar.setTime(changeDate);
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
-            initialDate = calendar.getTime();
+            overDate=changeDate;
 
-            calendar.setTime(initialDate);
-            calendar.add(Calendar.DAY_OF_YEAR, shapeTime);
-            overDate = calendar.getTime();
+            initialDate=overDate+shapeTime;
 
-            calendar.setTime(overDate);
-            calendar.add(Calendar.DAY_OF_YEAR, holdTime);
-            changeDate = calendar.getTime();
+            startSerial=overDate;
+
+            changeDate=startSerial-holdTime;
 
 
         }
