@@ -10,11 +10,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import quantour.vo.FormativeNHoldingVO;
-import quantour.vo.StockVO;
 import quantour.vo.StockSetVO;
+import quantour.vo.StockVO;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -374,22 +377,24 @@ public class ReturnsController implements Initializable {
 
     //这里是股票表格，包括股票排名，股票名和股票代码
     private void setStockTableView(ArrayList<StockVO> stockVOList) {
-        ObservableList<StockModel> models = FXCollections.observableArrayList();
-        //填充第几个持有期的combobox
+
+        //这个strategydatavo本来应该是json获得
+        StrategyDataVO strategyDataVO = new StrategyDataVO();
+        List<StockSetVO> stockSetVOS=strategyDataVO.getStockSetVOS();
+
+        ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
+
+
+        //填充第几个持有期的combobox,根据stocksetvos的长度
         ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
         List<String> HoldPeriodString = new ArrayList<>();
-        for (int i = 0; i < number; i++) {
+        for (int i = 1; i <=stockSetVOS.size(); i++) {
             HoldPeriodString.add("第" + i + "个持有期");
         }
         HoldPeriod.addAll(HoldPeriodString);
         HoldPeriodRank.setItems(HoldPeriod);
-
-        StrategyDataVO strategyDataVO = new StrategyDataVO();
-        strategyDataVO.getStockSetVOS().get(0).getStockSets();
-
-
-
-
+        //默认值
+        HoldPeriodRank.setValue("第一个持有期");
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
         StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
@@ -402,7 +407,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <= stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -428,7 +433,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <=stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -454,7 +459,7 @@ public class ReturnsController implements Initializable {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if (cell.getIndex() <= models.size()) {
+                        if (cell.getIndex() <= stockModels.size()) {
                             //
                             System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
@@ -469,59 +474,112 @@ public class ReturnsController implements Initializable {
             }
         });
 
-        for (int i = 0; i < stockVOList.size(); i++) {
-            StockVO stockVO = stockVOList.get(i);
-            StockModel stockModel = stockVOtoStockModel(stockVO);
-            models.add(stockModel);
+        //默认展示第一个持有期
+        ArrayList<StockModel> stockModelArrayList=this.getbeststock(stockSetVOS,0);
+        for(int i=0;i<stockModelArrayList.size();i++){
+            stockModels.add(stockModelArrayList.get(i));
         }
-        stockTable.setItems(models);
+        stockTable.setItems(stockModels);
+
+    }
+
+//    @FXML
+//    private void showTabelByHoldPeriod(){
+//        String holdPeriod=HoldPeriodRank.getValue();
+//        char[] h=holdPeriod.toCharArray();
+//        int time=h[1];
+//
+//    }
+
+    /**
+     * 根据第几个持有期画图
+     * @param stockSetVOS
+     * @param i
+     */
+    private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS,int i){
+        StockSetVO stockSetVO=stockSetVOS.get(i);
+        Map<Integer,Integer> stockSets=stockSetVO.getStockSets();
+        ArrayList<StockModel> stockModelArrayList=stockSetstoStockModel(stockSets);
+        return stockModelArrayList;
     }
 
 
-
-    public StockModel stockVOtoStockModel(StockVO stockVO) {
-        StockModel model = new StockModel();
-        model.setName(stockVO.getName());
-        int code = stockVO.getCode();
-        String code1 = String.valueOf(code);
-        char[] code2 = code1.toCharArray();
-        int t = 6 - code2.length;
-        for (int i = 0; i < t; i++) {
-            code1 = "0" + code1;
+    /**
+     * stockSets转ArrayList<StockModel>
+     * @param stockSets
+     * @return
+     */
+    private ArrayList<StockModel> stockSetstoStockModel(Map<Integer, Integer> stockSets) {
+        ArrayList<StockModel> stockModelArrayList=new ArrayList<StockModel>();
+        HashMap<String,String> name_code= this.getNameList("presentation/name_code.csv");
+        for(int i=1;i<=stockSets.size();i++) {
+            StockModel model = new StockModel();
+            model.setRank(String.valueOf(i));
+            int code = stockSets.get(i);
+            String code1 = String.valueOf(code);
+            char[] code2 = code1.toCharArray();
+            int t = 6 - code2.length;
+            for (int j = 0; j < t; j++) {
+                code1 = "0" + code1;
+            }
+            model.setID(code1);
+            model.setName(name_code.get(code1));
+            stockModelArrayList.add(model);
         }
-        model.setID(Integer.parseInt(code1));
-//        model.setRank(String.valueOf());
-//
-//        double[] low = stockVO.getLow();
-//        double minTemp = low[0];
-////        System.out.print("dhaudgaygduyagd"+minTemp);
-//        for (int i = 0; i < low.length; i++) {
-//            if (low[i] < minTemp) {
-//                minTemp = low[i];
-//            }
-//        }
-//
-//        model.setMinPrice(minTemp);
-//
-//        double[] high = stockVO.getHigh();
-//        double maxTemp = high[0];
-//        for (int i = 0; i < high.length; i++) {
-//            if (low[i] > maxTemp) {
-//                maxTemp = high[i];
-//            }
-//        }
-//        model.setMaxPrice(maxTemp);
-//        double dd = 2.00;
-//        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-//        riseAndDown = riseAndDown * 100;
-//        DecimalFormat df = new DecimalFormat("#.00");
-//        model.setRiseAndDown(df.format(riseAndDown) + "%");
-//        double d = stockVO.getVariance();
-//        BigDecimal bd = new BigDecimal(d);
-//        DecimalFormat df2 = new DecimalFormat("0.0000");
-//        model.setVariance(df2.format(d));
 
-        return model;
+        return stockModelArrayList;
+    }
+
+    /**
+     * get a list in the filepath
+     * @param filePath
+     * @return
+     */
+    private HashMap<String,String> getNameList(String filePath){
+        List<String> content=new ArrayList<String>();
+
+        content = this.readFile(filePath);
+
+        int nums = content.size();
+        HashMap<String,String> name_code=new HashMap<String, String>(nums);
+
+        for(int i = 0;i<nums;i++){
+
+            String tempName = content.get(i).split("\t")[1];
+            String tempCode = content.get(i).split("\t")[0];
+            name_code.put(tempCode,tempName);
+        }
+
+        return name_code;
+    }
+
+    private  List<String> readFile(String path){
+        List<String> content=new ArrayList<String>();
+
+        BufferedReader br=null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+            }
+        }catch (Exception e) {
+        }finally{
+            if(br!=null){
+                try {
+                    br.close();
+                    br=null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for (String temp:content
+                ) {
+            System.out.println(temp);
+        }
+        return content;
+
     }
 
     private void setMomentumStrategyInputSearch() {
