@@ -76,6 +76,7 @@ public class Momentum_Impl implements Strategy_data{
                     collect(Collectors.toList());
             startSerial=filted.stream().mapToInt(Stock::getSerial).max().getAsInt();
             endSerial=filted.stream().mapToInt(Stock::getSerial).min().getAsInt();
+            break;
         }
 
         int initialDate=startSerial-formativePeriod;
