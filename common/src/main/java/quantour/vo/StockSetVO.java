@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by 朱晨乾 on 2017/4/15.
  */
 public class StockSetVO {
-    private Map<Integer,Integer> stockSets;
+    private Map<Integer, Integer> stockSets;
 
     public StockSetVO(Map<Integer, Integer> stockSets) {
         this.stockSets = stockSets;

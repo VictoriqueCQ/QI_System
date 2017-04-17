@@ -10,7 +10,9 @@
     -fx-control-inner-background: transparent;
 }
 
-
+.button {
+    -fx-text-fill:rgb(240, 150, 96);
+}
 
 .axis-label {
     -fx-text-fill: rgb(240, 240, 240);
@@ -67,11 +69,29 @@
     -fx-border-radius: 20px;
 }
 
-.combo-box{
-    -fx-background-color:rgb(100,100,100);
+.combo-box .list-cell
+{
+    -fx-background-color: rgb(100,100,100);
+    -fx-text-fill:#AAACAF;
 }
 
-.combo-box .label{
-    -fx-text-fill: #AAACAF;
+.combo-box-popup .list-view
+{
+    -fx-background-color: rgb(100,100,100);
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-background-color: rgb(100,100,100);
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box {
+    -fx-background-color: rgb(100, 100, 100);
 }
 

@@ -1,6 +1,7 @@
 package ui;
 
 import net.sf.json.JSONObject;
+import quantour.vo.StockSetVO;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,6 +37,11 @@ public class JsonUtil {
         classMap.put("dates", Date.class);
         classMap.put("names",String.class);
         classMap.put("codes",Integer.class);
+        classMap.put("profits",Double.class);
+        classMap.put("profit",Double.class);
+        classMap.put("basicProfits",Double.class);
+        classMap.put("stockSetVOS", StockSetVO.class);
+
         T t = (T) JSONObject.toBean(jsonResult, obj, classMap);
         return t;
     }
