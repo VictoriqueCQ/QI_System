@@ -17,6 +17,9 @@ public class FormativeNHolding_data_ImplTest {
 
     @Test
     public void get() throws Exception {
+        //可能会出现持有期或形成期太长的现象
+        
+        String[] quest={null,"FNH","M","4/11/14","4/29/14","F","3","T",null,"1","2","4","10","402"};
 
     }
 

@@ -69,7 +69,7 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
             List<Double> overProfit=new ArrayList<>();
             int winTime=0;
             for(int j=0;j<profitList.size();j++){
-                double over=profitList.get(i)-profitList.get(i);
+                double over=profitList.get(i)-basicProfitList.get(i);
                 overProfit.add(over);
                 if(over>0){
                     winTime++;
