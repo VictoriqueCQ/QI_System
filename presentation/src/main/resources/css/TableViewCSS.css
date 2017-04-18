@@ -59,7 +59,7 @@
 }
 
 .table-row-cell:hover{
-    -fx-background-color: #323437;
+    -fx-background-color:black;
     -fx-background-insets: 0;
     -fx-background-radius: 1;
     -fx-table-cell-border-color: #323437;

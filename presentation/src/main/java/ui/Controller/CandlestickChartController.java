@@ -41,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -275,6 +276,10 @@ public class CandlestickChartController {
                 Date startDate = this.changeDateStyle(startLocalDate);
                 Date endDate = this.changeDateStyle(endLocalDate);
                 x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
+                long width=startLocalDate.until(endLocalDate, ChronoUnit.DAYS)*10;
+                if(width>1178){
+                    insidePane.setPrefWidth(width);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -307,10 +312,12 @@ public class CandlestickChartController {
             y2Axis.setRange(min2Value * 0.9, high2Value * 1.1);
             y2Axis.setTickUnit(new NumberTickUnit((high2Value * 1.1 - min2Value * 0.9) / 4));
             XYPlot plot2 = new XYPlot(timeSeriesCollection, null, y2Axis, xyBarRender);//建立第二个画图区域对象，主要此时的x轴设为了null值，因为要与第一个画图区域对象共享x轴
+
             CombinedDomainXYPlot combineddomainxyplot = new CombinedDomainXYPlot(x1Axis);//建立一个恰当的联合图形区域对象，以x轴为共享轴
             combineddomainxyplot.add(plot1, 2);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域2/3
             combineddomainxyplot.add(plot2, 1);//添加图形区域对象，后面的数字是计算这个区域对象应该占据多大的区域1/3
             combineddomainxyplot.setGap(10);//设置两个图形区域对象之间的间隔空间
+
             JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
             //颜色设置
@@ -454,6 +461,8 @@ public class CandlestickChartController {
             number.setLowerBound(5);
             number.setUpperBound(highest * 1.1);
             number.setTickUnit((highest * 1.1 - 5) / 10);
+//            lineChart.setPrefWidth(dates.size()*10);
+
         }
     }
 

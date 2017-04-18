@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -83,28 +84,42 @@
         </GridPane>
         <TabPane layoutX="295.0" layoutY="68.0" prefHeight="572.0" prefWidth="1180.0" stylesheets="@css/TabPaneCSS.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="68.0">
             <tabs>
-                <Tab text="K线图" />
+                <Tab text="K线图">
+               <content>
+                  <ScrollPane prefViewportHeight="512.0" prefViewportWidth="1178.0" styleClass="scrollPane">
+                     <content>
+                        <AnchorPane fx:id="insidePane" prefHeight="600.0" prefWidth="1178.0" styleClass="insidePane" />
+                     </content>
+                  </ScrollPane>
+               </content></Tab>
                 <Tab text="均线图">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <LineChart fx:id="lineChart" layoutX="268.0" layoutY="34.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-                                    <xAxis>
-                                        <CategoryAxis side="BOTTOM" />
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                    </yAxis>
-                                </LineChart>
+                        <ScrollPane layoutX="10.0" layoutY="10.0" prefViewportHeight="492.0" prefViewportWidth="1158.0" styleClass="scrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="10.0">
+                           <content>
+                                      <LineChart fx:id="lineChart" layoutX="268.0" layoutY="34.0" prefHeight="580.0" prefWidth="1160.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                          <xAxis>
+                                              <CategoryAxis side="BOTTOM" />
+                                          </xAxis>
+                                          <yAxis>
+                                              <NumberAxis side="LEFT" />
+                                          </yAxis>
+                                 <padding>
+                                    <Insets right="-10.0" />
+                                 </padding>
+                                      </LineChart>
+                           </content>
+                        </ScrollPane>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+      <AnchorPane layoutX="842.0" layoutY="40.0" prefHeight="210.0" prefWidth="207.0">
          <children>
-            <ListView fx:id="fuzzyCheck" layoutX="841.0" layoutY="50.0" prefHeight="200.0" prefWidth="211.0" styleClass="mylistview" stylesheets="@css/ListViewCSS.css" />
+            <ListView fx:id="fuzzyCheck" layoutX="4.0" layoutY="5.0" prefHeight="200.0" prefWidth="200.0" styleClass="mylistview" stylesheets="@css/ListViewCSS.css" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
     </children>
