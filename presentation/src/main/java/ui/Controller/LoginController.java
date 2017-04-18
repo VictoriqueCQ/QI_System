@@ -47,6 +47,9 @@ public class LoginController {
         main.gotoChangePassword();
     }
 
+    /**
+     * 登录
+     */
     @FXML
     private void login(){
         String username=usernameTextField.getText();
@@ -95,27 +98,20 @@ public class LoginController {
         }
     }
 
-
-
-    public LoginController() {
-
-    }
-
     public void setMain(Main main,Net net) {
-
-
         this.main = main;
         this.net=net;
-
+        //默认记住密码
         rememberPasswordRadioButton.setSelected(true);
 
+        //获取文件路径
         String path=String.valueOf(Main.class.getResource(""));
         String[] pathlist=path.split("/");
         for(int i=1;i<pathlist.length-1;i++){
             path1+=(pathlist[i]+"\\");
         }
-        //自动写入上次记住的用户名密码
 
+        //自动写入上次记住的用户名密码
         File f=new File(path1+"documentation\\remembereduserinfo.txt");
         try {
             BufferedReader brreader = new BufferedReader(new FileReader(f));
@@ -129,6 +125,5 @@ public class LoginController {
         catch(IOException e){
             e.printStackTrace();
         }
-
     }
 }

@@ -1,7 +1,6 @@
 package ui.Controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
@@ -10,10 +9,7 @@ import javafx.scene.effect.Lighting;
 import quantour.vo.UserVO;
 import ui.Main;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class ClientOverviewController implements Initializable {
+public class ClientOverviewController {
     private Main main;
 
     @FXML
@@ -100,6 +96,9 @@ public class ClientOverviewController implements Initializable {
         main.gotoRegist();
     }
 
+    /**
+     * 退出登录
+     */
     @FXML
     private void exitLogin(){
         loginButton.setVisible(true);
@@ -124,30 +123,21 @@ public class ClientOverviewController implements Initializable {
         returnsButton.setEffect(l);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-
-    public ClientOverviewController() {
-    }
-
     public void setMain(Main main, boolean t, UserVO userVO) {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
         if(t){
-            nameLabel.setText("          姓名: "+userVO.getName());
+            nameLabel.setText("姓名: "+userVO.getName());
             loginButton.setVisible(false);
             registerButton.setVisible(false);
             exitLoginButton.setVisible(true);
-
         }
         else{
-            nameLabel.setText("             游客");
+            nameLabel.setText("   游客访问");
             loginButton.setVisible(true);
             registerButton.setVisible(true);
             exitLoginButton.setVisible(false);
-
 //            comparsionButton.setDisable(true);
 //            returnsButton.setDisable(true);
         }

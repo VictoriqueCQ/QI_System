@@ -1273,10 +1273,10 @@ public class ReturnsController implements Initializable {
 //        setBarChart();
 //        setCumulativeTableView();
 //        setLineChart();
-        setMeanReversioInputSearch();
-        setMomentumStrategyInputSearch();
-        setOverProfitsUI_MS();
-        setOverProfitsUI_MR();
+//        setMeanReversioInputSearch();
+//        setMomentumStrategyInputSearch();
+//        setOverProfitsUI_MS();
+//        setOverProfitsUI_MR();
         this.main = main;
         this.net = net;
 

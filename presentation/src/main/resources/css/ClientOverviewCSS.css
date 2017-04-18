@@ -7,6 +7,10 @@
     -fx-font-size: 2em;
 }
 
+.namelabel{
+     -fx-font-size: 1.5em;
+}
+
 .button {
     -fx-base: rgb(0, 0, 0);
     -fx-font-color: rgb(255, 255, 255);

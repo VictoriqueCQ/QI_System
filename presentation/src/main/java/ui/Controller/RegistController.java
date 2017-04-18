@@ -11,8 +11,6 @@ import ui.JsonUtil;
 import ui.Main;
 import ui.Net;
 
-import java.rmi.RemoteException;
-
 
 
 /**
@@ -53,13 +51,19 @@ public class RegistController {
         noLabel.setVisible(false);
     }
 
+    /**
+     * 退出注册
+     */
     @FXML
     private void exitRegist(){
         main.closeExtraStage();
     }
 
+    /**
+     * 注册账户
+     */
     @FXML
-    private void register() throws RemoteException {
+    private void register() {
         if (usernameTextField.getText().isEmpty()) {
             this.exitRegist();
             AlertUtil.showWarningAlert("账号不可以为空！");

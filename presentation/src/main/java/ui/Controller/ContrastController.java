@@ -523,7 +523,7 @@ public class ContrastController extends Application {
 
 
                         stockField.setText(new_val);
-
+                        fuzzyCheck.setVisible(false);
 
 
                     }
@@ -552,6 +552,8 @@ public class ContrastController extends Application {
             return  null;
         }
     }
+
+
 
     /**
      * get a list in the filepath
@@ -657,5 +659,6 @@ public class ContrastController extends Application {
         Matcher matcher = pattern.matcher(s);
        System.out.print(matcher.matches());*/
 //       main.closeExtraStage();
+
     }
 }

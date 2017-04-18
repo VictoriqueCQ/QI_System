@@ -23,20 +23,21 @@
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                            </columnConstraints>
                            <rowConstraints>
+                              <RowConstraints />
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <ComboBox fx:id="selectComboBox" layoutX="61.0" layoutY="38.0" prefWidth="240.0" />
-                              <Button fx:id="ensureButton1" mnemonicParsing="false" onAction="#sectionSearch" text="确定" GridPane.columnIndex="1">
+                              <ComboBox fx:id="selectComboBox" layoutX="61.0" layoutY="38.0" prefWidth="240.0" stylesheets="@css/ComboBoxCSS.css" GridPane.rowIndex="1" />
+                              <Button fx:id="ensureButton1" mnemonicParsing="false" onAction="#sectionSearch" text="确定" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Button>
-                              <TextField fx:id="searchTextField" styleClass="TextFieldText" GridPane.columnIndex="2" />
-                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#stockSearch" prefHeight="32.0" prefWidth="32.0" styleClass="search_button" GridPane.columnIndex="3">
+                              <TextField fx:id="searchTextField" styleClass="TextFieldText" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#stockSearch" prefHeight="32.0" prefWidth="32.0" styleClass="search_button" GridPane.columnIndex="3" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Button>
-                              <Button mnemonicParsing="false" onAction="#finishStockSelect" prefHeight="32.0" prefWidth="35.0" styleClass="button3" GridPane.columnIndex="4" />
+                              <Button mnemonicParsing="false" onAction="#finishStockSelect" prefHeight="32.0" prefWidth="35.0" styleClass="button3" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                         <TableView fx:id="stockTable" layoutX="198.0" layoutY="116.0" stylesheets="@css/TableViewCSS.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
@@ -46,6 +47,7 @@
                               <TableColumn fx:id="isChoosen" prefWidth="150.0" text="是否已选" />
                           </columns>
                         </TableView>
+                        <ListView fx:id="fuzzyCheck" layoutX="384.0" layoutY="46.0" prefHeight="199.0" prefWidth="256.0" styleClass="mylistview" stylesheets="@css/ListViewCSS.css" />
                      </children>
                   </AnchorPane>
             </content>

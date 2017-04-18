@@ -1,8 +1,9 @@
-
 .label {
     -fx-text-fill: rgb(240, 240, 240);
     -fx-font-size: 1.5em;
 }
+
+
 
 .data0.chart-bar {
     -fx-bar-fill: rgb(240, 0, 0);
@@ -12,10 +13,9 @@
     -fx-bar-fill: rgb(0, 240, 0);
 }
 
+
 .button {
-    -fx-font: 22 arial;
-    -fx-base: rgb(0, 0, 0);
-    -fx-text-fill: rgb(240, 240, 240);
+    -fx-text-fill:rgb(240, 150, 96);
 }
 
 .chart-pie-label {
