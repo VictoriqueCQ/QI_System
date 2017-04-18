@@ -51,7 +51,10 @@ public class ReturnsController implements Initializable {
 
     //选择形成期还是持有期
     @FXML
-    private ComboBox<String> ChooseFPorHP;
+    private ComboBox<String> ChooseFPorHP_MS;
+
+    @FXML
+    private ComboBox<String> ChooseFPorHP_MR;
     /*
     * 以下5个变量是用于起始界面的变量，分别是：
     * 用于确定持有期个数的number
@@ -820,7 +823,7 @@ public class ReturnsController implements Initializable {
                 }
             } else {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1115,8 +1118,8 @@ public class ReturnsController implements Initializable {
         list.add("形成期");
         list.add("持有期");
         content.addAll(list);
-        ChooseFPorHP.setItems(content);
-        if (ChooseFPorHP.getItems().equals("形成期")) {
+        ChooseFPorHP_MS.setItems(content);
+        if (ChooseFPorHP_MR.getItems().equals("形成期")) {
             HoldingPeriod_MomentumStrategy.setDisable(true);
         } else {
             FormativePeriod_MomentumStrategy.setDisable(true);
@@ -1224,8 +1227,8 @@ public class ReturnsController implements Initializable {
         list.add("形成期");
         list.add("持有期");
         content.addAll(list);
-        ChooseFPorHP.setItems(content);
-        if (ChooseFPorHP.getItems().equals("形成期")) {
+        ChooseFPorHP_MR.setItems(content);
+        if (ChooseFPorHP_MR.getItems().equals("形成期")) {
             HoldingPeriod_MomentumStrategy.setDisable(true);
         } else {
             FormativePeriod_MomentumStrategy.setDisable(true);
