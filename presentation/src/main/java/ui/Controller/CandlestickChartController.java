@@ -277,6 +277,7 @@ public class CandlestickChartController {
                 Date endDate = this.changeDateStyle(endLocalDate);
                 x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
                 long width=startLocalDate.until(endLocalDate, ChronoUnit.DAYS)*10;
+                System.out.print(width);
                 if(width>1178){
                     insidePane.setPrefWidth(width);
                 }

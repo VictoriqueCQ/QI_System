@@ -30,8 +30,15 @@ public class DataReader_CSV implements DataReader_data{
         platePath="stock_data\\plate";//directory
         indexPath="stock_data\\index";//directory
         ratePath="stock_data\\rate.csv";
-        //File f=new File("a.txt");
-        //f.createNewFile();
+//        File f=new File("a.txt");
+//        f.createNewFile();
+//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\stock_data.csv";
+////        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
+////        stockPath="D:\\data.txt";
+//        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\plate";//directory
+//        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\index";//directory
+//        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\rate.csv";
+
     }
 
     public DataReader_CSV(String path) {

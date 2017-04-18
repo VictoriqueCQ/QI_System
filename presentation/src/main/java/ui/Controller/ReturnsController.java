@@ -719,7 +719,7 @@ public class ReturnsController implements Initializable {
      */
     private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS, int i) {
         StockSetVO stockSetVO = stockSetVOS.get(i);
-        Map<Integer, Integer> stockSets = stockSetVO.getStockSets();
+        Map<String,String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
     }
@@ -731,14 +731,13 @@ public class ReturnsController implements Initializable {
      * @param stockSets
      * @return
      */
-    private ArrayList<StockModel> stockSetstoStockModel(Map<Integer, Integer> stockSets) {
+    private ArrayList<StockModel> stockSetstoStockModel(Map<String,String> stockSets) {
         ArrayList<StockModel> stockModelArrayList = new ArrayList<StockModel>();
         HashMap<String, String> name_code = this.getNameList("presentation/name_code.csv");
         for (int i = 1; i <= stockSets.size(); i++) {
             StockModel model = new StockModel();
             model.setRank(String.valueOf(i));
-            int code = stockSets.get(i);
-            String code1 = String.valueOf(code);
+            String code1 = stockSets.get(i);
             char[] code2 = code1.toCharArray();
             int t = 6 - code2.length;
             for (int j = 0; j < t; j++) {
