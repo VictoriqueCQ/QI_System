@@ -189,7 +189,7 @@
                                              <children>
                                                 <Label layoutX="21.0" layoutY="20.0" />
                                                 <Label layoutX="21.0" layoutY="20.0" text="开始日期" />
-                                                <DatePicker fx:id="StartDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
+                                                <DatePicker fx:id="StartDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" onAction="#updateEndTimeDatePicker1" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -201,7 +201,7 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="20.0" text="结束日期" />
-                                                <DatePicker fx:id="EndDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
+                                                <DatePicker fx:id="EndDate_MomentumStrategy" layoutX="100.0" layoutY="18.0" onAction="#updateStartTimeDatePicker1" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -256,7 +256,7 @@
                                              <children>
                                                 <Label layoutX="21.0" layoutY="20.0" />
                                                 <Label layoutX="21.0" layoutY="20.0" text="开始日期" />
-                                                <DatePicker fx:id="StartDate_MeanReversio" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
+                                                <DatePicker fx:id="StartDate_MeanReversio" layoutX="100.0" layoutY="18.0" onAction="#updateEndTimeDatePicker2" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
@@ -268,10 +268,10 @@
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="20.0" text="结束日期" />
-                                                <DatePicker fx:id="EndDate_MeanReversio" layoutX="100.0" layoutY="18.0" stylesheets="@css/DatePickerCSS.css" />
+                                                <DatePicker fx:id="EndDate_MeanReversio" layoutX="100.0" layoutY="18.0" onAction="#updateStartTimeDatePicker2" stylesheets="@css/DatePickerCSS.css" />
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@css/ComboBoxCSS.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
                                                 <Label layoutX="24.0" layoutY="18.0" text="股票" />
                                                 <ComboBox fx:id="Plate_MeanReversio" layoutX="100.0" layoutY="16.0" prefHeight="23.0" prefWidth="187.0" />
@@ -285,7 +285,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="ChooseStock_MeanReversio" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" text="选择股票">
+                                                <Button fx:id="ChooseStock_MeanReversio" layoutX="125.0" layoutY="9.0" mnemonicParsing="false" onAction="#gotoSelectStock" text="选择股票">
                                                    <font>
                                                       <Font size="18.0" />
                                                    </font>

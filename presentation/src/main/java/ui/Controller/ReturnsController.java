@@ -274,6 +274,185 @@ public class ReturnsController implements Initializable {
     }
 
     /**
+     * 在开始时间选取后更新结束时间可选日期
+     */
+    @FXML
+    private void updateEndTimeDatePicker1() {
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        StartDate_MomentumStrategy.getValue().plusDays(1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+    }
+
+    /**
+     * 在结束时间选取后更新开始时间可选日期
+     */
+    @FXML
+    private void updateStartTimeDatePicker1() {
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isAfter(
+                                        EndDate_MomentumStrategy.getValue().minusDays(1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        StartDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+    }
+
+    /**
+     * 在开始时间选取后更新结束时间可选日期
+     */
+    @FXML
+    private void updateEndTimeDatePicker2() {
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        StartDate_MeanReversio.getValue().plusDays(1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        EndDate_MeanReversio.setDayCellFactory(dayCellFactory1);
+    }
+
+    /**
+     * 在结束时间选取后更新开始时间可选日期
+     */
+    @FXML
+    private void updateStartTimeDatePicker2() {
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isAfter(
+                                        EndDate_MeanReversio.getValue().minusDays(1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+
+                    }
+                };
+        StartDate_MeanReversio.setDayCellFactory(dayCellFactory1);
+    }
+
+
+
+
+    /**
+     * 初始化日期选择器可选时间
+     */
+    private void setDatePicker() {
+        StartDate_MomentumStrategy.setValue(LocalDate.of(2014, 2, 1));
+        EndDate_MomentumStrategy.setValue(LocalDate.of(2014, 4, 30));
+        StartDate_MeanReversio.setValue(LocalDate.of(2014, 2, 1));
+        EndDate_MeanReversio.setValue(LocalDate.of(2014, 4, 30));
+        final Callback<DatePicker, DateCell> dayCellFactory1 =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+
+                                if (item.isBefore(
+                                        LocalDate.of(2005, 2, 1))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                                if (item.isAfter(
+                                        LocalDate.of(2014, 4, 30))
+                                        ) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #000000;");
+                                }
+                            }
+                        };
+                    }
+                };
+        StartDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+        EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+        StartDate_MeanReversio.setDayCellFactory(dayCellFactory1);
+        EndDate_MomentumStrategy.setDayCellFactory(dayCellFactory1);
+    }
+
+
+    /**
      * 从股票选择页面返回后显示所选股票
      *
      * @param stockNameList
@@ -1308,6 +1487,6 @@ public class ReturnsController implements Initializable {
 //        setOverProfitsUI_MR();
         this.main = main;
         this.net = net;
-
+        this.setDatePicker();
     }
 }
