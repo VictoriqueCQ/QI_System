@@ -176,7 +176,7 @@ public class SelectStockController {
     @FXML
     private void sectionSearch(){
             String section =selectComboBox.getValue();
-            ArrayList<StockVO> stockVOList=readStockList(path1+"documentation\\stock-section\\"+section+".txt");
+            ArrayList<StockVO> stockVOList=readStockList("/Users/chenyuyan/IdeaProjects/QI_System/presentation/src/main/resources/documentation/stock-section/"+section+".txt");
             setTableView(stockVOList);
     }
 

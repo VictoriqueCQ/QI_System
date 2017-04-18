@@ -56,13 +56,14 @@ public class Average_Impl implements Strategy_data {
 
         int shapeTime = Integer.parseInt(quest[5]);//形成期,比价基准，均线
         int holdTime = Integer.parseInt(quest[7]);//持有期
-
+        int holdNumber = Integer.parseInt(quest[8]);//持股数
+        int winnerSize = Integer.parseInt(quest[8]);//持股数;
         List<Index> indices=null;
 
-        int winnerSize = 0;
+//        int winnerSize = 0;
         //自选股票
         Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
-        if (quest[6].equals("T")) {
+       /* if (quest[6].equals("T")) {
             winnerSize=(int)((quest.length-9)*0.2);
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
@@ -72,7 +73,7 @@ public class Average_Impl implements Strategy_data {
             stockPool = stockFilterData.filterStaStock(quest);
             indices=stockFilterData.getIndexList().get(quest[9]);
             winnerSize=(int)(stockPool.size()*0.2);
-        }
+        }*/
 
         int startSerial=0;
         int endSerial=0;
