@@ -24,12 +24,12 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-        stockPath = "stock_data\\stock_data.csv";
+        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\stock_data.csv";
 //        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
 //        stockPath="D:\\data.txt";
-        platePath="stock_data\\plate";//directory
-        indexPath="stock_data\\index";//directory
-        ratePath="stock_data\\rate.csv";
+        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\plate";//directory
+        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\index";//directory
+        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\rate.csv";
         //File f=new File("a.txt");
         //f.createNewFile();
     }
@@ -65,7 +65,6 @@ public class DataReader_CSV implements DataReader_data{
 
                 Stock stock = new Stock(serial, date, open, high, low, close, volume, adjClose, code, name, market);
                 stockList.add(stock);
-
                 row = br.readLine();
             }
 

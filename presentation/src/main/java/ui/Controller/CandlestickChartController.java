@@ -461,7 +461,7 @@ public class CandlestickChartController {
             number.setLowerBound(5);
             number.setUpperBound(highest * 1.1);
             number.setTickUnit((highest * 1.1 - 5) / 10);
-//            lineChart.setPrefWidth(dates.size()*10);
+            lineChart.setPrefWidth(dates.size()*10);
 
         }
     }

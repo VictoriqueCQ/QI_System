@@ -511,7 +511,7 @@ public class SelectStockController {
         sectionList.add("装修装饰业");
         sectionList.add("租赁服务业");
         selectComboBox.getItems().addAll(sectionList);
-        selectComboBox.setValue(sectionList.get(0));
+//        selectComboBox.setValue(sectionList.get(0));
     }
 
     public ArrayList<String> FuzzyCheck(){
