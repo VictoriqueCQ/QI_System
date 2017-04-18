@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import quantour.vo.StockVO;
 import ui.*;
@@ -266,6 +267,7 @@ public class SelectStockController {
                 cell.setOnMouseClicked((MouseEvent t) -> {
                     String name=(stockTable.getItems().get(cell.getIndex()).getName());
                     String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    //取消选择
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
                             Iterator<String> iterable1=stockNameList.iterator();
@@ -281,14 +283,25 @@ public class SelectStockController {
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
+                            if(cell.getIndex()%2==0){
+                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
+                            else{
+                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
                         }
                     }
+                    //选择
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
+                                cell.getTableRow().setStyle("-fx-background-color:black;");
+                                cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -324,6 +337,14 @@ public class SelectStockController {
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
+                            if(cell.getIndex()%2==0){
+                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
+                            else{
+                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
                         }
                     }
                     else if(t.getClickCount() == 1){
@@ -332,6 +353,8 @@ public class SelectStockController {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
+                                cell.getTableRow().setStyle("-fx-background-color:black;");
+                                cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
@@ -367,6 +390,14 @@ public class SelectStockController {
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
+                            if(cell.getIndex()%2==0){
+                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
+                            else{
+                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+                                cell.setTextFill(Color.rgb(200,200,200));
+                            }
                         }
                     }
                     else if(t.getClickCount() == 1){
@@ -375,6 +406,8 @@ public class SelectStockController {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
+                                cell.getTableRow().setStyle("-fx-background-color:black;");
+                                cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
