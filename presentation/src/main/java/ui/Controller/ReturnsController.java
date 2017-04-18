@@ -1485,6 +1485,8 @@ public class ReturnsController implements Initializable {
 //        setMomentumStrategyInputSearch();
 //        setOverProfitsUI_MS();
 //        setOverProfitsUI_MR();
+        setChoose_MR();
+        setChoose_MS();
         this.main = main;
         this.net = net;
         this.setDatePicker();
