@@ -24,9 +24,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
-/*
-在股票表格部分和超额收益率部分仍未完成
- */
 
 /**
  * Created by Administrator on 2017/3/24.
@@ -51,6 +48,10 @@ public class ReturnsController implements Initializable {
 
     //是否自选
     private boolean isyourchoice;
+
+    //选择形成期还是持有期
+    @FXML
+    private ComboBox<String> ChooseFPorHP;
     /*
     * 以下5个变量是用于起始界面的变量，分别是：
     * 用于确定持有期个数的number
@@ -98,10 +99,6 @@ public class ReturnsController implements Initializable {
     //股票表格
     @FXML
     private TableView<StockModel> stockTable;
-
-
-
-
 
 
     /*
@@ -413,8 +410,6 @@ public class ReturnsController implements Initializable {
     }
 
 
-
-
     /**
      * 初始化日期选择器可选时间
      */
@@ -587,11 +582,10 @@ public class ReturnsController implements Initializable {
      */
     private void setStockTableView() {
         List<StockSetVO> stockSetVOS;
-        if(MomentumStrategyTab.isSelected()) {
+        if (MomentumStrategyTab.isSelected()) {
             stockSetVOS = strategyDataVO_MS.getStockSetVOS();
-        }
-        else {
-            stockSetVOS=strategyDataVO_MR.getStockSetVOS();
+        } else {
+            stockSetVOS = strategyDataVO_MR.getStockSetVOS();
         }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
 
@@ -698,10 +692,10 @@ public class ReturnsController implements Initializable {
      * 根据第几个持有期展示最终表格
      */
     @FXML
-    private void showTabelByHoldPeriod_MS(){
-        String holdPeriod=HoldPeriodRank.getValue();
-        char[] h=holdPeriod.toCharArray();
-        int time=h[1];
+    private void showTabelByHoldPeriod_MS() {
+        String holdPeriod = HoldPeriodRank.getValue();
+        char[] h = holdPeriod.toCharArray();
+        int time = h[1];
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
@@ -816,12 +810,11 @@ public class ReturnsController implements Initializable {
         String StartDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MS));
         String EndDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MS));
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
-                && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
-                ) {
+                && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()) {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
@@ -829,14 +822,12 @@ public class ReturnsController implements Initializable {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
-                    instruction += sectionNameList.get(i) +"\t";
+                    instruction += sectionNameList.get(i) + "\t";
                 }
             }
-            System.out.print("fgh"+instruction);
+            System.out.print("fgh" + instruction);
             net.actionPerformed(instruction);
-        }
-
-        else{
+        } else {
             System.out.print("error");
         }
 
@@ -978,7 +969,7 @@ public class ReturnsController implements Initializable {
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
                         + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
-                    instruction += sectionNameList.get(i) +"\t";
+                    instruction += sectionNameList.get(i) + "\t";
                 }
             }
             net.actionPerformed(instruction);
@@ -1114,12 +1105,22 @@ public class ReturnsController implements Initializable {
     }
 
 
-
     /*
     * 这个方法是超额收益率图表与表格的填充
      */
     private void setOverProfitsUI_MS() {
-
+        //根据选择形成期还是持有期判定是否能输入形成期或持久期
+        ObservableList<String> content = FXCollections.observableArrayList();
+        List<String> list = new ArrayList<>();
+        list.add("形成期");
+        list.add("持有期");
+        content.addAll(list);
+        ChooseFPorHP.setItems(content);
+        if (ChooseFPorHP.getItems().equals("形成期")) {
+            HoldingPeriod_MomentumStrategy.setDisable(true);
+        } else {
+            FormativePeriod_MomentumStrategy.setDisable(true);
+        }
 
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
@@ -1127,23 +1128,39 @@ public class ReturnsController implements Initializable {
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MS));
         String EndDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MS));
-        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
-                && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()) {
+        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()) {
+            //如果选择形成期
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + null + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
-                    instruction += stockCodeList.get(i) +"\t";
+                    instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
-                instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + null + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
-                    instruction += sectionNameList.get(i) +"\t";
+                    instruction += sectionNameList.get(i) + "\t";
                 }
             }
             net.actionPerformed(instruction);
+        } else {
+            //如果选择持有期
+            String instruction;
+            if (isyourchoice == true) {
+                instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                for (int i = 0; i < stockCodeList.size(); i++) {
+                    instruction += stockCodeList.get(i) + "\t";
+                }
+            } else {
+                instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                for (int i = 0; i < sectionNameList.size(); i++) {
+                    instruction += sectionNameList.get(i) + "\t";
+                }
+            }
         }
 
 
@@ -1169,7 +1186,7 @@ public class ReturnsController implements Initializable {
             int cycle = 2;
 
             for (int i = 0; i < ListLength; i++) {
-                String cycleString = String.valueOf(cycle + i * 2);
+                String cycleString = String.valueOf(cycle + i * 1);
                 String overProfit = (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10) + "%";
                 String winChance = (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10) + "%";
                 model = new ReturnsModel(cycleString, overProfit, winChance);
@@ -1201,7 +1218,18 @@ public class ReturnsController implements Initializable {
     }
 
     private void setOverProfitsUI_MR() {
-
+        //根据选择的是形成期还是持有期判定另一个是否能填
+        ObservableList<String> content = FXCollections.observableArrayList();
+        List<String> list = new ArrayList<>();
+        list.add("形成期");
+        list.add("持有期");
+        content.addAll(list);
+        ChooseFPorHP.setItems(content);
+        if (ChooseFPorHP.getItems().equals("形成期")) {
+            HoldingPeriod_MomentumStrategy.setDisable(true);
+        } else {
+            FormativePeriod_MomentumStrategy.setDisable(true);
+        }
 
         LocalDate StartDate_MR = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MR = EndDate_MomentumStrategy.getValue();
@@ -1209,26 +1237,39 @@ public class ReturnsController implements Initializable {
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MR));
         String EndDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MR));
-        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
-                && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()
-                && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
+        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()) {
+            //如果选择形成期
             String instruction;
             if (isyourchoice == true) {
-                instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
-                    instruction += stockCodeList.get(i)+"\t";
+                    instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
-                instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
-                    instruction += sectionNameList.get(i)+"\t";
+                    instruction += sectionNameList.get(i) + "\t";
                 }
             }
             net.actionPerformed(instruction);
+        } else {
+            //如果选择持有期
+            String instruction;
+            if (isyourchoice == true) {
+                instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                for (int i = 0; i < stockCodeList.size(); i++) {
+                    instruction += stockCodeList.get(i) + "\t";
+                }
+            } else {
+                instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                for (int i = 0; i < sectionNameList.size(); i++) {
+                    instruction += sectionNameList.get(i) + "\t";
+                }
+            }
         }
 
 
@@ -1256,7 +1297,7 @@ public class ReturnsController implements Initializable {
             int cycle = 2;
 
             for (int i = 0; i < ListLength; i++) {
-                String cycleString = String.valueOf(cycle + i * 2);
+                String cycleString = String.valueOf(cycle + i * 1);
                 String overProfit = (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10) + "%";
                 String winChance = (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10) + "%";
                 model = new ReturnsModel(cycleString, overProfit, winChance);
@@ -1288,30 +1329,32 @@ public class ReturnsController implements Initializable {
 
 
     @FXML
-    private void setChoose_MS(){
+    private void setChoose_MS() {
 //        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
+//            ChooseFPorHP.setItems();
+
 //            setOverProfitsUI_MS();
 //        }else{
         System.out.print("dfghuj");
-            setMomentumStrategyInputSearch();
+        setMomentumStrategyInputSearch();
 
 //        }
 
     }
 
     @FXML
-    private void setChoose_MR(){
+    private void setChoose_MR() {
 //        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
 //            setOverProfitsUI_MR();
 //        }else{
-            setMeanReversioInputSearch();
-//        }/
+        setMeanReversioInputSearch();
+//        }
     }
 
 

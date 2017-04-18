@@ -238,6 +238,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Button>
+                                                <ComboBox fx:id="ChooseFPorHP" layoutY="16.0" prefHeight="23.0" prefWidth="100.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -305,6 +306,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Button>
+                                                <ComboBox fx:id="ChooseFPorHP" layoutY="16.0" prefHeight="23.0" prefWidth="100.0" />
                                              </children>
                                           </AnchorPane>
                                        </children>
