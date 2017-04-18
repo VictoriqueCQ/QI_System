@@ -83,15 +83,7 @@
         </GridPane>
         <TabPane layoutX="295.0" layoutY="68.0" prefHeight="572.0" prefWidth="1180.0" stylesheets="@css/TabPaneCSS.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="68.0">
             <tabs>
-                <Tab text="K线图">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <AnchorPane fx:id="insidePane" layoutX="55.0" layoutY="45.0" prefHeight="417.0" prefWidth="1030.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
+                <Tab text="K线图" />
                 <Tab text="均线图">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -110,5 +102,10 @@
                 </Tab>
             </tabs>
         </TabPane>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <ListView fx:id="fuzzyCheck" layoutX="841.0" layoutY="50.0" prefHeight="200.0" prefWidth="211.0" styleClass="mylistview" stylesheets="@css/ListViewCSS.css" />
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

@@ -514,8 +514,7 @@ public class SelectStockController {
         this.setComboBox();
 
         searchTextField.setText("请输入股票名称");
-
-
+        //模糊搜索
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
         allStockName = this.getNameList("presentation/name_code.csv");
@@ -523,20 +522,14 @@ public class SelectStockController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fuzzyCheck.getItems().removeAll();
-//                System.out.println("Remove!");
-
                     reStockName = ".*";
-
                     if(searchTextField.getText()!=""){
                         stockNameImport = searchTextField.getText();
                         if(stockNameImport!=null) {
                             for (int i = 0; i < stockNameImport.length(); i++) {
                                 reStockName = reStockName + stockNameImport.charAt(i) + ".*";
-//                                System.out.println("正则表达式为：" + reStockName);
                             }
-
                             ArrayList<String> fuzzy = FuzzyCheck();
-
                             if(fuzzy!=null) {
                                 ObservableList<String> items = FXCollections.observableArrayList(
                                         fuzzy);
@@ -552,24 +545,12 @@ public class SelectStockController {
         });
 
         fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
-
                 new ChangeListener<String>() {
-
                     public void changed(ObservableValue<? extends String> ov,
-
                                         String old_val, String new_val) {
-
-
                         searchTextField.setText(new_val);
                         fuzzyCheck.setVisible(false);
-
-
                     }
-
                 });
-
-
     }
-
-
 }

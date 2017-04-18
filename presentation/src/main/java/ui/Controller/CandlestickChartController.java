@@ -1,13 +1,16 @@
 package ui.Controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
@@ -30,12 +33,20 @@ import ui.Main;
 import ui.Net;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -45,6 +56,8 @@ public class CandlestickChartController {
     private Main main;
     private Net net;
     private StockVO stockVO;
+
+    private String[] allStockName;
 
     @FXML
     private AnchorPane insidePane;
@@ -66,6 +79,12 @@ public class CandlestickChartController {
 
     @FXML
     private TextField stockNameTextField;
+
+    @FXML
+    private ListView<String> fuzzyCheck;//模糊搜索
+
+    static String stockNameImport;//输入的股票名
+    static String reStockName;
 
     @FXML
     private TextField stockNumberTextField;
@@ -503,10 +522,141 @@ public class CandlestickChartController {
         return (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
     }
 
+    /**
+     * 读取name_code.csv文件
+     * @param stockPath
+     * @return
+     */
+    private ArrayList<StockVO> readStockList(String stockPath) {
+        ArrayList<StockVO> stockList = new ArrayList<StockVO>();
+        File f = new File(stockPath);
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String row = br.readLine();
+            while (row != null) {
+                List<String> stockInfo = Arrays.asList(row.split("\t"));
+                String name = stockInfo.get(0);
+                int code=Integer.parseInt(stockInfo.get(1));
+                StockVO stockVO = new StockVO();
+                stockVO.setName(name);
+                stockVO.setCode(code);
+                stockList.add(stockVO);
+                row = br.readLine();
+            }
+            br.close();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return stockList;
+    }
+
+    /**
+     * get a list in the filepath
+     *
+     * @param filePath
+     * @return
+     */
+    public String[] getNameList(String filePath) {
+        List<String> content = new ArrayList<String>();
+        content = this.readFile(filePath);
+        int nums = content.size();
+        String[] nameList = new String[nums];
+        for (int i = 0; i < nums; i++) {
+            String tempName = content.get(i).split("\t")[1];
+            nameList[i] = tempName;
+        }
+        return nameList;
+    }
+
+    private List<String> readFile(String path) {
+        List<String> content = new ArrayList<String>();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+            }
+        } catch (Exception e) {
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                    br = null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return content;
+    }
+
+    public ArrayList<String> FuzzyCheck(){
+        ArrayList<String> result = new ArrayList<>();
+        if(reStockName!=".*"){
+            Pattern pattern = Pattern.compile(reStockName);
+            for(int i=0;i<allStockName.length;i++){
+                Matcher matcher = pattern.matcher(allStockName[i]);
+                if(matcher.matches()){
+                    result.add(allStockName[i]);
+
+                }
+
+            }
+            return result;
+        }else{
+            return  null;
+        }
+    }
+
+    private void setFuzzyCheck(){
+        //模糊搜索
+        fuzzyCheck.setVisible(false);
+        reStockName = ".*";
+        allStockName = this.getNameList("presentation/name_code.csv");
+        stockNameTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                fuzzyCheck.getItems().removeAll();
+                reStockName = ".*";
+                if(stockNameTextField.getText()!=""){
+                    stockNameImport = stockNameTextField.getText();
+                    if(stockNameImport!=null) {
+                        for (int i = 0; i < stockNameImport.length(); i++) {
+                            reStockName = reStockName + stockNameImport.charAt(i) + ".*";
+                        }
+                        ArrayList<String> fuzzy = FuzzyCheck();
+                        if(fuzzy!=null) {
+                            ObservableList<String> items = FXCollections.observableArrayList(
+                                    fuzzy);
+                            fuzzyCheck.setItems(items);
+
+                            fuzzyCheck.setVisible(true);
+                        }else{
+                            fuzzyCheck.setVisible(false);
+                        }
+                    }
+                }
+            }
+        });
+
+        fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<String>() {
+                    public void changed(ObservableValue<? extends String> ov,
+                                        String old_val, String new_val) {
+                        stockNameTextField.setText(new_val);
+                        fuzzyCheck.setVisible(false);
+                    }
+                });
+    }
+
     public void setMain(Main main, Net net) {
         this.main = main;
         this.net = net;
         this.setDatePicker();
+        this.setFuzzyCheck();
     }
 
     /**
@@ -526,5 +676,8 @@ public class CandlestickChartController {
         stockNameTextField.setText(name);
         stockNumberTextField.setText(code);
         this.search();
+        this.setFuzzyCheck();
     }
+
+
 }
