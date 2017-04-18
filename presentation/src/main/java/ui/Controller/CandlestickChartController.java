@@ -509,6 +509,15 @@ public class CandlestickChartController {
         this.setDatePicker();
     }
 
+    /**
+     * 附带条件的跳转，自动填充条件并展示数据
+     * @param main
+     * @param net
+     * @param name
+     * @param code
+     * @param startdate
+     * @param enddate
+     */
     public void setMain(Main main,Net net,String name, String code, LocalDate startdate,LocalDate enddate){
         this.main=main;
         this.net=net;

@@ -48,7 +48,7 @@ public class  Main extends Application {
         stage.setResizable(false);
         net.setUpNet();
         UserVO userVO=new UserVO();
-        this.gotoStart();
+//        this.gotoStart();
         this.gotoClientOverview(false,userVO);
 //        System.out.print(Main.class.getResource(""));
 //        this.lodaing();
@@ -194,7 +194,7 @@ public class  Main extends Application {
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
-//            stage.show();
+            stage.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }

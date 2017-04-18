@@ -87,7 +87,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                             <children>
-                                <Button fx:id="searchButton" layoutX="34.0" layoutY="59.0" onAction="#setSearchButton" text="查询">
+                                <Button fx:id="searchButton" layoutX="32.0" layoutY="66.0" onAction="#setSearchButton" text="查询">
                                     <font>
                                         <Font size="14.0" />
                                     </font>

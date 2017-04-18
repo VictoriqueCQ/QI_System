@@ -1,0 +1,48 @@
+.combo-box .list-cell
+{
+    -fx-background-color: rgb(100,100,100);
+    -fx-text-fill:#AAACAF;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: rgb(100,100,100);
+}
+
+.combo-box-popup .list-view .list-cell:even
+{
+    -fx-background-color: rgb(70,70,70);
+}
+
+.combo-box-popup .list-view .list-cell:odd
+{
+    -fx-background-color: rgb(50,50,50);
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+}
+
+.combo-box {
+    -fx-background-color: rgb(100, 100, 100);
+}
+
+.combo-box .scroll-bar:horizontal .track ,.combo-box .scroll-bar:vertical .track{
+	-fx-background-color:#333333;
+	-fx-border-color:derive(gray,80%);
+	-fx-background-radius: 0em;
+}
+
+.combo-box .scroll-bar:horizontal .thumb,.combo-box .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+
+}
+
+.combo-box .increment-button ,.combo-box .decrement-button {
+	-fx-background-color:#333333;
+    -fx-border-color:derive(black,90%);
+}

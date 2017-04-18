@@ -1,5 +1,7 @@
 package ui.Controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by xjwhhh on 2017/4/15.
@@ -29,6 +33,8 @@ public class SelectStockController {
     private String[] allStockName;
 
     boolean isyourchoice;
+
+
 
     private ArrayList<String> stockNameList=new ArrayList<String>();
 
@@ -56,6 +62,12 @@ public class SelectStockController {
 
     @FXML
     private TextField searchTextField;
+
+    @FXML
+    private ListView<String> fuzzyCheck;//模糊搜索
+
+    static String stockNameImport;//输入的股票名
+    static String reStockName;
 
     @FXML
     private Button searchButton;
@@ -109,9 +121,6 @@ public class SelectStockController {
      */
     @FXML
     private void finishStockSelect(){
-//        for(int i=0;i<stockNameList.size();i++){
-//            System.out.print(stockNameList.get(i));
-//        }
         if(stockNameList.size()>0) {
             HashSet<String> hashset_temp = new HashSet<String>(stockNameList);
             stockNameList = new ArrayList<String>(hashset_temp);
@@ -167,12 +176,15 @@ public class SelectStockController {
     private void sectionSearch(){
             String section =selectComboBox.getValue();
             ArrayList<StockVO> stockVOList=readStockList(path1+"documentation\\stock-section\\"+section+".txt");
-//            ArrayList<StockVO> stockVOList=readStockList("C:\\Users\\xjwhh\\Desktop\\通信及相关设备制造业.csv");
             setTableView(stockVOList);
     }
 
-
-    public ArrayList<StockVO> readStockList(String stockPath) {
+    /**
+     * 读取name_code.csv文件
+     * @param stockPath
+     * @return
+     */
+    private ArrayList<StockVO> readStockList(String stockPath) {
         ArrayList<StockVO> stockList = new ArrayList<StockVO>();
         File f = new File(stockPath);
         SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
@@ -256,8 +268,6 @@ public class SelectStockController {
                     String code=(stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
-                            //
-                            System.out.print("2");
                             Iterator<String> iterable1=stockNameList.iterator();
                             while(iterable1.hasNext()){
                                 if(iterable1.next().equals(name)){
@@ -276,7 +286,6 @@ public class SelectStockController {
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
-                                System.out.print("1");
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
@@ -302,8 +311,6 @@ public class SelectStockController {
                     String code=(stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
-                            //
-                            System.out.print("2");
                             Iterator<String> iterable1=stockNameList.iterator();
                             while(iterable1.hasNext()){
                                 if(iterable1.next().equals(name)){
@@ -322,7 +329,6 @@ public class SelectStockController {
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
-                                System.out.print("1");
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
@@ -348,8 +354,6 @@ public class SelectStockController {
                     String code=(stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if(cell.getIndex()<=models.size()){
-                            //
-                            System.out.print("2");
                             Iterator<String> iterable1=stockNameList.iterator();
                             while(iterable1.hasNext()){
                                 if(iterable1.next().equals(name)){
@@ -368,7 +372,6 @@ public class SelectStockController {
                     else if(t.getClickCount() == 1){
                         try {
                             if(cell.getIndex()<=models.size()){
-                                System.out.print("1");
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
@@ -402,36 +405,6 @@ public class SelectStockController {
             code1="0"+code1;
         }
         model.setID(code1);
-//
-//        double[] low = stockVO.getLow();
-//        double minTemp = low[0];
-////        System.out.print("dhaudgaygduyagd"+minTemp);
-//        for (int i = 0; i < low.length; i++) {
-//            if (low[i] < minTemp) {
-//                minTemp = low[i];
-//            }
-//        }
-//
-//        model.setMinPrice(minTemp);
-//
-//        double[] high = stockVO.getHigh();
-//        double maxTemp = high[0];
-//        for (int i = 0; i < high.length; i++) {
-//            if (low[i] > maxTemp) {
-//                maxTemp = high[i];
-//            }
-//        }
-//        model.setMaxPrice(maxTemp);
-//        double dd = 2.00;
-//        double riseAndDown = (stockVO.getClose()[stockVO.getClose().length - 1] - stockVO.getClose()[0]) / stockVO.getClose()[0];
-//        riseAndDown = riseAndDown * 100;
-//        DecimalFormat df = new DecimalFormat("#.00");
-//        model.setRiseAndDown(df.format(riseAndDown) + "%");
-//        double d = stockVO.getVariance();
-//        BigDecimal bd = new BigDecimal(d);
-//        DecimalFormat df2 = new DecimalFormat("0.0000");
-//        model.setVariance(df2.format(d));
-
         return model;
     }
 
@@ -508,6 +481,24 @@ public class SelectStockController {
         selectComboBox.setValue(sectionList.get(0));
     }
 
+    public ArrayList<String> FuzzyCheck(){
+        ArrayList<String> result = new ArrayList<>();
+        if(reStockName!=".*"){
+            Pattern pattern = Pattern.compile(reStockName);
+            for(int i=0;i<allStockName.length;i++){
+                Matcher matcher = pattern.matcher(allStockName[i]);
+                if(matcher.matches()){
+                    result.add(allStockName[i]);
+
+                }
+
+            }
+            return result;
+        }else{
+            return  null;
+        }
+    }
+
     public void setMain(Main main, Net net,ReturnsController returnsController) {
         this.main = main;
         this.net = net;
@@ -518,13 +509,64 @@ public class SelectStockController {
         for(int i=1;i<pathlist.length-1;i++){
             path1+=(pathlist[i]+"\\");
         }
-//        allStockName = this.getNameList("C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\name_code.csv");
 
         //设置ComboBox
-        setComboBox();
+        this.setComboBox();
 
         searchTextField.setText("请输入股票名称");
 
+
+        fuzzyCheck.setVisible(false);
+        reStockName = ".*";
+        allStockName = this.getNameList("presentation/name_code.csv");
+        searchTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                fuzzyCheck.getItems().removeAll();
+//                System.out.println("Remove!");
+
+                    reStockName = ".*";
+
+                    if(searchTextField.getText()!=""){
+                        stockNameImport = searchTextField.getText();
+                        if(stockNameImport!=null) {
+                            for (int i = 0; i < stockNameImport.length(); i++) {
+                                reStockName = reStockName + stockNameImport.charAt(i) + ".*";
+//                                System.out.println("正则表达式为：" + reStockName);
+                            }
+
+                            ArrayList<String> fuzzy = FuzzyCheck();
+
+                            if(fuzzy!=null) {
+                                ObservableList<String> items = FXCollections.observableArrayList(
+                                        fuzzy);
+                                fuzzyCheck.setItems(items);
+
+                                fuzzyCheck.setVisible(true);
+                            }else{
+                                fuzzyCheck.setVisible(false);
+                            }
+                        }
+                    }
+                }
+        });
+
+        fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
+
+                new ChangeListener<String>() {
+
+                    public void changed(ObservableValue<? extends String> ov,
+
+                                        String old_val, String new_val) {
+
+
+                        searchTextField.setText(new_val);
+                        fuzzyCheck.setVisible(false);
+
+
+                    }
+
+                });
 
 
     }

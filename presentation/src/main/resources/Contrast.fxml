@@ -19,7 +19,7 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="33.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
+        <Label layoutX="54.0" layoutY="62.0" prefHeight="48.0" prefWidth="103.0" text="时间选择">
             <font>
                 <Font size="20.0" />
             </font>
@@ -31,7 +31,7 @@
             </font>
         </Label>
         <DatePicker fx:id="endTimeDatePicker" layoutX="274.0" layoutY="71.0" onAction="#updateStartTimeDatePicker" prefHeight="10.0" prefWidth="124.0" stylesheets="@css/DatePickerCSS.css" />
-        <Button fx:id="delete" layoutX="1055.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
+        <Button fx:id="delete" layoutX="1055.0" layoutY="71.0" mnemonicParsing="false" onAction="#removeCompare" text="移除对比" />
         <TabPane layoutX="47.0" layoutY="131.0" prefHeight="482.0" prefWidth="1100.0" stylesheets="@css/TabPaneCSS.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="120.0">
             <tabs>
                 <Tab text="总况">
@@ -91,7 +91,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="ensure" layoutX="930.0" layoutY="62.0" mnemonicParsing="false" onAction="#addCompare" text="添加比较" />
+        <Button fx:id="ensure" layoutX="927.0" layoutY="71.0" mnemonicParsing="false" onAction="#addCompare" text="添加比较" />
         <TextField fx:id="stockField" layoutX="736.0" layoutY="71.0" prefHeight="30.0" prefWidth="100.0" styleClass="TextFieldText" />
       <Label layoutX="424.0" layoutY="62.0" prefHeight="48.0" prefWidth="100.0" text="搜索方式">
          <font>
