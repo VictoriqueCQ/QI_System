@@ -24,20 +24,20 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-        stockPath = "C:\\stock_data\\stock_data.csv";
-//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
-//        stockPath="D:\\data.txt";
-        platePath="C:\\stock_data\\plate";//directory
-        indexPath="C:\\stock_data\\index";//directory
-        ratePath="C:\\stock_data\\rate.csv";
-//        File f=new File("a.txt");
-//        f.createNewFile();
-//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\stock_data.csv";
+//        stockPath = "C:\\stock_data\\stock_data.csv";
 ////        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
 ////        stockPath="D:\\data.txt";
-//        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\plate";//directory
-//        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\index";//directory
-//        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data\\rate.csv";
+//        platePath="C:\\stock_data\\plate";//directory
+//        indexPath="C:\\stock_data\\index";//directory
+//        ratePath="C:\\stock_data\\rate.csv";
+//        File f=new File("a.txt");
+//        f.createNewFile();
+        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\stock_data.csv";
+//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
+//        stockPath="D:\\data.txt";
+        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\plate";//directory
+        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\index";//directory
+        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\rate.csv";
 
     }
 

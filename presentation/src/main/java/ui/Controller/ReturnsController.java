@@ -465,6 +465,8 @@ public class ReturnsController implements Initializable {
         Plate_MomentumStrategy.setValue(stockNameList.get(0));
         Plate_MeanReversio.getItems().addAll(stockNameList);
         Plate_MeanReversio.setValue(stockNameList.get(0));
+        StockheldInHouse_MomentumStrategy.setText(String.valueOf(stockNameList.size()));
+        StockHeldInHouse_MeanReversio.setText(String.valueOf(stockNameList.size()));
         isyourchoice = true;
         this.stockNameList = stockNameList;
         this.stockCodeList = stockCodeList;
@@ -812,6 +814,7 @@ public class ReturnsController implements Initializable {
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()) {
             String instruction;
+            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
@@ -971,6 +974,7 @@ public class ReturnsController implements Initializable {
     * 这个方法是使用均值回归时处理用户输入，同时获取股票表格，累计收益率，相对收益指数的数据，将用于查询按钮
      */
     private void setMeanReversioInputSearch() {
+        System.out.print(2345);
         LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
         LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
 
@@ -981,6 +985,7 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
+            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
@@ -997,7 +1002,10 @@ public class ReturnsController implements Initializable {
                 }
             }
             net.actionPerformed(instruction);
+            System.out.print(instruction);
+
         }
+
 
         String ReturnsMessage;
         ReturnsMessage = net.run();
@@ -1439,16 +1447,21 @@ public class ReturnsController implements Initializable {
         HoldingPeriod_MomentumStrategy.setText("10");
         FormativePeriod_MomentumStrategy.setText("10");
 
+        HoldingPeriod_MeanReversio.setText("10");
+        FormativePeriod_MeanReversio.setText("10");
+        StockHeldInHouse_MeanReversio.setText("10");
+
+
 //        this.setDatePicker();
-//        stockCodeList.add("002007");
-//        stockCodeList.add("002006");
-//        stockCodeList.add("002002");
-//        stockCodeList.add("002003");
-//        stockCodeList.add("000016");
-//        stockCodeList.add("002004");
-//        stockCodeList.add("002005");
-//        stockCodeList.add("002001");
-//        stockCodeList.add("000100");
-//        stockCodeList.add("001696");
+        stockCodeList.add("002007");
+        stockCodeList.add("002006");
+        stockCodeList.add("002002");
+        stockCodeList.add("002003");
+        stockCodeList.add("000016");
+        stockCodeList.add("002004");
+        stockCodeList.add("002005");
+        stockCodeList.add("002001");
+        stockCodeList.add("000100");
+        stockCodeList.add("001696");
     }
 }
