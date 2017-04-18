@@ -762,6 +762,8 @@ public class ReturnsController implements Initializable {
             barChart.layout();
             barChart.getData().addAll(series3, series4);
             barChart.setAnimated(false);
+
+            setStockTableView();
         }
     }
 
@@ -899,6 +901,8 @@ public class ReturnsController implements Initializable {
             barChart.layout();
             barChart.getData().addAll(series3, series4);
             barChart.setAnimated(false);
+
+            setStockTableView();
         }
     }
 
@@ -985,8 +989,8 @@ public class ReturnsController implements Initializable {
                 && StockheldInHouse_MomentumStrategy.getText() != null && !StockheldInHouse_MomentumStrategy.getText().isEmpty()) {
             String instruction;
             if (isyourchoice == true) {
-                instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
+                instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t"
                         + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i);
@@ -1254,6 +1258,31 @@ public class ReturnsController implements Initializable {
 //        barChart.getData().addAll(series1, series2);
 //        barChart.setAnimated(false);
 //    }
+    @FXML
+    private void setChoose_MS(){
+        if(tableView.isPressed()){
+            HoldingPeriod_MeanReversio.setText("");
+            FormativePeriod_MeanReversio.setText("");
+            StockHeldInHouse_MeanReversio.setText("");
+            setOverProfitsUI_MS();
+        }else{
+            setMomentumStrategyInputSearch();
+        }
+
+    }
+
+    @FXML
+    private void setChoose_MR(){
+        if(tableView.isPressed()){
+            HoldingPeriod_MeanReversio.setText("");
+            FormativePeriod_MeanReversio.setText("");
+            StockHeldInHouse_MeanReversio.setText("");
+            setOverProfitsUI_MR();
+        }else{
+            setMeanReversioInputSearch();
+        }
+    }
+
 
     public void ReturnsController() {
 
