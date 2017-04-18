@@ -62,7 +62,7 @@ public class Momentum_Impl implements Strategy_data{
             }
         }else{
             stockPool=stockFilterData.filterStaStock(quest);
-            indices=stockFilterData.getIndexList().get(quest[6]);
+            indices=stockFilterData.getIndexList().get(quest[9]);
             winnerSize=(int)(stockPool.size()*0.2);
         }
 

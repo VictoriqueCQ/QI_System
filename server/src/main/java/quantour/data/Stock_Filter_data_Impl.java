@@ -46,7 +46,7 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
             List<StockNameNCode> stockNameNCodes=plateList.get(quest[i]);
             for(StockNameNCode temp:stockNameNCodes){
                 int code=temp.getCode();
-                List<Stock> info=stockList.stream().filter(stock -> stock.getCode()==code).collect(Collectors.toList());
+                List<Stock> info=filterSingleStock(code);
                 if(info!=null&&!info.isEmpty()){
                     result.put(code,info);
                 }

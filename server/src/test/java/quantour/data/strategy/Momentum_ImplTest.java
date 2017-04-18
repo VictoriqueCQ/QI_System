@@ -24,10 +24,16 @@ public class Momentum_ImplTest {
     }
 
     @Test
-    public void getSets() throws Exception {
+    public void getSets1() throws Exception {
         String[] quest={null,"STRATEGY","M","4/11/14","4/29/14","3","T","3",null,"1","2","4","10","402"};
         List<StockSet> stockSets=strategyData.getSets(quest);
         Assert.assertEquals(4,stockSets.size());
+    }
+
+    @Test
+    public void getSet2() throws Exception{
+        String[] quest={null,"STRATEGY","M","4/11/14","4/29/14","3","F","3",null,"深圳成指"};
+        strategyData.getSets(quest);
     }
 
 }
