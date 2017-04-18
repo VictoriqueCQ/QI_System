@@ -62,6 +62,46 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
                 collect(Collectors.toList());
     }
 
+    @Override
+    public double filterPeriodRate(Date startTime, Date endTime) {
+        List<Rate> requiredList=rateList.stream().
+                filter(rate -> rate.getDate().compareTo(endTime)<=0).
+                collect(Collectors.toList());
+        Rate endRate=requiredList.get(requiredList.size()-1);
+        requiredList=requiredList.stream().
+                filter(rate -> rate.getDate().compareTo(startTime)<=0).
+                collect(Collectors.toList());
+        Rate startRate=requiredList.get(requiredList.size()-1);
+
+        requiredList=requiredList.subList(requiredList.indexOf(startRate),requiredList.indexOf(endRate)+1);
+
+        if(requiredList.size()==1){
+            return requiredList.get(0).getRate();
+        }
+        double result=0.0;
+        long interval=(endTime.getTime()-startTime.getTime())/(1000*60*60*24);
+        if(requiredList.size()==2){
+            long subInterval=(requiredList.get(1).getDate().getTime()-startTime.getTime())/(1000*60*60*24);
+            result=result+requiredList.get(0).getRate()*((double)subInterval/(double)interval);
+
+            subInterval=(endTime.getTime()-requiredList.get(1).getDate().getTime())/(1000*60*60*24);
+            result=result+requiredList.get(1).getRate()*((double)subInterval/(double)interval);
+
+            return result;
+        }
+
+        Date start=startTime;
+        for(int i=1;i<requiredList.size();i++){
+            Date temp=requiredList.get(i).getDate();
+            long subInterval=(temp.getTime()-start.getTime())/(1000*60*60*24);
+            result=result+requiredList.get(i-1).getRate()*((double)subInterval/(double)interval);
+            start=temp;
+        }
+        long subInterval=(endTime.getTime()-start.getTime())/(1000*60*60*24);
+        result=result+requiredList.get(requiredList.size()-1).getRate()*((double)subInterval/(double)interval);
+        return result;
+    }
+
 
     @Override
     public List<Stock> getStockList() {

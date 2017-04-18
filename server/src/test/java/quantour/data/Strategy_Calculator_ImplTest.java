@@ -20,7 +20,7 @@ public class Strategy_Calculator_ImplTest {
     @Test
     public void get() throws Exception {
         String[] quest={null,"STRATEGY","M","4/11/14","4/29/14","3","T","3",null,"1","2","4","10","402"};
-        
+        strategyCalculatorData.get(quest);
     }
 
 }

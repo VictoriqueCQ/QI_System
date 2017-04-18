@@ -49,6 +49,9 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
         double interval=l/(1000*60*60*24);
 
         for(int i=2;i<=30;i++){
+            if(i>interval){
+                break;
+            }
             String[] nQuest=quest.clone();
             if(quest[5].equals("F")){
                 nQuest[5]=quest[7];

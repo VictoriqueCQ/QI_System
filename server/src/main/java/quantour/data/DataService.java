@@ -1,6 +1,8 @@
 package quantour.data;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.text.ParseException;
@@ -19,6 +21,8 @@ public class DataService {
     }
 
     private void start() throws IOException, ParseException {
+        DataFactory_CSV_Impl.getInstance();
+
         setUpNet();
 
         run();

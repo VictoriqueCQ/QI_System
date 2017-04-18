@@ -1,6 +1,5 @@
 package quantour.data;
 
-import quantour.data.datastructure.Index;
 import quantour.data.strategy.Average_Impl;
 import quantour.data.strategy.Momentum_Impl;
 import quantour.dataservice.Stock_Filter_data;
@@ -9,14 +8,11 @@ import quantour.dataservice.Strategy_data;
 import quantour.po.StockSetPO;
 import quantour.po.StrategyDataPO;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by dell on 2017/3/31.
@@ -27,10 +23,10 @@ import java.util.stream.Collectors;
  */
 public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
     private Strategy_data strategyData;
-    private List<Stock> stocks;
+    private Stock_Filter_data stockFilterData;
 
     Strategy_Calculator_Impl(Stock_Filter_data stockFilterData){
-        this.stocks=stockFilterData.getStockList();
+        this.stockFilterData=stockFilterData;
     }
 
     @Override
@@ -46,6 +42,12 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         }
 
         List<StockSet> stockSets=strategyData.getSets(quest);
+
+        if(stockSets==null||stockSets.size()==0){
+            return null;
+        }
+
+        List<Double> basicProfitList=strategyData.getBasicProfits();
         List<Double> profitList=new ArrayList<>();//策略收益率list
         for(StockSet stockSet:stockSets){
             profitList.add(stockSet.countProfit());
@@ -65,105 +67,42 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         double interval=l/(1000*60*60*24);
 
         double e1=profitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
-        double d1=profitList.stream().mapToDouble(num -> num * num).average().getAsDouble();
+        double d1=profitList.stream().mapToDouble(num -> num * num).average().getAsDouble()-e1*e1;
         double annualProfit=(e1/interval) *365;//年化收益率
 
-        Count count=startCount(startTime,endTime);
-
-        double e2=0.0;
-        if(quest[6].equals("T")){
-            e2=count.getE();
-        }
-        else{
-            DataFactory_CSV_Impl dataFactory;
-            try {
-                dataFactory=DataFactory_CSV_Impl.getInstance();
-            } catch (ParseException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-
-            List<Index> indices=dataFactory.getStockFilterData().getIndexList().get(quest[9]);
-            List<Index> indicesRequired=indices.stream().
-                    filter(index -> index.getDate().compareTo(startTime)>=0&&index.getDate().compareTo(endTime)<=0).
-                    collect(Collectors.toList());
-            Index start=indicesRequired.get(0);
-            Index end=indicesRequired.get(indicesRequired.size()-1);
-            e2=(end.getClose()-start.getClose())/start.getClose();
-        }
-
+        double e2=basicProfitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+        double d2=basicProfitList.stream().mapToDouble(num -> num*num).average().getAsDouble()-e2*e2;
         double basicAnnualProfit=(e2/interval)*365;//基准年化收益率
 
         double sum=0.0;
         for (int i=0;i<profitList.size();i++){
-            sum=sum+profitList.get(i)*count.getProfits(i);
+            sum=sum+profitList.get(i)*basicProfitList.get(i);
         }
-        double beta=(sum/profitList.size()-e1*e2)/count.getD(e2);//β
+        double beta=(sum/profitList.size()-e1*e2)/d2;//β
 
-        double rf=0.0;//待读，无风险收益率
+        double rf=stockFilterData.filterPeriodRate(startTime,endTime);/**待读，无风险收益率*/
         double alpha=(annualProfit-rf)-beta*(basicAnnualProfit-rf);//α
 
         double sharpe=(e1-rf)/Math.sqrt(d1);//夏普比率
 
-        List<Double> maxDrawBacks=new ArrayList<>();
-        for(int i=profitList.size()-1;i>=0;i++){
-            double today=profitList.get(i);
-            double min=profitList.subList(0,i).stream().mapToDouble(Double::doubleValue).min().getAsDouble();
-            maxDrawBacks.add(today-min);
+        double maxDrawDown=0.0;
+        if(profitList.size()>1){
+            List<Double> maxDrawBacks=new ArrayList<>();
+            for(int i=0;i<profitList.size()-1;i++){
+                double today=profitList.get(i);
+                double min=profitList.subList(i+1,profitList.size()).stream().mapToDouble(Double::doubleValue).
+                        min().getAsDouble();
+                maxDrawBacks.add(today-min);
+            }
+            maxDrawDown=maxDrawBacks.stream().mapToDouble(Double::doubleValue).max().getAsDouble();//最大回撤
         }
-        double maxDrawDown=maxDrawBacks.stream().mapToDouble(Double::doubleValue).max().getAsDouble();//最大回撤
 
         List<StockSetPO> stockSetPOS=new ArrayList<>();
         for (StockSet stockSet : stockSets) {
             stockSetPOS.add(new StockSetPO(stockSet));
         }
-        return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,profitList
-        ,strategyData.getBasicProfits());
-    }
-
-    private Count startCount(Date startTime,Date endTime){
-        Map<Integer,List<Stock>> stockList=strategyData.getStockPool();
-        List<Double> profits=new ArrayList<>();
-        List<Double> profitsSquare=new ArrayList<>();
-        List<Integer> keys=stockList.keySet().stream().sorted().collect(Collectors.toList());
-        for(int key:keys){
-            List<Stock> singleStock=stockList.get(key).stream().
-                    filter(stock -> stock.getDate().compareTo(startTime)>=0&&stock.getDate().compareTo(endTime)<=0).
-                    collect(Collectors.toList());
-            Stock start=singleStock.get(singleStock.size()-1);//大日期在前
-            Stock end=singleStock.get(0);
-
-            double profit=(end.getAdjClose()-start.getAdjClose())/start.getAdjClose();
-            profits.add(profit);
-            profitsSquare.add(profit*profit);
-        }
-        return new Count(profits,profitsSquare);
-    }
-
-    class Count{
-        List<Double> profits;
-        List<Double> profitsSquare;
-
-        Count(List<Double> profits, List<Double> profitsSquare) {
-            this.profits = profits;
-            this.profitsSquare = profitsSquare;
-        }
-
-        double getE(){
-            return profits.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
-        }
-
-        double getD(double e){
-            return profitsSquare.stream().mapToDouble(Double::doubleValue).average().getAsDouble()-e*e;
-        }
-
-        double getProfits(int i){
-            return profits.get(i);
-        }
-
+        return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,
+                profitList,basicProfitList);
     }
 
 }

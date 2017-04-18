@@ -16,6 +16,7 @@ public interface Stock_Filter_data {
     List<Stock> filterSingleStock(int code);
     Map<Integer,List<Stock>> filterStaStock(String[] quest);
     List<Stock> filterPeriodStock(Date startTime,Date endTime);
+    double filterPeriodRate(Date startTime,Date endTime);//需要计算这段时间内的平均无风险收益率
     List<Stock> getStockList();
     Map<String, List<StockNameNCode>> getPlateList();
     Map<String, List<Index>> getIndexList();
