@@ -1258,7 +1258,7 @@ public class ReturnsController implements Initializable {
 //        barChart.getData().addAll(series1, series2);
 //        barChart.setAnimated(false);
 //    }
-
+    @FXML
     private void setChoose_MS(){
         if(tableView.isPressed()){
             HoldingPeriod_MeanReversio.setText("");
@@ -1270,6 +1270,8 @@ public class ReturnsController implements Initializable {
         }
 
     }
+
+    @FXML
     private void setChoose_MR(){
         if(tableView.isPressed()){
             HoldingPeriod_MeanReversio.setText("");
