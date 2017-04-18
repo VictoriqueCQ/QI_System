@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import quantour.vo.FormativeNHoldingVO;
 import quantour.vo.StockSetVO;
-import quantour.vo.StockVO;
 import quantour.vo.StrategyDataVO;
 import ui.*;
 
@@ -96,6 +95,10 @@ public class ReturnsController implements Initializable {
     //股票表格
     @FXML
     private TableView<StockModel> stockTable;
+
+
+
+
 
 
     /*
@@ -304,7 +307,6 @@ public class ReturnsController implements Initializable {
 
     /*
     这里是自选股票板块情况（表格）
-
      */
 
     private void setStockComboBox() {
@@ -398,15 +400,18 @@ public class ReturnsController implements Initializable {
         return date;
     }
 
-    //这里是股票表格，包括股票排名，股票名和股票代码
-    private void setStockTableView(ArrayList<StockVO> stockVOList) {
-
-        //这个strategydatavo本来应该是json获得
-        StrategyDataVO strategyDataVO = new StrategyDataVO();
-        List<StockSetVO> stockSetVOS = strategyDataVO.getStockSetVOS();
-
+    /**
+     * 表格设置
+     */
+    private void setStockTableView_MS() {
+        List<StockSetVO> stockSetVOS;
+        if(MomentumStrategyTab.isSelected()) {
+            stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        }
+        else {
+            stockSetVOS=strategyDataVO_MR.getStockSetVOS();
+        }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
-
 
         //填充第几个持有期的combobox,根据stocksetvos的长度
         ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
@@ -506,16 +511,26 @@ public class ReturnsController implements Initializable {
 
     }
 
-//    @FXML
-//    private void showTabelByHoldPeriod(){
-//        String holdPeriod=HoldPeriodRank.getValue();
-//        char[] h=holdPeriod.toCharArray();
-//        int time=h[1];
-//
-//    }
 
     /**
-     * 根据第几个持有期画图
+     * 根据第几个持有期展示最终表格
+     */
+    @FXML
+    private void showTabelByHoldPeriod_MS(){
+        String holdPeriod=HoldPeriodRank.getValue();
+        char[] h=holdPeriod.toCharArray();
+        int time=h[1];
+        List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
+        ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
+        for (int i = 0; i < stockModelArrayList.size(); i++) {
+            stockModels.add(stockModelArrayList.get(i));
+        }
+        stockTable.setItems(stockModels);
+    }
+
+    /**
+     * 根据第几个持有期返回对应数据
      *
      * @param stockSetVOS
      * @param i
