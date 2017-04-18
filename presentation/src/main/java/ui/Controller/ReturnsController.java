@@ -403,7 +403,7 @@ public class ReturnsController implements Initializable {
     /**
      * 表格设置
      */
-    private void setStockTableView_MS() {
+    private void setStockTableView() {
         List<StockSetVO> stockSetVOS;
         if(MomentumStrategyTab.isSelected()) {
             stockSetVOS = strategyDataVO_MS.getStockSetVOS();
