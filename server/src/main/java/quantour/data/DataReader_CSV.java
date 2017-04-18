@@ -24,12 +24,14 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-//        stockPath = "stock_data\\stock_data.csv";
+        stockPath = "stock_data\\stock_data.csv";
 //        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
-        stockPath="D:\\data.txt";
+//        stockPath="D:\\data.txt";
         platePath="stock_data\\plate";//directory
         indexPath="stock_data\\index";//directory
         ratePath="stock_data\\rate.csv";
+        //File f=new File("a.txt");
+        //f.createNewFile();
     }
 
     public DataReader_CSV(String path) {

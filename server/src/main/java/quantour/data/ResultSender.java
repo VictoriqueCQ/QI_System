@@ -30,9 +30,10 @@ class ResultSender {
 
     void run() throws ParseException, IOException {
         String[] questContent = quest.split("\t");
+        System.out.print(quest);
         Logic logic=null;
         DataClass result;
-        switch (questContent[1]) {
+        switch (questContent[1].toUpperCase()) {
             case "STOCK":
                 logic = dataFactory.getSingleSearch();
                 break;
