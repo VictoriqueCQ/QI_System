@@ -3,6 +3,7 @@ package quantour.data;
 import quantour.data.datastructure.Index;
 import quantour.data.strategy.Average_Impl;
 import quantour.data.strategy.Momentum_Impl;
+import quantour.dataservice.Stock_Filter_data;
 import quantour.dataservice.Strategy_Calculator_data;
 import quantour.dataservice.Strategy_data;
 import quantour.po.StockSetPO;
@@ -28,8 +29,8 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
     private Strategy_data strategyData;
     private List<Stock> stocks;
 
-    Strategy_Calculator_Impl(List<Stock> stocks){
-        this.stocks=stocks;
+    Strategy_Calculator_Impl(Stock_Filter_data stockFilterData){
+        this.stocks=stockFilterData.getStockList();
     }
 
     @Override

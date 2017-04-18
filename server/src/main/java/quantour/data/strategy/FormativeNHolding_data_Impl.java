@@ -25,7 +25,7 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
 
     @Override
     public DataClass get(String[] quest) {
-        if(quest[3].equals("M")){
+        if(quest[2].equals("M")){
             strategyData=new Momentum_Impl();
         }
         else{
@@ -51,8 +51,8 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
         for(int i=2;i<=30;i++){
             String[] nQuest=quest.clone();
             if(quest[5].equals("F")){
-                nQuest[5]=quest[6];
-                nQuest[6]=i+"";
+                nQuest[5]=quest[7];
+                nQuest[7]=i+"";
             }
             else{
                 nQuest[5]=i+"";
@@ -69,14 +69,15 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
             List<Double> overProfit=new ArrayList<>();
             int winTime=0;
             for(int j=0;j<profitList.size();j++){
-                double over=profitList.get(i)-basicProfitList.get(i);
+                double over=profitList.get(j)-basicProfitList.get(j);
                 overProfit.add(over);
                 if(over>0){
                     winTime++;
                 }
             }
 
-            double avg=(profitList.stream().mapToDouble(Double::doubleValue).average().getAsDouble()/interval)*365;
+            double avg=overProfit.stream().mapToDouble(Double::doubleValue).average().getAsDouble();
+            avg=avg/interval*365;
 
             profits.add(avg);
             winChance.add(winTime/(double)profitList.size());

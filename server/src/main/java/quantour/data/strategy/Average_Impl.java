@@ -28,12 +28,13 @@ public class Average_Impl implements Strategy_data {
     private SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
     public Average_Impl() {
-        stockPool = new HashMap<>();
-        basicProfits=new ArrayList<>();
+
     }
 
     @Override
     public List<StockSet> getSets(String[] quest) {
+        stockPool = new HashMap<>();
+        basicProfits=new ArrayList<>();
         DataFactory_CSV_Impl dataFactoryCsv = null;
         try{
             dataFactoryCsv=getInstance();
@@ -43,7 +44,7 @@ public class Average_Impl implements Strategy_data {
         }
 
 
-       final Date startDate;
+        final Date startDate;
         final Date endDate ;
         try{
             startDate=sdf.parse(quest[3]);
@@ -69,7 +70,7 @@ public class Average_Impl implements Strategy_data {
             }
         } else {
             stockPool = stockFilterData.filterStaStock(quest);
-            indices=stockFilterData.getIndexList().get(quest[6]);
+            indices=stockFilterData.getIndexList().get(quest[9]);
             winnerSize=(int)(stockPool.size()*0.2);
         }
 
@@ -104,7 +105,7 @@ public class Average_Impl implements Strategy_data {
 
 //        Set<Integer> codes = stockPool.keySet();//股票编码
 
-        while (overDate>=endSerial) {
+        while (overDate>endSerial) {
             List<Candidate1> candidates = new ArrayList<>();
             for (int c : codes) {
                 int change=changeDate;

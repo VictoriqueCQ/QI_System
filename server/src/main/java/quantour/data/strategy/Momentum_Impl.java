@@ -22,13 +22,15 @@ public class Momentum_Impl implements Strategy_data{
     private List<Double> basicProfits;
 
     public Momentum_Impl(){
-        stockPool=new HashMap<>();
-        basicProfits=new ArrayList<>();
+
     }
 
 
     @Override
     public List<StockSet> getSets(String[] quest) {
+        stockPool=new HashMap<>();
+        basicProfits=new ArrayList<>();
+
         DataFactory_CSV_Impl dataFactoryCsv=null;
         try{
             dataFactoryCsv=getInstance();
@@ -84,7 +86,7 @@ public class Momentum_Impl implements Strategy_data{
         int changeDate=startSerial-holdingPeriod;
 
         List<StockSet> stockSets=new ArrayList<>();
-        while(overDate>=endSerial){
+        while(overDate>endSerial){
             List<Candidate> candidates=new ArrayList<>();
             for(int c:codes){
                 int change=changeDate;

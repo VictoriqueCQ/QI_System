@@ -31,8 +31,10 @@ public class DataFactory_CSV_Impl implements DataFactory {
         singleSearchData = new Single_Search_data_Impl(stockList);
         userData=new User_data_Impl();
         getterData=new Getter_Impl(stockList);
-        strategyCalculatorData=new Strategy_Calculator_Impl(stockList);
+
         stockFilterData=new Stock_Filter_data_Impl(dataReader_CSV);
+
+        strategyCalculatorData=new Strategy_Calculator_Impl(stockFilterData);
         formativeNHoldingdata =new FormativeNHolding_data_Impl();
     }
 
