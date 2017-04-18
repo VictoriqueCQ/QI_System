@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import net.sf.json.JSONObject;
 import quantour.vo.FormativeNHoldingVO;
 import quantour.vo.StockSetVO;
 import quantour.vo.StrategyDataVO;
@@ -464,6 +465,8 @@ public class ReturnsController implements Initializable {
         Plate_MomentumStrategy.setValue(stockNameList.get(0));
         Plate_MeanReversio.getItems().addAll(stockNameList);
         Plate_MeanReversio.setValue(stockNameList.get(0));
+        StockheldInHouse_MomentumStrategy.setText(String.valueOf(stockNameList.size()));
+        StockHeldInHouse_MeanReversio.setText(String.valueOf(stockNameList.size()));
         isyourchoice = true;
         this.stockNameList = stockNameList;
         this.stockCodeList = stockCodeList;
@@ -597,8 +600,6 @@ public class ReturnsController implements Initializable {
         }
         HoldPeriod.addAll(HoldPeriodString);
         HoldPeriodRank.setItems(HoldPeriod);
-        //默认值
-        HoldPeriodRank.setValue("第一个持有期");
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
         StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
@@ -679,12 +680,11 @@ public class ReturnsController implements Initializable {
         });
 
         //默认展示第一个持有期
-        ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, 0);
+        ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, 1);
         for (int i = 0; i < stockModelArrayList.size(); i++) {
             stockModels.add(stockModelArrayList.get(i));
         }
         stockTable.setItems(stockModels);
-
     }
 
 
@@ -695,7 +695,8 @@ public class ReturnsController implements Initializable {
     private void showTabelByHoldPeriod_MS() {
         String holdPeriod = HoldPeriodRank.getValue();
         char[] h = holdPeriod.toCharArray();
-        int time = h[1];
+        int time = h[1]-48;
+        System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
@@ -712,7 +713,7 @@ public class ReturnsController implements Initializable {
      * @param i
      */
     private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS, int i) {
-        StockSetVO stockSetVO = stockSetVOS.get(i);
+        StockSetVO stockSetVO = stockSetVOS.get(i-1);
         Map<String,String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
@@ -728,10 +729,12 @@ public class ReturnsController implements Initializable {
     private ArrayList<StockModel> stockSetstoStockModel(Map<String,String> stockSets) {
         ArrayList<StockModel> stockModelArrayList = new ArrayList<StockModel>();
         HashMap<String, String> name_code = this.getNameList("presentation/name_code.csv");
-        for (int i = 1; i <= stockSets.size(); i++) {
-            StockModel model = new StockModel();
-            model.setRank(String.valueOf(i));
-            String code1 = stockSets.get(i);
+
+        for (Map.Entry<String,String> entry : stockSets.entrySet()) {
+                    StockModel model = new StockModel();
+
+            model.setRank(entry.getKey());
+            String code1 = entry.getValue();
             char[] code2 = code1.toCharArray();
             int t = 6 - code2.length;
             for (int j = 0; j < t; j++) {
@@ -741,7 +744,6 @@ public class ReturnsController implements Initializable {
             model.setName(name_code.get(code1));
             stockModelArrayList.add(model);
         }
-
         return stockModelArrayList;
     }
 
@@ -760,9 +762,13 @@ public class ReturnsController implements Initializable {
         HashMap<String, String> name_code = new HashMap<String, String>(nums);
 
         for (int i = 0; i < nums; i++) {
-
             String tempName = content.get(i).split("\t")[1];
             String tempCode = content.get(i).split("\t")[0];
+            char[] code2 = tempCode.toCharArray();
+            int t = 6 - code2.length;
+            for (int j = 0; j < t; j++) {
+                tempCode = "0" + tempCode;
+            }
             name_code.put(tempCode, tempName);
         }
 
@@ -790,10 +796,6 @@ public class ReturnsController implements Initializable {
                 }
             }
         }
-        for (String temp : content
-                ) {
-            System.out.println(temp);
-        }
         return content;
 
     }
@@ -812,6 +814,7 @@ public class ReturnsController implements Initializable {
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()) {
             String instruction;
+            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
@@ -820,20 +823,18 @@ public class ReturnsController implements Initializable {
                 }
             } else {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+null+"\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
             }
-            System.out.print("fgh" + instruction);
             net.actionPerformed(instruction);
         } else {
             System.out.print("error");
         }
 
 
-        String ReturnsMessage;
-        ReturnsMessage = net.run();
+        String ReturnsMessage = net.run();
         if (ReturnsMessage == null) {
             System.out.println("No data on that day!");
         } else {
@@ -842,6 +843,32 @@ public class ReturnsController implements Initializable {
             JsonUtil jsonUtil = new JsonUtil();
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
             strategyDataVO_MS = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
+
+            //处理map
+           ArrayList<StockSetVO> stockSetVOS=new ArrayList<StockSetVO>();
+            HashMap<String,String> hashMap=new HashMap<String,String>();
+            for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
+                JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
+                String key = null;
+                String value = null;
+                Iterator<String> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    key = keys.next();
+                    value = jsonObject.get(key).toString();
+                    JSONObject jsonObject1 = JSONObject.fromObject(value);
+                    String key1 = null;
+                    String value1 = null;
+                    Iterator<String> keys1 = jsonObject1.keys();
+                    while(keys1.hasNext()){
+                        key1=keys1.next();
+                        value1=jsonObject1.get(key1).toString();
+                        hashMap.put(key1, value1);
+
+                    }
+                }
+                stockSetVOS.add(new StockSetVO(hashMap));
+            }
+            strategyDataVO_MS.setStockSetPOS(stockSetVOS);
 
 
             //以下是累计收益率
@@ -947,6 +974,7 @@ public class ReturnsController implements Initializable {
     * 这个方法是使用均值回归时处理用户输入，同时获取股票表格，累计收益率，相对收益指数的数据，将用于查询按钮
      */
     private void setMeanReversioInputSearch() {
+        System.out.print(2345);
         LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
         LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
 
@@ -957,6 +985,7 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
+            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
@@ -973,7 +1002,10 @@ public class ReturnsController implements Initializable {
                 }
             }
             net.actionPerformed(instruction);
+            System.out.print(instruction);
+
         }
+
 
         String ReturnsMessage;
         ReturnsMessage = net.run();
@@ -985,6 +1017,33 @@ public class ReturnsController implements Initializable {
             JsonUtil jsonUtil = new JsonUtil();
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
             strategyDataVO_MR = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
+
+            //处理map
+            ArrayList<StockSetVO> stockSetVOS=new ArrayList<StockSetVO>();
+            HashMap<String,String> hashMap=new HashMap<String,String>();
+            for(int j=0;j<strategyDataVO_MR.getStockSetVOS().size();j++) {
+                JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MR.getStockSetVOS().get(j));
+                String key = null;
+                String value = null;
+                Iterator<String> keys = jsonObject.keys();
+                while (keys.hasNext()) {
+                    key = keys.next();
+                    value = jsonObject.get(key).toString();
+                    JSONObject jsonObject1 = JSONObject.fromObject(value);
+                    String key1 = null;
+                    String value1 = null;
+                    Iterator<String> keys1 = jsonObject1.keys();
+                    while(keys1.hasNext()){
+                        key1=keys1.next();
+                        value1=jsonObject1.get(key1).toString();
+                        hashMap.put(key1, value1);
+
+                    }
+                }
+                stockSetVOS.add(new StockSetVO(hashMap));
+            }
+
+            strategyDataVO_MR.setStockSetPOS(stockSetVOS);
 
             annualReturn = strategyDataVO_MR.getAnnualReturn();
 
@@ -1385,6 +1444,24 @@ public class ReturnsController implements Initializable {
 //        setChoose_MS();
         this.main = main;
         this.net = net;
+        HoldingPeriod_MomentumStrategy.setText("10");
+        FormativePeriod_MomentumStrategy.setText("10");
+
+        HoldingPeriod_MeanReversio.setText("10");
+        FormativePeriod_MeanReversio.setText("10");
+        StockHeldInHouse_MeanReversio.setText("10");
+
+
 //        this.setDatePicker();
+        stockCodeList.add("002007");
+        stockCodeList.add("002006");
+        stockCodeList.add("002002");
+        stockCodeList.add("002003");
+        stockCodeList.add("000016");
+        stockCodeList.add("002004");
+        stockCodeList.add("002005");
+        stockCodeList.add("002001");
+        stockCodeList.add("000100");
+        stockCodeList.add("001696");
     }
 }
