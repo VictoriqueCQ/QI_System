@@ -1225,13 +1225,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1312,13 +1312,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
+                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1329,13 +1329,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
