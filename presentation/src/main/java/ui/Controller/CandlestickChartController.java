@@ -167,17 +167,13 @@ public class CandlestickChartController {
      */
     @FXML
     private void search() {
-        main.lodaing();
         this.createEMA();
         SwingNode swingNode = this.createCandlestickChart();
-//        main.closeExtraStage();
         if (swingNode != null) {
             insidePane.getChildren().add(swingNode);
         } else {
             AlertUtil.showErrorAlert("对不起，不存在这只股票");
         }
-//        main.closeExtraStage();
-
     }
 
 

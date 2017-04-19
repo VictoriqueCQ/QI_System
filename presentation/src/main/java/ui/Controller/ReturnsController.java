@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -1147,12 +1148,22 @@ public class ReturnsController implements Initializable {
         sharp.setCellValueFactory(celldata -> celldata.getValue().sharpProperty());
         retreats.setCellValueFactory(celldata -> celldata.getValue().retreatsProperty());
 
-        //测试数据，数据层完成后将修改
-        cumulativeData = FXCollections.observableArrayList(
-                new CumulativeReturnsModel(String.valueOf(annualReturn), String.valueOf(basicAnnualReturn),
-                        String.valueOf(alphaNum), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown))
-        );
+        //TODO
 
+        DecimalFormat decimalFormat=new DecimalFormat();
+        decimalFormat.applyPattern("####0.00");
+//        String testdf=decimalFormat.format(annualReturn);
+
+        //测试数据，数据层完成后将修改
+//        cumulativeData = FXCollections.observableArrayList(
+//                new CumulativeReturnsModel(String.valueOf(annualReturn), String.valueOf(basicAnnualReturn),
+//                        String.valueOf(alphaNum), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown))
+//        );
+
+        cumulativeData = FXCollections.observableArrayList(
+                new CumulativeReturnsModel(decimalFormat.format(annualReturn), decimalFormat.format(basicAnnualReturn),
+                       decimalFormat.format(alphaNum),decimalFormat.format(betaNum), decimalFormat.format(sharpeRatio), decimalFormat.format(maxDrawDown))
+        );
         cumulativeTableView.getStyleClass().add("edge-to-edge");
         cumulativeTableView.getStyleClass().add("noborder");
         cumulativeTableView.setItems(cumulativeData);
@@ -1390,31 +1401,30 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void setChoose_MS() {
-//        if(chaoetab.isSelected()){
+        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-//            ChooseFPorHP.setItems();
-
-//            setOverProfitsUI_MS();
-//        }else{
-        System.out.print("dfghuj");
+////            ChooseFPorHP.setItems();
+            setOverProfitsUI_MS();
+        }else{
+//        System.out.print("dfghuj");
         setMomentumStrategyInputSearch();
 
-//        }
+        }
 
     }
 
     @FXML
     private void setChoose_MR() {
-//        if(chaoetab.isSelected()){
+        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-//            setOverProfitsUI_MR();
-//        }else{
+            setOverProfitsUI_MR();
+        }else{
         setMeanReversioInputSearch();
-//        }
+        }
     }
 
 
