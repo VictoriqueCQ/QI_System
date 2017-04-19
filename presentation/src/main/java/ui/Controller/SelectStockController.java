@@ -41,6 +41,8 @@ public class SelectStockController {
 
     private ArrayList<String> stockCodeList=new ArrayList<String>();
 
+    private ArrayList<String> oldstockCodeList =new ArrayList<String>();
+
     private ArrayList<String> sectionNameList=new ArrayList<String>();
 
     @FXML
@@ -176,7 +178,8 @@ public class SelectStockController {
     @FXML
     private void sectionSearch(){
             String section =selectComboBox.getValue();
-            ArrayList<StockVO> stockVOList=readStockList("/Users/chenyuyan/IdeaProjects/QI_System/presentation/src/main/resources/documentation/stock-section/"+section+".txt");
+//            ArrayList<StockVO> stockVOList=readStockList("/Users/chenyuyan/IdeaProjects/QI_System/presentation/src/main/resources/documentation/stock-section/"+section+".txt");
+            ArrayList<StockVO> stockVOList=readStockList(path1+"documentation/stock-section/"+section+".txt");
             setTableView(stockVOList);
     }
 
@@ -284,11 +287,11 @@ public class SelectStockController {
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
                             if(cell.getIndex()%2==0){
-                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                             else{
-                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                         }
@@ -300,7 +303,7 @@ public class SelectStockController {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-                                cell.getTableRow().setStyle("-fx-background-color:black;");
+//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -338,11 +341,11 @@ public class SelectStockController {
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
                             if(cell.getIndex()%2==0){
-                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                             else{
-                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                         }
@@ -353,7 +356,7 @@ public class SelectStockController {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-                                cell.getTableRow().setStyle("-fx-background-color:black;");
+//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -391,11 +394,11 @@ public class SelectStockController {
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
                             if(cell.getIndex()%2==0){
-                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
+//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                             else{
-                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
+//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
                                 cell.setTextFill(Color.rgb(200,200,200));
                             }
                         }
@@ -406,7 +409,7 @@ public class SelectStockController {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-                                cell.getTableRow().setStyle("-fx-background-color:black;");
+//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -438,6 +441,13 @@ public class SelectStockController {
             code1="0"+code1;
         }
         model.setID(code1);
+        for (int i=0;i<oldstockCodeList.size();i++){
+            if(code1.equals(oldstockCodeList.get(i))){
+                model.setIsChoosen("是");
+                stockNameList.add(model.getName());
+                stockCodeList.add(model.getID());
+            }
+        }
         return model;
     }
 
@@ -511,7 +521,6 @@ public class SelectStockController {
         sectionList.add("装修装饰业");
         sectionList.add("租赁服务业");
         selectComboBox.getItems().addAll(sectionList);
-//        selectComboBox.setValue(sectionList.get(0));
     }
 
     public ArrayList<String> FuzzyCheck(){
@@ -532,10 +541,11 @@ public class SelectStockController {
         }
     }
 
-    public void setMain(Main main, Net net,ReturnsController returnsController) {
+    public void setMain(Main main, Net net,ReturnsController returnsController,ArrayList<String> stockCodeList) {
         this.main = main;
         this.net = net;
         this.returnsController=returnsController;
+        this.oldstockCodeList=stockCodeList;
 
         String path=String.valueOf(Main.class.getResource(""));
         String[] pathlist=path.split("/");

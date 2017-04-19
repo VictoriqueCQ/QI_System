@@ -78,7 +78,6 @@ public class LoginController {
                 AlertUtil.showConfirmingAlert("登录成功");
                 main.gotoClientOverview(true,userVO);
                 if(rememberPasswordRadioButton.isSelected()){
-                    //TODO
                     File f=new File(path1+"documentation\\remembereduserinfo.txt");
                     try {
                         BufferedWriter brwriter = new BufferedWriter(new FileWriter(f,false));

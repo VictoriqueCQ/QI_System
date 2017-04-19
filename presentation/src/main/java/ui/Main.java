@@ -1,5 +1,8 @@
 package ui;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,10 +10,12 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import quantour.vo.UserVO;
 import ui.Controller.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,37 +53,9 @@ public class  Main extends Application {
         stage.setResizable(false);
         net.setUpNet();
         UserVO userVO=new UserVO();
+//        this.lodaing();
 //        this.gotoStart();
         this.gotoClientOverview(false,userVO);
-//        System.out.print(Main.class.getResource(""));
-//        this.lodaing();
-//         net.actionPerformed("GET");
-//        String json = net.run();
-//        JsonUtil jsonUtil = new JsonUtil();
-//        NameVO nameVO1 = new NameVO();
-//        NameVO nameVO= (NameVO) jsonUtil.JSONToObj(json, nameVO1.getClass());
-//        File file=new File("C:\\Users\\xjwhh\\Desktop\\stock.txt");
-//        if(!file.exists())
-//            file.createNewFile();
-//        FileWriter fw = new FileWriter(file, true);
-//        BufferedWriter bw = new BufferedWriter(fw);
-//
-//
-//        for(int i=0;i<nameVO.getCodes().size();i++){
-//            int code=nameVO.getCodes().get(i);
-//            String code1=String.valueOf(code);
-//            char[] code2=code1.toCharArray();
-//            int j=code2.length;
-//            for(int m=0;m<6-j;m++){
-//                bw.write("0");
-//            }
-//            bw.write(nameVO.getCodes().get (i)+System.getProperty("line.separator"));
-//            bw.flush();
-//        }
-//
-//        bw.close();
-//        System.out.print("success");
-
 }
 
     public void gotoStart(){
@@ -108,13 +85,17 @@ public class  Main extends Application {
             insidePane.setPrefSize(800,600);
             LoadingController controller = (LoadingController) fxmlLoader.getController();
             controller.setMain(this);
-
             Scene scene=new Scene(insidePane);
             scene.setFill(null);
             stage2.setScene(scene);
             stage2.setAlwaysOnTop(true);
             stage2.centerOnScreen();
             stage2.show();
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4.5), ev -> {
+                this.closeExtraStage();
+            }));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -305,13 +286,13 @@ public class  Main extends Application {
     /**
      * 跳转到股票选择界面
      */
-    public void gotoSelectStock(ReturnsController returnsController){
+    public void gotoSelectStock(ReturnsController returnsController, ArrayList<String> stockCodeList){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/SelectStock.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             SelectStockController controller = (SelectStockController) fxmlLoader.getController();
-            controller.setMain(this, net,returnsController);
+            controller.setMain(this, net,returnsController,stockCodeList);
             stage3.setScene(new Scene(insidePane));
             stage3.centerOnScreen();
             stage3.show();
