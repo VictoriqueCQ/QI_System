@@ -11,7 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import quantour.vo.StockVO;
-import ui.*;
+import ui.AlertUtil;
+import ui.Main;
+import ui.Net;
+import ui.StockModel;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,6 +37,8 @@ public class SelectStockController {
     private String[] allStockName;
 
     boolean isyourchoice;
+
+    HashMap<String, String> name_code=new HashMap<String,String>();
 
 
 
@@ -101,12 +106,14 @@ public class SelectStockController {
     @FXML
     private void stockSearch() {
         if (!searchTextField.getText().equals("")) {
-            String input = "";
-            net.actionPerformed(input);
-            String json = net.run();
-            JsonUtil jsonUtil = new JsonUtil();
-            StockVO stockVO1 = new StockVO();
-            StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
+            StockVO stockVO=new StockVO();
+            stockVO.setName(searchTextField.getText());
+            for (Map.Entry<String, String> entry : name_code.entrySet()) {
+                if(entry.getValue().equals(searchTextField.getText())){
+                    stockVO.setCode(Integer.parseInt(entry.getKey()));
+                    break;
+                }
+            }
             if (stockVO != null) {
                 ArrayList<StockVO> stockVOList = new ArrayList<StockVO>();
                 stockVOList.add(stockVO);
@@ -173,7 +180,7 @@ public class SelectStockController {
     }
 
     /**
-     * 选择股票板块：上证指数，沪深300，深圳成指
+     * 选择股票证监会板块
      */
     @FXML
     private void sectionSearch(){
@@ -219,20 +226,31 @@ public class SelectStockController {
      * @param filePath
      * @return
      */
-    public String[] getNameList(String filePath) {
+    private HashMap<String, String> getNameList(String filePath) {
         List<String> content = new ArrayList<String>();
+
         content = this.readFile(filePath);
+
         int nums = content.size();
-        String[] nameList = new String[nums];
+        HashMap<String, String> name_code = new HashMap<String, String>(nums);
+
         for (int i = 0; i < nums; i++) {
             String tempName = content.get(i).split("\t")[1];
-            nameList[i] = tempName;
+            String tempCode = content.get(i).split("\t")[0];
+            char[] code2 = tempCode.toCharArray();
+            int t = 6 - code2.length;
+            for (int j = 0; j < t; j++) {
+                tempCode = "0" + tempCode;
+            }
+            name_code.put(tempCode, tempName);
         }
-        return nameList;
+
+        return name_code;
     }
 
     private List<String> readFile(String path) {
         List<String> content = new ArrayList<String>();
+
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(path));
@@ -252,6 +270,7 @@ public class SelectStockController {
             }
         }
         return content;
+
     }
 
     /**
@@ -441,11 +460,12 @@ public class SelectStockController {
             code1="0"+code1;
         }
         model.setID(code1);
-        for (int i=0;i<oldstockCodeList.size();i++){
-            if(code1.equals(oldstockCodeList.get(i))){
+        for (int i=0;i<stockCodeList.size();i++){
+            if(code1.equals(stockCodeList.get(i))){
                 model.setIsChoosen("是");
                 stockNameList.add(model.getName());
                 stockCodeList.add(model.getID());
+                break;
             }
         }
         return model;
@@ -531,9 +551,7 @@ public class SelectStockController {
                 Matcher matcher = pattern.matcher(allStockName[i]);
                 if(matcher.matches()){
                     result.add(allStockName[i]);
-
                 }
-
             }
             return result;
         }else{
@@ -541,26 +559,66 @@ public class SelectStockController {
         }
     }
 
+    /**
+     * get a list in the filepath
+     * @param filePath
+     * @return
+     */
+    public String[] getNameList1(String filePath){
+        List<String> content=new ArrayList<String>();
+        content = this.readFile1(filePath);
+        int nums = content.size();
+        String[] nameList = new String[nums];
+        for(int i = 0;i<nums;i++){
+            String tempName = content.get(i).split("\t")[1];
+            nameList[i] = tempName;
+        }
+        return nameList;
+    }
+
+    private  List<String> readFile1(String path) {
+        List<String> content = new ArrayList<String>();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                content.add(line);
+            }
+        } catch (Exception e) {
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                    br = null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return content;
+    }
+
+
     public void setMain(Main main, Net net,ReturnsController returnsController,ArrayList<String> stockCodeList) {
         this.main = main;
         this.net = net;
         this.returnsController=returnsController;
+        this.stockCodeList=stockCodeList;
         this.oldstockCodeList=stockCodeList;
-
         String path=String.valueOf(Main.class.getResource(""));
         String[] pathlist=path.split("/");
         for(int i=1;i<pathlist.length-1;i++){
             path1+=(pathlist[i]+"\\");
         }
-
         //设置ComboBox
         this.setComboBox();
-
         searchTextField.setText("请输入股票名称");
         //模糊搜索
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
-        allStockName = this.getNameList("presentation/name_code.csv");
+        allStockName = this.getNameList1("presentation/name_code.csv");
+        name_code = this.getNameList("presentation/name_code.csv");
         searchTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -586,7 +644,6 @@ public class SelectStockController {
                     }
                 }
         });
-
         fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<String>() {
                     public void changed(ObservableValue<? extends String> ov,

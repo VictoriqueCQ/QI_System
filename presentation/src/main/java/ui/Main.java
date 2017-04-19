@@ -53,7 +53,6 @@ public class  Main extends Application {
         stage.setResizable(false);
         net.setUpNet();
         UserVO userVO=new UserVO();
-//        this.lodaing();
 //        this.gotoStart();
         this.gotoClientOverview(false,userVO);
 }
@@ -92,7 +91,7 @@ public class  Main extends Application {
             stage2.centerOnScreen();
             stage2.show();
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4.5), ev -> {
-                this.closeExtraStage();
+                stage2.close();
             }));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();

@@ -3,6 +3,7 @@ package quantour.po;
 import quantour.data.Stock;
 import quantour.data.StockSet;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import java.util.Map;
  */
 public class StockSetPO {
     private Map<String,String> stockSets;
+    private Date date;
 
     public StockSetPO(StockSet stockSet){
         stockSets=new HashMap<>();
@@ -20,6 +22,9 @@ public class StockSetPO {
             Stock stock=listMap.get(integer).get(0);
             int code=stock.getCode();
             stockSets.put(integer+"",code+"");
+        }
+        if(listMap!=null&&listMap.size()!=0) {
+            date =listMap.get(1).get(1).getDate();
         }
     }
 

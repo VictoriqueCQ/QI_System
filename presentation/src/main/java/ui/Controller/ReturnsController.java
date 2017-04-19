@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -485,26 +486,6 @@ public class ReturnsController implements Initializable {
         this.sectionNameList = sectionNameList;
     }
 
-    /*
-    这里是自选股票板块情况（表格）
-     */
-
-    private void setStockComboBox() {
-        ObservableList<String> plate_MS = FXCollections.observableArrayList();
-        List<String> plateName_MS = new ArrayList<String>();
-        plateName_MS.add("板块1");
-        plateName_MS.add("板块2");
-        plate_MS.addAll(plateName_MS);
-        Plate_MomentumStrategy.setItems(plate_MS);
-
-        ObservableList<String> plate_MR = FXCollections.observableArrayList();
-        List<String> plateName_MR = new ArrayList<String>();
-        plateName_MR.add("板块1");
-        plateName_MR.add("板块2");
-        plate_MR.addAll(plateName_MR);
-        Plate_MeanReversio.setItems(plate_MR);
-    }
-
     public void setStartDatePicker_MomentumStrategy() {
         StartDate_MomentumStrategy.setValue(LocalDate.of(2005, 2, 1));
         final Callback<DatePicker, DateCell> dayCellFactory1 =
@@ -594,6 +575,7 @@ public class ReturnsController implements Initializable {
             HoldPeriodString.add("第" + i + "个持有期");
         }
         HoldPeriod.addAll(HoldPeriodString);
+        HoldPeriodRank.getItems().clear();
         HoldPeriodRank.setItems(HoldPeriod);
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
@@ -691,6 +673,7 @@ public class ReturnsController implements Initializable {
         String holdPeriod = HoldPeriodRank.getValue();
         char[] h = holdPeriod.toCharArray();
         int time = h[1]-48;
+
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
@@ -809,7 +792,7 @@ public class ReturnsController implements Initializable {
         if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()
                 && HoldingPeriod_MomentumStrategy.getText() != null && !HoldingPeriod_MomentumStrategy.getText().isEmpty()) {
             String instruction;
-            isyourchoice=true;
+//            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
                         + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
@@ -867,17 +850,17 @@ public class ReturnsController implements Initializable {
 
 
             //以下是累计收益率
-            annualReturn = strategyDataVO_MS.getAnnualReturn();
+            annualReturn = ((double)((int)(strategyDataVO_MS.getAnnualReturn()*1000)))/10;
 
-            basicAnnualReturn = strategyDataVO_MS.getBasicAnnualReturn();
+            basicAnnualReturn = ((double)((int)(strategyDataVO_MS.getBasicAnnualReturn()*1000)))/10;
 
-            alphaNum = strategyDataVO_MS.getAlpha();
+            alphaNum = ((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10;
 
-            betaNum = strategyDataVO_MS.getBeta();
+            betaNum = ((double)((int)(strategyDataVO_MS.getBeta()*1000)))/1000;
 
-            sharpeRatio = strategyDataVO_MS.getSharpeRatio();
+            sharpeRatio = ((double)((int)(strategyDataVO_MS.getSharpeRatio()*1000)))/1000;
 
-            maxDrawDown = strategyDataVO_MS.getMaxDrawDown();
+            maxDrawDown = ((double)((int)(strategyDataVO_MS.getMaxDrawDown()*1000)))/10;
 
             setCumulativeTableView();
 
@@ -890,30 +873,40 @@ public class ReturnsController implements Initializable {
 //            long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime()) / number;
             long period = Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()) * 24 * 60 * 60;
 
-            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
+            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM-dd");
 
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
 
+            List<Double> relativeProfits = new ArrayList<>();//相对收益指数
+            String time;
+            Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
-                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MS).getTime() + i * period);
+                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
+                System.out.println("profits="+profits.get(i));
+                System.out.println("basicProfits="+basicProfits.get(i));
+                relativeProfits.add(profits.get(i)-basicProfits.get(i));
+                Calendar c = new  GregorianCalendar();
+                c.setTime(startTime);
+                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
+                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
 
 
             //以下是相对收益指数
-            List<Double> relativeProfits = new ArrayList<>();
+            for (int i = 0;i<relativeProfits.size();i++){
+                System.out.println("relativesProfits="+relativeProfits.get(i));
+                }
 
             int[] frequentNumber = new int[10];
             for (int i = 0; i < 10; i++) {
                 frequentNumber[i] = 0;
             }
-            for (int i = 0; i < number; i++) {
-                relativeProfits.add(profits.get(i) - basicProfits.get(i));
-            }
+
             for (int i = 0; i < number; i++) {
                 if (relativeProfits.get(i) <= 0.015 && relativeProfits.get(i) >= 0) {
                     frequentNumber[0]++;
@@ -939,8 +932,8 @@ public class ReturnsController implements Initializable {
             }
 
             //以下是相对收益指数图表的数据
-            barChart.setBarGap(3);
-            barChart.setCategoryGap(20);
+            barChart.setBarGap(10);
+            barChart.setCategoryGap(100);
             XYChart.Series<String, Number> series3 = new XYChart.Series<>();
             XYChart.Series<String, Number> series4 = new XYChart.Series<>();
 
@@ -980,18 +973,18 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
-            isyourchoice=true;
+//            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MeanReversio.getText() + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"
+                        + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MeanReversio.getText() + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t"
+                        + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1040,17 +1033,17 @@ public class ReturnsController implements Initializable {
 
             strategyDataVO_MR.setStockSetPOS(stockSetVOS);
 
-            annualReturn = strategyDataVO_MR.getAnnualReturn();
+            annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
 
-            basicAnnualReturn = strategyDataVO_MR.getBasicAnnualReturn();
+            basicAnnualReturn = ((double)((int)(strategyDataVO_MS.getBasicAnnualReturn()*1000)))/10;
 
-            alphaNum = strategyDataVO_MR.getAlpha();
+            alphaNum = ((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10;
 
-            betaNum = strategyDataVO_MR.getBeta();
+            betaNum = ((double)((int)(strategyDataVO_MS.getBeta()*1000)))/1000;
 
-            sharpeRatio = strategyDataVO_MR.getSharpeRatio();
+            sharpeRatio = ((double)((int)(strategyDataVO_MS.getSharpeRatio()*1000)))/1000;
 
-            maxDrawDown = strategyDataVO_MR.getMaxDrawDown();
+            maxDrawDown = ((double)((int)(strategyDataVO_MS.getMaxDrawDown()*1000)))/10;
 
             setCumulativeTableView();
 
@@ -1058,32 +1051,36 @@ public class ReturnsController implements Initializable {
 
             List<Double> basicProfits = strategyDataVO_MR.getBasicProfits();
 
-            int number = profits.size();//形成期+持有期的个数
+            number = profits.size();//形成期+持有期的个数
 
 //            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime()) / number;
-            long period = Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()) * 24 * 60 * 60;
+            long period = Integer.parseInt(HoldingPeriod_MeanReversio.getText()) * 24 * 60 * 60;
 
             SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
 
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
+            List<Double> relativeProfits = new ArrayList<>();
 
+            String time;
+            Date startTime = this.changeDateStyle(StartDate_MR);
             for (int i = 0; i < number; i++) {
-                String time = simpleDateFormat_2.format(this.changeDateStyle(StartDate_MR).getTime() + i * period);
+                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
+                relativeProfits.add(profits.get(i)-basicProfits.get(i));
+                Calendar c = new  GregorianCalendar();
+                c.setTime(startTime);
+                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MeanReversio.getText()));
+                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
 
-            List<Double> relativeProfits = new ArrayList<>();
 
             int[] frequentNumber = new int[10];
             for (int i = 0; i < 10; i++) {
                 frequentNumber[i] = 0;
-            }
-            for (int i = 0; i < number; i++) {
-                relativeProfits.add(profits.get(i) - basicProfits.get(i));
             }
             for (int i = 0; i < number; i++) {
                 if (relativeProfits.get(i) <= 0.015 && relativeProfits.get(i) >= 0) {
@@ -1147,12 +1144,22 @@ public class ReturnsController implements Initializable {
         sharp.setCellValueFactory(celldata -> celldata.getValue().sharpProperty());
         retreats.setCellValueFactory(celldata -> celldata.getValue().retreatsProperty());
 
-        //测试数据，数据层完成后将修改
-        cumulativeData = FXCollections.observableArrayList(
-                new CumulativeReturnsModel(String.valueOf(annualReturn), String.valueOf(basicAnnualReturn),
-                        String.valueOf(alphaNum), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown))
-        );
+        //TODO
 
+        DecimalFormat decimalFormat=new DecimalFormat();
+        decimalFormat.applyPattern("####0.00");
+//        String testdf=decimalFormat.format(annualReturn);
+
+        //测试数据，数据层完成后将修改
+//        cumulativeData = FXCollections.observableArrayList(
+//                new CumulativeReturnsModel(String.valueOf(annualReturn), String.valueOf(basicAnnualReturn),
+//                        String.valueOf(alphaNum), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown))
+//        );
+
+        cumulativeData = FXCollections.observableArrayList(
+                new CumulativeReturnsModel(String.valueOf(annualReturn+"%"), String.valueOf(basicAnnualReturn+"%"),
+                        String.valueOf(alphaNum+"%"), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown+"%"))
+        );
         cumulativeTableView.getStyleClass().add("edge-to-edge");
         cumulativeTableView.getStyleClass().add("noborder");
         cumulativeTableView.setItems(cumulativeData);
@@ -1196,13 +1203,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1214,13 +1221,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + StockheldInHouse_MomentumStrategy.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1228,7 +1235,6 @@ public class ReturnsController implements Initializable {
             System.out.println(instruction);
             net.actionPerformed(instruction);
         }
-
 
         String ReturnsMessage;
         ReturnsMessage = net.run();
@@ -1245,7 +1251,10 @@ public class ReturnsController implements Initializable {
             returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
             percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
+//            System.out.print(fhVO.getOverProfit().toString());
+//            System.out.print(fhVO.getClass());
             int ListLength = fhVO.getOverProfit().size();
+//            System.out.print(ListLength);
 
             List<ReturnsModel> models = new ArrayList<>();
             ReturnsModel model;
@@ -1286,29 +1295,29 @@ public class ReturnsController implements Initializable {
     private void setOverProfitsUI_MR() {
 
         if (ChooseFPorHP_MR.getItems().equals("形成期")) {
-            HoldingPeriod_MomentumStrategy.setDisable(true);
+            HoldingPeriod_MeanReversio.setDisable(true);
         } else {
-            FormativePeriod_MomentumStrategy.setDisable(true);
+            FormativePeriod_MeanReversio.setDisable(true);
         }
 
-        LocalDate StartDate_MR = StartDate_MomentumStrategy.getValue();
-        LocalDate EndDate_MR = EndDate_MomentumStrategy.getValue();
+        LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
+        LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
 
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MR));
         String EndDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MR));
-        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()) {
+        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()) {
             //如果选择形成期
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t";
+                        + "F" + "\t" + "F\t" + FormativePeriod_MeanReversio.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1319,13 +1328,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1390,31 +1399,30 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void setChoose_MS() {
-//        if(chaoetab.isSelected()){
+        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-//            ChooseFPorHP.setItems();
-
-//            setOverProfitsUI_MS();
-//        }else{
-        System.out.print("dfghuj");
+////            ChooseFPorHP.setItems();
+            setOverProfitsUI_MS();
+        }else{
+//        System.out.print("dfghuj");
         setMomentumStrategyInputSearch();
 
-//        }
+        }
 
     }
 
     @FXML
     private void setChoose_MR() {
-//        if(chaoetab.isSelected()){
+        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-//            setOverProfitsUI_MR();
-//        }else{
+            setOverProfitsUI_MR();
+        }else{
         setMeanReversioInputSearch();
-//        }
+        }
     }
 
 
