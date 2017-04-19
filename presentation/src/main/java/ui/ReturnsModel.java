@@ -19,13 +19,11 @@ public class ReturnsModel {
     private final SimpleStringProperty percent;
 
 
-
     public ReturnsModel(String period, String returns, String percent) {
         this.period = new SimpleStringProperty(period);
         this.returns = new SimpleStringProperty(returns);
         this.percent = new SimpleStringProperty(percent);
     }
-
 
 
     public SimpleStringProperty periodProperty() {

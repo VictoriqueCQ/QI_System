@@ -57,12 +57,12 @@ public class ClientOverviewController {
     }
 
     @FXML
-    private void zoomout(){
+    private void zoomout() {
         main.zoomoutButton();
     }
 
     @FXML
-    private void gotoMarketCondition(){
+    private void gotoMarketCondition() {
         main.gotoMarketCondition();
     }
 
@@ -72,7 +72,7 @@ public class ClientOverviewController {
     }
 
     @FXML
-    private void gotoComparsion()  {
+    private void gotoComparsion() {
         main.gotoCompareFunction();
     }
 
@@ -82,7 +82,7 @@ public class ClientOverviewController {
     }
 
     @FXML
-    private void gotoReturns(){
+    private void gotoReturns() {
         main.gotoReturns();
     }
 
@@ -100,7 +100,7 @@ public class ClientOverviewController {
      * 退出登录
      */
     @FXML
-    private void exitLogin(){
+    private void exitLogin() {
         loginButton.setVisible(true);
         registerButton.setVisible(true);
         exitLoginButton.setVisible(false);
@@ -129,22 +129,21 @@ public class ClientOverviewController {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
-//        if(t){
-//            nameLabel.setText("   姓名: "+userVO.getName());
-//            loginButton.setVisible(false);
-//            registerButton.setVisible(false);
-//            exitLoginButton.setVisible(true);
-//            comparsionButton.setDisable(false);
-//            returnsButton.setDisable(false);
-//        }
-//        else{
-//            nameLabel.setText("   游客访问");
-//            loginButton.setVisible(true);
-//            registerButton.setVisible(true);
-//            exitLoginButton.setVisible(false);
-//            comparsionButton.setDisable(true);
-//            returnsButton.setDisable(true);
-//        }
+        if (t) {
+            nameLabel.setText("   姓名: " + userVO.getName());
+            loginButton.setVisible(false);
+            registerButton.setVisible(false);
+            exitLoginButton.setVisible(true);
+            comparsionButton.setDisable(false);
+            returnsButton.setDisable(false);
+        } else {
+            nameLabel.setText("   游客访问");
+            loginButton.setVisible(true);
+            registerButton.setVisible(true);
+            exitLoginButton.setVisible(false);
+            comparsionButton.setDisable(true);
+            returnsButton.setDisable(true);
+        }
     }
 
 }

@@ -78,13 +78,16 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         for (int i=0;i<profitList.size();i++){
             sum=sum+profitList.get(i)*basicProfitList.get(i);
         }
-        double beta=(sum/profitList.size()-e1*e2)/d2;//β
+        double beta=0.0;
+        if(d1>0){
+            beta=(sum/profitList.size()-e1*e2)/d2;//β
+        }
 
-        double rf=stockFilterData.filterPeriodRate(startTime,endTime);/**待读，无风险收益率*/
+        double rf=stockFilterData.filterPeriodRate(startTime,endTime);
         double alpha=(annualProfit-rf)-beta*(basicAnnualProfit-rf);//α
 
         double sharpe=0.0;//夏普比率
-        if(d1!=0){
+        if(d1>0){
             sharpe=(e1-rf)/Math.sqrt(d1);
         }
 
@@ -99,6 +102,10 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
             }
             maxDrawDown=maxDrawBacks.stream().mapToDouble(Double::doubleValue).max().getAsDouble();//最大回撤
         }
+        System.out.println(alpha);
+        System.out.println(beta);
+        System.out.println(sharpe);
+        System.out.println(maxDrawDown);
 
         List<StockSetPO> stockSetPOS=new ArrayList<>();
         for (StockSet stockSet : stockSets) {
