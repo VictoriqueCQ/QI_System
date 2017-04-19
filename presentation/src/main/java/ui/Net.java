@@ -15,7 +15,7 @@ public class Net {
 
     public void setUpNet() {
         try {
-            sock = new Socket("127.0.0.1", 9000);
+            sock = new Socket("172.28.141.143", 9000);
             inputStream = new DataInputStream(sock.getInputStream());
             outputStream = new DataOutputStream(sock.getOutputStream());
             System.out.println("Network established.");

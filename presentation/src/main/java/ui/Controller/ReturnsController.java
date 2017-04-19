@@ -1322,13 +1322,7 @@ public class ReturnsController implements Initializable {
      */
     private void setOverProfitsUI_MS() {
 
-        if (ChooseFPorHP_MS.getItems().equals("形成期")) {
-            HoldingPeriod_MomentumStrategy.setDisable(true);
-            System.out.println("get choose");
-        } else {
-            FormativePeriod_MomentumStrategy.setDisable(true);
-            System.out.println("get choose");
-        }
+
 
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
@@ -1438,11 +1432,7 @@ public class ReturnsController implements Initializable {
 
     private void setOverProfitsUI_MR() {
 
-        if (ChooseFPorHP_MR.getItems().equals("形成期")) {
-            HoldingPeriod_MeanReversio.setDisable(true);
-        } else {
-            FormativePeriod_MeanReversio.setDisable(true);
-        }
+
 
         LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
         LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
@@ -1545,6 +1535,25 @@ public class ReturnsController implements Initializable {
         }
     }
 
+    @FXML
+    private void setComboBox_MS(){
+        if (ChooseFPorHP_MS.getValue().equals("形成期")) {
+            HoldingPeriod_MomentumStrategy.setDisable(true);
+            System.out.println("get choose");
+        } else {
+            FormativePeriod_MomentumStrategy.setDisable(true);
+            System.out.println("get choose");
+        }
+    }
+
+    @FXML
+    private void setComboBox_MR(){
+        if (ChooseFPorHP_MR.getValue().equals("形成期")) {
+            HoldingPeriod_MeanReversio.setDisable(true);
+        } else {
+            FormativePeriod_MeanReversio.setDisable(true);
+        }
+    }
 
     @FXML
     private void setChoose_MS() {
