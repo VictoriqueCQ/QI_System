@@ -38,18 +38,10 @@ public class DataReader_CSV implements DataReader_data{
 //        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\plate";//directory
 //        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\index";//directory
 //        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\rate.csv";
-
-        stockPath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/stock_data.csv";
-        platePath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/plate";
-        indexPath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/index";
-        ratePath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/rate.csv";
-
-
-
-//        stockPath = "F:\\stock_data\\stock_data.csv";
-//        platePath = "F:\\stock_data\\plate";
-//        indexPath = "F:\\stock_data\\index";
-//        ratePath = "F:\\stock_data\\rate.csv";
+        stockPath = "C:\\stock_data\\stock_data.csv";
+        platePath = "C:\\stock_data\\plate";
+        indexPath = "C:\\stock_data\\index";
+        ratePath = "C:\\stock_data\\rate.csv";
 
     }
 

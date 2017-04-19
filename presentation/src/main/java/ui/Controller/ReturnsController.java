@@ -891,8 +891,6 @@ public class ReturnsController implements Initializable {
                 time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
-                System.out.println("profits="+profits.get(i));
-                System.out.println("basicProfits="+basicProfits.get(i));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
                 Calendar c = new  GregorianCalendar();
                 c.setTime(startTime);
@@ -904,9 +902,7 @@ public class ReturnsController implements Initializable {
 
 
             //以下是相对收益指数
-            for (int i = 0;i<relativeProfits.size();i++){
-                System.out.println("relativesProfits="+relativeProfits.get(i));
-            }
+
             int[] frequentNumber = new int[10];
             for (int i = 0; i < 10; i++) {
                 frequentNumber[i] = 0;
@@ -922,7 +918,6 @@ public class ReturnsController implements Initializable {
                     frequentNumber[3]++;
                 } else if (relativeProfits.get(i) > 0.045) {
                     frequentNumber[4]++;
-                    System.err.println(frequentNumber[4]);
                 } else if (relativeProfits.get(i) > -0.015 && relativeProfits.get(i) < 0) {
                     frequentNumber[5]++;
                 } else if (relativeProfits.get(i) > -0.025 && relativeProfits.get(i) < -0.015) {
@@ -933,7 +928,6 @@ public class ReturnsController implements Initializable {
                     frequentNumber[8]++;
                 } else if (relativeProfits.get(i) < -0.045) {
                     frequentNumber[9]++;
-                    System.err.println(frequentNumber[9]);
                 }
             }
 
@@ -982,15 +976,15 @@ public class ReturnsController implements Initializable {
             isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MeanReversio.getText() + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"
+                        + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"
-                        + StockheldInHouse_MomentumStrategy.getText() + "\t";
+                        + FormativePeriod_MeanReversio.getText() + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t"
+                        + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1388,18 +1382,16 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void setChoose_MS() {
-//        if(chaoetab.isSelected()){
+        if(chaoetab.isSelected()){
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-//            ChooseFPorHP.setItems();
-
-//            setOverProfitsUI_MS();
-//        }else{
+            setOverProfitsUI_MS();
+        }else{
         System.out.print("dfghuj");
         setMomentumStrategyInputSearch();
 
-//        }
+        }
 
     }
 
