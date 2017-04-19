@@ -144,17 +144,19 @@ public class Momentum_Impl implements Strategy_data{
                     basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
                 }
 
-                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
+                if(candidates.size()>=winnerSize) {
+                    candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
 
-                Map<Integer, List<Stock>> map = new HashMap<>();
-                for (int i = winnerSize - 1; i >= 0; i--) {
-                    List<Stock> temp = new ArrayList<>();
-                    temp.add(candidates.get(i).getS1());
-                    temp.add(candidates.get(i).getS2());
-                    map.put(candidates.size() - i, temp);
+                    Map<Integer, List<Stock>> map = new HashMap<>();
+                    for (int i = winnerSize - 1; i >= 0; i--) {
+                        List<Stock> temp = new ArrayList<>();
+                        temp.add(candidates.get(i).getS1());
+                        temp.add(candidates.get(i).getS2());
+                        map.put(candidates.size() - i, temp);
+                    }
+                    StockSet stockSet = new StockSet(map);
+                    stockSets.add(stockSet);
                 }
-                StockSet stockSet = new StockSet(map);
-                stockSets.add(stockSet);
             }
 
             overDate=changeDate;

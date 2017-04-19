@@ -651,8 +651,12 @@ public class SelectStockController {
         this.main = main;
         this.net = net;
         this.returnsController=returnsController;
-        this.stockCodeList=stockCodeList;
+
         this.oldstockCodeList=stockCodeList;
+        for(int i=0;i<oldstockCodeList.size();i++){
+            this.stockCodeList.add(oldstockCodeList.get(i));
+        }
+
         String path=String.valueOf(Main.class.getResource(""));
         String[] pathlist=path.split("/");
         for(int i=1;i<pathlist.length-1;i++){

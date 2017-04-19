@@ -64,16 +64,16 @@ public class Stock_Filter_data_Impl implements Stock_Filter_data{
 
     @Override
     public double filterPeriodRate(Date startTime, Date endTime) {
-        List<Rate> requiredList=rateList.stream().
+        List<Rate> requiredList1=rateList.stream().
                 filter(rate -> rate.getDate().compareTo(endTime)<=0).
                 collect(Collectors.toList());
-        Rate endRate=requiredList.get(requiredList.size()-1);
-        requiredList=requiredList.stream().
+        Rate endRate=requiredList1.get(requiredList1.size()-1);
+        List<Rate> requiredList2=requiredList1.stream().
                 filter(rate -> rate.getDate().compareTo(startTime)<=0).
                 collect(Collectors.toList());
-        Rate startRate=requiredList.get(requiredList.size()-1);
+        Rate startRate=requiredList2.get(requiredList2.size()-1);
 
-        requiredList=requiredList.subList(requiredList.indexOf(startRate),requiredList.indexOf(endRate)+1);
+        List<Rate> requiredList=requiredList1.subList(requiredList1.indexOf(startRate),requiredList1.indexOf(endRate)+1);
 
         if(requiredList.size()==1){
             return requiredList.get(0).getRate();

@@ -101,6 +101,14 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         for (StockSet stockSet : stockSets) {
             stockSetPOS.add(new StockSetPO(stockSet));
         }
+
+        System.out.println(annualProfit);
+        System.out.println(basicAnnualProfit);
+        System.out.println(alpha);
+        System.out.println(beta);
+        System.out.println(sharpe);
+        System.out.println(maxDrawDown);
+        
         return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,
                 profitList,basicProfitList);
     }

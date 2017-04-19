@@ -28,6 +28,7 @@ public class  Main extends Application {
     private Stage stage1=new Stage(StageStyle.UNDECORATED);
     private Stage stage2=new Stage(StageStyle.TRANSPARENT);
     private Stage stage3=new Stage(StageStyle.UNDECORATED);
+    private Stage stage4=new Stage(StageStyle.UNDECORATED);
 
 
     // 内部窗口
@@ -67,10 +68,10 @@ public class  Main extends Application {
             controller.setMain(this,net,stage);
             Scene scene=new Scene(insidePane);
             scene.setFill(null);
-            stage1.setScene(scene);
-            stage1.setAlwaysOnTop(true);
-            stage1.centerOnScreen();
-            stage1.show();
+            stage4.setScene(scene);
+            stage4.setAlwaysOnTop(true);
+            stage4.centerOnScreen();
+            stage4.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -340,6 +341,12 @@ public class  Main extends Application {
         }
         if (stage3!=null&&stage3.isShowing()) {
             stage3.hide();
+        }
+    }
+
+    public void closeStage4(){
+        if (stage4!=null&&stage4.isShowing()) {
+            stage4.hide();
         }
     }
 //

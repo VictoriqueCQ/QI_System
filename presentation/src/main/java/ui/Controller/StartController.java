@@ -23,7 +23,7 @@ public class StartController {
         //3.5秒后关闭开场动画，进入主界面
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3.5), ev -> {
             stage.show();
-            main.closeExtraStage();
+            main.closeStage4();
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
