@@ -1145,11 +1145,11 @@ public class ReturnsController implements Initializable {
             series3.getData().add(new XYChart.Data<>("4.00%", frequentNumber[3]));
             series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[4]));
 
-            series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[0]));
+            series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[5]));
+            series4.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[6]));
+            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[7]));
+            series4.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[8]));
+            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[9]));
 
             barChart.getData().clear();
             barChart.layout();
