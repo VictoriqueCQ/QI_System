@@ -153,7 +153,7 @@ public class Average_Impl implements Strategy_data {
 
                 }
             }
-            if (candidates.size() > 0) {
+            if (candidates.size() > 0&&candidates.size()>=winnerSize) {
                 candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
                         collect(Collectors.toList());//从小到大排序
 
@@ -174,10 +174,13 @@ public class Average_Impl implements Strategy_data {
 
 
                 candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
-                Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
 
+                Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
+                System.out.println("ca shi "+candidates.size());
 
                 for (int i = winnerSize - 1; i >= 0; i--) {
+//                    System.out.println("i de zhi wei"+i);
+                    System.out.println("di"+i+":"+candidates.get(i).getCode());
                     List<Stock> temp = new ArrayList<>();
                     temp.add(candidates.get(i).getS1());
                     temp.add(candidates.get(i).getS2());

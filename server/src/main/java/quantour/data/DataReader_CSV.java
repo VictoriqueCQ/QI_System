@@ -24,10 +24,10 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-        stockPath = "stock_data\\stock_data.csv";
-        platePath="stock_data\\plate";//directory
-        indexPath="stock_data\\index";//directory
-        ratePath="stock_data\\rate.csv";
+        stockPath = "F:\\stock_data\\stock_data.csv";
+        platePath="F:\\stock_data\\plate";//directory
+        indexPath="F:\\stock_data\\index";//directory
+        ratePath="F:\\stock_data\\rate.csv";
 
 //
 //        platePath="/Users/chenyuyan/Desktop/stock_data/plate";//directory
