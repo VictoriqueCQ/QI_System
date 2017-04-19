@@ -24,15 +24,15 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-        stockPath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/stock_data.csv";
-//        platePath="stock_data\\plate";//directory
-//        indexPath="stock_data\\index";//directory
-//        ratePath="stock_data\\rate.csv";
+        stockPath = "F:\\stock_data\\stock_data.csv";
+        platePath="F:\\stock_data\\plate";//directory
+        indexPath="F:\\stock_data\\index";//directory
+        ratePath="F:\\stock_data\\rate.csv";
 
 //
-        platePath="/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/plate";//directory
-        indexPath="/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/index";//directory
-        ratePath="/Users/chenyuyan/IdeaProjects/QI_System/stock_data(1)/rate.csv";
+//        platePath="/Users/chenyuyan/Desktop/stock_data/plate";//directory
+//        indexPath="/Users/chenyuyan/Desktop/stock_data/index";//directory
+//        ratePath="/Users/chenyuyan/IdeaProjects/QI_System/stock_data/rate.csv";
 
 //        stockPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\stock_data.csv";
 //        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\plate";//directory
