@@ -83,7 +83,10 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
         double rf=stockFilterData.filterPeriodRate(startTime,endTime);/**待读，无风险收益率*/
         double alpha=(annualProfit-rf)-beta*(basicAnnualProfit-rf);//α
 
-        double sharpe=(e1-rf)/Math.sqrt(d1);//夏普比率
+        double sharpe=0.0;//夏普比率
+        if(d1!=0){
+            sharpe=(e1-rf)/Math.sqrt(d1);
+        }
 
         double maxDrawDown=0.0;
         if(profitList.size()>1){
@@ -102,13 +105,6 @@ public class Strategy_Calculator_Impl implements Strategy_Calculator_data {
             stockSetPOS.add(new StockSetPO(stockSet));
         }
 
-        System.out.println(annualProfit);
-        System.out.println(basicAnnualProfit);
-        System.out.println(alpha);
-        System.out.println(beta);
-        System.out.println(sharpe);
-        System.out.println(maxDrawDown);
-        
         return new StrategyDataPO(annualProfit,basicAnnualProfit,alpha,beta,sharpe,maxDrawDown,stockSetPOS,
                 profitList,basicProfitList);
     }
