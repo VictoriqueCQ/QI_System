@@ -51,9 +51,9 @@ class ResultSender {
                 break;
             case "FNH":
                 logic=dataFactory.getFormativeNHoldingData();
+                break;
             default:
                 System.out.println("wrong");//此处应改为exception
-
                 break;
         }
         result= logic.get(questContent);

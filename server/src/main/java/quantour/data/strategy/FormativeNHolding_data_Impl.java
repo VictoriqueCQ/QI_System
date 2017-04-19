@@ -67,6 +67,10 @@ public class FormativeNHolding_data_Impl implements FormativeNHolding_data{
                 profitList.add(stockSet.countProfit());
             }
 
+            if(profitList.isEmpty()){
+                continue;
+            }
+
             List<Double> basicProfitList=strategyData.getBasicProfits();
 
             List<Double> overProfit=new ArrayList<>();
