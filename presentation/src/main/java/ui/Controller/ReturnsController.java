@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
@@ -20,6 +21,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -50,6 +52,8 @@ public class ReturnsController implements Initializable {
 
     //是否自选
     private boolean isyourchoice;
+
+
 
 
 
@@ -89,7 +93,7 @@ public class ReturnsController implements Initializable {
      */
     //股票排名
     @FXML
-    private TableColumn<StockModel, String> StockRank;
+    private TableColumn<StockModel, Integer> StockRank;
 
     //股票名
     @FXML
@@ -565,8 +569,14 @@ public class ReturnsController implements Initializable {
         List<StockSetVO> stockSetVOS;
         if (MomentumStrategyTab.isSelected()) {
             stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+//            stockSetVOS=stockSetVOS1;
         } else {
             stockSetVOS = strategyDataVO_MR.getStockSetVOS();
+//            stockSetVOS=stockSetVOS1;
+        }
+
+                for(int j=0;j<stockSetVOS.size();j++){
+            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
         }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
 
@@ -595,13 +605,21 @@ public class ReturnsController implements Initializable {
 //
 //        HoldPeriodRank.getItems().addAll(HoldPeriodString);
 
+//        ObservableList<TableColumn> observableList=stockTable.getColumns();
 
-        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
-        StockRank.setCellFactory(new Callback<TableColumn<StockModel,String>, TableCell<StockModel, String>>() {
+
+
+
+//        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
+        StockRank.setCellValueFactory(new PropertyValueFactory<StockModel,Integer>("rank"));
+//        StockRank.setSortType(TableColumn.SortType.ASCENDING);
+
+//        StockRank.setCellFactory(new PropertyValueFactory<StockModel,Integer>("rankProperty"));
+        StockRank.setCellFactory(new Callback<TableColumn<StockModel,Integer>, TableCell<StockModel, Integer>>() {
 
             @Override
-            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
-                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+            public TableCell<StockModel, Integer> call(TableColumn<StockModel, Integer> param) {
+                TextFieldTableCell<StockModel, Integer> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
@@ -668,12 +686,15 @@ public class ReturnsController implements Initializable {
             }
         });
 
+
+
         //默认展示第一个持有期
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, 1);
         for (int i = 0; i < stockModelArrayList.size(); i++) {
             stockModels.add(stockModelArrayList.get(i));
         }
         stockTable.setItems(stockModels);
+
     }
 
 
@@ -694,23 +715,33 @@ public class ReturnsController implements Initializable {
         }
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
-        for(int i=0;i<stockSetVOS.size();i++){
-            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
-        }
+//        for(int i=0;i<stockSetVOS.size();i++){
+////            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
+//        }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
-//        for(int i=1;i<=stockModelArrayList.size();i++){
-//            for(int j=0;j<stockModelArrayList.size();j++){
-//                if(Integer.parseInt(stockModelArrayList.get(j).getID())==i){
-//                    stockModels.add(stockModelArrayList.get(j));
-//                    break;
-//                }
-//            }
+//        ArrayList<Integer> rankList=new ArrayList<Integer>();
+//        for(int i=0;i<stockModelArrayList.size();i++){
+//            rankList.add(Integer.parseInt(stockModelArrayList.get(i).getRank()));
 //        }
-        for (int i = 0; i < stockModelArrayList.size(); i++) {
-            stockModels.add(stockModelArrayList.get(i));
+
+        //TODO
+        // 排序
+        for(int i=1;i<=stockModelArrayList.size();i++){
+            for(int j=0;j<stockModelArrayList.size();j++){
+                if(stockModelArrayList.get(j).getRank()==i){
+                    System.out.println(i);
+                    stockTable.getItems().add(stockModelArrayList.get(j));
+
+//                    stockModels.add(stockModelArrayList.get(j));
+                    break;
+                }
+            }
         }
-        stockTable.setItems(stockModels);
+//        for (int i = 0; i < stockModelArrayList.size(); i++) {
+//            stockModels.add(stockModelArrayList.get(i));
+//        }
+//        stockTable.setItems(stockModels);
         System.out.print("success");
     }
 
@@ -726,9 +757,9 @@ public class ReturnsController implements Initializable {
         }
         System.out.println("di"+i);
         StockSetVO stockSetVO = stockSetVOS.get(i-1);
-        for(int j=0;j<stockSetVOS.size();j++){
-            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
-        }
+//        for(int j=0;j<stockSetVOS.size();j++){
+//            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
+//        }
         Map<String,String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
@@ -748,7 +779,7 @@ public class ReturnsController implements Initializable {
         for (Map.Entry<String,String> entry : stockSets.entrySet()) {
                     StockModel model = new StockModel();
 
-            model.setRank(entry.getKey());
+            model.setRank(Integer.parseInt(entry.getKey()));
             String code1 = entry.getValue();
             char[] code2 = code1.toCharArray();
             int t = 6 - code2.length;
@@ -819,10 +850,8 @@ public class ReturnsController implements Initializable {
     * 这个方法是使用动量策略时处理用户输入，同时获取股票表格，累计收益率，相对收益指数的数据，将用于查询按钮
      */
     private void setMomentumStrategyInputSearch() {
-        System.out.print(1);
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
-        System.out.print(2);
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MS));
         String EndDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MS));
@@ -860,11 +889,16 @@ public class ReturnsController implements Initializable {
             strategyDataVO_MS = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             //处理map
-           ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
-            HashMap<String,String> hashMap=new HashMap<String,String>();
-            Date date=new Date();
+
+            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
+                String year="";
+                String month="";
+                String day="";
+                HashMap<String,String> hashMap=new HashMap<String,String>();
+                Date date=new Date();
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -875,47 +909,45 @@ public class ReturnsController implements Initializable {
                     JSONObject jsonObject1 = JSONObject.fromObject(value);
                     String key1 = null;
                     String value1 = null;
+
                     Iterator<String> keys1 = jsonObject1.keys();
                     while(keys1.hasNext()){
-                        String year="";
-                        String month="";
-                        String day="";
                         key1=keys1.next();
                         if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
                         }
-//                        else if(key1.equals("year")){
-//                            year=jsonObject1.get(key1).toString();
-//                            System.out.println(year);
-//                        }
-//                        else if(key1.equals("month")){
-//                            month=jsonObject1.get(key1).toString();
-//                            System.out.println(month);
-//                        }
-//                        else if(key1.equals("day")){
-//                            day=jsonObject1.get(key1).toString();
-//                            System.out.println(day);
-//                        }
-//                        date=new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-//                        try {
-//                            date = format.parse(year + "-"+month+"-"+day);
-//
-//                        }
-//                        catch (ParseException e){
-//                            e.printStackTrace();
-//                        }
+                        else if(key1.equals("year")){
+                            year=jsonObject1.get(key1).toString();
+                            int t= Integer.parseInt(year);
+                            t+=1900;
+                            year=String.valueOf(t);
+                            System.out.println(year);
+                        }
+                        else if(key1.equals("month")){
+                            month=jsonObject1.get(key1).toString();
+                            System.out.println(month);
+                        }
+                        else if(key1.equals("date")){
+                            day=jsonObject1.get(key1).toString();
+                            System.out.println(day);
+                        }
                     }
                 }
+                try {
+                    date = format.parse(year + "-"+month+"-"+day);
+                }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
                 System.out.println(date);
-                System.out.println("b"+hashMap.toString());
-                stockSetVOS1.add(new StockSetVO(hashMap));
-                System.out.println(new StockSetVO(hashMap).getStockSets().toString());
+                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                stockSetVO.setDate(date);
+                stockSetVOS1.add(stockSetVO);
             }
-            System.out.println(stockSetVOS1.size());
-            for(int i=0;i<stockSetVOS1.size();i++){
-                System.out.println("d"+stockSetVOS1.get(i).getStockSets().toString());
-            }
+//            for(int i=0;i<stockSetVOS1.size();i++){
+//                System.out.println("d"+stockSetVOS1.get(i).getStockSets().toString());
+//            }
             strategyDataVO_MS.setStockSetPOS(stockSetVOS1);
 
 
@@ -951,20 +983,21 @@ public class ReturnsController implements Initializable {
             List<Double> relativeProfits = new ArrayList<>();//相对收益指数
 
             String time;
-            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
+//            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
             Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
-//                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
-                time = simpleDateFormat_2.format(startTime);
+//                System.out.print(strategyDataVO_MS.getStockSetVOS().get(i).toString());
+                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
+//                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
                 System.out.println("profits="+profits.get(i));
                 System.out.println("basicProfits="+basicProfits.get(i));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
-                Calendar c = new  GregorianCalendar();
-                c.setTime(startTime);
-                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
-                startTime = c.getTime();
+//                Calendar c = new  GregorianCalendar();
+//                c.setTime(startTime);
+//                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
+//                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
@@ -1081,9 +1114,14 @@ public class ReturnsController implements Initializable {
             strategyDataVO_MR = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             //处理map
-            ArrayList<StockSetVO> stockSetVOS=new ArrayList<StockSetVO>();
+            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
+            Date date=new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             HashMap<String,String> hashMap=new HashMap<String,String>();
             for(int j=0;j<strategyDataVO_MR.getStockSetVOS().size();j++) {
+                String year="";
+                String month="";
+                String day="";
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MR.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -1101,12 +1139,36 @@ public class ReturnsController implements Initializable {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
                         }
+                        else if(key1.equals("year")){
+                            year=jsonObject1.get(key1).toString();
+                            int t= Integer.parseInt(year);
+                            t+=1900;
+                            year=String.valueOf(t);
+                            System.out.println(year);
+                        }
+                        else if(key1.equals("month")){
+                            month=jsonObject1.get(key1).toString();
+                            System.out.println(month);
+                        }
+                        else if(key1.equals("date")){
+                            day=jsonObject1.get(key1).toString();
+                            System.out.println(day);
+                        }
                     }
                 }
-                stockSetVOS.add(new StockSetVO(hashMap));
+                try {
+                    date = format.parse(year + "-"+month+"-"+day);
+                }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
+//                System.out.println(date);
+                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                stockSetVO.setDate(date);
+                stockSetVOS1.add(stockSetVO);
             }
 
-            strategyDataVO_MR.setStockSetPOS(stockSetVOS);
+            strategyDataVO_MR.setStockSetPOS(stockSetVOS1);
 
             annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
 
