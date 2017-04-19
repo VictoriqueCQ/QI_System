@@ -724,23 +724,23 @@ public class ReturnsController implements Initializable {
 //            rankList.add(Integer.parseInt(stockModelArrayList.get(i).getRank()));
 //        }
 
-        //TODO
-        // 排序
-        for (int i = 1; i <= stockModelArrayList.size(); i++) {
-            for (int j = 0; j < stockModelArrayList.size(); j++) {
-                if (stockModelArrayList.get(j).getRank() == i) {
-                    System.out.println(i);
-                    stockTable.getItems().add(stockModelArrayList.get(j));
-
-//                    stockModels.add(stockModelArrayList.get(j));
-                    break;
-                }
-            }
-        }
-//        for (int i = 0; i < stockModelArrayList.size(); i++) {
-//            stockModels.add(stockModelArrayList.get(i));
+//        //TODO
+//        // 排序
+//        for (int i = 1; i <= stockModelArrayList.size(); i++) {
+//            for (int j = 0; j < stockModelArrayList.size(); j++) {
+//                if (stockModelArrayList.get(j).getRank() == i) {
+//                    System.out.println(i);
+//                    stockTable.getItems().add(stockModelArrayList.get(j));
+//
+////                    stockModels.add(stockModelArrayList.get(j));
+//                    break;
+//                }
+//            }
 //        }
-//        stockTable.setItems(stockModels);
+        for (int i = 0; i < stockModelArrayList.size(); i++) {
+            stockModels.add(stockModelArrayList.get(i));
+        }
+        stockTable.setItems(stockModels);
         System.out.print("success");
     }
 
@@ -1073,7 +1073,7 @@ public class ReturnsController implements Initializable {
         String EndDateString_MR = simpleDateFormat.format(this.changeDateStyle(EndDate_MR));
         if (FormativePeriod_MeanReversio.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
-                && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
+                && StockHeldInHouse_MeanReversio.getText().length()!=0 && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
@@ -1091,6 +1091,8 @@ public class ReturnsController implements Initializable {
                 }
             }
             net.actionPerformed(instruction);
+        }else{
+            System.out.println("text is empty");
         }
 
         String ReturnsMessage;
@@ -1526,20 +1528,30 @@ public class ReturnsController implements Initializable {
     @FXML
     private void setComboBox_MS() {
         if (ChooseFPorHP_MS.getValue().equals("形成期")) {
+            FormativePeriod_MomentumStrategy.setDisable(false);
             HoldingPeriod_MomentumStrategy.setDisable(true);
             System.out.println("get choose");
-        } else {
+        } else if (ChooseFPorHP_MS.getValue().equals("持有期")){
+            HoldingPeriod_MomentumStrategy.setDisable(false);
             FormativePeriod_MomentumStrategy.setDisable(true);
             System.out.println("get choose");
+        }else{
+            FormativePeriod_MeanReversio.setDisable(false);
+            HoldingPeriod_MeanReversio.setDisable(false);
         }
     }
 
     @FXML
     private void setComboBox_MR() {
         if (ChooseFPorHP_MR.getValue().equals("形成期")) {
+            FormativePeriod_MeanReversio.setDisable(false);
             HoldingPeriod_MeanReversio.setDisable(true);
-        } else {
+        } else if(ChooseFPorHP_MR.getValue().equals("持有期")){
+            HoldingPeriod_MeanReversio.setDisable(false);
             FormativePeriod_MeanReversio.setDisable(true);
+        }else{
+            FormativePeriod_MeanReversio.setDisable(false);
+            HoldingPeriod_MeanReversio.setDisable(false);
         }
     }
 

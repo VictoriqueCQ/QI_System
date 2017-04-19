@@ -72,7 +72,7 @@ public class LoginController {
             UserVO userVO = (UserVO) jsonUtil.JSONToObj(json, userVO1.getClass());
             if (userVO != null) {
                 this.exitLogin();
-                AlertUtil.showConfirmingAlert("登录成功");
+//                AlertUtil.showConfirmingAlert("登录成功");
                 main.gotoClientOverview(true, userVO);
                 if (rememberPasswordRadioButton.isSelected()) {
                     File f = new File(path1 + "documentation\\remembereduserinfo.txt");
@@ -107,7 +107,7 @@ public class LoginController {
         }
 
         //自动写入上次记住的用户名密码
-        File f = new File("F:stock_data\\remembereduserinfo.txt");
+        File f = new File(path1 + "documentation\\remembereduserinfo.txt");
         try {
             BufferedReader brreader = new BufferedReader(new FileReader(f));
             String info = brreader.readLine();
