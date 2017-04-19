@@ -172,8 +172,9 @@ public class Average_Impl implements Strategy_data {
                     basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
                 }
 
-
-                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
+        if(candidates.size()>winnerSize){
+                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());}
+        
                 Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
 
 
