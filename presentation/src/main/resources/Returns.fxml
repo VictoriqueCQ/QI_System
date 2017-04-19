@@ -51,7 +51,7 @@
                                           <TableColumn fx:id="StockCode" minWidth="0.0" prefWidth="350.0" text="股票代码" />
                                       </columns>
                                     </TableView>
-                                    <ComboBox fx:id="HoldPeriodRank" layoutX="979.0" layoutY="30.0" onAction="#showTabelByHoldPeriod_MS" prefWidth="150.0" promptText="第1个持有期" stylesheets="@css/ComboBoxCSS.css" />
+                                    <ComboBox fx:id="HoldPeriodRank" layoutX="942.0" layoutY="27.0" onAction="#showTabelByHoldPeriod" prefHeight="23.0" prefWidth="187.0" stylesheets="@css/ComboBoxCSS.css" />
                                  </children>
                               </AnchorPane>
                           </content>
