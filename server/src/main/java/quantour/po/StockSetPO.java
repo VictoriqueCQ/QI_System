@@ -25,10 +25,17 @@ public class StockSetPO {
         }
         if(listMap!=null&&listMap.size()!=0) {
             date =listMap.get(1).get(1).getDate();
+            if(date==null){
+                System.out.print("1");
+            }
         }
     }
 
     public Map<String, String> getStockSets() {
         return stockSets;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }
