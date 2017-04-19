@@ -697,7 +697,7 @@ public class ReturnsController implements Initializable {
             }
         }
         System.out.println(time);
-        List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        List<StockSetVO> stockSetVOS = strategyDataVO_MR.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
         for (int i = 0; i < stockModelArrayList.size(); i++) {
@@ -1058,15 +1058,15 @@ public class ReturnsController implements Initializable {
 
             annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
 
-            basicAnnualReturn = ((double)((int)(strategyDataVO_MS.getBasicAnnualReturn()*1000)))/10;
+            basicAnnualReturn = ((double)((int)(strategyDataVO_MR.getBasicAnnualReturn()*1000)))/10;
 
-            alphaNum = ((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10;
+            alphaNum = ((double)((int)(strategyDataVO_MR.getAlpha()*1000)))/10;
 
-            betaNum = ((double)((int)(strategyDataVO_MS.getBeta()*1000)))/1000;
+            betaNum = ((double)((int)(strategyDataVO_MR.getBeta()*1000)))/1000;
 
-            sharpeRatio = ((double)((int)(strategyDataVO_MS.getSharpeRatio()*1000)))/1000;
+            sharpeRatio = ((double)((int)(strategyDataVO_MR.getSharpeRatio()*1000)))/1000;
 
-            maxDrawDown = ((double)((int)(strategyDataVO_MS.getMaxDrawDown()*1000)))/10;
+            maxDrawDown = ((double)((int)(strategyDataVO_MR.getMaxDrawDown()*1000)))/10;
 
             setCumulativeTableView();
 
