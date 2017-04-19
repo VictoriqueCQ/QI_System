@@ -879,13 +879,14 @@ public class ReturnsController implements Initializable {
             //处理map
 
             ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
-            Date date=new Date();
+
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
                 String year="";
                 String month="";
                 String day="";
                 HashMap<String,String> hashMap=new HashMap<String,String>();
+                Date date=new Date();
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -899,7 +900,6 @@ public class ReturnsController implements Initializable {
 
                     Iterator<String> keys1 = jsonObject1.keys();
                     while(keys1.hasNext()){
-
                         key1=keys1.next();
                         if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
                             value1 = jsonObject1.get(key1).toString();
@@ -916,7 +916,7 @@ public class ReturnsController implements Initializable {
                             month=jsonObject1.get(key1).toString();
                             System.out.println(month);
                         }
-                        else if(key1.equals("day")){
+                        else if(key1.equals("date")){
                             day=jsonObject1.get(key1).toString();
                             System.out.println(day);
                         }
@@ -928,7 +928,7 @@ public class ReturnsController implements Initializable {
                 catch (ParseException e){
                     e.printStackTrace();
                 }
-//                System.out.println(date);
+                System.out.println(date);
                 StockSetVO stockSetVO=new StockSetVO(hashMap);
                 stockSetVO.setDate(date);
                 stockSetVOS1.add(stockSetVO);
@@ -1137,7 +1137,7 @@ public class ReturnsController implements Initializable {
                             month=jsonObject1.get(key1).toString();
                             System.out.println(month);
                         }
-                        else if(key1.equals("day")){
+                        else if(key1.equals("date")){
                             day=jsonObject1.get(key1).toString();
                             System.out.println(day);
                         }
