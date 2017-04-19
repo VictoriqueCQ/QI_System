@@ -14,8 +14,8 @@ public class StockSetVO {
         this.stockSets = stockSets;
     }
 
-    public void setDate(){
-
+    public void setDate(Date date){
+        this.date = date;
     }
     public Date getDate() {
         return date;

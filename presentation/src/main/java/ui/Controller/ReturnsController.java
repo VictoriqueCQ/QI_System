@@ -894,7 +894,7 @@ public class ReturnsController implements Initializable {
             number = profits.size();//形成期+持有期的个数
 
 //            long period = (this.changeDateStyle(EndDate_MS).getTime() - this.changeDateStyle(StartDate_MS).getTime()) / number;
-            long period = Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()) * 24 * 60 * 60;
+//            long period = Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()) * 24 * 60 * 60;
 
             SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -902,22 +902,25 @@ public class ReturnsController implements Initializable {
             XYChart.Series series2 = new XYChart.Series();
 
             List<Double> relativeProfits = new ArrayList<>();//相对收益指数
+
             String time;
+            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
             Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
-                time = simpleDateFormat_2.format(startTime);
+                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
                 System.out.println("profits="+profits.get(i));
                 System.out.println("basicProfits="+basicProfits.get(i));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
-                Calendar c = new  GregorianCalendar();
-                c.setTime(startTime);
-                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
-                startTime = c.getTime();
+//                Calendar c = new  GregorianCalendar();
+//                c.setTime(startTime);
+//                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
+//                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
+            lineChart.setAnimated(false);
 
 
             //以下是相对收益指数
@@ -965,13 +968,13 @@ public class ReturnsController implements Initializable {
             series3.getData().add(new XYChart.Data<>("3.00%", frequentNumber[2]));
             series3.getData().add(new XYChart.Data<>("4.00%", frequentNumber[3]));
             series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[4]));
-
-            series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[0]));
-
+            System.err.println(frequentNumber[4]);
+            series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[5]));
+            series4.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[6]));
+            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[7]));
+            series4.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[8]));
+            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[9]));
+            System.err.println(frequentNumber[9]);
             barChart.getData().clear();
             barChart.layout();
             barChart.getData().addAll(series3, series4);
@@ -1058,15 +1061,15 @@ public class ReturnsController implements Initializable {
 
             annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
 
-            basicAnnualReturn = ((double)((int)(strategyDataVO_MS.getBasicAnnualReturn()*1000)))/10;
+            basicAnnualReturn = ((double)((int)(strategyDataVO_MR.getBasicAnnualReturn()*1000)))/10;
 
-            alphaNum = ((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10;
+            alphaNum = ((double)((int)(strategyDataVO_MR.getAlpha()*1000)))/10;
 
-            betaNum = ((double)((int)(strategyDataVO_MS.getBeta()*1000)))/1000;
+            betaNum = ((double)((int)(strategyDataVO_MR.getBeta()*1000)))/1000;
 
-            sharpeRatio = ((double)((int)(strategyDataVO_MS.getSharpeRatio()*1000)))/1000;
+            sharpeRatio = ((double)((int)(strategyDataVO_MR.getSharpeRatio()*1000)))/1000;
 
-            maxDrawDown = ((double)((int)(strategyDataVO_MS.getMaxDrawDown()*1000)))/10;
+            maxDrawDown = ((double)((int)(strategyDataVO_MR.getMaxDrawDown()*1000)))/10;
 
             setCumulativeTableView();
 
@@ -1099,6 +1102,7 @@ public class ReturnsController implements Initializable {
             }
 
             lineChart.getData().addAll(series1, series2);
+            lineChart.setAnimated(false);
 
 
             int[] frequentNumber = new int[10];
@@ -1314,6 +1318,9 @@ public class ReturnsController implements Initializable {
             areaChart_2.setHorizontalZeroLineVisible(true);
             areaChart_1.getData().addAll(series1);
             areaChart_2.getData().addAll(series2);
+
+            areaChart_1.setAnimated(false);
+            areaChart_2.setAnimated(false);
         }
 
     }
@@ -1421,6 +1428,9 @@ public class ReturnsController implements Initializable {
             areaChart_2.setHorizontalZeroLineVisible(true);
             areaChart_1.getData().addAll(series1);
             areaChart_2.getData().addAll(series2);
+
+            areaChart_1.setAnimated(false);
+            areaChart_2.setAnimated(false);
         }
     }
 
@@ -1483,9 +1493,9 @@ public class ReturnsController implements Initializable {
         HoldingPeriod_MomentumStrategy.setText("10");
         FormativePeriod_MomentumStrategy.setText("10");
 
-        HoldingPeriod_MeanReversio.setText("10");
-        FormativePeriod_MeanReversio.setText("10");
-        StockHeldInHouse_MeanReversio.setText("10");
+        HoldingPeriod_MeanReversio.setText("");
+        FormativePeriod_MeanReversio.setText("2");
+        StockHeldInHouse_MeanReversio.setText("9");
 
         stockCodeList.add("002007");
         stockCodeList.add("002006");
