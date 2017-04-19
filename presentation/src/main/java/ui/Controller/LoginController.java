@@ -111,7 +111,7 @@ public class LoginController {
         }
 
         //自动写入上次记住的用户名密码
-        File f=new File(path1+"documentation\\remembereduserinfo.txt");
+        File f=new File("F:stock_data\\remembereduserinfo.txt");
         try {
             BufferedReader brreader = new BufferedReader(new FileReader(f));
             String info=brreader.readLine();

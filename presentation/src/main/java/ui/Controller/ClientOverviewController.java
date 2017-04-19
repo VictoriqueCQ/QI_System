@@ -129,22 +129,22 @@ public class ClientOverviewController {
         this.main = main;
         setButtonText();
         this.gotoMarketCondition();
-        if(t){
-            nameLabel.setText("   姓名: "+userVO.getName());
-            loginButton.setVisible(false);
-            registerButton.setVisible(false);
-            exitLoginButton.setVisible(true);
-            comparsionButton.setDisable(false);
-            returnsButton.setDisable(false);
-        }
-        else{
-            nameLabel.setText("   游客访问");
-            loginButton.setVisible(true);
-            registerButton.setVisible(true);
-            exitLoginButton.setVisible(false);
-            comparsionButton.setDisable(true);
-            returnsButton.setDisable(true);
-        }
+//        if(t){
+//            nameLabel.setText("   姓名: "+userVO.getName());
+//            loginButton.setVisible(false);
+//            registerButton.setVisible(false);
+//            exitLoginButton.setVisible(true);
+//            comparsionButton.setDisable(false);
+//            returnsButton.setDisable(false);
+//        }
+//        else{
+//            nameLabel.setText("   游客访问");
+//            loginButton.setVisible(true);
+//            registerButton.setVisible(true);
+//            exitLoginButton.setVisible(false);
+//            comparsionButton.setDisable(true);
+//            returnsButton.setDisable(true);
+//        }
     }
 
 }
