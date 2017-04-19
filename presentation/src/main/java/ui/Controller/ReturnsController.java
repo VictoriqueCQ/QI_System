@@ -1536,9 +1536,9 @@ public class ReturnsController implements Initializable {
             HoldingPeriod_MomentumStrategy.setDisable(false);
             FormativePeriod_MomentumStrategy.setDisable(true);
             System.out.println("get choose");
-        }else if (ChooseFPorHP_MS.getValue().equals("无")){
-            FormativePeriod_MeanReversio.setDisable(false);
-            HoldingPeriod_MeanReversio.setDisable(false);
+        }else {
+            FormativePeriod_MomentumStrategy.setDisable(false);
+            HoldingPeriod_MomentumStrategy.setDisable(false);
         }
     }
 
@@ -1550,7 +1550,7 @@ public class ReturnsController implements Initializable {
         } else if(ChooseFPorHP_MR.getValue().equals("持有期")){
             HoldingPeriod_MeanReversio.setDisable(false);
             FormativePeriod_MeanReversio.setDisable(true);
-        }else if(ChooseFPorHP_MR.getValue().equals("无")){
+        }else {
             FormativePeriod_MeanReversio.setDisable(false);
             HoldingPeriod_MeanReversio.setDisable(false);
         }

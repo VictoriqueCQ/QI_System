@@ -72,7 +72,7 @@ public class LoginController {
             UserVO userVO = (UserVO) jsonUtil.JSONToObj(json, userVO1.getClass());
             if (userVO != null) {
                 this.exitLogin();
-//                AlertUtil.showConfirmingAlert("登录成功");
+                AlertUtil.showConfirmingAlert("登录成功");
                 main.gotoClientOverview(true, userVO);
                 if (rememberPasswordRadioButton.isSelected()) {
                     File f = new File(path1 + "documentation\\remembereduserinfo.txt");
