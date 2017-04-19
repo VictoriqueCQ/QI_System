@@ -30,8 +30,7 @@ public class StockSetPO {
             }
         }
     }
-
-    public Date getDate(){return date;}
+    
     public Map<String, String> getStockSets() {
         return stockSets;
     }
