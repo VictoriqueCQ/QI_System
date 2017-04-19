@@ -982,25 +982,25 @@ public class ReturnsController implements Initializable {
             }
 
             for (int i = 0; i < number; i++) {
-                if (relativeProfits.get(i) <= 0.015 && relativeProfits.get(i) >= 0) {
+                if (relativeProfits.get(i) <= 0.02 && relativeProfits.get(i) >= 0) {
                     frequentNumber[0]++;
-                } else if (relativeProfits.get(i) > 0.015 && relativeProfits.get(i) < +0.025) {
+                } else if (relativeProfits.get(i) > 0.02 && relativeProfits.get(i) <= +0.04) {
                     frequentNumber[1]++;
-                } else if (relativeProfits.get(i) > 0.025 && relativeProfits.get(i) < +0.035) {
+                } else if (relativeProfits.get(i) > 0.04 && relativeProfits.get(i) <= +0.06) {
                     frequentNumber[2]++;
-                } else if (relativeProfits.get(i) > 0.035 && relativeProfits.get(i) < +0.045) {
+                } else if (relativeProfits.get(i) > 0.06 && relativeProfits.get(i) <= +0.08) {
                     frequentNumber[3]++;
-                } else if (relativeProfits.get(i) > 0.045) {
+                } else if (relativeProfits.get(i) > 0.08) {
                     frequentNumber[4]++;
-                } else if (relativeProfits.get(i) > -0.015 && relativeProfits.get(i) < 0) {
+                } else if (relativeProfits.get(i) > -0.02 && relativeProfits.get(i) < 0) {
                     frequentNumber[5]++;
-                } else if (relativeProfits.get(i) > -0.025 && relativeProfits.get(i) < -0.015) {
+                } else if (relativeProfits.get(i) > -0.04 && relativeProfits.get(i) <= -0.02) {
                     frequentNumber[6]++;
-                } else if (relativeProfits.get(i) > -0.035 && relativeProfits.get(i) < -0.025) {
+                } else if (relativeProfits.get(i) > -0.06 && relativeProfits.get(i) <= -0.04) {
                     frequentNumber[7]++;
-                } else if (relativeProfits.get(i) > -0.045 && relativeProfits.get(i) < -0.035) {
+                } else if (relativeProfits.get(i) > -0.08 && relativeProfits.get(i) <= -0.06) {
                     frequentNumber[8]++;
-                } else if (relativeProfits.get(i) < -0.045) {
+                } else if (relativeProfits.get(i) <= -0.08) {
                     frequentNumber[9]++;
                 }
             }
@@ -1012,16 +1012,16 @@ public class ReturnsController implements Initializable {
             XYChart.Series<String, Number> series4 = new XYChart.Series<>();
 
             series3.getData().add(new XYChart.Data<>("1.00%", frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("2.00%", frequentNumber[1]));
-            series3.getData().add(new XYChart.Data<>("3.00%", frequentNumber[2]));
-            series3.getData().add(new XYChart.Data<>("4.00%", frequentNumber[3]));
-            series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[4]));
+            series3.getData().add(new XYChart.Data<>("3.00%", frequentNumber[1]));
+            series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[2]));
+            series3.getData().add(new XYChart.Data<>("7.00%", frequentNumber[3]));
+            series3.getData().add(new XYChart.Data<>("9.00%", frequentNumber[4]));
             System.err.println(frequentNumber[4]);
             series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[5]));
-            series4.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[6]));
-            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[7]));
-            series4.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[8]));
-            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[9]));
+            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[6]));
+            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[7]));
+            series4.getData().add(new XYChart.Data<>("7.00%", -frequentNumber[8]));
+            series4.getData().add(new XYChart.Data<>("9.00%", -frequentNumber[9]));
             System.err.println(frequentNumber[9]);
             barChart.getData().clear();
             barChart.layout();
@@ -1159,25 +1159,25 @@ public class ReturnsController implements Initializable {
                 frequentNumber[i] = 0;
             }
             for (int i = 0; i < number; i++) {
-                if (relativeProfits.get(i) <= 0.015 && relativeProfits.get(i) >= 0) {
+                if (relativeProfits.get(i) <= 0.02 && relativeProfits.get(i) >= 0) {
                     frequentNumber[0]++;
-                } else if (relativeProfits.get(i) > 0.015 && relativeProfits.get(i) < +0.025) {
+                } else if (relativeProfits.get(i) > 0.02 && relativeProfits.get(i) <= +0.04) {
                     frequentNumber[1]++;
-                } else if (relativeProfits.get(i) > 0.025 && relativeProfits.get(i) < +0.035) {
+                } else if (relativeProfits.get(i) > 0.04 && relativeProfits.get(i) <= +0.06) {
                     frequentNumber[2]++;
-                } else if (relativeProfits.get(i) > 0.035 && relativeProfits.get(i) < +0.045) {
+                } else if (relativeProfits.get(i) > 0.06 && relativeProfits.get(i) <= +0.08) {
                     frequentNumber[3]++;
-                } else if (relativeProfits.get(i) > 0.045) {
+                } else if (relativeProfits.get(i) > 0.08) {
                     frequentNumber[4]++;
-                } else if (relativeProfits.get(i) > -0.015 && relativeProfits.get(i) < 0) {
+                } else if (relativeProfits.get(i) > -0.02 && relativeProfits.get(i) < 0) {
                     frequentNumber[5]++;
-                } else if (relativeProfits.get(i) > -0.025 && relativeProfits.get(i) < -0.015) {
+                } else if (relativeProfits.get(i) > -0.04 && relativeProfits.get(i) <= -0.02) {
                     frequentNumber[6]++;
-                } else if (relativeProfits.get(i) > -0.035 && relativeProfits.get(i) < -0.025) {
+                } else if (relativeProfits.get(i) > -0.06 && relativeProfits.get(i) <= -0.04) {
                     frequentNumber[7]++;
-                } else if (relativeProfits.get(i) > -0.045 && relativeProfits.get(i) < -0.035) {
+                } else if (relativeProfits.get(i) > -0.08 && relativeProfits.get(i) <= -0.06) {
                     frequentNumber[8]++;
-                } else if (relativeProfits.get(i) < -0.045) {
+                } else if (relativeProfits.get(i) <= -0.08) {
                     frequentNumber[9]++;
                 }
             }
@@ -1189,16 +1189,16 @@ public class ReturnsController implements Initializable {
             XYChart.Series<String, Number> series4 = new XYChart.Series<>();
 
             series3.getData().add(new XYChart.Data<>("1.00%", frequentNumber[0]));
-            series3.getData().add(new XYChart.Data<>("2.00%", frequentNumber[1]));
-            series3.getData().add(new XYChart.Data<>("3.00%", frequentNumber[2]));
-            series3.getData().add(new XYChart.Data<>("4.00%", frequentNumber[3]));
-            series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[4]));
+            series3.getData().add(new XYChart.Data<>("3.00%", frequentNumber[1]));
+            series3.getData().add(new XYChart.Data<>("5.00%", frequentNumber[2]));
+            series3.getData().add(new XYChart.Data<>("7.00%", frequentNumber[3]));
+            series3.getData().add(new XYChart.Data<>("9.00%", frequentNumber[4]));
 
             series4.getData().add(new XYChart.Data<>("1.00%", -frequentNumber[5]));
-            series4.getData().add(new XYChart.Data<>("2.00%", -frequentNumber[6]));
-            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[7]));
-            series4.getData().add(new XYChart.Data<>("4.00%", -frequentNumber[8]));
-            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[9]));
+            series4.getData().add(new XYChart.Data<>("3.00%", -frequentNumber[6]));
+            series4.getData().add(new XYChart.Data<>("5.00%", -frequentNumber[7]));
+            series4.getData().add(new XYChart.Data<>("7.00%", -frequentNumber[8]));
+            series4.getData().add(new XYChart.Data<>("9.00%", -frequentNumber[9]));
 
             barChart.getData().clear();
             barChart.layout();
@@ -1388,7 +1388,7 @@ public class ReturnsController implements Initializable {
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MR));
         String EndDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MR));
-        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()) {
+        if (FormativePeriod_MeanReversio.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()) {
             //如果选择形成期
             String instruction;
             if (isyourchoice == true) {
