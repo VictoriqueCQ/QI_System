@@ -112,6 +112,9 @@ public class Momentum_Impl implements Strategy_data{
                     List<Stock> formativeList=currentCalculate.stream().
                             filter(stock -> stock.getSerial()>over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
+                    if(formativeList.size()==0){
+                        continue;
+                    }
                     double endPrice=formativeList.get(0).getAdjClose();
                     double startPrice=formativeList.get(formativeList.size()-1).getAdjClose();
                     double profit=(endPrice-startPrice)/startPrice;
