@@ -209,7 +209,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
-                                                <Label layoutX="22.0" layoutY="18.0" text="形成期" />
+                                                <Label layoutX="22.0" layoutY="18.0" text="持有期" />
                                                 <TextField fx:id="HoldingPeriod_MomentumStrategy" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
@@ -224,7 +224,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                              <children>
-                                                <Label layoutX="25.0" layoutY="18.0" text="持有期" />
+                                                <Label layoutX="25.0" layoutY="18.0" text="形成期" />
                                                 <TextField fx:id="FormativePeriod_MomentumStrategy" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
@@ -277,7 +277,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                                              <children>
-                                                <Label layoutX="22.0" layoutY="18.0" text="形成期" />
+                                                <Label layoutX="22.0" layoutY="18.0" text="持有期" />
                                                 <TextField fx:id="HoldingPeriod_MeanReversio" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
@@ -292,7 +292,7 @@
                                           </AnchorPane>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3">
                                              <children>
-                                                <Label layoutX="25.0" layoutY="18.0" text="持有期" />
+                                                <Label layoutX="25.0" layoutY="18.0" text="形成期" />
                                                 <TextField fx:id="FormativePeriod_MeanReversio" layoutX="124.0" layoutY="16.0" styleClass="TextFieldText" />
                                              </children>
                                           </AnchorPane>
