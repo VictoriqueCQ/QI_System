@@ -144,7 +144,7 @@ public class Momentum_Impl implements Strategy_data{
                     basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
                 }
 
-                if(candidates.size()>winnerSize) {
+                if(candidates.size()>=winnerSize) {
                     candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
 
                     Map<Integer, List<Stock>> map = new HashMap<>();
