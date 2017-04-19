@@ -999,7 +999,7 @@ public class ReturnsController implements Initializable {
 //                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
 //                startTime = c.getTime();
             }
-
+            lineChart.getData().clear();
             lineChart.getData().addAll(series1, series2);
             lineChart.setAnimated(false);
 
@@ -1212,6 +1212,7 @@ public class ReturnsController implements Initializable {
                 startTime = c.getTime();
             }
 
+            lineChart.getData().clear();
             lineChart.getData().addAll(series1, series2);
             lineChart.setAnimated(false);
 
