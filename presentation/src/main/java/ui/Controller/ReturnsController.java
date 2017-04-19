@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
@@ -92,7 +93,7 @@ public class ReturnsController implements Initializable {
      */
     //股票排名
     @FXML
-    private TableColumn<StockModel, String> StockRank;
+    private TableColumn<StockModel, Integer> StockRank;
 
     //股票名
     @FXML
@@ -604,13 +605,21 @@ public class ReturnsController implements Initializable {
 //
 //        HoldPeriodRank.getItems().addAll(HoldPeriodString);
 
+//        ObservableList<TableColumn> observableList=stockTable.getColumns();
 
-        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
-        StockRank.setCellFactory(new Callback<TableColumn<StockModel,String>, TableCell<StockModel, String>>() {
+
+
+
+//        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
+        StockRank.setCellValueFactory(new PropertyValueFactory<StockModel,Integer>("rank"));
+//        StockRank.setSortType(TableColumn.SortType.ASCENDING);
+
+//        StockRank.setCellFactory(new PropertyValueFactory<StockModel,Integer>("rankProperty"));
+        StockRank.setCellFactory(new Callback<TableColumn<StockModel,Integer>, TableCell<StockModel, Integer>>() {
 
             @Override
-            public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
-                TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
+            public TableCell<StockModel, Integer> call(TableColumn<StockModel, Integer> param) {
+                TextFieldTableCell<StockModel, Integer> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
                     String name = (stockTable.getItems().get(cell.getIndex()).getName());
@@ -677,12 +686,15 @@ public class ReturnsController implements Initializable {
             }
         });
 
+
+
         //默认展示第一个持有期
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, 1);
         for (int i = 0; i < stockModelArrayList.size(); i++) {
             stockModels.add(stockModelArrayList.get(i));
         }
         stockTable.setItems(stockModels);
+
     }
 
 
@@ -717,7 +729,7 @@ public class ReturnsController implements Initializable {
         // 排序
         for(int i=1;i<=stockModelArrayList.size();i++){
             for(int j=0;j<stockModelArrayList.size();j++){
-                if(Integer.parseInt(stockModelArrayList.get(j).getRank())==i){
+                if(stockModelArrayList.get(j).getRank()==i){
                     System.out.println(i);
                     stockTable.getItems().add(stockModelArrayList.get(j));
 
@@ -767,7 +779,7 @@ public class ReturnsController implements Initializable {
         for (Map.Entry<String,String> entry : stockSets.entrySet()) {
                     StockModel model = new StockModel();
 
-            model.setRank(entry.getKey());
+            model.setRank(Integer.parseInt(entry.getKey()));
             String code1 = entry.getValue();
             char[] code2 = code1.toCharArray();
             int t = 6 - code2.length;

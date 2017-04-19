@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -21,7 +22,7 @@ public class StockModel {
 
     private final SimpleStringProperty isChoosen;
 
-    private final SimpleStringProperty rank;
+    private final IntegerProperty rank;
 
     public StockModel() {
         name = new SimpleStringProperty();
@@ -31,7 +32,7 @@ public class StockModel {
         riseAndDown = new SimpleStringProperty();
         variance = new SimpleStringProperty();
         isChoosen = new SimpleStringProperty();
-        rank = new SimpleStringProperty();
+        rank = new SimpleIntegerProperty();
     }
 
     public String getName() {
@@ -122,15 +123,15 @@ public class StockModel {
         return isChoosen;
     }
 
-    public String getRank() {
+    public Integer getRank() {
         return rank.get();
     }
 
-    public void setRank(String rank) {
+    public void setRank(Integer rank) {
         this.rank.set(rank);
     }
 
-    public SimpleStringProperty rankProperty() {
+    public IntegerProperty rankProperty() {
         return rank;
     }
 }
