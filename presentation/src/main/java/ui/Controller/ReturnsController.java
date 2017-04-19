@@ -575,6 +575,7 @@ public class ReturnsController implements Initializable {
             HoldPeriodString.add("第" + i + "个持有期");
         }
         HoldPeriod.addAll(HoldPeriodString);
+        HoldPeriodRank.getItems().clear();
         HoldPeriodRank.setItems(HoldPeriod);
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
@@ -672,6 +673,7 @@ public class ReturnsController implements Initializable {
         String holdPeriod = HoldPeriodRank.getValue();
         char[] h = holdPeriod.toCharArray();
         int time = h[1]-48;
+
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
@@ -1249,7 +1251,10 @@ public class ReturnsController implements Initializable {
             returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
             percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
+//            System.out.print(fhVO.getOverProfit().toString());
+//            System.out.print(fhVO.getClass());
             int ListLength = fhVO.getOverProfit().size();
+//            System.out.print(ListLength);
 
             List<ReturnsModel> models = new ArrayList<>();
             ReturnsModel model;

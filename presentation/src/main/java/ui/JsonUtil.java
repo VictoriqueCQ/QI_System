@@ -38,6 +38,8 @@ public class JsonUtil {
         classMap.put("names",String.class);
         classMap.put("codes",Integer.class);
         classMap.put("profits",Double.class);
+        classMap.put("overProfit",Double.class);
+        classMap.put("winChance",Double.class);
         classMap.put("profit",Double.class);
         classMap.put("basicProfits",Double.class);
         classMap.put("stockSetVOS", StockSetVO.class);
