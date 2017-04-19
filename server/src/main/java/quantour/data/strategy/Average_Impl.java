@@ -173,7 +173,7 @@ public class Average_Impl implements Strategy_data {
                     candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
 
                     Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
-                    System.out.println("ca shi " + candidates.size());
+//                    System.out.println("ca shi " + candidates.size());
 
                     for (int i = candidates.size() - 1; i >= 0; i--) {
 //                    System.out.println("i de zhi wei"+i);
