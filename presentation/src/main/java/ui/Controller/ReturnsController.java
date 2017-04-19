@@ -54,9 +54,6 @@ public class ReturnsController implements Initializable {
     private boolean isyourchoice;
 
 
-
-
-
     /*
     * 以下5个变量是用于起始界面的变量，分别是：
     * 用于确定持有期个数的number
@@ -475,7 +472,6 @@ public class ReturnsController implements Initializable {
         Plate_MeanReversio.getItems().addAll(stockNameList);
         Plate_MeanReversio.setValue(stockNameList.get(0));
         StockheldInHouse_MomentumStrategy.setText(String.valueOf(stockNameList.size()));
-        StockHeldInHouse_MeanReversio.setText(String.valueOf(stockNameList.size()));
         isyourchoice = true;
         this.stockNameList = stockNameList;
         this.stockCodeList = stockCodeList;
@@ -575,8 +571,8 @@ public class ReturnsController implements Initializable {
 //            stockSetVOS=stockSetVOS1;
         }
 
-                for(int j=0;j<stockSetVOS.size();j++){
-            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
+        for (int j = 0; j < stockSetVOS.size(); j++) {
+            System.out.println("a" + stockSetVOS.get(j).getStockSets().toString());
         }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
 
@@ -608,14 +604,12 @@ public class ReturnsController implements Initializable {
 //        ObservableList<TableColumn> observableList=stockTable.getColumns();
 
 
-
-
 //        StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
-        StockRank.setCellValueFactory(new PropertyValueFactory<StockModel,Integer>("rank"));
+        StockRank.setCellValueFactory(new PropertyValueFactory<StockModel, Integer>("rank"));
 //        StockRank.setSortType(TableColumn.SortType.ASCENDING);
 
 //        StockRank.setCellFactory(new PropertyValueFactory<StockModel,Integer>("rankProperty"));
-        StockRank.setCellFactory(new Callback<TableColumn<StockModel,Integer>, TableCell<StockModel, Integer>>() {
+        StockRank.setCellFactory(new Callback<TableColumn<StockModel, Integer>, TableCell<StockModel, Integer>>() {
 
             @Override
             public TableCell<StockModel, Integer> call(TableColumn<StockModel, Integer> param) {
@@ -687,7 +681,6 @@ public class ReturnsController implements Initializable {
         });
 
 
-
         //默认展示第一个持有期
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, 1);
         for (int i = 0; i < stockModelArrayList.size(); i++) {
@@ -706,15 +699,21 @@ public class ReturnsController implements Initializable {
         String holdPeriod = HoldPeriodRank.getValue();
 //        char[] h = holdPeriod.toCharArray();
 //        int time = h[1]-48;
-        int time=0;
-        for(int i=0;i<HoldPeriodRank.getItems().size();i++){
-            if(holdPeriod.equals(HoldPeriodRank.getItems().get(i))){
-                time=i+1;
+        int time = 0;
+        for (int i = 0; i < HoldPeriodRank.getItems().size(); i++) {
+            if (holdPeriod.equals(HoldPeriodRank.getItems().get(i))) {
+                time = i + 1;
                 break;
             }
         }
         System.out.println(time);
-        List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        List<StockSetVO> stockSetVOS;
+
+        if (MomentumStrategyTab.isSelected()) {
+            stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        } else {
+            stockSetVOS = strategyDataVO_MR.getStockSetVOS();
+        }
 //        for(int i=0;i<stockSetVOS.size();i++){
 ////            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
 //        }
@@ -727,9 +726,9 @@ public class ReturnsController implements Initializable {
 
         //TODO
         // 排序
-        for(int i=1;i<=stockModelArrayList.size();i++){
-            for(int j=0;j<stockModelArrayList.size();j++){
-                if(stockModelArrayList.get(j).getRank()==i){
+        for (int i = 1; i <= stockModelArrayList.size(); i++) {
+            for (int j = 0; j < stockModelArrayList.size(); j++) {
+                if (stockModelArrayList.get(j).getRank() == i) {
                     System.out.println(i);
                     stockTable.getItems().add(stockModelArrayList.get(j));
 
@@ -752,15 +751,15 @@ public class ReturnsController implements Initializable {
      * @param i
      */
     private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS, int i) {
-        if(i<1){
-            i=1;
+        if (i < 1) {
+            i = 1;
         }
-        System.out.println("di"+i);
-        StockSetVO stockSetVO = stockSetVOS.get(i-1);
+        System.out.println("di" + i);
+        StockSetVO stockSetVO = stockSetVOS.get(i - 1);
 //        for(int j=0;j<stockSetVOS.size();j++){
 //            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
 //        }
-        Map<String,String> stockSets = stockSetVO.getStockSets();
+        Map<String, String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
     }
@@ -772,12 +771,12 @@ public class ReturnsController implements Initializable {
      * @param stockSets
      * @return
      */
-    private ArrayList<StockModel> stockSetstoStockModel(Map<String,String> stockSets) {
+    private ArrayList<StockModel> stockSetstoStockModel(Map<String, String> stockSets) {
         ArrayList<StockModel> stockModelArrayList = new ArrayList<StockModel>();
         HashMap<String, String> name_code = this.getNameList("presentation/name_code.csv");
 
-        for (Map.Entry<String,String> entry : stockSets.entrySet()) {
-                    StockModel model = new StockModel();
+        for (Map.Entry<String, String> entry : stockSets.entrySet()) {
+            StockModel model = new StockModel();
 
             model.setRank(Integer.parseInt(entry.getKey()));
             String code1 = entry.getValue();
@@ -867,7 +866,7 @@ public class ReturnsController implements Initializable {
                 }
             } else {
                 instruction = "Strategy\t" + "M\t" + StartDateString_MS + "\t" + EndDateString_MS + "\t"
-                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+null+"\t";
+                        + FormativePeriod_MomentumStrategy.getText() + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t" + null + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -890,15 +889,15 @@ public class ReturnsController implements Initializable {
 
             //处理map
 
-            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
+            ArrayList<StockSetVO> stockSetVOS1 = new ArrayList<StockSetVO>();
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
-                String year="";
-                String month="";
-                String day="";
-                HashMap<String,String> hashMap=new HashMap<String,String>();
-                Date date=new Date();
+            for (int j = 0; j < strategyDataVO_MS.getStockSetVOS().size(); j++) {
+                String year = "";
+                String month = "";
+                String day = "";
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                Date date = new Date();
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -911,37 +910,33 @@ public class ReturnsController implements Initializable {
                     String value1 = null;
 
                     Iterator<String> keys1 = jsonObject1.keys();
-                    while(keys1.hasNext()){
-                        key1=keys1.next();
-                        if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
+                    while (keys1.hasNext()) {
+                        key1 = keys1.next();
+                        if ((!key1.equals("date")) && (!key1.equals("hours")) && (!key1.equals("month")) && (!key1.equals("seconds")) && (!key1.equals("timezoneOffset")) && (!key1.equals("year")) && (!key1.equals("minutes")) && (!key1.equals("time")) && (!key1.equals("day"))) {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
-                        }
-                        else if(key1.equals("year")){
-                            year=jsonObject1.get(key1).toString();
-                            int t= Integer.parseInt(year);
-                            t+=1900;
-                            year=String.valueOf(t);
+                        } else if (key1.equals("year")) {
+                            year = jsonObject1.get(key1).toString();
+                            int t = Integer.parseInt(year);
+                            t += 1900;
+                            year = String.valueOf(t);
                             System.out.println(year);
-                        }
-                        else if(key1.equals("month")){
-                            month=jsonObject1.get(key1).toString();
+                        } else if (key1.equals("month")) {
+                            month = jsonObject1.get(key1).toString();
                             System.out.println(month);
-                        }
-                        else if(key1.equals("date")){
-                            day=jsonObject1.get(key1).toString();
+                        } else if (key1.equals("date")) {
+                            day = jsonObject1.get(key1).toString();
                             System.out.println(day);
                         }
                     }
                 }
                 try {
-                    date = format.parse(year + "-"+month+"-"+day);
-                }
-                catch (ParseException e){
+                    date = format.parse(year + "-" + month + "-" + day);
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 System.out.println(date);
-                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                StockSetVO stockSetVO = new StockSetVO(hashMap);
                 stockSetVO.setDate(date);
                 stockSetVOS1.add(stockSetVO);
             }
@@ -952,17 +947,17 @@ public class ReturnsController implements Initializable {
 
 
             //以下是累计收益率
-            annualReturn = ((double)((int)(strategyDataVO_MS.getAnnualReturn()*1000)))/10;
+            annualReturn = ((double) ((int) (strategyDataVO_MS.getAnnualReturn() * 1000))) / 10;
 
-            basicAnnualReturn = ((double)((int)(strategyDataVO_MS.getBasicAnnualReturn()*1000)))/10;
+            basicAnnualReturn = ((double) ((int) (strategyDataVO_MS.getBasicAnnualReturn() * 1000))) / 10;
 
-            alphaNum = ((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10;
+            alphaNum = ((double) ((int) (strategyDataVO_MS.getAlpha() * 1000))) / 10;
 
-            betaNum = ((double)((int)(strategyDataVO_MS.getBeta()*1000)))/1000;
+            betaNum = ((double) ((int) (strategyDataVO_MS.getBeta() * 1000))) / 1000;
 
-            sharpeRatio = ((double)((int)(strategyDataVO_MS.getSharpeRatio()*1000)))/1000;
+            sharpeRatio = ((double) ((int) (strategyDataVO_MS.getSharpeRatio() * 1000))) / 1000;
 
-            maxDrawDown = ((double)((int)(strategyDataVO_MS.getMaxDrawDown()*1000)))/10;
+            maxDrawDown = ((double) ((int) (strategyDataVO_MS.getMaxDrawDown() * 1000))) / 10;
 
             setCumulativeTableView();
 
@@ -991,9 +986,9 @@ public class ReturnsController implements Initializable {
 //                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
-                System.out.println("profits="+profits.get(i));
-                System.out.println("basicProfits="+basicProfits.get(i));
-                relativeProfits.add(profits.get(i)-basicProfits.get(i));
+                System.out.println("profits=" + profits.get(i));
+                System.out.println("basicProfits=" + basicProfits.get(i));
+                relativeProfits.add(profits.get(i) - basicProfits.get(i));
 //                Calendar c = new  GregorianCalendar();
 //                c.setTime(startTime);
 //                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
@@ -1005,9 +1000,9 @@ public class ReturnsController implements Initializable {
 
 
             //以下是相对收益指数
-            for (int i = 0;i<relativeProfits.size();i++){
-                System.out.println("relativesProfits="+relativeProfits.get(i));
-                }
+            for (int i = 0; i < relativeProfits.size(); i++) {
+                System.out.println("relativesProfits=" + relativeProfits.get(i));
+            }
 
             int[] frequentNumber = new int[10];
             for (int i = 0; i < 10; i++) {
@@ -1080,7 +1075,6 @@ public class ReturnsController implements Initializable {
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
                 && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
-//            isyourchoice=true;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
                         + FormativePeriod_MeanReversio.getText() + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"
@@ -1097,10 +1091,7 @@ public class ReturnsController implements Initializable {
                 }
             }
             net.actionPerformed(instruction);
-            System.out.print(instruction);
-
         }
-
 
         String ReturnsMessage;
         ReturnsMessage = net.run();
@@ -1112,16 +1103,15 @@ public class ReturnsController implements Initializable {
             JsonUtil jsonUtil = new JsonUtil();
             StrategyDataVO StrategyDataVO_middleState = new StrategyDataVO();
             strategyDataVO_MR = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
-
             //处理map
-            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
-            Date date=new Date();
+            ArrayList<StockSetVO> stockSetVOS1 = new ArrayList<StockSetVO>();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            HashMap<String,String> hashMap=new HashMap<String,String>();
-            for(int j=0;j<strategyDataVO_MR.getStockSetVOS().size();j++) {
-                String year="";
-                String month="";
-                String day="";
+            for (int j = 0; j < strategyDataVO_MR.getStockSetVOS().size(); j++) {
+                Date date = new Date();
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                String year = "";
+                String month = "";
+                String day = "";
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MR.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -1133,54 +1123,49 @@ public class ReturnsController implements Initializable {
                     String key1 = null;
                     String value1 = null;
                     Iterator<String> keys1 = jsonObject1.keys();
-                    while(keys1.hasNext()){
-                        key1=keys1.next();
-                        if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
+                    while (keys1.hasNext()) {
+                        key1 = keys1.next();
+                        if ((!key1.equals("date")) && (!key1.equals("hours")) && (!key1.equals("month")) && (!key1.equals("seconds")) && (!key1.equals("timezoneOffset")) && (!key1.equals("year")) && (!key1.equals("minutes")) && (!key1.equals("time")) && (!key1.equals("day"))) {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
-                        }
-                        else if(key1.equals("year")){
-                            year=jsonObject1.get(key1).toString();
-                            int t= Integer.parseInt(year);
-                            t+=1900;
-                            year=String.valueOf(t);
+                        } else if (key1.equals("year")) {
+                            year = jsonObject1.get(key1).toString();
+                            int t = Integer.parseInt(year);
+                            t += 1900;
+                            year = String.valueOf(t);
                             System.out.println(year);
-                        }
-                        else if(key1.equals("month")){
-                            month=jsonObject1.get(key1).toString();
+                        } else if (key1.equals("month")) {
+                            month = jsonObject1.get(key1).toString();
                             System.out.println(month);
-                        }
-                        else if(key1.equals("date")){
-                            day=jsonObject1.get(key1).toString();
+                        } else if (key1.equals("date")) {
+                            day = jsonObject1.get(key1).toString();
                             System.out.println(day);
                         }
                     }
                 }
                 try {
-                    date = format.parse(year + "-"+month+"-"+day);
-                }
-                catch (ParseException e){
+                    date = format.parse(year + "-" + month + "-" + day);
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
-//                System.out.println(date);
-                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                StockSetVO stockSetVO = new StockSetVO(hashMap);
                 stockSetVO.setDate(date);
                 stockSetVOS1.add(stockSetVO);
             }
 
             strategyDataVO_MR.setStockSetPOS(stockSetVOS1);
 
-            annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
+            annualReturn = ((double) ((int) (strategyDataVO_MR.getAnnualReturn() * 1000))) / 10;
 
-            basicAnnualReturn = ((double)((int)(strategyDataVO_MR.getBasicAnnualReturn()*1000)))/10;
+            basicAnnualReturn = ((double) ((int) (strategyDataVO_MR.getBasicAnnualReturn() * 1000))) / 10;
 
-            alphaNum = ((double)((int)(strategyDataVO_MR.getAlpha()*1000)))/10;
+            alphaNum = ((double) ((int) (strategyDataVO_MR.getAlpha() * 1000))) / 10;
 
-            betaNum = ((double)((int)(strategyDataVO_MR.getBeta()*1000)))/1000;
+            betaNum = ((double) ((int) (strategyDataVO_MR.getBeta() * 1000))) / 1000;
 
-            sharpeRatio = ((double)((int)(strategyDataVO_MR.getSharpeRatio()*1000)))/1000;
+            sharpeRatio = ((double) ((int) (strategyDataVO_MR.getSharpeRatio() * 1000))) / 1000;
 
-            maxDrawDown = ((double)((int)(strategyDataVO_MR.getMaxDrawDown()*1000)))/10;
+            maxDrawDown = ((double) ((int) (strategyDataVO_MR.getMaxDrawDown() * 1000))) / 10;
 
             setCumulativeTableView();
 
@@ -1205,10 +1190,10 @@ public class ReturnsController implements Initializable {
                 time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
-                relativeProfits.add(profits.get(i)-basicProfits.get(i));
-                Calendar c = new  GregorianCalendar();
+                relativeProfits.add(profits.get(i) - basicProfits.get(i));
+                Calendar c = new GregorianCalendar();
                 c.setTime(startTime);
-                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MeanReversio.getText()));
+                c.add(c.DATE, Integer.parseInt(HoldingPeriod_MeanReversio.getText()));
                 startTime = c.getTime();
             }
 
@@ -1285,7 +1270,7 @@ public class ReturnsController implements Initializable {
 
         //TODO
 
-        DecimalFormat decimalFormat=new DecimalFormat();
+        DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.applyPattern("####0.00");
 //        String testdf=decimalFormat.format(annualReturn);
 
@@ -1296,15 +1281,15 @@ public class ReturnsController implements Initializable {
 //        );
 
         cumulativeData = FXCollections.observableArrayList(
-                new CumulativeReturnsModel(String.valueOf(annualReturn+"%"), String.valueOf(basicAnnualReturn+"%"),
-                        String.valueOf(alphaNum+"%"), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown+"%"))
+                new CumulativeReturnsModel(String.valueOf(annualReturn + "%"), String.valueOf(basicAnnualReturn + "%"),
+                        String.valueOf(alphaNum + "%"), String.valueOf(betaNum), String.valueOf(sharpeRatio), String.valueOf(maxDrawDown + "%"))
         );
         cumulativeTableView.getStyleClass().add("edge-to-edge");
         cumulativeTableView.getStyleClass().add("noborder");
         cumulativeTableView.setItems(cumulativeData);
     }
 
-    private void setChooseFPorHP(){
+    private void setChooseFPorHP() {
         //根据选择形成期还是持有期判定是否能输入形成期或持久期
 //        ObservableList<String> content = FXCollections.observableArrayList();
         List<String> list = new ArrayList<>();
@@ -1448,7 +1433,7 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "T\t" + FormativePeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MeanReversio.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
@@ -1465,13 +1450,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1539,7 +1524,7 @@ public class ReturnsController implements Initializable {
     }
 
     @FXML
-    private void setComboBox_MS(){
+    private void setComboBox_MS() {
         if (ChooseFPorHP_MS.getValue().equals("形成期")) {
             HoldingPeriod_MomentumStrategy.setDisable(true);
             System.out.println("get choose");
@@ -1550,7 +1535,7 @@ public class ReturnsController implements Initializable {
     }
 
     @FXML
-    private void setComboBox_MR(){
+    private void setComboBox_MR() {
         if (ChooseFPorHP_MR.getValue().equals("形成期")) {
             HoldingPeriod_MeanReversio.setDisable(true);
         } else {
@@ -1561,15 +1546,15 @@ public class ReturnsController implements Initializable {
     @FXML
     private void setChoose_MS() {
 //        if(stockCodeList.size()>=100) {
-            if (chaoetab.isSelected()) {
+        if (chaoetab.isSelected()) {
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
 ////            ChooseFPorHP.setItems();
-                setOverProfitsUI_MS();
-            } else {
-                setMomentumStrategyInputSearch();
-            }
+            setOverProfitsUI_MS();
+        } else {
+            setMomentumStrategyInputSearch();
+        }
 //        }
 //        else{
 //            AlertUtil.showWarningAlert("对不起，您选择的股票不足100只");
@@ -1580,14 +1565,14 @@ public class ReturnsController implements Initializable {
     @FXML
     private void setChoose_MR() {
 //        if (stockCodeList.size() >= 100) {
-            if (chaoetab.isSelected()) {
+        if (chaoetab.isSelected()) {
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-                setOverProfitsUI_MR();
-            } else {
-                setMeanReversioInputSearch();
-            }
+            setOverProfitsUI_MR();
+        } else {
+            setMeanReversioInputSearch();
+        }
 //        }
 //        else{
 //            AlertUtil.showWarningAlert("对不起，您选择的股票不足100只");
@@ -1606,40 +1591,9 @@ public class ReturnsController implements Initializable {
 
 
     public void setMain(Main main, Net net) {
-//        setComboBox();
-//        setTableView();
-//        setAreaChart_1();
-//        setAreaChart_2();
-//        setBarChart();
-//        setCumulativeTableView();
-//        setLineChart();
-//        setMeanReversioInputSearch();
-//        setMomentumStrategyInputSearch();
-//        setOverProfitsUI_MS();
-//        setOverProfitsUI_MR();
         setChooseFPorHP();
         this.setDatePicker();
         this.main = main;
         this.net = net;
-        HoldingPeriod_MomentumStrategy.setText("10");
-        FormativePeriod_MomentumStrategy.setText("10");
-
-        HoldingPeriod_MeanReversio.setText("");
-        FormativePeriod_MeanReversio.setText("2");
-        StockHeldInHouse_MeanReversio.setText("9");
-
-        stockCodeList.add("002007");
-        stockCodeList.add("002006");
-        stockCodeList.add("002002");
-        stockCodeList.add("002003");
-        stockCodeList.add("000016");
-        stockCodeList.add("002004");
-        stockCodeList.add("002005");
-        stockCodeList.add("002001");
-        stockCodeList.add("000100");
-        stockCodeList.add("001696");
-
-        isyourchoice=true;
-
     }
 }

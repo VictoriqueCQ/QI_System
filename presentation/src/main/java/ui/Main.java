@@ -19,16 +19,16 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class  Main extends Application {
+public class Main extends Application {
 
     Net net;
 
     // 主窗口
     private Stage stage;
-    private Stage stage1=new Stage(StageStyle.UNDECORATED);
-    private Stage stage2=new Stage(StageStyle.TRANSPARENT);
-    private Stage stage3=new Stage(StageStyle.UNDECORATED);
-    private Stage stage4=new Stage(StageStyle.UNDECORATED);
+    private Stage stage1 = new Stage(StageStyle.UNDECORATED);
+    private Stage stage2 = new Stage(StageStyle.TRANSPARENT);
+    private Stage stage3 = new Stage(StageStyle.UNDECORATED);
+    private Stage stage4 = new Stage(StageStyle.UNDECORATED);
 
 
     // 内部窗口
@@ -53,20 +53,20 @@ public class  Main extends Application {
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setResizable(false);
         net.setUpNet();
-        UserVO userVO=new UserVO();
-//        this.gotoStart();
-        this.gotoClientOverview(false,userVO);
-}
+        UserVO userVO = new UserVO();
+        this.gotoStart();
+        this.gotoClientOverview(false, userVO);
+    }
 
-    public void gotoStart(){
+    public void gotoStart() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Start.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(600,400);
+            insidePane.setPrefSize(600, 400);
             StartController controller = (StartController) fxmlLoader.getController();
-            controller.setMain(this,net,stage);
-            Scene scene=new Scene(insidePane);
+            controller.setMain(this, net, stage);
+            Scene scene = new Scene(insidePane);
             scene.setFill(null);
             stage4.setScene(scene);
             stage4.setAlwaysOnTop(true);
@@ -77,15 +77,15 @@ public class  Main extends Application {
         }
     }
 
-    public void lodaing(){
+    public void lodaing() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Loading.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
-            insidePane.setPrefSize(800,600);
+            insidePane.setPrefSize(800, 600);
             LoadingController controller = (LoadingController) fxmlLoader.getController();
             controller.setMain(this);
-            Scene scene=new Scene(insidePane);
+            Scene scene = new Scene(insidePane);
             scene.setFill(null);
             stage2.setScene(scene);
             stage2.setAlwaysOnTop(true);
@@ -110,7 +110,7 @@ public class  Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Login.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             LoginController controller = (LoginController) fxmlLoader.getController();
-            controller.setMain(this,net);
+            controller.setMain(this, net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -121,7 +121,7 @@ public class  Main extends Application {
     }
 
     /**
-     *  跳转到注册界面
+     * 跳转到注册界面
      */
     public void gotoRegist() {
         try {
@@ -129,7 +129,7 @@ public class  Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/Regist.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             RegistController registController = (RegistController) fxmlLoader.getController();
-            registController.setMain(this,net);
+            registController.setMain(this, net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -140,7 +140,7 @@ public class  Main extends Application {
     }
 
     /**
-     *  跳转到更改密码界面
+     * 跳转到更改密码界面
      */
     public void gotoChangePassword() {
         try {
@@ -148,7 +148,7 @@ public class  Main extends Application {
             fxmlLoader.setLocation(Main.class.getResource("/ChangePassword.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             ChangePasswordController registController = (ChangePasswordController) fxmlLoader.getController();
-            registController.setMain(this,net);
+            registController.setMain(this, net);
             stage1.setScene(new Scene(insidePane));
             stage1.setAlwaysOnTop(true);
             stage1.centerOnScreen();
@@ -157,7 +157,6 @@ public class  Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-
 
 
     /**
@@ -171,11 +170,11 @@ public class  Main extends Application {
             rootLayout.setPrefSize(1200, 800);
             rootLayout.setDividerPositions(0.15f);
             ClientOverviewController controller = (ClientOverviewController) fxmlLoader.getController();
-            controller.setMain(this,t,userVO);
+            controller.setMain(this, t, userVO);
             scene = new Scene(rootLayout);
             stage.setScene(scene);
             stage.centerOnScreen();
-            stage.show();
+//            stage.show();
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -184,7 +183,7 @@ public class  Main extends Application {
     /**
      * 跳转到市场情况界面
      */
-    public void gotoMarketCondition(){
+    public void gotoMarketCondition() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/MarketCondition.fxml"));
@@ -218,7 +217,7 @@ public class  Main extends Application {
     /**
      * 跳转到K线图界面
      */
-    public void gotoCandlestickChart(String name, String code, LocalDate startdate,LocalDate enddate) {
+    public void gotoCandlestickChart(String name, String code, LocalDate startdate, LocalDate enddate) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/CandlestickChart.fxml"));
@@ -226,7 +225,7 @@ public class  Main extends Application {
             insidePane.setPrefSize(1200, 680);
             rootLayout.getItems().set(1, insidePane);
             CandlestickChartController controller = (CandlestickChartController) fxmlLoader.getController();
-            controller.setMain(this, net,name,code,startdate,enddate);
+            controller.setMain(this, net, name, code, startdate, enddate);
         } catch (Exception e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -269,7 +268,7 @@ public class  Main extends Application {
     /**
      * 跳转到策略界面
      */
-    public void gotoReturns(){
+    public void gotoReturns() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Returns.fxml"));
@@ -286,13 +285,13 @@ public class  Main extends Application {
     /**
      * 跳转到股票选择界面
      */
-    public void gotoSelectStock(ReturnsController returnsController, ArrayList<String> stockCodeList){
+    public void gotoSelectStock(ReturnsController returnsController, ArrayList<String> stockCodeList) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/SelectStock.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
             SelectStockController controller = (SelectStockController) fxmlLoader.getController();
-            controller.setMain(this, net,returnsController,stockCodeList);
+            controller.setMain(this, net, returnsController, stockCodeList);
             stage3.setScene(new Scene(insidePane));
             stage3.centerOnScreen();
             stage3.show();
@@ -318,34 +317,34 @@ public class  Main extends Application {
     /**
      * 系统缩小至任务栏
      */
-    public void zoomoutButton(){
+    public void zoomoutButton() {
         stage.setIconified(true);
     }
 
     /**
      * 弹窗缩小至任务栏
      */
-    public void zoomoutButton1(){
+    public void zoomoutButton1() {
         stage3.setIconified(true);
     }
 
     /**
-     *  关闭弹窗
+     * 关闭弹窗
      */
     public void closeExtraStage() {
-        if (stage1!=null&&stage1.isShowing()) {
+        if (stage1 != null && stage1.isShowing()) {
             stage1.hide();
         }
-        if (stage2!=null&&stage2.isShowing()) {
+        if (stage2 != null && stage2.isShowing()) {
             stage2.hide();
         }
-        if (stage3!=null&&stage3.isShowing()) {
+        if (stage3 != null && stage3.isShowing()) {
             stage3.hide();
         }
     }
 
-    public void closeStage4(){
-        if (stage4!=null&&stage4.isShowing()) {
+    public void closeStage4() {
+        if (stage4 != null && stage4.isShowing()) {
             stage4.hide();
         }
     }

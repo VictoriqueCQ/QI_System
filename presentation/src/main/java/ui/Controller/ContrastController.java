@@ -128,8 +128,6 @@ public class ContrastController extends Application {
     private int number;//最多可设置五只股票同时比较
 
 
-
-
     @FXML
     private ListView<String> fuzzyCheck;//模糊搜索
 
@@ -255,45 +253,38 @@ public class ContrastController extends Application {
     @FXML
     public void addCompare() {
         fuzzyCheck.setVisible(false);
-        if(number<5){
-        number++;
-        StockSearchConditionVO searchConditionVO1;
-        String stockName1 = stockField.getText();
-        LocalDate startLocalDate = startTimeDatePicker.getValue();
-        LocalDate endLocalDate = endTimeDatePicker.getValue();
-        Date startDate = this.changeDateStyle(startLocalDate);
-        Date endDate = this.changeDateStyle(endLocalDate);
+        if (number < 5) {
+            number++;
+            StockSearchConditionVO searchConditionVO1;
+            String stockName1 = stockField.getText();
+            LocalDate startLocalDate = startTimeDatePicker.getValue();
+            LocalDate endLocalDate = endTimeDatePicker.getValue();
+            Date startDate = this.changeDateStyle(startLocalDate);
+            Date endDate = this.changeDateStyle(endLocalDate);
 
-        if (searchWayChoice.getValue().equals("股票名称搜索")) {
-            searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
+            if (searchWayChoice.getValue().equals("股票名称搜索")) {
+                searchConditionVO1 = new StockSearchConditionVO(null, stockName1, startDate, endDate);
 
+            } else {
+                searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
+
+            }
+
+            stock1 = getStockVoByCondition(searchConditionVO1);
+            if (stock1 == null) {
+                AlertUtil.showErrorAlert("对不起，您输入的股票不存在");
+            }
+
+            setTableContrast();
+            setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
+            setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
+            setVariance();
         } else {
-            searchConditionVO1 = new StockSearchConditionVO(stockName1, null, startDate, endDate);
-
-        }
-
-        stock1 = getStockVoByCondition(searchConditionVO1);
-        if (stock1 == null) {
-            AlertUtil.showErrorAlert("对不起，您输入的股票不存在");
-        }
-
-        setTableContrast();
-        setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
-        setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
-        setVariance();
-        } else{
             AlertUtil.showConfirmingAlert("对不起，您选择比较股票数过多");
         }
 
 
     }
-
-
-
-
-
-
-
 
     public void setTableContrast() {
         stockName1.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
@@ -302,11 +293,7 @@ public class ContrastController extends Application {
         maxPrice.setCellValueFactory(celldata -> celldata.getValue().maxPriceProperty());
         riseAndDown.setCellValueFactory(celldata -> celldata.getValue().riseAndDownProperty());
         stockModel1 = stockVOtoStockModle(stock1);
-//        stockModel2 = stockVOtoStockModle(stock2);
-//        System.out.print(stockModel1.getName());
-//        models = FXCollections.observableArrayList();
         models.add(stockModel1);
-//        models.add(stockModel2);
         stockTable.setItems(models);
     }
 
@@ -316,7 +303,6 @@ public class ContrastController extends Application {
         model.setID(stockVO.getCode());
         double[] low = stockVO.getLow();
         double minTemp = low[0];
-//        System.out.print("dhaudgaygduyagd"+minTemp);
         for (int i = 0; i < low.length; i++) {
             if (low[i] < minTemp) {
                 minTemp = low[i];
@@ -452,28 +438,21 @@ public class ContrastController extends Application {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fuzzyCheck.getItems().removeAll();
-//                System.out.println("Remove!");
-                if(searchWayChoice.getValue().equals("股票名称搜索")){
-
+                if (searchWayChoice.getValue().equals("股票名称搜索")) {
                     reStockName = ".*";
-
-                    if(stockField.getText()!=""){
+                    if (stockField.getText() != "") {
                         stockNameImport = stockField.getText();
-                        if(stockNameImport!=null) {
+                        if (stockNameImport != null) {
                             for (int i = 0; i < stockNameImport.length(); i++) {
                                 reStockName = reStockName + stockNameImport.charAt(i) + ".*";
-//                                System.out.println("正则表达式为：" + reStockName);
                             }
-
                             ArrayList<String> fuzzy = FuzzyCheck();
-
-                            if(fuzzy!=null) {
+                            if (fuzzy != null) {
                                 ObservableList<String> items = FXCollections.observableArrayList(
                                         fuzzy);
                                 fuzzyCheck.setItems(items);
-
                                 fuzzyCheck.setVisible(true);
-                            }else{
+                            } else {
                                 fuzzyCheck.setVisible(false);
                             }
                         }
@@ -483,61 +462,47 @@ public class ContrastController extends Application {
         });
 
         fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
-
                 new ChangeListener<String>() {
-
                     public void changed(ObservableValue<? extends String> ov,
-
                                         String old_val, String new_val) {
-
-
                         stockField.setText(new_val);
                         fuzzyCheck.setVisible(false);
-
-
                     }
-
                 });
-
-
-
     }
 
-    public ArrayList<String> FuzzyCheck(){
+    public ArrayList<String> FuzzyCheck() {
         ArrayList<String> result = new ArrayList<>();
-        if(reStockName!=".*"){
-        Pattern pattern = Pattern.compile(reStockName);
-        for(int i=0;i<allStockName.length;i++){
-            Matcher matcher = pattern.matcher(allStockName[i]);
-            if(matcher.matches()){
-//                System.out.println("匹配："+allStockName[i]);
-                result.add(allStockName[i]);
-
+        if (reStockName != ".*") {
+            Pattern pattern = Pattern.compile(reStockName);
+            for (int i = 0; i < allStockName.length; i++) {
+                Matcher matcher = pattern.matcher(allStockName[i]);
+                if (matcher.matches()) {
+                    result.add(allStockName[i]);
                 }
-
             }
             return result;
-        }else{
-            return  null;
+        } else {
+            return null;
         }
     }
 
 
-
     /**
      * get a list in the filepath
+     *
      * @param filePath
      * @return
      */
-    public String[] getNameList(String filePath){
-        List<String> content=new ArrayList<String>();
+    public String[] getNameList(String filePath) {
+        List<String> content = new ArrayList<String>();
 
         content = this.readFile(filePath);
 
         int nums = content.size();
         String[] nameList = new String[nums];
 
-        for(int i = 0;i<nums;i++){
+        for (int i = 0; i < nums; i++) {
 
             String tempName = content.get(i).split("\t")[1];
             nameList[i] = tempName;
@@ -547,70 +512,40 @@ public class ContrastController extends Application {
         return nameList;
     }
 
-    private  List<String> readFile(String path){
-        List<String> content=new ArrayList<String>();
+    private List<String> readFile(String path) {
+        List<String> content = new ArrayList<String>();
 
-        BufferedReader br=null;
+        BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(path));
             String line = "";
             while ((line = br.readLine()) != null) {
                 content.add(line);
-//                System.out.println(line);
             }
-        }catch (Exception e) {
-        }finally{
-            if(br!=null){
+        } catch (Exception e) {
+        } finally {
+            if (br != null) {
                 try {
                     br.close();
-                    br=null;
+                    br = null;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-
-//
-        /*for (String temp:content
-                ) {
-            System.out.println(temp);
-        }*/
         return content;
-
     }
-
-//    public static void main(String[] args) {
-//        ContrastController test = new ContrastController();
-//        test.readFile("presentation/name_code.csv");
-//    }
 
     @FXML
     private void initialize() {
-//        main.lodaing();
         searchWayChoice.setItems(FXCollections.observableArrayList(
                 "股票名称搜索", "股票编号搜索"));
         searchWayChoice.getSelectionModel().select(0);
         number = 0;
         models = FXCollections.observableArrayList();
         models2 = FXCollections.observableArrayList();
-
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
-
-/*        net.actionPerformed("GET");
-        String json = net.run();
-        JsonUtil jsonUtil = new JsonUtil();*/
-
-//        StockVO stockVO1 = new StockVO();
-//        StockVO stockVO = (StockVO) jsonUtil.JSONToObj(json, stockVO1.getClass());
         allStockName = this.getNameList("presentation/name_code.csv");
-
-
-
-
-
-
-
-
     }
 }
