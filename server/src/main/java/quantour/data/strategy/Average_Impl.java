@@ -93,14 +93,6 @@ public class Average_Impl implements Strategy_data {
         int changeDate=startSerial-holdTime;
 
 
-      /*  Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-        calendar.add(Calendar.DAY_OF_YEAR, -shapeTime);
-        Date initialDate = calendar.getTime();//形成期的开始
-        Date overDate = startDate;
-        calendar.setTime(overDate);//算形成期的时候的结束日期
-        calendar.add(Calendar.DAY_OF_YEAR, holdTime);
-        Date changeDate = calendar.getTime();//调仓*/
 
         List<StockSet> stockSets = new ArrayList<>();
 
@@ -171,7 +163,7 @@ public class Average_Impl implements Strategy_data {
                     Index end = indexList.get(indexList.size() - 1);
                     basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
                 }
-//                System.out.println("success!!");
+
                 if (candidates.size() >= winnerSize){
                     candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
 
@@ -180,7 +172,7 @@ public class Average_Impl implements Strategy_data {
 
                     for (int i = candidates.size() - 1; i >= 0; i--) {
 //                    System.out.println("i de zhi wei"+i);
-                        System.out.println("di" + i + ":" + candidates.get(i).getCode());
+//                        System.out.println("di" + i + ":" + candidates.get(i).getCode());
                         List<Stock> temp = new ArrayList<>();
                         temp.add(candidates.get(i).getS1());
                         temp.add(candidates.get(i).getS2());
@@ -202,7 +194,7 @@ public class Average_Impl implements Strategy_data {
 
 
         }
-        System.out.println("result"+stockSets.get(0).getStockSets().get(1).get(0).getName());
+//        System.out.println("result"+stockSets.get(0).getStockSets().get(1).get(0).getName());
         return stockSets;
     }
 
