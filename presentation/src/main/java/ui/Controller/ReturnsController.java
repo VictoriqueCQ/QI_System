@@ -50,9 +50,8 @@ public class ReturnsController implements Initializable {
     //是否自选
     private boolean isyourchoice;
 
-    //选择形成期还是持有期
-    @FXML
-    private ComboBox<String> ChooseFPorHP;
+
+
     /*
     * 以下5个变量是用于起始界面的变量，分别是：
     * 用于确定持有期个数的number
@@ -267,6 +266,11 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private Button search_MeanReversio;
+    //选择形成期还是持有期
+    @FXML
+    private ComboBox<String> ChooseFPorHP_MS;
+    @FXML
+    private ComboBox<String> ChooseFPorHP_MR;
 
 
     @FXML
@@ -1154,22 +1158,31 @@ public class ReturnsController implements Initializable {
         cumulativeTableView.setItems(cumulativeData);
     }
 
+    private void setChooseFPorHP(){
+        //根据选择形成期还是持有期判定是否能输入形成期或持久期
+//        ObservableList<String> content = FXCollections.observableArrayList();
+        List<String> list = new ArrayList<>();
+        list.add("形成期");
+        list.add("持有期");
+//        content.addAll(list);
+//        for (int i = 0;i<content.size();i++){
+//            System.out.println(content.get(i));
+//        }
+        ChooseFPorHP_MS.getItems().addAll(list);
+        ChooseFPorHP_MR.getItems().addAll(list);
+    }
 
     /*
     * 这个方法是超额收益率图表与表格的填充
      */
     private void setOverProfitsUI_MS() {
-        //根据选择形成期还是持有期判定是否能输入形成期或持久期
-        ObservableList<String> content = FXCollections.observableArrayList();
-        List<String> list = new ArrayList<>();
-        list.add("形成期");
-        list.add("持有期");
-        content.addAll(list);
-        ChooseFPorHP.setItems(content);
-        if (ChooseFPorHP.getItems().equals("形成期")) {
+
+        if (ChooseFPorHP_MS.getItems().equals("形成期")) {
             HoldingPeriod_MomentumStrategy.setDisable(true);
+            System.out.println("get choose");
         } else {
             FormativePeriod_MomentumStrategy.setDisable(true);
+            System.out.println("get choose");
         }
 
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
@@ -1194,6 +1207,7 @@ public class ReturnsController implements Initializable {
                     instruction += sectionNameList.get(i) + "\t";
                 }
             }
+            System.out.println(instruction);
             net.actionPerformed(instruction);
         } else {
             //如果选择持有期
@@ -1211,6 +1225,8 @@ public class ReturnsController implements Initializable {
                     instruction += sectionNameList.get(i) + "\t";
                 }
             }
+            System.out.println(instruction);
+            net.actionPerformed(instruction);
         }
 
 
@@ -1268,14 +1284,8 @@ public class ReturnsController implements Initializable {
     }
 
     private void setOverProfitsUI_MR() {
-        //根据选择的是形成期还是持有期判定另一个是否能填
-        ObservableList<String> content = FXCollections.observableArrayList();
-        List<String> list = new ArrayList<>();
-        list.add("形成期");
-        list.add("持有期");
-        content.addAll(list);
-        ChooseFPorHP.setItems(content);
-        if (ChooseFPorHP.getItems().equals("形成期")) {
+
+        if (ChooseFPorHP_MR.getItems().equals("形成期")) {
             HoldingPeriod_MomentumStrategy.setDisable(true);
         } else {
             FormativePeriod_MomentumStrategy.setDisable(true);
@@ -1430,6 +1440,7 @@ public class ReturnsController implements Initializable {
 //        setMomentumStrategyInputSearch();
 //        setOverProfitsUI_MS();
 //        setOverProfitsUI_MR();
+        setChooseFPorHP();
         this.setDatePicker();
 //        setChoose_MR();
 //        setChoose_MS();
