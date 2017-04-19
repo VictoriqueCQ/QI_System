@@ -20,6 +20,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -881,6 +882,9 @@ public class ReturnsController implements Initializable {
             Date date=new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
+                String year="";
+                String month="";
+                String day="";
                 HashMap<String,String> hashMap=new HashMap<String,String>();
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
@@ -892,46 +896,46 @@ public class ReturnsController implements Initializable {
                     JSONObject jsonObject1 = JSONObject.fromObject(value);
                     String key1 = null;
                     String value1 = null;
+
                     Iterator<String> keys1 = jsonObject1.keys();
                     while(keys1.hasNext()){
-                        String year="";
-                        String month="";
-                        String day="";
+
                         key1=keys1.next();
                         if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
                         }
-//                        else if(key1.equals("year")){
-//                            year=jsonObject1.get(key1).toString();
-//                            System.out.println(year);
-//                        }
-//                        else if(key1.equals("month")){
-//                            month=jsonObject1.get(key1).toString();
-//                            System.out.println(month);
-//                        }
-//                        else if(key1.equals("day")){
-//                            day=jsonObject1.get(key1).toString();
-//                            System.out.println(day);
-//                        }
-//                        date=new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
-//                        try {
-//                            date = format.parse(year + "-"+month+"-"+day);
-//
-//                        }
-//                        catch (ParseException e){
-//                            e.printStackTrace();
-//                        }
+                        else if(key1.equals("year")){
+                            year=jsonObject1.get(key1).toString();
+                            int t= Integer.parseInt(year);
+                            t+=1900;
+                            year=String.valueOf(t);
+                            System.out.println(year);
+                        }
+                        else if(key1.equals("month")){
+                            month=jsonObject1.get(key1).toString();
+                            System.out.println(month);
+                        }
+                        else if(key1.equals("day")){
+                            day=jsonObject1.get(key1).toString();
+                            System.out.println(day);
+                        }
                     }
                 }
+                try {
+                    date = format.parse(year + "-"+month+"-"+day);
+                }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
 //                System.out.println(date);
-                System.out.println("b"+hashMap.toString());
-                stockSetVOS1.add(new StockSetVO(hashMap));
+                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                stockSetVO.setDate(date);
+                stockSetVOS1.add(stockSetVO);
             }
-            System.out.println(stockSetVOS1.size());
-            for(int i=0;i<stockSetVOS1.size();i++){
-                System.out.println("d"+stockSetVOS1.get(i).getStockSets().toString());
-            }
+//            for(int i=0;i<stockSetVOS1.size();i++){
+//                System.out.println("d"+stockSetVOS1.get(i).getStockSets().toString());
+//            }
             strategyDataVO_MS.setStockSetPOS(stockSetVOS1);
 
 
@@ -1097,9 +1101,14 @@ public class ReturnsController implements Initializable {
             strategyDataVO_MR = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             //处理map
-            ArrayList<StockSetVO> stockSetVOS=new ArrayList<StockSetVO>();
+            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
+            Date date=new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             HashMap<String,String> hashMap=new HashMap<String,String>();
             for(int j=0;j<strategyDataVO_MR.getStockSetVOS().size();j++) {
+                String year="";
+                String month="";
+                String day="";
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MR.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -1117,12 +1126,36 @@ public class ReturnsController implements Initializable {
                             value1 = jsonObject1.get(key1).toString();
                             hashMap.put(key1, value1);
                         }
+                        else if(key1.equals("year")){
+                            year=jsonObject1.get(key1).toString();
+                            int t= Integer.parseInt(year);
+                            t+=1900;
+                            year=String.valueOf(t);
+                            System.out.println(year);
+                        }
+                        else if(key1.equals("month")){
+                            month=jsonObject1.get(key1).toString();
+                            System.out.println(month);
+                        }
+                        else if(key1.equals("day")){
+                            day=jsonObject1.get(key1).toString();
+                            System.out.println(day);
+                        }
                     }
                 }
-                stockSetVOS.add(new StockSetVO(hashMap));
+                try {
+                    date = format.parse(year + "-"+month+"-"+day);
+                }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
+//                System.out.println(date);
+                StockSetVO stockSetVO=new StockSetVO(hashMap);
+                stockSetVO.setDate(date);
+                stockSetVOS1.add(stockSetVO);
             }
 
-            strategyDataVO_MR.setStockSetPOS(stockSetVOS);
+            strategyDataVO_MR.setStockSetPOS(stockSetVOS1);
 
             annualReturn = ((double)((int)(strategyDataVO_MR.getAnnualReturn()*1000)))/10;
 
