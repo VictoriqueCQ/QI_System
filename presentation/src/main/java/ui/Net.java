@@ -43,7 +43,7 @@ public class Net {
      */
     public String run() {
         StringBuilder sb = new StringBuilder();
-//        main.lodaing();
+        main.lodaing();
         try {
             int length = inputStream.readInt();
             for (int i = 0; i < length; i++) {

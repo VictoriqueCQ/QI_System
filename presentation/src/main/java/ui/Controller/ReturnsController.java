@@ -576,6 +576,8 @@ public class ReturnsController implements Initializable {
 //        HoldPeriodRank.getItems().clear();
 //        int t=HoldPeriodRank.getItems().size();
 //        HoldPeriodRank.getItems().remove(0,t-1);
+        HoldPeriodRank.getItems().clear();
+
         for (int i = 1; i <= stockSetVOS.size(); i++) {
             HoldPeriodString.add("第" + i + "个持有期");
             HoldPeriodRank.getItems().add("第" + i + "个持有期");
@@ -595,7 +597,7 @@ public class ReturnsController implements Initializable {
 
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
-        StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
+        StockRank.setCellFactory(new Callback<TableColumn<StockModel,String>, TableCell<StockModel, String>>() {
 
             @Override
             public TableCell<StockModel, String> call(TableColumn<StockModel, String> param) {
@@ -606,8 +608,6 @@ public class ReturnsController implements Initializable {
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if (cell.getIndex() <= stockModels.size()) {
-                            //
-                            System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
                             } else {
@@ -632,8 +632,6 @@ public class ReturnsController implements Initializable {
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if (cell.getIndex() <= stockModels.size()) {
-                            //
-                            System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
                             } else {
@@ -658,8 +656,6 @@ public class ReturnsController implements Initializable {
                     String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
                         if (cell.getIndex() <= stockModels.size()) {
-                            //
-                            System.out.print("2");
                             if (MomentumStrategyTab.isSelected()) {
                                 main.gotoCandlestickChart(name, code, StartDate_MomentumStrategy.getValue(), EndDate_MomentumStrategy.getValue());
                             } else {
@@ -698,8 +694,19 @@ public class ReturnsController implements Initializable {
         }
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+        for(int i=0;i<stockSetVOS.size();i++){
+            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
+        }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
+//        for(int i=1;i<=stockModelArrayList.size();i++){
+//            for(int j=0;j<stockModelArrayList.size();j++){
+//                if(Integer.parseInt(stockModelArrayList.get(j).getID())==i){
+//                    stockModels.add(stockModelArrayList.get(j));
+//                    break;
+//                }
+//            }
+//        }
         for (int i = 0; i < stockModelArrayList.size(); i++) {
             stockModels.add(stockModelArrayList.get(i));
         }
@@ -714,7 +721,14 @@ public class ReturnsController implements Initializable {
      * @param i
      */
     private ArrayList<StockModel> getbeststock(List<StockSetVO> stockSetVOS, int i) {
+        if(i<1){
+            i=1;
+        }
+        System.out.println("di"+i);
         StockSetVO stockSetVO = stockSetVOS.get(i-1);
+        for(int j=0;j<stockSetVOS.size();j++){
+            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
+        }
         Map<String,String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
@@ -846,8 +860,10 @@ public class ReturnsController implements Initializable {
             strategyDataVO_MS = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             //处理map
-           ArrayList<StockSetVO> stockSetVOS=new ArrayList<StockSetVO>();
+           ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
             HashMap<String,String> hashMap=new HashMap<String,String>();
+            Date date=new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
@@ -861,15 +877,46 @@ public class ReturnsController implements Initializable {
                     String value1 = null;
                     Iterator<String> keys1 = jsonObject1.keys();
                     while(keys1.hasNext()){
+                        String year="";
+                        String month="";
+                        String day="";
                         key1=keys1.next();
-                        value1=jsonObject1.get(key1).toString();
-                        hashMap.put(key1, value1);
-
+                        if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
+                            value1 = jsonObject1.get(key1).toString();
+                            hashMap.put(key1, value1);
+                        }
+//                        else if(key1.equals("year")){
+//                            year=jsonObject1.get(key1).toString();
+//                            System.out.println(year);
+//                        }
+//                        else if(key1.equals("month")){
+//                            month=jsonObject1.get(key1).toString();
+//                            System.out.println(month);
+//                        }
+//                        else if(key1.equals("day")){
+//                            day=jsonObject1.get(key1).toString();
+//                            System.out.println(day);
+//                        }
+//                        date=new Date(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+//                        try {
+//                            date = format.parse(year + "-"+month+"-"+day);
+//
+//                        }
+//                        catch (ParseException e){
+//                            e.printStackTrace();
+//                        }
                     }
                 }
-                stockSetVOS.add(new StockSetVO(hashMap));
+                System.out.println(date);
+                System.out.println("b"+hashMap.toString());
+                stockSetVOS1.add(new StockSetVO(hashMap));
+                System.out.println(new StockSetVO(hashMap).getStockSets().toString());
             }
-            strategyDataVO_MS.setStockSetPOS(stockSetVOS);
+            System.out.println(stockSetVOS1.size());
+            for(int i=0;i<stockSetVOS1.size();i++){
+                System.out.println("d"+stockSetVOS1.get(i).getStockSets().toString());
+            }
+            strategyDataVO_MS.setStockSetPOS(stockSetVOS1);
 
 
             //以下是累计收益率
@@ -1049,9 +1096,10 @@ public class ReturnsController implements Initializable {
                     Iterator<String> keys1 = jsonObject1.keys();
                     while(keys1.hasNext()){
                         key1=keys1.next();
-                        value1=jsonObject1.get(key1).toString();
-                        hashMap.put(key1, value1);
-
+                        if((!key1.equals("date"))&&(!key1.equals("hours"))&&(!key1.equals("month"))&&(!key1.equals("seconds"))&&(!key1.equals("timezoneOffset"))&&(!key1.equals("year"))&&(!key1.equals("minutes"))&&(!key1.equals("time"))&&(!key1.equals("day"))) {
+                            value1 = jsonObject1.get(key1).toString();
+                            hashMap.put(key1, value1);
+                        }
                     }
                 }
                 stockSetVOS.add(new StockSetVO(hashMap));
@@ -1437,30 +1485,38 @@ public class ReturnsController implements Initializable {
 
     @FXML
     private void setChoose_MS() {
-        if(chaoetab.isSelected()){
+//        if(stockCodeList.size()>=100) {
+            if (chaoetab.isSelected()) {
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
 ////            ChooseFPorHP.setItems();
-            setOverProfitsUI_MS();
-        }else{
-//        System.out.print("dfghuj");
-        setMomentumStrategyInputSearch();
-
-        }
+                setOverProfitsUI_MS();
+            } else {
+                setMomentumStrategyInputSearch();
+            }
+//        }
+//        else{
+//            AlertUtil.showWarningAlert("对不起，您选择的股票不足100只");
+//        }
 
     }
 
     @FXML
     private void setChoose_MR() {
-        if(chaoetab.isSelected()){
+//        if (stockCodeList.size() >= 100) {
+            if (chaoetab.isSelected()) {
 //            HoldingPeriod_MeanReversio.setText("");
 //            FormativePeriod_MeanReversio.setText("");
 //            StockHeldInHouse_MeanReversio.setText("");
-            setOverProfitsUI_MR();
-        }else{
-        setMeanReversioInputSearch();
-        }
+                setOverProfitsUI_MR();
+            } else {
+                setMeanReversioInputSearch();
+            }
+//        }
+//        else{
+//            AlertUtil.showWarningAlert("对不起，您选择的股票不足100只");
+//        }
     }
 
 
