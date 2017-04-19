@@ -274,11 +274,11 @@ public class CandlestickChartController {
                 Date startDate = this.changeDateStyle(startLocalDate);
                 Date endDate = this.changeDateStyle(endLocalDate);
                 x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
-                long width=startLocalDate.until(endLocalDate, ChronoUnit.DAYS)*10;
-                if(width>1178){
+                long width = startLocalDate.until(endLocalDate, ChronoUnit.DAYS) * 10;
+                if (width > 1178) {
                     insidePane.setPrefWidth(width);
                 }
-                if(width>2000){
+                if (width > 2000) {
                     insidePane.setPrefWidth(2000);
                 }
             } catch (Exception e) {
@@ -334,7 +334,7 @@ public class CandlestickChartController {
             plot2.setBackgroundPaint(Color.black);
 
             ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new Dimension(4000 , 950));
+            chartPanel.setPreferredSize(new Dimension(4000, 950));
 
             SwingNode swingNode = new SwingNode();
             swingNode.setContent(chartPanel);
@@ -464,8 +464,8 @@ public class CandlestickChartController {
             number.setLowerBound(5);
             number.setUpperBound(highest * 1.1);
             number.setTickUnit((highest * 1.1 - 5) / 10);
-            int width=dates.size()*10;
-            if(width>1178){
+            int width = dates.size() * 10;
+            if (width > 1178) {
                 lineChart.setPrefWidth(width);
             }
 
@@ -540,13 +540,14 @@ public class CandlestickChartController {
 
     /**
      * 读取name_code.csv文件
+     *
      * @param stockPath
      * @return
      */
     private ArrayList<StockVO> readStockList(String stockPath) {
         ArrayList<StockVO> stockList = new ArrayList<StockVO>();
         File f = new File(stockPath);
-        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -554,7 +555,7 @@ public class CandlestickChartController {
             while (row != null) {
                 List<String> stockInfo = Arrays.asList(row.split("\t"));
                 String name = stockInfo.get(0);
-                int code=Integer.parseInt(stockInfo.get(1));
+                int code = Integer.parseInt(stockInfo.get(1));
                 StockVO stockVO = new StockVO();
                 stockVO.setName(name);
                 stockVO.setCode(code);
@@ -609,25 +610,25 @@ public class CandlestickChartController {
         return content;
     }
 
-    public ArrayList<String> FuzzyCheck(){
+    public ArrayList<String> FuzzyCheck() {
         ArrayList<String> result = new ArrayList<>();
-        if(reStockName!=".*"){
+        if (reStockName != ".*") {
             Pattern pattern = Pattern.compile(reStockName);
-            for(int i=0;i<allStockName.length;i++){
+            for (int i = 0; i < allStockName.length; i++) {
                 Matcher matcher = pattern.matcher(allStockName[i]);
-                if(matcher.matches()){
+                if (matcher.matches()) {
                     result.add(allStockName[i]);
 
                 }
 
             }
             return result;
-        }else{
-            return  null;
+        } else {
+            return null;
         }
     }
 
-    private void setFuzzyCheck(){
+    private void setFuzzyCheck() {
         //模糊搜索
         fuzzyCheck.setVisible(false);
         reStockName = ".*";
@@ -637,20 +638,20 @@ public class CandlestickChartController {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fuzzyCheck.getItems().removeAll();
                 reStockName = ".*";
-                if(stockNameTextField.getText()!=""){
+                if (stockNameTextField.getText() != "") {
                     stockNameImport = stockNameTextField.getText();
-                    if(stockNameImport!=null) {
+                    if (stockNameImport != null) {
                         for (int i = 0; i < stockNameImport.length(); i++) {
                             reStockName = reStockName + stockNameImport.charAt(i) + ".*";
                         }
                         ArrayList<String> fuzzy = FuzzyCheck();
-                        if(fuzzy!=null) {
+                        if (fuzzy != null) {
                             ObservableList<String> items = FXCollections.observableArrayList(
                                     fuzzy);
                             fuzzyCheck.setItems(items);
 
                             fuzzyCheck.setVisible(true);
-                        }else{
+                        } else {
                             fuzzyCheck.setVisible(false);
                         }
                     }
@@ -677,6 +678,7 @@ public class CandlestickChartController {
 
     /**
      * 附带条件的跳转，自动填充条件并展示数据
+     *
      * @param main
      * @param net
      * @param name
@@ -684,9 +686,9 @@ public class CandlestickChartController {
      * @param startdate
      * @param enddate
      */
-    public void setMain(Main main,Net net,String name, String code, LocalDate startdate,LocalDate enddate){
-        this.main=main;
-        this.net=net;
+    public void setMain(Main main, Net net, String name, String code, LocalDate startdate, LocalDate enddate) {
+        this.main = main;
+        this.net = net;
         startTimeDatePicker.setValue(startdate);
         endTimeDatePicker.setValue(enddate);
         stockNameTextField.setText(name);

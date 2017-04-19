@@ -33,22 +33,21 @@ public class SelectStockController {
     private Net net;
     private ReturnsController returnsController;
 
-    private String path1="";
+    private String path1 = "";
     private String[] allStockName;
 
     boolean isyourchoice;
 
-    HashMap<String, String> name_code=new HashMap<String,String>();
+    HashMap<String, String> name_code = new HashMap<String, String>();
 
 
+    private ArrayList<String> stockNameList = new ArrayList<String>();
 
-    private ArrayList<String> stockNameList=new ArrayList<String>();
+    private ArrayList<String> stockCodeList = new ArrayList<String>();
 
-    private ArrayList<String> stockCodeList=new ArrayList<String>();
+    private ArrayList<String> oldstockCodeList = new ArrayList<String>();
 
-    private ArrayList<String> oldstockCodeList =new ArrayList<String>();
-
-    private ArrayList<String> sectionNameList=new ArrayList<String>();
+    private ArrayList<String> sectionNameList = new ArrayList<String>();
 
     @FXML
     private TableView<StockModel> stockTable;
@@ -98,15 +97,15 @@ public class SelectStockController {
     }
 
     @FXML
-    private void zoomout(){
+    private void zoomout() {
         main.zoomoutButton1();
     }
 
-    boolean isselectall=false;
+    boolean isselectall = false;
 
     @FXML
-    private void selectAllStocks(){
-        if(!selectComboBox.getValue().equals(null)) {
+    private void selectAllStocks() {
+        if (!selectComboBox.getValue().equals(null)) {
             ObservableList<StockModel> models = FXCollections.observableArrayList();
             String section = selectComboBox.getValue();
             ArrayList<StockVO> stockVOList = readStockList(path1 + "documentation/stock-section/" + section + ".txt");
@@ -121,21 +120,20 @@ public class SelectStockController {
                     models.add(stockModel);
                 }
                 stockTable.setItems(models);
-                isselectall=true;
-            }
-            else{
+                isselectall = true;
+            } else {
                 for (int i = 0; i < stockVOList.size(); i++) {
                     StockVO stockVO = stockVOList.get(i);
                     StockModel stockModel = stockVOtoStockModle(stockVO);
-                    Iterator<String> iterable1=stockNameList.iterator();
-                    while(iterable1.hasNext()){
-                        if(iterable1.next().equals(stockModel.getName())){
+                    Iterator<String> iterable1 = stockNameList.iterator();
+                    while (iterable1.hasNext()) {
+                        if (iterable1.next().equals(stockModel.getName())) {
                             iterable1.remove();
                         }
                     }
-                    Iterator<String> iterable2=stockCodeList.iterator();
-                    while(iterable2.hasNext()){
-                        if(iterable2.next().equals(stockModel.getID())){
+                    Iterator<String> iterable2 = stockCodeList.iterator();
+                    while (iterable2.hasNext()) {
+                        if (iterable2.next().equals(stockModel.getID())) {
                             iterable2.remove();
                         }
                     }
@@ -143,7 +141,7 @@ public class SelectStockController {
                     models.add(stockModel);
                 }
                 stockTable.setItems(models);
-                isselectall=false;
+                isselectall = false;
             }
         }
     }
@@ -154,10 +152,10 @@ public class SelectStockController {
     @FXML
     private void stockSearch() {
         if (!searchTextField.getText().equals("")) {
-            StockVO stockVO=new StockVO();
+            StockVO stockVO = new StockVO();
             stockVO.setName(searchTextField.getText());
             for (Map.Entry<String, String> entry : name_code.entrySet()) {
-                if(entry.getValue().equals(searchTextField.getText())){
+                if (entry.getValue().equals(searchTextField.getText())) {
                     stockVO.setCode(Integer.parseInt(entry.getKey()));
                     break;
                 }
@@ -178,8 +176,8 @@ public class SelectStockController {
      * 自选股票选择结束
      */
     @FXML
-    private void finishStockSelect(){
-        if(stockNameList.size()>0) {
+    private void finishStockSelect() {
+        if (stockNameList.size() > 0) {
             HashSet<String> hashset_temp = new HashSet<String>(stockNameList);
             stockNameList = new ArrayList<String>(hashset_temp);
             HashSet<String> hashset_temp1 = new HashSet<String>(stockCodeList);
@@ -188,8 +186,7 @@ public class SelectStockController {
             AlertUtil.showInformationAlert("您此次选中" + stockNameList.size() + "只股票");
             main.closeExtraStage();
             returnsController.setSelectStockComboBox(stockNameList, stockCodeList);
-        }
-        else{
+        } else {
             AlertUtil.showWarningAlert("对不起，您未选择股票");
         }
     }
@@ -198,18 +195,18 @@ public class SelectStockController {
      * 板块选择结束
      */
     @FXML
-    private void finishSectionSelect(){
+    private void finishSectionSelect() {
         sectionNameList.clear();
-        if(shangzhengRadioButton.isSelected()){
+        if (shangzhengRadioButton.isSelected()) {
             sectionNameList.add("上证指数");
         }
-        if(hushenRadioButton.isSelected()){
+        if (hushenRadioButton.isSelected()) {
             sectionNameList.add("沪深300");
         }
-        if(shenzhenRadioButton.isSelected()){
+        if (shenzhenRadioButton.isSelected()) {
             sectionNameList.add("深圳成指");
         }
-        if(sectionNameList.size()>=1) {
+        if (sectionNameList.size() >= 1) {
             String text = "您此次选中";
             for (int i = 0; i < sectionNameList.size() - 1; i++) {
                 text += sectionNameList.get(i) + ",";
@@ -220,8 +217,7 @@ public class SelectStockController {
             isyourchoice = false;
             main.closeExtraStage();
             returnsController.setSectionComboBox(sectionNameList);
-        }
-        else{
+        } else {
             AlertUtil.showWarningAlert("对不起，您未选择板块");
         }
 
@@ -231,21 +227,24 @@ public class SelectStockController {
      * 选择股票证监会板块
      */
     @FXML
-    private void sectionSearch(){
-            String section =selectComboBox.getValue();
-            ArrayList<StockVO> stockVOList=readStockList(path1+"documentation/stock-section/"+section+".txt");
-            setTableView(stockVOList);
+    private void sectionSearch() {
+        String section = selectComboBox.getValue();
+        ArrayList<StockVO> stockVOList = readStockList(path1 + "documentation/stock-section/" + section + ".txt");
+        setTableView(stockVOList);
+        selectAllRadioButton.setSelected(false);
+        isselectall = false;
     }
 
     /**
      * 读取name_code.csv文件
+     *
      * @param stockPath
      * @return
      */
     private ArrayList<StockVO> readStockList(String stockPath) {
         ArrayList<StockVO> stockList = new ArrayList<StockVO>();
         File f = new File(stockPath);
-        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
@@ -253,7 +252,7 @@ public class SelectStockController {
             while (row != null) {
                 List<String> stockInfo = Arrays.asList(row.split("\t"));
                 String name = stockInfo.get(0);
-                int code=Integer.parseInt(stockInfo.get(1));
+                int code = Integer.parseInt(stockInfo.get(1));
                 StockVO stockVO = new StockVO();
                 stockVO.setName(name);
                 stockVO.setCode(code);
@@ -322,6 +321,7 @@ public class SelectStockController {
 
     /**
      * 显示对应板块的股票并设置监听
+     *
      * @param stockVOList
      */
     private void setTableView(ArrayList<StockVO> stockVOList) {
@@ -334,42 +334,38 @@ public class SelectStockController {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     //取消选择
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
-                            Iterator<String> iterable1=stockNameList.iterator();
-                            while(iterable1.hasNext()){
-                                if(iterable1.next().equals(name)){
+                        if (cell.getIndex() <= models.size()) {
+                            Iterator<String> iterable1 = stockNameList.iterator();
+                            while (iterable1.hasNext()) {
+                                if (iterable1.next().equals(name)) {
                                     iterable1.remove();
                                 }
                             }
-                            Iterator<String> iterable2=stockCodeList.iterator();
-                            while(iterable2.hasNext()){
-                                if(iterable2.next().equals(name)){
+                            Iterator<String> iterable2 = stockCodeList.iterator();
+                            while (iterable2.hasNext()) {
+                                if (iterable2.next().equals(name)) {
                                     iterable2.remove();
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
-                            if(cell.getIndex()%2==0){
-//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
-                                cell.setTextFill(Color.rgb(200,200,200));
-                            }
-                            else{
-//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
-                                cell.setTextFill(Color.rgb(200,200,200));
+                            if (cell.getIndex() % 2 == 0) {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
+                            } else {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
                             }
                         }
                     }
                     //选择
-                    else if(t.getClickCount() == 1){
+                    else if (t.getClickCount() == 1) {
                         try {
-                            if(cell.getIndex()<=models.size()){
+                            if (cell.getIndex() <= models.size()) {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -389,40 +385,35 @@ public class SelectStockController {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
-                            Iterator<String> iterable1=stockNameList.iterator();
-                            while(iterable1.hasNext()){
-                                if(iterable1.next().equals(name)){
+                        if (cell.getIndex() <= models.size()) {
+                            Iterator<String> iterable1 = stockNameList.iterator();
+                            while (iterable1.hasNext()) {
+                                if (iterable1.next().equals(name)) {
                                     iterable1.remove();
                                 }
                             }
-                            Iterator<String> iterable2=stockCodeList.iterator();
-                            while(iterable2.hasNext()){
-                                if(iterable2.next().equals(name)){
+                            Iterator<String> iterable2 = stockCodeList.iterator();
+                            while (iterable2.hasNext()) {
+                                if (iterable2.next().equals(name)) {
                                     iterable2.remove();
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
-                            if(cell.getIndex()%2==0){
-//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
-                                cell.setTextFill(Color.rgb(200,200,200));
-                            }
-                            else{
-//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
-                                cell.setTextFill(Color.rgb(200,200,200));
+                            if (cell.getIndex() % 2 == 0) {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
+                            } else {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
                             }
                         }
-                    }
-                    else if(t.getClickCount() == 1){
+                    } else if (t.getClickCount() == 1) {
                         try {
-                            if(cell.getIndex()<=models.size()){
+                            if (cell.getIndex() <= models.size()) {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -442,40 +433,35 @@ public class SelectStockController {
                 TextFieldTableCell<StockModel, String> cell = new TextFieldTableCell<>();
 
                 cell.setOnMouseClicked((MouseEvent t) -> {
-                    String name=(stockTable.getItems().get(cell.getIndex()).getName());
-                    String code=(stockTable.getItems().get(cell.getIndex()).getID());
+                    String name = (stockTable.getItems().get(cell.getIndex()).getName());
+                    String code = (stockTable.getItems().get(cell.getIndex()).getID());
                     if (t.getClickCount() == 2) {
-                        if(cell.getIndex()<=models.size()){
-                            Iterator<String> iterable1=stockNameList.iterator();
-                            while(iterable1.hasNext()){
-                                if(iterable1.next().equals(name)){
+                        if (cell.getIndex() <= models.size()) {
+                            Iterator<String> iterable1 = stockNameList.iterator();
+                            while (iterable1.hasNext()) {
+                                if (iterable1.next().equals(name)) {
                                     iterable1.remove();
                                 }
                             }
-                            Iterator<String> iterable2=stockCodeList.iterator();
-                            while(iterable2.hasNext()){
-                                if(iterable2.next().equals(name)){
+                            Iterator<String> iterable2 = stockCodeList.iterator();
+                            while (iterable2.hasNext()) {
+                                if (iterable2.next().equals(name)) {
                                     iterable2.remove();
                                 }
                             }
                             stockTable.getItems().get(cell.getIndex()).setIsChoosen("");
-                            if(cell.getIndex()%2==0){
-//                                cell.getTableRow().setStyle("-fx-background-color:rgb(80,80,80);");
-                                cell.setTextFill(Color.rgb(200,200,200));
-                            }
-                            else{
-//                                cell.getTableRow().setStyle("-fx-background-color: rgb(50,50,50);");
-                                cell.setTextFill(Color.rgb(200,200,200));
+                            if (cell.getIndex() % 2 == 0) {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
+                            } else {
+                                cell.setTextFill(Color.rgb(200, 200, 200));
                             }
                         }
-                    }
-                    else if(t.getClickCount() == 1){
+                    } else if (t.getClickCount() == 1) {
                         try {
-                            if(cell.getIndex()<=models.size()){
+                            if (cell.getIndex() <= models.size()) {
                                 stockNameList.add(name);
                                 stockCodeList.add(code);
                                 stockTable.getItems().get(cell.getIndex()).setIsChoosen("是");
-//                                cell.getTableRow().setStyle("-fx-background-color:black;");
                                 cell.setTextFill(Color.WHITE);
                             }
                         } catch (NumberFormatException e) {
@@ -499,16 +485,16 @@ public class SelectStockController {
     public StockModel stockVOtoStockModle(StockVO stockVO) {
         StockModel model = new StockModel();
         model.setName(stockVO.getName());
-        int code=stockVO.getCode();
-        String code1=String.valueOf(code);
-        char[] code2=code1.toCharArray();
-        int t=6-code2.length;
-        for(int i=0;i<t;i++){
-            code1="0"+code1;
+        int code = stockVO.getCode();
+        String code1 = String.valueOf(code);
+        char[] code2 = code1.toCharArray();
+        int t = 6 - code2.length;
+        for (int i = 0; i < t; i++) {
+            code1 = "0" + code1;
         }
         model.setID(code1);
-        for (int i=0;i<stockCodeList.size();i++){
-            if(code1.equals(stockCodeList.get(i))){
+        for (int i = 0; i < stockCodeList.size(); i++) {
+            if (code1.equals(stockCodeList.get(i))) {
                 model.setIsChoosen("是");
                 stockNameList.add(model.getName());
                 stockCodeList.add(model.getID());
@@ -521,8 +507,8 @@ public class SelectStockController {
     /**
      * 初始化股票板块ComboBox
      */
-    private void setComboBox(){
-        ArrayList<String> sectionList=new ArrayList<String>();
+    private void setComboBox() {
+        ArrayList<String> sectionList = new ArrayList<String>();
         sectionList.add("暂无板块分类");
         sectionList.add("采掘服务业");
         sectionList.add("餐饮业");
@@ -590,40 +576,41 @@ public class SelectStockController {
         selectComboBox.getItems().addAll(sectionList);
     }
 
-    public ArrayList<String> FuzzyCheck(){
+    public ArrayList<String> FuzzyCheck() {
         ArrayList<String> result = new ArrayList<>();
-        if(reStockName!=".*"){
+        if (reStockName != ".*") {
             Pattern pattern = Pattern.compile(reStockName);
-            for(int i=0;i<allStockName.length;i++){
+            for (int i = 0; i < allStockName.length; i++) {
                 Matcher matcher = pattern.matcher(allStockName[i]);
-                if(matcher.matches()){
+                if (matcher.matches()) {
                     result.add(allStockName[i]);
                 }
             }
             return result;
-        }else{
-            return  null;
+        } else {
+            return null;
         }
     }
 
     /**
      * get a list in the filepath
+     *
      * @param filePath
      * @return
      */
-    public String[] getNameList1(String filePath){
-        List<String> content=new ArrayList<String>();
+    public String[] getNameList1(String filePath) {
+        List<String> content = new ArrayList<String>();
         content = this.readFile1(filePath);
         int nums = content.size();
         String[] nameList = new String[nums];
-        for(int i = 0;i<nums;i++){
+        for (int i = 0; i < nums; i++) {
             String tempName = content.get(i).split("\t")[1];
             nameList[i] = tempName;
         }
         return nameList;
     }
 
-    private  List<String> readFile1(String path) {
+    private List<String> readFile1(String path) {
         List<String> content = new ArrayList<String>();
         BufferedReader br = null;
         try {
@@ -647,20 +634,20 @@ public class SelectStockController {
     }
 
 
-    public void setMain(Main main, Net net,ReturnsController returnsController,ArrayList<String> stockCodeList) {
+    public void setMain(Main main, Net net, ReturnsController returnsController, ArrayList<String> stockCodeList) {
         this.main = main;
         this.net = net;
-        this.returnsController=returnsController;
+        this.returnsController = returnsController;
 
-        this.oldstockCodeList=stockCodeList;
-        for(int i=0;i<oldstockCodeList.size();i++){
+        this.oldstockCodeList = stockCodeList;
+        for (int i = 0; i < oldstockCodeList.size(); i++) {
             this.stockCodeList.add(oldstockCodeList.get(i));
         }
 
-        String path=String.valueOf(Main.class.getResource(""));
-        String[] pathlist=path.split("/");
-        for(int i=1;i<pathlist.length-1;i++){
-            path1+=(pathlist[i]+"\\");
+        String path = String.valueOf(Main.class.getResource(""));
+        String[] pathlist = path.split("/");
+        for (int i = 1; i < pathlist.length - 1; i++) {
+            path1 += (pathlist[i] + "\\");
         }
         //设置ComboBox
         this.setComboBox();
@@ -674,26 +661,26 @@ public class SelectStockController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 fuzzyCheck.getItems().removeAll();
-                    reStockName = ".*";
-                    if(searchTextField.getText()!=""){
-                        stockNameImport = searchTextField.getText();
-                        if(stockNameImport!=null) {
-                            for (int i = 0; i < stockNameImport.length(); i++) {
-                                reStockName = reStockName + stockNameImport.charAt(i) + ".*";
-                            }
-                            ArrayList<String> fuzzy = FuzzyCheck();
-                            if(fuzzy!=null) {
-                                ObservableList<String> items = FXCollections.observableArrayList(
-                                        fuzzy);
-                                fuzzyCheck.setItems(items);
+                reStockName = ".*";
+                if (searchTextField.getText() != "") {
+                    stockNameImport = searchTextField.getText();
+                    if (stockNameImport != null) {
+                        for (int i = 0; i < stockNameImport.length(); i++) {
+                            reStockName = reStockName + stockNameImport.charAt(i) + ".*";
+                        }
+                        ArrayList<String> fuzzy = FuzzyCheck();
+                        if (fuzzy != null) {
+                            ObservableList<String> items = FXCollections.observableArrayList(
+                                    fuzzy);
+                            fuzzyCheck.setItems(items);
 
-                                fuzzyCheck.setVisible(true);
-                            }else{
-                                fuzzyCheck.setVisible(false);
-                            }
+                            fuzzyCheck.setVisible(true);
+                        } else {
+                            fuzzyCheck.setVisible(false);
                         }
                     }
                 }
+            }
         });
         fuzzyCheck.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<String>() {

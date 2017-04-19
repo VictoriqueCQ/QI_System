@@ -35,13 +35,13 @@ public class JsonUtil {
         JSONObject jsonResult = JSONObject.fromObject(jsonStr);
         Map<String, Class> classMap = new HashMap<String, Class>();
         classMap.put("dates", Date.class);
-        classMap.put("names",String.class);
-        classMap.put("codes",Integer.class);
-        classMap.put("profits",Double.class);
-        classMap.put("overProfit",Double.class);
-        classMap.put("winChance",Double.class);
-        classMap.put("profit",Double.class);
-        classMap.put("basicProfits",Double.class);
+        classMap.put("names", String.class);
+        classMap.put("codes", Integer.class);
+        classMap.put("profits", Double.class);
+        classMap.put("overProfit", Double.class);
+        classMap.put("winChance", Double.class);
+        classMap.put("profit", Double.class);
+        classMap.put("basicProfits", Double.class);
         classMap.put("stockSetVOS", StockSetVO.class);
 
         T t = (T) JSONObject.toBean(jsonResult, obj, classMap);
