@@ -44,6 +44,7 @@
                           </columns>
                         </TableView>
                         <ListView fx:id="fuzzyCheck" layoutX="384.0" layoutY="46.0" prefHeight="199.0" prefWidth="256.0" styleClass="mylistview" stylesheets="@css/ListViewCSS.css" />
+                        <RadioButton fx:id="selectAllRadioButton" layoutX="748.0" layoutY="67.0" mnemonicParsing="false" onAction="#selectAllStocks" prefHeight="33.0" prefWidth="90.0" text="全选" textFill="WHITE" />
                      </children>
                   </AnchorPane>
             </content>

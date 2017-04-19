@@ -109,12 +109,12 @@ public class Average_Impl implements Strategy_data {
         while (overDate>endSerial) {
             List<Candidate1> candidates = new ArrayList<>();
             for (int c : codes) {
-                int change=changeDate;
-                int initial=initialDate;
+                int change = changeDate;
+                int initial = initialDate;
                 List<Stock> currentStock = stockPool.get(c);
                 List<Stock> currentCalculate = currentStock.stream().
-                        filter(stock -> stock.getSerial()>change).
-                        filter(stock -> stock.getSerial()<=initial)
+                        filter(stock -> stock.getSerial() > change).
+                        filter(stock -> stock.getSerial() <= initial)
                         .collect(Collectors.toList());
                 boolean toDelete = false;
                 for (Stock temp : currentCalculate) {
@@ -128,12 +128,12 @@ public class Average_Impl implements Strategy_data {
                 } else {
                     int over = overDate;
                     List<Stock> formativeList = currentCalculate.stream().
-                            filter(stock -> stock.getSerial()>over).
+                            filter(stock -> stock.getSerial() > over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
 
-                    double endPrice=formativeList.get(0).getAdjClose();
-                    double startPrice=formativeList.get(formativeList.size()-1).getAdjClose();
-                    double profit=(endPrice-startPrice)/startPrice;
+                    double endPrice = formativeList.get(0).getAdjClose();
+                    double startPrice = formativeList.get(formativeList.size() - 1).getAdjClose();
+                    double profit = (endPrice - startPrice) / startPrice;
 
                     double sum = 0;
                     for (int i = 0; i < formativeList.size(); i++) {
@@ -141,60 +141,62 @@ public class Average_Impl implements Strategy_data {
                     }
                     double average = sum / shapeTime;
                     List<Stock> holdingList = currentCalculate.stream().
-                            filter(stock -> stock.getSerial()<=over).
+                            filter(stock -> stock.getSerial() <= over).
                             sorted(Comparator.comparing(Stock::getSerial)).collect(Collectors.toList());
-                    double currentPrice = holdingList.get(holdingList.size()-1).getAdjClose();
+                    double currentPrice = holdingList.get(holdingList.size() - 1).getAdjClose();
                     double deviate = (average - currentPrice) / average;
                     Candidate1 candidate1 = new Candidate1(c, holdingList.get(0), holdingList.get(holdingList.size() - 1),
-                            deviate,profit);
+                            deviate, profit);
 
                     candidates.add(candidate1);
 
 
                 }
             }
-            candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
-                    collect(Collectors.toList());//从小到大排序
+            if (candidates.size() > 0&&candidates.size()>=winnerSize) {
+                candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
+                        collect(Collectors.toList());//从小到大排序
 
 
-            //基准收益率
-            if(quest[6].equals("T")) {
-                basicProfits.add(candidates.stream().mapToDouble(Candidate1::getProfit).average().getAsDouble());
+                //基准收益率
+                if (quest[6].equals("T")) {
+                    basicProfits.add(candidates.stream().mapToDouble(Candidate1::getProfit).average().getAsDouble());
+                } else {
+                    Date change = candidates.get(0).getS1().getDate();
+                    Date over = candidates.get(0).getS2().getDate();
+                    List<Index> indexList = indices.stream().
+                            filter(index -> index.getDate().compareTo(over) >= 0 && index.getDate().compareTo(change) < 0).
+                            collect(Collectors.toList());
+                    Index start = indexList.get(0);
+                    Index end = indexList.get(indexList.size() - 1);
+                    basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
+                }
+
+
+                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
+
+                Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
+                System.out.println("ca shi "+candidates.size());
+
+                for (int i = winnerSize - 1; i >= 0; i--) {
+//                    System.out.println("i de zhi wei"+i);
+                    System.out.println("di"+i+":"+candidates.get(i).getCode());
+                    List<Stock> temp = new ArrayList<>();
+                    temp.add(candidates.get(i).getS1());
+                    temp.add(candidates.get(i).getS2());
+                    map.put(candidates.size() - i, temp);
+                }
+                StockSet stockSet = new StockSet(map);
+                stockSets.add(stockSet);
             }
-            else{
-                Date change = candidates.get(0).getS1().getDate();
-                Date over = candidates.get(0).getS2().getDate();
-                List<Index> indexList = indices.stream().
-                        filter(index -> index.getDate().compareTo(over) >= 0 && index.getDate().compareTo(change) < 0).
-                        collect(Collectors.toList());
-                Index start = indexList.get(0);
-                Index end = indexList.get(indexList.size() - 1);
-                basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
-            }
 
+                overDate = changeDate;
 
+                initialDate = overDate + shapeTime;
 
+                startSerial = overDate;
 
-            candidates=candidates.subList(candidates.size()-winnerSize,candidates.size());
-            Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
-
-
-            for (int i = winnerSize - 1; i >= 0; i--) {
-                List<Stock> temp = new ArrayList<>();
-                temp.add(candidates.get(i).getS1());
-                temp.add(candidates.get(i).getS2());
-                map.put(candidates.size() - i, temp);
-            }
-            StockSet stockSet = new StockSet(map);
-            stockSets.add(stockSet);
-
-            overDate=changeDate;
-
-            initialDate=overDate+shapeTime;
-
-            startSerial=overDate;
-
-            changeDate=startSerial-holdTime;
+                changeDate = startSerial - holdTime;
 
 
         }

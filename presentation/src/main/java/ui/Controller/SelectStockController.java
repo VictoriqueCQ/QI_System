@@ -81,6 +81,9 @@ public class SelectStockController {
     private Button searchButton;
 
     @FXML
+    private RadioButton selectAllRadioButton;
+
+    @FXML
     private RadioButton shangzhengRadioButton;
 
     @FXML
@@ -99,6 +102,51 @@ public class SelectStockController {
         main.zoomoutButton1();
     }
 
+    boolean isselectall=false;
+
+    @FXML
+    private void selectAllStocks(){
+        if(!selectComboBox.getValue().equals(null)) {
+            ObservableList<StockModel> models = FXCollections.observableArrayList();
+            String section = selectComboBox.getValue();
+            ArrayList<StockVO> stockVOList = readStockList(path1 + "documentation/stock-section/" + section + ".txt");
+            setTableView(stockVOList);
+            if (!isselectall) {
+                for (int i = 0; i < stockVOList.size(); i++) {
+                    StockVO stockVO = stockVOList.get(i);
+                    StockModel stockModel = stockVOtoStockModle(stockVO);
+                    stockNameList.add(stockModel.getName());
+                    stockCodeList.add(stockModel.getID());
+                    stockModel.setIsChoosen("是");
+                    models.add(stockModel);
+                }
+                stockTable.setItems(models);
+                isselectall=true;
+            }
+            else{
+                for (int i = 0; i < stockVOList.size(); i++) {
+                    StockVO stockVO = stockVOList.get(i);
+                    StockModel stockModel = stockVOtoStockModle(stockVO);
+                    Iterator<String> iterable1=stockNameList.iterator();
+                    while(iterable1.hasNext()){
+                        if(iterable1.next().equals(stockModel.getName())){
+                            iterable1.remove();
+                        }
+                    }
+                    Iterator<String> iterable2=stockCodeList.iterator();
+                    while(iterable2.hasNext()){
+                        if(iterable2.next().equals(stockModel.getID())){
+                            iterable2.remove();
+                        }
+                    }
+                    stockModel.setIsChoosen("");
+                    models.add(stockModel);
+                }
+                stockTable.setItems(models);
+                isselectall=false;
+            }
+        }
+    }
 
     /**
      * 自选股票板块
@@ -185,7 +233,6 @@ public class SelectStockController {
     @FXML
     private void sectionSearch(){
             String section =selectComboBox.getValue();
-//            ArrayList<StockVO> stockVOList=readStockList("/Users/chenyuyan/IdeaProjects/QI_System/presentation/src/main/resources/documentation/stock-section/"+section+".txt");
             ArrayList<StockVO> stockVOList=readStockList(path1+"documentation/stock-section/"+section+".txt");
             setTableView(stockVOList);
     }

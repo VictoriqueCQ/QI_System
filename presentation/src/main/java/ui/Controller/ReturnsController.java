@@ -19,14 +19,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
-import java.util.Date;
 
 
 /**
@@ -79,6 +77,8 @@ public class ReturnsController implements Initializable {
     //第几个持有期
     @FXML
     private ComboBox<String> HoldPeriodRank;
+
+    private ObservableList<String> HoldPeriod;
 
     /*
     * 以下4个变量是用于股票表格的，分别是
@@ -571,14 +571,28 @@ public class ReturnsController implements Initializable {
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
 
         //填充第几个持有期的combobox,根据stocksetvos的长度
-        ObservableList<String> HoldPeriod = FXCollections.observableArrayList();
+//        HoldPeriod = FXCollections.observableArrayList();
         List<String> HoldPeriodString = new ArrayList<>();
+//        HoldPeriodRank.getItems().clear();
+//        int t=HoldPeriodRank.getItems().size();
+//        HoldPeriodRank.getItems().remove(0,t-1);
         for (int i = 1; i <= stockSetVOS.size(); i++) {
             HoldPeriodString.add("第" + i + "个持有期");
+            HoldPeriodRank.getItems().add("第" + i + "个持有期");
+
         }
-        HoldPeriod.addAll(HoldPeriodString);
-        HoldPeriodRank.getItems().clear();
-        HoldPeriodRank.setItems(HoldPeriod);
+        HoldPeriodRank.setValue("第1个持有期");
+//        HoldPeriod.addAll(HoldPeriodString);
+//        System.out.print(HoldPeriod.toString());
+//        System.out.println(HoldPeriodRank.getItems().toString());
+//        HoldPeriodRank=new ComboBox<String>();
+//        System.out.println(HoldPeriodRank.getItems().toString());
+//        System.out.print(HoldPeriodString.toString());
+//
+//        HoldPeriodRank.getItems().clear();
+//
+//        HoldPeriodRank.getItems().addAll(HoldPeriodString);
+
 
         StockRank.setCellValueFactory(celldata -> celldata.getValue().rankProperty());
         StockRank.setCellFactory(new Callback<TableColumn<StockModel, String>, TableCell<StockModel, String>>() {
@@ -671,11 +685,17 @@ public class ReturnsController implements Initializable {
      * 根据第几个持有期展示最终表格
      */
     @FXML
-    private void showTabelByHoldPeriod_MS() {
+    private void showTabelByHoldPeriod() {
         String holdPeriod = HoldPeriodRank.getValue();
-        char[] h = holdPeriod.toCharArray();
-        int time = h[1]-48;
-
+//        char[] h = holdPeriod.toCharArray();
+//        int time = h[1]-48;
+        int time=0;
+        for(int i=0;i<HoldPeriodRank.getItems().size();i++){
+            if(holdPeriod.equals(HoldPeriodRank.getItems().get(i))){
+                time=i+1;
+                break;
+            }
+        }
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
@@ -684,6 +704,7 @@ public class ReturnsController implements Initializable {
             stockModels.add(stockModelArrayList.get(i));
         }
         stockTable.setItems(stockModels);
+        System.out.print("success");
     }
 
     /**
@@ -869,10 +890,6 @@ public class ReturnsController implements Initializable {
             List<Double> profits = strategyDataVO_MS.getProfits();
 
             List<Double> basicProfits = strategyDataVO_MS.getBasicProfits();
-            List<StockSetVO> stockSetVO = strategyDataVO_MS.getStockSetVOS();
-            System.out.println(basicProfits);
-            System.out.println(stockSetVO.get(0).getDate());
-//            List<Date> dateList = strategyDataVO_MS.getStockSetVOS();
 
             number = profits.size();//形成期+持有期的个数
 
@@ -884,22 +901,20 @@ public class ReturnsController implements Initializable {
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
 
-            List<Date> dateList = new ArrayList<>();
-
-            List<Double> relativeProfits = new ArrayList<>();//相对收益指数提前获取
+            List<Double> relativeProfits = new ArrayList<>();//相对收益指数
             String time;
-//            Date startTime = this.changeDateStyle(StartDate_MS);
+            Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
-                time = simpleDateFormat_2.format(stockSetVO.get(i).getDate());
+                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
                 System.out.println("profits="+profits.get(i));
                 System.out.println("basicProfits="+basicProfits.get(i));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
-//                Calendar c = new  GregorianCalendar();
-//                c.setTime(startTime);
-//                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
-//                startTime = c.getTime();
+                Calendar c = new  GregorianCalendar();
+                c.setTime(startTime);
+                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
+                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
@@ -1071,16 +1086,16 @@ public class ReturnsController implements Initializable {
             List<Double> relativeProfits = new ArrayList<>();
 
             String time;
-//            Date startTime = this.changeDateStyle(StartDate_MR);
+            Date startTime = this.changeDateStyle(StartDate_MR);
             for (int i = 0; i < number; i++) {
-                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
+                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
-//                Calendar c = new  GregorianCalendar();
-//                c.setTime(startTime);
-//                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MeanReversio.getText()));
-//                startTime = c.getTime();
+                Calendar c = new  GregorianCalendar();
+                c.setTime(startTime);
+                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MeanReversio.getText()));
+                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
@@ -1269,13 +1284,9 @@ public class ReturnsController implements Initializable {
             int cycle = 2;
 
             for (int i = 0; i < ListLength; i++) {
-
-                //((double)((int)(strategyDataVO_MS.getAlpha()*1000)))/10
-
                 String cycleString = String.valueOf(cycle + i * 1);
-                DecimalFormat a = new DecimalFormat("#0.00%");
-                String overProfit = a.format(fhVO.getOverProfit().get(i));
-                String winChance = a.format(fhVO.getWinChance().get(i));
+                String overProfit = (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10) + "%";
+                String winChance = (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10) + "%";
                 model = new ReturnsModel(cycleString, overProfit, winChance);
                 models.add(model);
             }
@@ -1293,8 +1304,8 @@ public class ReturnsController implements Initializable {
             XYChart.Series series2 = new XYChart.Series();
             cycle = 2;
             for (int i = 0; i < ListLength; i++) {
-                series1.getData().add(new XYChart.Data<>(cycle + i * 1, fhVO.getOverProfit().get(i)));
-                series2.getData().add(new XYChart.Data<>(cycle + i * 1, fhVO.getWinChance().get(i)));
+                series1.getData().add(new XYChart.Data<>(cycle + i * 1, (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10)));
+                series2.getData().add(new XYChart.Data<>(cycle + i * 1, (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10)));
             }
             areaChart_1.setHorizontalZeroLineVisible(true);
             areaChart_2.setHorizontalZeroLineVisible(true);
@@ -1462,9 +1473,6 @@ public class ReturnsController implements Initializable {
 //        setOverProfitsUI_MR();
         setChooseFPorHP();
         this.setDatePicker();
-//        setChoose_MR();
-//        setChoose_MS();
-        isyourchoice = true;
         this.main = main;
         this.net = net;
         HoldingPeriod_MomentumStrategy.setText("10");
@@ -1474,8 +1482,6 @@ public class ReturnsController implements Initializable {
         FormativePeriod_MeanReversio.setText("10");
         StockHeldInHouse_MeanReversio.setText("10");
 
-
-//        this.setDatePicker();
         stockCodeList.add("002007");
         stockCodeList.add("002006");
         stockCodeList.add("002002");
@@ -1486,5 +1492,8 @@ public class ReturnsController implements Initializable {
         stockCodeList.add("002001");
         stockCodeList.add("000100");
         stockCodeList.add("001696");
+
+        isyourchoice=true;
+
     }
 }
