@@ -1073,7 +1073,7 @@ public class ReturnsController implements Initializable {
         String EndDateString_MR = simpleDateFormat.format(this.changeDateStyle(EndDate_MR));
         if (FormativePeriod_MeanReversio.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()
                 && HoldingPeriod_MeanReversio.getText() != null && !HoldingPeriod_MeanReversio.getText().isEmpty()
-                && StockHeldInHouse_MeanReversio.getText() != null && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
+                && StockHeldInHouse_MeanReversio.getText().length()!=0 && !StockHeldInHouse_MeanReversio.getText().isEmpty()) {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "Strategy\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
@@ -1091,6 +1091,8 @@ public class ReturnsController implements Initializable {
                 }
             }
             net.actionPerformed(instruction);
+        }else{
+            System.out.println("text is empty");
         }
 
         String ReturnsMessage;
