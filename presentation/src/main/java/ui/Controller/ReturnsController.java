@@ -974,17 +974,18 @@ public class ReturnsController implements Initializable {
 //            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
             Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
-//                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
-                time = simpleDateFormat_2.format(startTime);
+//                System.out.print(strategyDataVO_MS.getStockSetVOS().get(i).toString());
+                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
+//                time = simpleDateFormat_2.format(startTime);
                 series1.getData().add(new XYChart.Data<>(time, profits.get(i)));
                 series2.getData().add(new XYChart.Data<>(time, basicProfits.get(i)));
                 System.out.println("profits="+profits.get(i));
                 System.out.println("basicProfits="+basicProfits.get(i));
                 relativeProfits.add(profits.get(i)-basicProfits.get(i));
-                Calendar c = new  GregorianCalendar();
-                c.setTime(startTime);
-                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
-                startTime = c.getTime();
+//                Calendar c = new  GregorianCalendar();
+//                c.setTime(startTime);
+//                c.add(c.DATE,Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()));
+//                startTime = c.getTime();
             }
 
             lineChart.getData().addAll(series1, series2);
