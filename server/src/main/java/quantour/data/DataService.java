@@ -30,7 +30,8 @@ public class DataService {
 
     private void setUpNet() {
         try {
-            socket = new Socket("127.0.0.1", 9001);
+            socket=new Socket("127.0.0.1",9001);
+            //socket = new Socket("127.0.0.1", 9001);
             dataInputStream = new DataInputStream(socket.getInputStream());
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
         } catch (UnknownHostException e) {
