@@ -724,23 +724,23 @@ public class ReturnsController implements Initializable {
 //            rankList.add(Integer.parseInt(stockModelArrayList.get(i).getRank()));
 //        }
 
-        //TODO
-        // 排序
-        for (int i = 1; i <= stockModelArrayList.size(); i++) {
-            for (int j = 0; j < stockModelArrayList.size(); j++) {
-                if (stockModelArrayList.get(j).getRank() == i) {
-                    System.out.println(i);
-                    stockTable.getItems().add(stockModelArrayList.get(j));
-
-//                    stockModels.add(stockModelArrayList.get(j));
-                    break;
-                }
-            }
-        }
-//        for (int i = 0; i < stockModelArrayList.size(); i++) {
-//            stockModels.add(stockModelArrayList.get(i));
+//        //TODO
+//        // 排序
+//        for (int i = 1; i <= stockModelArrayList.size(); i++) {
+//            for (int j = 0; j < stockModelArrayList.size(); j++) {
+//                if (stockModelArrayList.get(j).getRank() == i) {
+//                    System.out.println(i);
+//                    stockTable.getItems().add(stockModelArrayList.get(j));
+//
+////                    stockModels.add(stockModelArrayList.get(j));
+//                    break;
+//                }
+//            }
 //        }
-//        stockTable.setItems(stockModels);
+        for (int i = 0; i < stockModelArrayList.size(); i++) {
+            stockModels.add(stockModelArrayList.get(i));
+        }
+        stockTable.setItems(stockModels);
         System.out.print("success");
     }
 
