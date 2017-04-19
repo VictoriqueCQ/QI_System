@@ -53,6 +53,8 @@ public class ReturnsController implements Initializable {
 
 
 
+
+
     /*
     * 以下5个变量是用于起始界面的变量，分别是：
     * 用于确定持有期个数的number
@@ -565,8 +567,14 @@ public class ReturnsController implements Initializable {
         List<StockSetVO> stockSetVOS;
         if (MomentumStrategyTab.isSelected()) {
             stockSetVOS = strategyDataVO_MS.getStockSetVOS();
+//            stockSetVOS=stockSetVOS1;
         } else {
             stockSetVOS = strategyDataVO_MR.getStockSetVOS();
+//            stockSetVOS=stockSetVOS1;
+        }
+
+                for(int j=0;j<stockSetVOS.size();j++){
+            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
         }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
 
@@ -694,23 +702,33 @@ public class ReturnsController implements Initializable {
         }
         System.out.println(time);
         List<StockSetVO> stockSetVOS = strategyDataVO_MS.getStockSetVOS();
-        for(int i=0;i<stockSetVOS.size();i++){
-            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
-        }
+//        for(int i=0;i<stockSetVOS.size();i++){
+////            System.out.println("c"+stockSetVOS.get(i).getStockSets().toString());
+//        }
         ObservableList<StockModel> stockModels = FXCollections.observableArrayList();
         ArrayList<StockModel> stockModelArrayList = this.getbeststock(stockSetVOS, time);
-//        for(int i=1;i<=stockModelArrayList.size();i++){
-//            for(int j=0;j<stockModelArrayList.size();j++){
-//                if(Integer.parseInt(stockModelArrayList.get(j).getID())==i){
-//                    stockModels.add(stockModelArrayList.get(j));
-//                    break;
-//                }
-//            }
+//        ArrayList<Integer> rankList=new ArrayList<Integer>();
+//        for(int i=0;i<stockModelArrayList.size();i++){
+//            rankList.add(Integer.parseInt(stockModelArrayList.get(i).getRank()));
 //        }
-        for (int i = 0; i < stockModelArrayList.size(); i++) {
-            stockModels.add(stockModelArrayList.get(i));
+
+        //TODO
+        // 排序
+        for(int i=1;i<=stockModelArrayList.size();i++){
+            for(int j=0;j<stockModelArrayList.size();j++){
+                if(Integer.parseInt(stockModelArrayList.get(j).getRank())==i){
+                    System.out.println(i);
+                    stockTable.getItems().add(stockModelArrayList.get(j));
+
+//                    stockModels.add(stockModelArrayList.get(j));
+                    break;
+                }
+            }
         }
-        stockTable.setItems(stockModels);
+//        for (int i = 0; i < stockModelArrayList.size(); i++) {
+//            stockModels.add(stockModelArrayList.get(i));
+//        }
+//        stockTable.setItems(stockModels);
         System.out.print("success");
     }
 
@@ -726,9 +744,9 @@ public class ReturnsController implements Initializable {
         }
         System.out.println("di"+i);
         StockSetVO stockSetVO = stockSetVOS.get(i-1);
-        for(int j=0;j<stockSetVOS.size();j++){
-            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
-        }
+//        for(int j=0;j<stockSetVOS.size();j++){
+//            System.out.println("a"+stockSetVOS.get(j).getStockSets().toString());
+//        }
         Map<String,String> stockSets = stockSetVO.getStockSets();
         ArrayList<StockModel> stockModelArrayList = stockSetstoStockModel(stockSets);
         return stockModelArrayList;
@@ -819,10 +837,8 @@ public class ReturnsController implements Initializable {
     * 这个方法是使用动量策略时处理用户输入，同时获取股票表格，累计收益率，相对收益指数的数据，将用于查询按钮
      */
     private void setMomentumStrategyInputSearch() {
-        System.out.print(1);
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
-        System.out.print(2);
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MS));
         String EndDateString_MS = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MS));
@@ -860,11 +876,12 @@ public class ReturnsController implements Initializable {
             strategyDataVO_MS = (StrategyDataVO) jsonUtil.JSONToObj(ReturnsMessage, StrategyDataVO_middleState.getClass());
 
             //处理map
-           ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
-            HashMap<String,String> hashMap=new HashMap<String,String>();
+
+            ArrayList<StockSetVO> stockSetVOS1=new ArrayList<StockSetVO>();
             Date date=new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for(int j=0;j<strategyDataVO_MS.getStockSetVOS().size();j++) {
+                HashMap<String,String> hashMap=new HashMap<String,String>();
                 JSONObject jsonObject = JSONObject.fromObject(strategyDataVO_MS.getStockSetVOS().get(j));
                 String key = null;
                 String value = null;
@@ -907,10 +924,9 @@ public class ReturnsController implements Initializable {
 //                        }
                     }
                 }
-                System.out.println(date);
+//                System.out.println(date);
                 System.out.println("b"+hashMap.toString());
                 stockSetVOS1.add(new StockSetVO(hashMap));
-                System.out.println(new StockSetVO(hashMap).getStockSets().toString());
             }
             System.out.println(stockSetVOS1.size());
             for(int i=0;i<stockSetVOS1.size();i++){
@@ -951,7 +967,7 @@ public class ReturnsController implements Initializable {
             List<Double> relativeProfits = new ArrayList<>();//相对收益指数
 
             String time;
-            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
+//            System.err.println(strategyDataVO_MS.getStockSetVOS().get(0).getDate());
             Date startTime = this.changeDateStyle(StartDate_MS);
             for (int i = 0; i < number; i++) {
 //                time = simpleDateFormat_2.format(strategyDataVO_MS.getStockSetVOS().get(i).getDate());
