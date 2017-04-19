@@ -1193,7 +1193,7 @@ public class ReturnsController implements Initializable {
 //            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime()) / number;
             long period = Integer.parseInt(HoldingPeriod_MeanReversio.getText()) * 24 * 60 * 60;
 
-            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
+            SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM-dd");
 
             XYChart.Series series1 = new XYChart.Series();
             XYChart.Series series2 = new XYChart.Series();
@@ -1322,7 +1322,8 @@ public class ReturnsController implements Initializable {
      */
     private void setOverProfitsUI_MS() {
 
-
+        areaChart_1.getData().clear();
+        areaChart_2.getData().clear();
 
         LocalDate StartDate_MS = StartDate_MomentumStrategy.getValue();
         LocalDate EndDate_MS = EndDate_MomentumStrategy.getValue();
@@ -1432,7 +1433,8 @@ public class ReturnsController implements Initializable {
 
     private void setOverProfitsUI_MR() {
 
-
+        areaChart_1.getData().clear();
+        areaChart_2.getData().clear();
 
         LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
         LocalDate EndDate_MR = EndDate_MeanReversio.getValue();

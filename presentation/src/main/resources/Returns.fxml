@@ -235,7 +235,7 @@
                                                       <Font size="18.0" />
                                                    </font>
                                                 </Button>
-                                                <ComboBox fx:id="ChooseFPorHP_MS" layoutY="16.0" onAction="#setComboBoxAction_MS" prefHeight="23.0" prefWidth="100.0" stylesheets="@css/ComboBoxCSS.css" />
+                                                <ComboBox fx:id="ChooseFPorHP_MS" layoutY="16.0" onAction="#setComboBox_MS" prefHeight="23.0" prefWidth="100.0" stylesheets="@css/ComboBoxCSS.css" />
                                              </children>
                                           </AnchorPane>
                                        </children>
@@ -303,7 +303,7 @@
                                                       <Font size="18.0" />
                                                    </font>`                                                                                                                                                                                             
                                                 </Button>
-                                                <ComboBox fx:id="ChooseFPorHP_MR" layoutY="16.0" onAction="#setComboBoxAction_MR" prefHeight="23.0" prefWidth="100.0" stylesheets="@css/ComboBoxCSS.css" />
+                                                <ComboBox fx:id="ChooseFPorHP_MR" layoutY="16.0" onAction="#setComboBox_MR" prefHeight="23.0" prefWidth="100.0" stylesheets="@css/ComboBoxCSS.css" />
                                              </children>
                                           </AnchorPane>
                                        </children>
