@@ -104,7 +104,9 @@ public class ClientOverviewController {
         loginButton.setVisible(true);
         registerButton.setVisible(true);
         exitLoginButton.setVisible(false);
-        nameLabel.setText("          游客");
+        comparsionButton.setDisable(true);
+        returnsButton.setDisable(true);
+        nameLabel.setText("   游客");
     }
 
     /**
@@ -128,18 +130,20 @@ public class ClientOverviewController {
         setButtonText();
         this.gotoMarketCondition();
         if(t){
-            nameLabel.setText("姓名: "+userVO.getName());
+            nameLabel.setText("   姓名: "+userVO.getName());
             loginButton.setVisible(false);
             registerButton.setVisible(false);
             exitLoginButton.setVisible(true);
+            comparsionButton.setDisable(false);
+            returnsButton.setDisable(false);
         }
         else{
             nameLabel.setText("   游客访问");
             loginButton.setVisible(true);
             registerButton.setVisible(true);
             exitLoginButton.setVisible(false);
-//            comparsionButton.setDisable(true);
-//            returnsButton.setDisable(true);
+            comparsionButton.setDisable(true);
+            returnsButton.setDisable(true);
         }
     }
 

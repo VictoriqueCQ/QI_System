@@ -167,14 +167,16 @@ public class CandlestickChartController {
      */
     @FXML
     private void search() {
+        main.lodaing();
         this.createEMA();
         SwingNode swingNode = this.createCandlestickChart();
-        main.closeExtraStage();
+//        main.closeExtraStage();
         if (swingNode != null) {
             insidePane.getChildren().add(swingNode);
         } else {
             AlertUtil.showErrorAlert("对不起，不存在这只股票");
         }
+//        main.closeExtraStage();
 
     }
 
@@ -277,9 +279,11 @@ public class CandlestickChartController {
                 Date endDate = this.changeDateStyle(endLocalDate);
                 x1Axis.setRange(startDate, endDate);//设置时间范围，注意时间的最大值要比已有的时间最大值要多一天
                 long width=startLocalDate.until(endLocalDate, ChronoUnit.DAYS)*10;
-                System.out.print(width);
                 if(width>1178){
                     insidePane.setPrefWidth(width);
+                }
+                if(width>2000){
+                    insidePane.setPrefWidth(2000);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -321,6 +325,7 @@ public class CandlestickChartController {
 
             JFreeChart chart = new JFreeChart("K线图", JFreeChart.DEFAULT_TITLE_FONT, combineddomainxyplot, false);
 
+
             //颜色设置
             chart.setBackgroundPaint(Color.black);
             x1Axis.setTickMarkPaint(Color.yellow);
@@ -333,7 +338,8 @@ public class CandlestickChartController {
             plot2.setBackgroundPaint(Color.black);
 
             ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new Dimension(2200, 950));
+            chartPanel.setPreferredSize(new Dimension(4000 , 950));
+
             SwingNode swingNode = new SwingNode();
             swingNode.setContent(chartPanel);
             return swingNode;
@@ -463,7 +469,6 @@ public class CandlestickChartController {
             number.setUpperBound(highest * 1.1);
             number.setTickUnit((highest * 1.1 - 5) / 10);
             int width=dates.size()*10;
-            System.out.print(width);
             if(width>1178){
                 lineChart.setPrefWidth(width);
             }
