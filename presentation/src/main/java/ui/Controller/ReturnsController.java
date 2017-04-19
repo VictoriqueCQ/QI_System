@@ -1052,7 +1052,7 @@ public class ReturnsController implements Initializable {
             number = profits.size();//形成期+持有期的个数
 
 //            long period = (this.changeDateStyle(EndDate_MR).getTime() - this.changeDateStyle(StartDate_MR).getTime()) / number;
-            long period = Integer.parseInt(HoldingPeriod_MomentumStrategy.getText()) * 24 * 60 * 60;
+            long period = Integer.parseInt(HoldingPeriod_MeanReversio.getText()) * 24 * 60 * 60;
 
             SimpleDateFormat simpleDateFormat_2 = new SimpleDateFormat("yyyy-MM");
 
@@ -1290,29 +1290,29 @@ public class ReturnsController implements Initializable {
     private void setOverProfitsUI_MR() {
 
         if (ChooseFPorHP_MR.getItems().equals("形成期")) {
-            HoldingPeriod_MomentumStrategy.setDisable(true);
+            HoldingPeriod_MeanReversio.setDisable(true);
         } else {
-            FormativePeriod_MomentumStrategy.setDisable(true);
+            FormativePeriod_MeanReversio.setDisable(true);
         }
 
-        LocalDate StartDate_MR = StartDate_MomentumStrategy.getValue();
-        LocalDate EndDate_MR = EndDate_MomentumStrategy.getValue();
+        LocalDate StartDate_MR = StartDate_MeanReversio.getValue();
+        LocalDate EndDate_MR = EndDate_MeanReversio.getValue();
 
         SimpleDateFormat simpleDateFormat_1 = new SimpleDateFormat("MM/dd/yy");
         String StartDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(StartDate_MR));
         String EndDateString_MR = simpleDateFormat_1.format(this.changeDateStyle(EndDate_MR));
-        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MomentumStrategy.getText().isEmpty()) {
+        if (FormativePeriod_MomentumStrategy.getText() != null && !FormativePeriod_MeanReversio.getText().isEmpty()) {
             //如果选择形成期
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "T\t" + FormativePeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "F" + "\t" + "T\t" + FormativePeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "F" + "\t" + "F\t" + FormativePeriod_MomentumStrategy.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "F" + "\t" + "F\t" + FormativePeriod_MeanReversio.getText() + "\t" + StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }
@@ -1323,13 +1323,13 @@ public class ReturnsController implements Initializable {
             String instruction;
             if (isyourchoice == true) {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "T\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "T\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < stockCodeList.size(); i++) {
                     instruction += stockCodeList.get(i) + "\t";
                 }
             } else {
                 instruction = "FNH\t" + "A\t" + StartDateString_MR + "\t" + EndDateString_MR + "\t"
-                        + "H" + "\t" + "F\t" + HoldingPeriod_MomentumStrategy.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
+                        + "H" + "\t" + "F\t" + HoldingPeriod_MeanReversio.getText() + "\t"+ StockHeldInHouse_MeanReversio.getText() + "\t";
                 for (int i = 0; i < sectionNameList.size(); i++) {
                     instruction += sectionNameList.get(i) + "\t";
                 }

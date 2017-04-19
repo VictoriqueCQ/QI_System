@@ -24,26 +24,36 @@ public class DataReader_CSV implements DataReader_data{
     private String ratePath;
 
     DataReader_CSV() throws IOException {
-//        stockPath = "C:\\stock_data\\stock_data.csv";
-////        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
-////        stockPath="D:\\data.txt";
-//        platePath="C:\\stock_data\\plate";//directory
-//        indexPath="C:\\stock_data\\index";//directory
-//        ratePath="C:\\stock_data\\rate.csv";
-//        File f=new File("a.txt");
-//        f.createNewFile();
-//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\stock_data.csv";
+//        stockPath = "stock_data\\stock_data.csv";
 //        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
 //        stockPath="D:\\data.txt";
+//        platePath="stock_data\\plate";//directory
+//        indexPath="stock_data\\index";//directory
+//        ratePath="stock_data\\rate.csv";
+
+//        stockPath = "/Users/chenyuyan/IdeaProjects/QI_System/stock_data/stock_data.csv";
+//        stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\stock_data.csv";
+//        stockPath="D:\\data.txt";
+//
+//        platePath="/Users/chenyuyan/Desktop/stock_data/plate";//directory
+//        indexPath="/Users/chenyuyan/Desktop/stock_data/index";//directory
+//        ratePath="/Users/chenyuyan/IdeaProjects/QI_System/stock_data/rate.csv";
+
+//                stockPath = "C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\stock_data.csv";
+//
 //        platePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\plate";//directory
 //        indexPath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\index";//directory
 //        ratePath="C:\\Users\\xjwhh\\IdeaProjects\\QI_System\\server\\stock_data1\\rate.csv";
-        stockPath = "stock_data\\stock_data.csv";
-        platePath = "stock_data\\plate";
-        indexPath = "stock_data\\index";
-        ratePath = "stock_data\\rate.csv";
 
+        stockPath = "C:\\stock_data\\stock_data.csv";
+        platePath = "C:\\stock_data\\plate";
+        indexPath = "C:\\stock_data\\index";
+        ratePath = "C:\\stock_data\\rate.csv";
     }
+
+        //File f=new File("a.txt");
+        //f.createNewFile();
+
 
     public DataReader_CSV(String path) {
         this.stockPath = path;
