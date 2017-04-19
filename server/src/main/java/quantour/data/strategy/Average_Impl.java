@@ -63,8 +63,8 @@ public class Average_Impl implements Strategy_data {
 //        int winnerSize = 0;
         //自选股票
         Stock_Filter_data stockFilterData = dataFactoryCsv.getStockFilterData();
-       /* if (quest[6].equals("T")) {
-            winnerSize=(int)((quest.length-9)*0.2);
+        if (quest[6].equals("T")) {
+//            winnerSize=(int)((quest.length-9)*0.2);
             for (int i = 9; i < quest.length; i++) {
                 int code = Integer.parseInt(quest[i]);
                 stockPool.put(code, stockFilterData.filterSingleStock(code));
@@ -72,8 +72,8 @@ public class Average_Impl implements Strategy_data {
         } else {
             stockPool = stockFilterData.filterStaStock(quest);
             indices=stockFilterData.getIndexList().get(quest[9]);
-            winnerSize=(int)(stockPool.size()*0.2);
-        }*/
+//            winnerSize=(int)(stockPool.size()*0.2);
+        }
 
         int startSerial=0;
         int endSerial=0;
