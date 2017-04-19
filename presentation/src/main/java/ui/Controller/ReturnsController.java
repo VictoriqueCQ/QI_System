@@ -1130,8 +1130,8 @@ public class ReturnsController implements Initializable {
             }
 
             //以下是相对收益指数图表的数据
-            barChart.setBarGap(3);
-            barChart.setCategoryGap(20);
+            barChart.setBarGap(10);
+            barChart.setCategoryGap(100);
             XYChart.Series<String, Number> series3 = new XYChart.Series<>();
             XYChart.Series<String, Number> series4 = new XYChart.Series<>();
 
@@ -1365,6 +1365,7 @@ public class ReturnsController implements Initializable {
                     instruction += sectionNameList.get(i) + "\t";
                 }
             }
+            net.actionPerformed(instruction);
         }
 
 
@@ -1384,7 +1385,7 @@ public class ReturnsController implements Initializable {
             returns.setCellValueFactory(celldata -> celldata.getValue().returnsProperty());
             percent.setCellValueFactory(celldata -> celldata.getValue().percentProperty());
 
-            fhVO = new FormativeNHoldingVO();
+
             int ListLength = fhVO.getOverProfit().size();
 
             List<ReturnsModel> models = new ArrayList<>();
@@ -1393,8 +1394,9 @@ public class ReturnsController implements Initializable {
 
             for (int i = 0; i < ListLength; i++) {
                 String cycleString = String.valueOf(cycle + i * 1);
-                String overProfit = (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10) + "%";
-                String winChance = (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10) + "%";
+                DecimalFormat a = new DecimalFormat("#0.00%");
+                String overProfit = a.format(fhVO.getOverProfit().get(i));
+                String winChance = a.format(fhVO.getWinChance().get(i));
                 model = new ReturnsModel(cycleString, overProfit, winChance);
                 models.add(model);
             }
@@ -1412,8 +1414,8 @@ public class ReturnsController implements Initializable {
             XYChart.Series series2 = new XYChart.Series();
             cycle = 2;
             for (int i = 0; i < ListLength; i++) {
-                series1.getData().add(new XYChart.Data<>(cycle + i * 1, (double) (((int) (fhVO.getOverProfit().get(i) * 1000)) / 10)));
-                series2.getData().add(new XYChart.Data<>(cycle + i * 1, (double) (((int) (fhVO.getWinChance().get(i) * 1000)) / 10)));
+                series1.getData().add(new XYChart.Data<>(cycle + i * 1, fhVO.getOverProfit().get(i)));
+                series2.getData().add(new XYChart.Data<>(cycle + i * 1, fhVO.getWinChance().get(i)));
             }
             areaChart_1.setHorizontalZeroLineVisible(true);
             areaChart_2.setHorizontalZeroLineVisible(true);
