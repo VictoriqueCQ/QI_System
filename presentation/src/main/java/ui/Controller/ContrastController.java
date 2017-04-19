@@ -290,41 +290,10 @@ public class ContrastController extends Application {
 
 
 
-        /*stock1 = getStockVoByCondition(searchConditionVO1);
-        if (stock1 == null) {
-            AlertUtil.showErrorAlert("对不起，您输入的股票一不存在");
-        }
-        stock2 = getStockVoByCondition(searchConditionVO2);
-        if (stock2 == null) {
-            AlertUtil.showErrorAlert("对不起，您输入的股票二不存在");
-        }
-
-        setTableContrast();
-        setClosePriceLine(stock1.getClose(), stock1.getDates(), stock1.getName());
-        setClosePriceLine(stock2.getClose(), stock2.getDates(), stock2.getName());
-        setIncomeLine(stock1.getDates(), stock1.getName(), stock1.getProfit());
-        setIncomeLine(stock2.getDates(), stock2.getName(), stock2.getProfit());
-        setVariance();*/
 
 
-    /**
-     * cyy
-     * 判断是否存在
-     */
-    /*
-    public boolean Judge(String name) {
-        boolean b = false;
-        Iterator<StockVO> iter = allStock.iterator();
-        while (iter.hasNext()) {
-            StockVO stock = iter.next();
-            if (name == stock.getName()) {
-                b = true;
-            }
 
-        }
-        return b;
 
-    }*/
 
     public void setTableContrast() {
         stockName1.setCellValueFactory(celldata -> celldata.getValue().nameProperty());
@@ -642,23 +611,6 @@ public class ContrastController extends Application {
 
 
 
-//        allStockName[0] = "深发展A";
-//        allStockName[1] = "b股";
-       /* String  customerName = "深";
-        String reCustomerName = ".*";
-        if(customerName!=null){
-            for(int i = 0 ; i < customerName.length(); i++){
-                reCustomerName= reCustomerName + customerName.charAt(i)  +".*";
-            }
-        }
-        System.out.println("姓名正则:   "+reCustomerName);
-
-        String s = "aaaaaabcc";
-
-        Pattern pattern = Pattern.compile(reCustomerName);
-        Matcher matcher = pattern.matcher(s);
-       System.out.print(matcher.matches());*/
-//       main.closeExtraStage();
 
     }
 }

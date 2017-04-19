@@ -93,14 +93,6 @@ public class Average_Impl implements Strategy_data {
         int changeDate=startSerial-holdTime;
 
 
-      /*  Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-        calendar.add(Calendar.DAY_OF_YEAR, -shapeTime);
-        Date initialDate = calendar.getTime();//形成期的开始
-        Date overDate = startDate;
-        calendar.setTime(overDate);//算形成期的时候的结束日期
-        calendar.add(Calendar.DAY_OF_YEAR, holdTime);
-        Date changeDate = calendar.getTime();//调仓*/
 
         List<StockSet> stockSets = new ArrayList<>();
 
@@ -153,7 +145,7 @@ public class Average_Impl implements Strategy_data {
 
                 }
             }
-            if (candidates.size() > 0&&candidates.size()>=winnerSize) {
+            if (candidates.size() > 0) {
                 candidates = candidates.stream().sorted(Comparator.comparing(Candidate1::getDeviate)).
                         collect(Collectors.toList());//从小到大排序
 
@@ -172,22 +164,23 @@ public class Average_Impl implements Strategy_data {
                     basicProfits.add((end.getClose() - start.getClose()) / start.getClose());
                 }
 
+                if (candidates.size() >= winnerSize){
+                    candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
 
-                candidates = candidates.subList(candidates.size() - winnerSize, candidates.size());
+                    Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
+                    System.out.println("ca shi " + candidates.size());
 
-                Map<Integer, List<Stock>> map = new HashMap<>();//取百分之二十的赢家组合
-                System.out.println("ca shi "+candidates.size());
-
-                for (int i = winnerSize - 1; i >= 0; i--) {
+                    for (int i = candidates.size() - 1; i >= 0; i--) {
 //                    System.out.println("i de zhi wei"+i);
-                    System.out.println("di"+i+":"+candidates.get(i).getCode());
-                    List<Stock> temp = new ArrayList<>();
-                    temp.add(candidates.get(i).getS1());
-                    temp.add(candidates.get(i).getS2());
-                    map.put(candidates.size() - i, temp);
+//                        System.out.println("di" + i + ":" + candidates.get(i).getCode());
+                        List<Stock> temp = new ArrayList<>();
+                        temp.add(candidates.get(i).getS1());
+                        temp.add(candidates.get(i).getS2());
+                        map.put(candidates.size() - i, temp);
+                    }
+                    StockSet stockSet = new StockSet(map);
+                    stockSets.add(stockSet);
                 }
-                StockSet stockSet = new StockSet(map);
-                stockSets.add(stockSet);
             }
 
                 overDate = changeDate;
@@ -197,9 +190,11 @@ public class Average_Impl implements Strategy_data {
                 startSerial = overDate;
 
                 changeDate = startSerial - holdTime;
+//                System.out.println("ending!!");
 
 
         }
+//        System.out.println("result"+stockSets.get(0).getStockSets().get(1).get(0).getName());
         return stockSets;
     }
 
@@ -208,6 +203,7 @@ public class Average_Impl implements Strategy_data {
             return stockPool;
         }
 
+    @Override
     public List<Double> getBasicProfits() {
         return basicProfits;
     }
