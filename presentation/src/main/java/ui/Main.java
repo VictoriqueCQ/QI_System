@@ -78,8 +78,8 @@ public class Main extends Application {
     }
 
     public void lodaing() {
+//        stage.close();
         try {
-            stage.close();
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(Main.class.getResource("/Loading.fxml"));
             AnchorPane insidePane = (AnchorPane) fxmlLoader.load();
@@ -91,10 +91,14 @@ public class Main extends Application {
             stage2.setScene(scene);
             stage2.setAlwaysOnTop(true);
             stage2.centerOnScreen();
+
+
             stage2.show();
+            System.out.print("stage2");
             stage.show();
 
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4.5), ev -> {
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(7), ev -> {
 
                 stage2.close();
             }));

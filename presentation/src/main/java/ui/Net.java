@@ -44,7 +44,7 @@ public class Net {
      */
     public String run() {
         StringBuilder sb = new StringBuilder();
-        main.lodaing();
+
         try {
             int length = inputStream.readInt();
             for (int i = 0; i < length; i++) {
@@ -54,6 +54,7 @@ public class Net {
             e.printStackTrace();
         }
 //        main.closeExtraStage();
+//        main.closeStage2();
         return sb.toString();
     }
 
@@ -63,6 +64,7 @@ public class Net {
      * @param input
      */
     public void actionPerformed(String input) {
+        main.lodaing();
         try {
             outputStream.writeUTF(input);
         } catch (Exception ep) {
